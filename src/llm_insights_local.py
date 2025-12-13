@@ -21,7 +21,7 @@ def pick_topic_inputs(conn, limit=30):
         COALESCE(t.title_ja, t.title) AS topic_title,
         t.category AS category,
         a.url AS url,
-        COALESCE(a.content, a.summary, a.title, '') AS body
+        COALESCE(a.content, a.title, '') AS body
       FROM topics t
       JOIN topic_articles ta ON ta.topic_id = t.id
       JOIN articles a ON a.id = ta.article_id
