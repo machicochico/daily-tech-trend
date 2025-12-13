@@ -93,33 +93,43 @@ def main():
         )
         topics_by_cat[cat_id] = [r[0] for r in cur.fetchall()]
 
-        # 注目TOP5（続報多い順 = topic内の記事数）
+        # (2) 注目TOP5：直近48時間に増えた分（recent_count）でスコア化
         cur.execute(
             """
             SELECT
               t.id,
               COALESCE(t.title_ja, t.title) AS ttitle,
-              COUNT(ta.article_id) AS article_count,
-              MAX(t.created_at) AS created_at
+              COUNT(ta.article_id) AS total_count,
+              SUM(
+                CASE
+                  WHEN datetime(a.fetched_at) >= datetime('now', '-48 hours') THEN 1
+                  ELSE 0
+                END
+              ) AS recent_count
             FROM topics t
             JOIN topic_articles ta ON ta.topic_id = t.id
+            JOIN articles a ON a.id = ta.article_id
             WHERE t.category = ?
             GROUP BY t.id
-            ORDER BY article_count DESC, created_at DESC, t.id DESC
+            HAVING recent_count > 0
+            ORDER BY recent_count DESC, total_count DESC, t.id DESC
             LIMIT ?
             """,
             (cat_id, HOT_TOP_N)
         )
         rows = cur.fetchall()
+        
         hot_by_cat[cat_id] = [
             {
                 "id": tid,
                 "title": title,
-                "articles": int(ac),
-                "followups": max(int(ac) - 1, 0),
+                "articles": int(total),
+                "recent": int(recent),                 # ★ 48h増分
+                "followups": max(int(total) - 1, 0),   # 既存表示用（残してOK）
             }
-            for (tid, title, ac, _created_at) in rows
+            for (tid, title, total, recent) in rows
         ]
+
 
     conn.close()
 
