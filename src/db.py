@@ -53,7 +53,7 @@ def init_db():
     conn = connect()
     conn.executescript(SCHEMA)
 
-    # 既存DBへ追加（マイグレーション）
+    # 既存DBに列を追加（これが無いと title_ja が増えない）
     _add_column_if_missing(conn, "articles", "title_ja", "TEXT")
 
     conn.commit()
