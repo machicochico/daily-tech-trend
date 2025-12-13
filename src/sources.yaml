@@ -38,3 +38,18 @@ sources:
     name: Mitsubishi Heavy Industries News
     category: manufacturing
     url: https://www.mhi.com/rss/mhi_news.xml
+  # --- Siemens (OT/ICS) ---
+  - id: siemens-cert
+    name: Siemens ProductCERT Advisories
+    category: manufacturing
+    url: https://www.siemens.com/cert/rss/advisories.xml
+
+  - id: siemens-press
+    name: Siemens Press Releases
+    category: manufacturing
+    url: https://www.siemens.com/press/en/pressreleases.rss
+
+  - id: siemens-industry
+    name: Siemens Digital Industries News
+    category: manufacturing
+    url: https://www.siemens.com/rss/digital-industries.xml
