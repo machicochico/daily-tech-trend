@@ -1,24 +1,62 @@
-categories:
-  - id: system
-    name: システム
-  - id: manufacturing
-    name: 製造
-  - id: security
-    name: セキュリティ
-  - id: ai_data
-    name: AI/データ
-  - id: dev
-    name: 開発
+sources:
+  # --- Security ---
+  - id: cisa-icsa
+    name: CISA ICS Advisories
+    category: セキュリティ
+    url: https://us-cert.cisa.gov/ics/advisories/advisories.xml
 
-feeds:
-  - url: "https://aws.amazon.com/blogs/aws/feed/"
-    category: system
-    source: "AWS Blog"
+  - id: cisa-alerts
+    name: CISA NCAS Alerts
+    category: セキュリティ
+    url: https://us-cert.cisa.gov/ncas/alerts.xml
 
-  - url: "https://cloud.google.com/blog/rss"
-    category: system
-    source: "Google Cloud Blog"
+  - id: cisa-analysis
+    name: CISA NCAS Analysis Reports
+    category: セキュリティ
+    url: https://us-cert.cisa.gov/ncas/analysis-reports.xml
 
-  - url: "https://www.cisa.gov/cybersecurity-advisories/all.xml"
-    category: security
-    source: "CISA Advisories"
+  - id: cisa-cyber-all
+    name: CISA Cybersecurity Advisories (all)
+    category: セキュリティ
+    url: https://www.cisa.gov/cybersecurity-advisories/all.xml
+
+  - id: jpcert-all
+    name: JPCERT/CC RSS (統合)
+    category: セキュリティ
+    url: https://www.jpcert.or.jp/rss/jpcert-all.rdf
+
+  - id: jvn-rss
+    name: JVN RSS Index
+    category: セキュリティ
+    url: https://jvn.jp/rss/
+
+  - id: jvndb-feed
+    name: JVN iPedia Feed
+    category: セキュリティ
+    url: https://jvndb.jvn.jp/ja/feed/
+
+  - id: nvd-feeds
+    name: NVD Data Feeds
+    category: セキュリティ
+    url: https://nvd.nist.gov/vuln/data-feeds
+
+  # --- Manufacturing ---
+  - id: mhi-news
+    name: Mitsubishi Heavy Industries News
+    category: 製造
+    url: https://www.mhi.com/rss/mhi_news.xml
+
+  - id: khi-news
+    name: Kawasaki News
+    category: 製造
+    url: https://www.khi.co.jp/news/rss/news.xml
+
+  - id: khi-press
+    name: Kawasaki Press Releases
+    category: 製造
+    url: https://www.khi.co.jp/pressrelease/rss/pressrelease.xml
+
+  - id: khi-ir
+    name: Kawasaki IR News
+    category: 製造
+    url: https://www.khi.co.jp/news/rss/ir.xml
