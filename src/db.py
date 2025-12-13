@@ -167,5 +167,19 @@ def init_db():
     )
     """)
 
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS topic_insights (
+        topic_id INTEGER PRIMARY KEY,
+        importance INTEGER,
+        type TEXT,
+        summary TEXT,
+        key_points TEXT,      -- JSON文字列で保存
+        impact_guess TEXT,
+        next_actions TEXT,    -- JSON文字列で保存
+        evidence_urls TEXT,   -- JSON文字列で保存
+        updated_at TEXT
+    )
+    """)
+  
     conn.commit()
     conn.close()
