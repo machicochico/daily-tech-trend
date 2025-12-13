@@ -1,0 +1,24 @@
+categories:
+  - id: system
+    name: システム
+  - id: manufacturing
+    name: 製造
+  - id: security
+    name: セキュリティ
+  - id: ai_data
+    name: AI/データ
+  - id: dev
+    name: 開発
+
+feeds:
+  - url: "https://aws.amazon.com/blogs/aws/feed/"
+    category: system
+    source: "AWS Blog"
+
+  - url: "https://cloud.google.com/blog/rss"
+    category: system
+    source: "Google Cloud Blog"
+
+  - url: "https://www.cisa.gov/cybersecurity-advisories/all.xml"
+    category: security
+    source: "CISA Advisories"
