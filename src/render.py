@@ -37,8 +37,8 @@ HTML = r"""<!doctype html>
           {% for item in hot_by_cat[cat.id] %}
             <li>
               {{ item.title }}
-              <span class="badge">続報 {{ item.followups }}</span>
-              <span class="small">（記事 {{ item.articles }}）</span>
+              <span class="badge">48h +{{ item.recent }}</span>
+              <span class="small">（累計 {{ item.articles }}）</span>
             </li>
           {% endfor %}
         </ul>
