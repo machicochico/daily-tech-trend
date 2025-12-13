@@ -29,10 +29,32 @@ jobs:
 
       - run: python -c "from src.db import init_db; init_db()"
       - run: python src/collect.py
+      - name: Count articles by category (after collect)
+        run: |
+          python - <<'PY'
+          import sqlite3
+          conn=sqlite3.connect("data/state.sqlite")
+          cur=conn.cursor()
+          cur.execute("SELECT category, COUNT(*) FROM articles GROUP BY category ORDER BY COUNT(*) DESC")
+          print("articles:", cur.fetchall())
+          conn.close()
+          PY
+
       - run: python src/normalize.py
       - run: python src/dedupe.py
       - run: python src/normalize_categories.py
       - run: python src/thread.py
+      - name: Count topics by category (after thread)
+        run: |
+          python - <<'PY'
+          import sqlite3
+          conn=sqlite3.connect("data/state.sqlite")
+          cur=conn.cursor()
+          cur.execute("SELECT category, COUNT(*) FROM topics GROUP BY category ORDER BY COUNT(*) DESC")
+          print("topics:", cur.fetchall())
+          conn.close()
+          PY
+
       - run: python src/translate.py
       - run: python src/render.py
 
