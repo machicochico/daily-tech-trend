@@ -5,6 +5,13 @@ import requests
 LMSTUDIO_URL = "http://127.0.0.1:1234/v1/chat/completions"  # 必要なら変更
 MODEL = "local-model"  # LM Studio側で指定不要なら任意文字列でOK
 
+def has_insight(cur, topic_id: int) -> bool:
+    cur.execute(
+        "SELECT 1 FROM topic_insights WHERE topic_id = ? LIMIT 1",
+        (topic_id,),
+    )
+    return cur.fetchone() is not None
+
 def connect():
     return sqlite3.connect("data/state.sqlite")
 
@@ -30,7 +37,11 @@ def pick_topic_inputs(conn, limit=30):
         FROM topic_articles ta2
         JOIN articles a2 ON a2.id = ta2.article_id
         WHERE ta2.topic_id = t.id
-        ORDER BY datetime(a2.fetched_at) DESC, a2.id DESC
+        ORDER BY
+          datetime(a2.fetched_at) DESC,
+          datetime(COALESCE(NULLIF(a2.published_at,''), a2.fetched_at)) DESC,
+          a2.url ASC
+
         LIMIT 1
       )
       ORDER BY t.id DESC
@@ -114,21 +125,37 @@ def upsert_insight(conn, topic_id, insight):
 
 def main():
     conn = connect()
+    cur = conn.cursor()
 
-    rows = pick_topic_inputs(conn, limit=30)  # まずは30件で運用開始がおすすめ
+    rows = pick_topic_inputs(conn, limit=30)
     for r in rows:
+        topic_id = r["topic_id"]
+
+        # ★ ここが生成前ガード（最重要）
+        if has_insight(cur, topic_id):
+            continue
+
         try:
-            ins = call_llm(r["topic_title"], r["category"], r["url"], r["body"])
+            ins = call_llm(
+                r["topic_title"],
+                r["category"],
+                r["url"],
+                r["body"]
+            )
+
             # URLを必ず入れる保険
             if "evidence_urls" not in ins or not ins["evidence_urls"]:
                 ins["evidence_urls"] = [r["url"]]
-            upsert_insight(conn, r["topic_id"], ins)
+
+            upsert_insight(conn, topic_id, ins)
             conn.commit()
-        except Exception as e:
+
+        except Exception:
             # 失敗しても止めない
             continue
 
     conn.close()
+
 
 if __name__ == "__main__":
     main()

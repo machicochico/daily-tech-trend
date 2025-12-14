@@ -39,6 +39,7 @@ HTML = r"""<!doctype html>
 <body>
   <h1>Daily Tech Trend</h1>
   <div class="meta">カテゴリ別（最新テーマ）＋ 注目TOP5（48h増分）＋ LLM解説（ローカル）</div>
+  <div class="meta">生成日時：{{ generated_at }}</div>
 
   {% for cat in categories %}
     <h2>{{ cat.name }} <span class="tag">{{ cat.id }}</span></h2>
@@ -75,7 +76,7 @@ HTML = r"""<!doctype html>
                 <span class="badge imp">重要度 {{ t.importance }}</span>
               {% endif %}
 
-              {% if t.recent is not none %}
+              {% if t.recent > 0 %}
                 <span class="badge">48h +{{ t.recent }}</span>
               {% endif %}
             </div>
@@ -210,6 +211,10 @@ def main():
         categories = build_categories_fallback(cur)
     categories = ensure_category_coverage(cur, categories)
 
+    # ★ ここを追加（完全決定順）
+    categories = sorted(categories, key=lambda c: c["id"])
+
+
     LIMIT_PER_CAT = 20
     HOT_TOP_N = 5
 
@@ -230,7 +235,7 @@ def main():
                   COUNT(ta.article_id) AS total_count,
                   SUM(
                     CASE
-                      WHEN COALESCE(NULLIF(a.published_at,''), a.fetched_at) >= ? THEN 1
+                      WHEN datetime(COALESCE(NULLIF(a.published_at,''), a.fetched_at)) >= datetime(?) THEN 1
                       ELSE 0
                     END
                   ) AS recent_count
@@ -256,7 +261,7 @@ def main():
                   COUNT(ta.article_id) AS total_count,
                   SUM(
                     CASE
-                      WHEN COALESCE(NULLIF(a.published_at,''), a.fetched_at) >= ? THEN 1
+                      WHEN datetime(COALESCE(NULLIF(a.published_at,''), a.fetched_at)) >= datetime(?) THEN 1
                       ELSE 0
                     END
                   ) AS recent_count
@@ -279,6 +284,12 @@ def main():
             for (tid, title, total, recent) in rows
         ]
 
+        # ★ 注目TOP5の並びも完全決定（揺れ防止）
+        hot_by_cat[cat_id] = sorted(
+            hot_by_cat[cat_id],
+            key=lambda x: (-x["recent"], -x["articles"], x["id"]),
+        )
+
         # (B) 一覧（topics + insights + 代表URL + 48h増分）
         if cat_id == "other":
             cur.execute(
@@ -287,24 +298,24 @@ def main():
                   t.id,
                   COALESCE(t.title_ja, t.title) AS title,
                   (
-                    SELECT a2.url
-                    FROM topic_articles ta2
-                    JOIN articles a2 ON a2.id = ta2.article_id
-                    WHERE ta2.topic_id = t.id
-                    ORDER BY COALESCE(NULLIF(a2.published_at,''), a2.fetched_at) DESC, a2.id DESC
-                    LIMIT 1
-                  ) AS url,
+                      SELECT a2.url
+                      FROM topic_articles ta2
+                      JOIN articles a2 ON a2.id = ta2.article_id
+                      WHERE ta2.topic_id = t.id
+                      ORDER BY a2.id DESC
+                      LIMIT 1
+                    ) AS url,
                   (
-                    SELECT SUM(
-                      CASE
-                        WHEN COALESCE(NULLIF(a3.published_at,''), a3.fetched_at) >= ? THEN 1
-                        ELSE 0
-                      END
-                    )
-                    FROM topic_articles ta3
-                    JOIN articles a3 ON a3.id = ta3.article_id
-                    WHERE ta3.topic_id = t.id
-                  ) AS recent,
+                      SELECT COALESCE(SUM(
+                        CASE
+                          WHEN a3.published_at >= ? THEN 1
+                          ELSE 0
+                        END
+                      ), 0)
+                      FROM topic_articles ta3
+                      JOIN articles a3 ON a3.id = ta3.article_id
+                      WHERE ta3.topic_id = t.id
+                    ) AS recent,
                   i.importance,
                   i.summary,
                   i.key_points,
@@ -314,7 +325,10 @@ def main():
                 FROM topics t
                 LEFT JOIN topic_insights i ON i.topic_id = t.id
                 WHERE t.category IS NULL OR t.category = ''
-                ORDER BY COALESCE(i.importance, 0) DESC, COALESCE(recent, 0) DESC, t.id DESC
+                ORDER BY
+                  COALESCE(i.importance, 0) DESC,
+                  COALESCE(recent, 0) DESC,
+                  t.id DESC
                 LIMIT ?
                 """,
                 (cutoff_48h, LIMIT_PER_CAT),
@@ -326,24 +340,25 @@ def main():
                   t.id,
                   COALESCE(t.title_ja, t.title) AS title,
                   (
-                    SELECT a2.url
-                    FROM topic_articles ta2
-                    JOIN articles a2 ON a2.id = ta2.article_id
-                    WHERE ta2.topic_id = t.id
-                    ORDER BY COALESCE(NULLIF(a2.published_at,''), a2.fetched_at) DESC, a2.id DESC
-                    LIMIT 1
-                  ) AS url,
+                      SELECT a2.url
+                      FROM topic_articles ta2
+                      JOIN articles a2 ON a2.id = ta2.article_id
+                      WHERE ta2.topic_id = t.id
+                      ORDER BY a2.id DESC
+                      LIMIT 1
+                    ) AS url,
                   (
-                    SELECT SUM(
-                      CASE
-                        WHEN COALESCE(NULLIF(a3.published_at,''), a3.fetched_at) >= ? THEN 1
-                        ELSE 0
-                      END
-                    )
-                    FROM topic_articles ta3
-                    JOIN articles a3 ON a3.id = ta3.article_id
-                    WHERE ta3.topic_id = t.id
-                  ) AS recent,
+                      SELECT COALESCE(SUM(
+                        CASE
+                          WHEN a3.published_at >= ? THEN 1
+                          ELSE 0
+                        END
+                      ), 0)
+                      FROM topic_articles ta3
+                      JOIN articles a3 ON a3.id = ta3.article_id
+                      WHERE ta3.topic_id = t.id
+                    ) AS recent,
+
                   i.importance,
                   i.summary,
                   i.key_points,
@@ -353,7 +368,10 @@ def main():
                 FROM topics t
                 LEFT JOIN topic_insights i ON i.topic_id = t.id
                 WHERE t.category = ?
-                ORDER BY COALESCE(i.importance, 0) DESC, COALESCE(recent, 0) DESC, t.id DESC
+                ORDER BY
+                  COALESCE(i.importance, 0) DESC,
+                  COALESCE(recent, 0) DESC,
+                  t.id DESC
                 LIMIT ?
                 """,
                 (cutoff_48h, cat_id, LIMIT_PER_CAT),
@@ -369,7 +387,7 @@ def main():
                     "id": tid,
                     "title": title,  # ← ここはSQLで title_ja 優先済み
                     "url": url or "#",
-                    "recent": int(recent) if recent is not None else None,
+                    "recent": int(recent or 0),
                     "importance": int(importance) if importance is not None else None,
                     "summary": summary or "",
                     "key_points": _safe_json_list(key_points),
@@ -379,14 +397,32 @@ def main():
                 }
             )
 
+        # トピック順を完全決定（最後の揺れ防止）
+        items = sorted(
+            items,
+            key=lambda x: (
+                -(x["importance"] or 0),
+                -(x["recent"] or 0),
+                x["id"]
+            )
+        )
+
         topics_by_cat[cat_id] = items
 
     conn.close()
+    
+    # 生成日時（JST）
+    generated_at = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M:%S JST")
 
     out_dir = Path("docs")
     out_dir.mkdir(exist_ok=True)
     (out_dir / "index.html").write_text(
-        Template(HTML).render(categories=categories, topics_by_cat=topics_by_cat, hot_by_cat=hot_by_cat),
+                Template(HTML).render(
+            categories=categories,
+            topics_by_cat=topics_by_cat,
+            hot_by_cat=hot_by_cat,
+            generated_at=generated_at,
+        ),
         encoding="utf-8",
     )
 
