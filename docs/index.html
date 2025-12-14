@@ -21,15 +21,254 @@
     .kps, .nas{margin:6px 0 0 0}
     .kps li, .nas li{margin:4px 0}
     a{color:inherit}
+     /* --- UX改善①: 上部サマリー + 横断TOP --- */
+    .summary-card{background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px 14px;margin:10px 0 14px}
+    .summary-title{font-weight:800;font-size:16px;margin:0 0 6px}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:8px}
+    .summary-item .k{color:#666;font-size:11px}
+    .summary-item .v{font-size:13px;font-weight:650}
+
+    .top-zone{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 18px}
+    .top-col{background:#fff;border:1px solid #eee;border-radius:12px;padding:10px 12px}
+    .top-col h3{margin:0 0 8px;font-size:14px}
+    .top-list{margin:0;padding-left:18px}
+    .mini{color:#666;font-size:12px;margin-top:2px}
+
+    .quick-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+    #q{padding:6px 10px;border:1px solid #ddd;border-radius:10px;min-width:260px}
+    .btn{padding:6px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer}
+
+    .badge.hot{font-weight:800}
+    .badge.new{border-style:dashed}
+
+    .imp-5{border-color:#f33}
+    .imp-4{border-color:#f80}
+    .imp-3{border-color:#cc0}
+    .imp-2{border-color:#6c6}
+    .imp-1{border-color:#9ad}
+    .imp-0{border-color:#ccc}
+
+    .category-section{margin-top:18px}
+    .category-header{display:flex;align-items:center;gap:10px}
+    .category-body{margin-top:8px}
+    .category-section.collapsed .category-body{display:none}
+
   </style>
 </head>
 <body>
   <h1>Daily Tech Trend</h1>
   <div class="meta">カテゴリ別（最新テーマ）＋ 注目TOP5（48h増分）＋ LLM解説（ローカル）</div>
-  <div class="meta">生成日時：2025-12-14 20:27:07 JST</div>
+  <div class="meta">生成日時：2025-12-14 20:55:11 JST</div>
+    <div class="summary-card">
+    <div class="summary-title">今日の要点</div>
 
-  
-    <h2>AI <span class="tag">ai</span></h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="k">Generated (JST)</div>
+        <div class="v">2025-12-14 20:55:11 JST</div>
+      </div>
+      <div class="summary-item">
+        <div class="k">Runtime</div>
+        <div class="v">0 sec</div>
+      </div>
+      <div class="summary-item">
+        <div class="k">Articles</div>
+        <div class="v">280 <span class="small">(new48h 3)</span></div>
+      </div>
+      <div class="summary-item">
+        <div class="k">RSS Sources</div>
+        <div class="v">23</div>
+      </div>
+    </div>
+
+    <div class="quick-controls">
+      <input id="q" type="search" placeholder="Search title/summary..." />
+      <label class="small">imp ≥
+        <select id="impMin">
+          <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+          <option value="3">3</option><option value="4">4</option><option value="5">5</option>
+        </select>
+      </label>
+      <label class="small">recent ≥
+        <select id="recentMin">
+          <option value="-999">any</option>
+          <option value="0">0</option><option value="1">1</option><option value="3">3</option>
+          <option value="5">5</option><option value="10">10</option>
+        </select>
+      </label>
+      <button class="btn" type="button" onclick="toggleAllCats()">Toggle categories</button>
+    </div>
+  </div>
+
+  <section class="top-zone">
+    <div class="top-col">
+      <h3>Global Top 10（importance × recent）</h3>
+      <ol class="top-list">
+        
+          <li class="topic-row"
+              data-title="アゼオテック DAQファクトリー"
+              data-summary="アゼオテックのDAQファクトリーに関するCISAのICSアドバイザリが報告され、脆弱性や攻撃手法について警戒が必要。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-240">アゼオテック DAQファクトリー</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="重要インフラストラクチャのサイバーセキュリティ パフォーマンス目標 2.0"
+              data-summary="重要インフラストラクチャ向けサイバーセキュリティパフォーマンス目標2.0が発表され、監視・脅威検知の改善と迅速な対応を求める新基準が提示された。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-243">重要インフラストラクチャのサイバーセキュリティ パフォーマンス目標 2.0</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="2025 CWE の最も危険なソフトウェアの弱点トップ 25"
+              data-summary="CISAが発表した2025年版CWEトップ25のソフトウェア弱点は、脆弱性対策の優先順位付けに不可欠であり、開発者とセキュリティチームが即時対応すべき重要項目を示している。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-244">2025 CWE の最も危険なソフトウェアの弱点トップ 25</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="Siemens SINEMA リモート接続サーバー"
+              data-summary="Siemens SINEMA Remote Connect Serverに脆弱性が報告され、リモート接続経由での不正アクセスや情報漏洩リスクが高まる。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-245">Siemens SINEMA リモート接続サーバー</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="Siemens Building X - セキュリティ マネージャー エッジ コントローラー"
+              data-summary="Siemens Building XのSecurity Manager Edge Controllerに脆弱性が報告され、CISAが警告。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-246">Siemens Building X - セキュリティ マネージャー エッジ コントローラー</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="Varex Imaging パノラマ歯科用イメージング ソフトウェア"
+              data-summary="Varex Imagingのパノラマ歯科用イメージングソフトウェアに脆弱性が報告され、医療機器への不正アクセスリスクが高まる可能性があります。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-247">Varex Imaging パノラマ歯科用イメージング ソフトウェア</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="シーメンス エネルギー サービス"
+              data-summary="シーメンス エネルギー サービスに関するセキュリティアドバイザリが公開され、ICS環境での脆弱性が報告された。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-248">シーメンス エネルギー サービス</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="シーメンス IAM クライアント"
+              data-summary="シーメンスのIAMクライアントに脆弱性が報告され、CISAが警告。攻撃者は認証情報を取得し不正アクセスできる可能性がある。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-249">シーメンス IAM クライアント</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="高速でコスト効率の高い推論モデルである Amazon Nova 2 Lite の紹介"
+              data-summary="Amazonが高速かつ低コストの推論モデル「Nova 2 Lite」を発表し、クラウドベースのAIサービスを拡充。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-250">高速でコスト効率の高い推論モデルである Amazon Nova 2 Lite の紹介</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="Amazon FSx for NetApp ONTAP が Amazon S3 と統合され、シームレスなデータ アクセスが可能になりました"
+              data-summary="Amazon FSx for NetApp ONTAP が Amazon S3 と統合され、データアクセスがシームレスに。"
+              data-imp="80"
+              data-recent="0">
+            <span class="badge imp-80">imp 80</span>
+            
+            <a href="#topic-251">Amazon FSx for NetApp ONTAP が Amazon S3 と統合され、シームレスなデータ アクセスが可能になりました</a>
+            
+          </li>
+        
+      </ol>
+    </div>
+
+    <div class="top-col">
+      <h3>Trending（48h増分）</h3>
+      <ol class="top-list">
+        
+          <li class="topic-row"
+              data-title="AI を活用したソフトウェア最適化の将来 (およびそれがチームにどのように役立つか)"
+              data-summary=""
+              data-imp="0"
+              data-recent="1">
+            <span class="badge imp-0">imp 0</span>
+            <span class="badge hot">48h +1</span>
+            <a href="#topic-20">AI を活用したソフトウェア最適化の将来 (およびそれがチームにどのように役立つか)</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="Amazon Nova Sonic を使用して音声駆動の AWS アシスタントを構築する"
+              data-summary=""
+              data-imp="0"
+              data-recent="1">
+            <span class="badge imp-0">imp 0</span>
+            <span class="badge hot">48h +1</span>
+            <a href="#topic-102">Amazon Nova Sonic を使用して音声駆動の AWS アシスタントを構築する</a>
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="強力な音声体験を実現する改良された Gemini オーディオ モデル"
+              data-summary=""
+              data-imp="0"
+              data-recent="1">
+            <span class="badge imp-0">imp 0</span>
+            <span class="badge hot">48h +1</span>
+            <a href="#topic-161">強力な音声体験を実現する改良された Gemini オーディオ モデル</a>
+            
+          </li>
+        
+      </ol>
+    </div>
+  </section>
+
+    
+  <section class="category-section" id="cat-ai">
+    <div class="category-header">
+      <h2 style="margin:0">AI <span class="tag">ai</span></h2>
+      <button class="btn" type="button" onclick="toggleCat('ai')">Toggle</button>
+    </div>
+
+    <div class="category-body">
+      <!-- ここに既存の topbox と topics list をそのまま置く -->
+
 
     <div class="topbox">
       <h3>注目TOP5（48h増分）</h3>
@@ -55,7 +294,12 @@
     
       <ul>
         
-          <li>
+           <li id="topic-102" class="topic-row"
+              data-title="Amazon Nova Sonic を使用して音声駆動の AWS アシスタントを構築する"
+              data-summary=""
+              data-imp="0"
+              data-recent="1">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/machine-learning/building-a-voice-driven-aws-assistant-with-amazon-nova-sonic/" target="_blank" rel="noopener">Amazon Nova Sonic を使用して音声駆動の AWS アシスタントを構築する</a>
@@ -71,7 +315,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-161" class="topic-row"
+              data-title="強力な音声体験を実現する改良された Gemini オーディオ モデル"
+              data-summary=""
+              data-imp="0"
+              data-recent="1">
+
             <div>
               
                 <a href="https://deepmind.google/blog/improved-gemini-audio-models-for-powerful-voice-experiences/" target="_blank" rel="noopener">強力な音声体験を実現する改良された Gemini オーディオ モデル</a>
@@ -87,7 +336,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-191" class="topic-row"
+              data-title="オーストラリア向け OpenAI の紹介"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/global-affairs/openai-for-australia" target="_blank" rel="noopener">オーストラリア向け OpenAI の紹介</a>
@@ -101,7 +355,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-192" class="topic-row"
+              data-title="ヴァージン アトランティック航空が AI を使用して旅行のあらゆる段階を強化する方法"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/virgin-atlantic-oliver-byers" target="_blank" rel="noopener">ヴァージン アトランティック航空が AI を使用して旅行のあらゆる段階を強化する方法</a>
@@ -115,7 +374,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-193" class="topic-row"
+              data-title="エンタープライズ AI の現状"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/the-state-of-enterprise-ai-2025-report" target="_blank" rel="noopener">エンタープライズ AI の現状</a>
@@ -129,7 +393,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-194" class="topic-row"
+              data-title="Instacart と OpenAI が AI ショッピング体験で提携"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/instacart-partnership" target="_blank" rel="noopener">Instacart と OpenAI が AI ショッピング体験で提携</a>
@@ -143,7 +412,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-195" class="topic-row"
+              data-title="OpenAI、デニス・ドレッサーを最高収益責任者に任命"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/openai-appoints-denise-dresser" target="_blank" rel="noopener">OpenAI、デニス・ドレッサーを最高収益責任者に任命</a>
@@ -157,7 +431,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-196" class="topic-row"
+              data-title="ChatGPT Enterprise を使用して AI の流暢さを大規模に構築する"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/commonwealth-bank-of-australia" target="_blank" rel="noopener">ChatGPT Enterprise を使用して AI の流暢さを大規模に構築する</a>
@@ -171,7 +450,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-197" class="topic-row"
+              data-title="ドイツテレコムで強力な AI をヨーロッパ全土の数百万人に提供"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/deutsche-telekom-collaboration" target="_blank" rel="noopener">ドイツテレコムで強力な AI をヨーロッパ全土の数百万人に提供</a>
@@ -185,7 +469,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-198" class="topic-row"
+              data-title="最初の OpenAI 認定コースの開始"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/openai-certificate-courses" target="_blank" rel="noopener">最初の OpenAI 認定コースの開始</a>
@@ -199,7 +488,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-199" class="topic-row"
+              data-title="OpenAI が Agentic AI Foundation を共同設立し、AGENTS.md を寄付"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/agentic-ai-foundation" target="_blank" rel="noopener">OpenAI が Agentic AI Foundation を共同設立し、AGENTS.md を寄付</a>
@@ -213,7 +507,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-200" class="topic-row"
+              data-title="Scout24 が AI を使用して次世代の不動産検索を構築する方法"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/scout24" target="_blank" rel="noopener">Scout24 が AI を使用して次世代の不動産検索を構築する方法</a>
@@ -227,7 +526,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-201" class="topic-row"
+              data-title="AI 機能の進歩に伴うサイバー レジリエンスの強化"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/strengthening-cyber-resilience" target="_blank" rel="noopener">AI 機能の進歩に伴うサイバー レジリエンスの強化</a>
@@ -241,7 +545,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-202" class="topic-row"
+              data-title="AI を中小企業に導入することで収益が 300% 増加"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/podium" target="_blank" rel="noopener">AI を中小企業に導入することで収益が 300% 増加</a>
@@ -255,7 +564,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-203" class="topic-row"
+              data-title="10年"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/ten-years" target="_blank" rel="noopener">10年</a>
@@ -269,7 +583,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-204" class="topic-row"
+              data-title="ウォルト・ディズニー・カンパニーとOpenAIが、最愛のキャラクターをソラにもたらすという画期的な合意に達した"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/disney-sora-agreement" target="_blank" rel="noopener">ウォルト・ディズニー・カンパニーとOpenAIが、最愛のキャラクターをソラにもたらすという画期的な合意に達した</a>
@@ -283,7 +602,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-205" class="topic-row"
+              data-title="GPT-5.2 による科学と数学の進歩"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/gpt-5-2-for-science-and-math" target="_blank" rel="noopener">GPT-5.2 による科学と数学の進歩</a>
@@ -297,7 +621,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-206" class="topic-row"
+              data-title="Codex を使用して Android 版 Sora を 28 日以内に出荷した方法"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/shipping-sora-for-android-with-codex" target="_blank" rel="noopener">Codex を使用して Android 版 Sora を 28 日以内に出荷した方法</a>
@@ -311,7 +640,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-207" class="topic-row"
+              data-title="BNY は OpenAI を使用して「どこにいても誰でも使える AI」を構築します"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/bny" target="_blank" rel="noopener">BNY は OpenAI を使用して「どこにいても誰でも使える AI」を構築します</a>
@@ -325,7 +659,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-208" class="topic-row"
+              data-title="BBVA と OpenAI が協力してグローバル バンキングを変革"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://openai.com/index/bbva-collaboration-expansion" target="_blank" rel="noopener">BBVA と OpenAI が協力してグローバル バンキングを変革</a>
@@ -341,8 +680,18 @@
         
       </ul>
     
+      </div>
+  </section>
   
-    <h2>開発 <span class="tag">dev</span></h2>
+  <section class="category-section" id="cat-dev">
+    <div class="category-header">
+      <h2 style="margin:0">開発 <span class="tag">dev</span></h2>
+      <button class="btn" type="button" onclick="toggleCat('dev')">Toggle</button>
+    </div>
+
+    <div class="category-body">
+      <!-- ここに既存の topbox と topics list をそのまま置く -->
+
 
     <div class="topbox">
       <h3>注目TOP5（48h増分）</h3>
@@ -362,7 +711,12 @@
     
       <ul>
         
-          <li>
+           <li id="topic-20" class="topic-row"
+              data-title="AI を活用したソフトウェア最適化の将来 (およびそれがチームにどのように役立つか)"
+              data-summary=""
+              data-imp="0"
+              data-recent="1">
+
             <div>
               
                 <a href="https://github.blog/news-insights/policy-news-and-insights/the-future-of-ai-powered-software-optimization-and-how-it-can-help-your-team/" target="_blank" rel="noopener">AI を活用したソフトウェア最適化の将来 (およびそれがチームにどのように役立つか)</a>
@@ -378,7 +732,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-1" class="topic-row"
+              data-title="Microsoft.Extensions.AI.Evaluation を使用して AI をテストしてください"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/put-your-ai-to-the-test-with-microsoft-extensions-ai-evaluation" target="_blank" rel="noopener">Microsoft.Extensions.AI.Evaluation を使用して AI をテストしてください</a>
@@ -392,7 +751,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-2" class="topic-row"
+              data-title="Universe デモの裏側: VS Code、GitHub Copilot、Microsoft Agent Framework を使用したプロンプトから運用まで"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/behind-the-universe-demo-with-vs-code-copilot-and-agent-framework" target="_blank" rel="noopener">Universe デモの裏側: VS Code、GitHub Copilot、Microsoft Agent Framework を使用したプロンプトから運用まで</a>
@@ -406,7 +770,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-3" class="topic-row"
+              data-title="Microsoft 365 の相互運用性とデータ ポータビリティに関する新しい開発者リソース ページ"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/new-developer-resource-page-for-microsoft-365-interoperability-and-data-portability" target="_blank" rel="noopener">Microsoft 365 の相互運用性とデータ ポータビリティに関する新しい開発者リソース ページ</a>
@@ -420,7 +789,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-4" class="topic-row"
+              data-title="コンテナを簡単に管理: Copilot + VS Code"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/manage-containers-the-easy-way-copilot-vs-code" target="_blank" rel="noopener">コンテナを簡単に管理: Copilot + VS Code</a>
@@ -434,7 +808,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-5" class="topic-row"
+              data-title="OSS AI Summit: Building with LangChain イベントに参加してください"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/join-the-oss-ai-summit-building-with-langchain-event" target="_blank" rel="noopener">OSS AI Summit: Building with LangChain イベントに参加してください</a>
@@ -448,7 +827,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-6" class="topic-row"
+              data-title="デバイスバインドリクエスト署名による機密性の高いモバイル操作の保護"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/securing-sensitive-mobile-operations-with-device-bound-request-signing" target="_blank" rel="noopener">デバイスバインドリクエスト署名による機密性の高いモバイル操作の保護</a>
@@ -462,7 +846,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-7" class="topic-row"
+              data-title="AI Dev Days に参加しましょう – 12 月 10 ～ 11 日"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/join-us-for-ai-devdays" target="_blank" rel="noopener">AI Dev Days に参加しましょう – 12 月 10 ～ 11 日</a>
@@ -476,7 +865,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-8" class="topic-row"
+              data-title="1 つの簡単なステップで Azure Functions 上で Node.js MCP サーバーをホストする"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/host-your-node-js-mcp-server-on-azure-functions-in-3-simple-steps" target="_blank" rel="noopener">1 つの簡単なステップで Azure Functions 上で Node.js MCP サーバーをホストする</a>
@@ -490,7 +884,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-9" class="topic-row"
+              data-title="VS Code 用の JavaScript/TypeScript Modernizer の発表"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/jsts-modernizer-preview" target="_blank" rel="noopener">VS Code 用の JavaScript/TypeScript Modernizer の発表</a>
@@ -504,7 +903,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-10" class="topic-row"
+              data-title="GitHub Copilot CLI で Windows Terminal を素晴らしいものにする"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://devblogs.microsoft.com/blog/making-windows-terminal-awesome-with-github-copilot-cli" target="_blank" rel="noopener">GitHub Copilot CLI で Windows Terminal を素晴らしいものにする</a>
@@ -518,7 +922,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-11" class="topic-row"
+              data-title="ミッションコントロールを使用してエージェントを調整する方法"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://github.blog/ai-and-ml/github-copilot/how-to-orchestrate-agents-using-mission-control/" target="_blank" rel="noopener">ミッションコントロールを使用してエージェントを調整する方法</a>
@@ -532,7 +941,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-12" class="topic-row"
+              data-title="「ローカルファーストの反乱」: Home Assistant がどのようにしてあなたの家の最も重要なプロジェクトになったか"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://github.blog/open-source/maintainers/the-local-first-rebellion-how-home-assistant-became-the-most-important-project-in-your-house/" target="_blank" rel="noopener">「ローカルファーストの反乱」: Home Assistant がどのようにしてあなたの家の最も重要なプロジェクトになったか</a>
@@ -546,7 +960,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-13" class="topic-row"
+              data-title="あなたのスタック、あなたのルール: 可観測性、IaC、セキュリティのための GitHub Copilot へのカスタム エージェントの導入"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://github.blog/news-insights/product-news/your-stack-your-rules-introducing-custom-agents-in-github-copilot-for-observability-iac-and-security/" target="_blank" rel="noopener">あなたのスタック、あなたのルール: 可観測性、IaC、セキュリティのための GitHub Copilot へのカスタム エージェントの導入</a>
@@ -560,7 +979,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-14" class="topic-row"
+              data-title="GitHub Copilot Spaces を使用して問題をより迅速にデバッグする方法"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://github.blog/ai-and-ml/github-copilot/how-to-use-github-copilot-spaces-to-debug-issues-faster/" target="_blank" rel="noopener">GitHub Copilot Spaces を使用して問題をより迅速にデバッグする方法</a>
@@ -574,7 +998,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-15" class="topic-row"
+              data-title="開発者の新しいアイデンティティ: AI 時代に何が変わり、何が変わらないのか"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://github.blog/news-insights/octoverse/the-new-identity-of-a-developer-what-changes-and-what-doesnt-in-the-ai-era/" target="_blank" rel="noopener">開発者の新しいアイデンティティ: AI 時代に何が変わり、何が変わらないのか</a>
@@ -588,7 +1017,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-16" class="topic-row"
+              data-title="スピードはコントロールなしでは意味がありません: AI 時代に品質を高く保つ方法"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://github.blog/ai-and-ml/generative-ai/speed-is-nothing-without-control-how-to-keep-quality-high-in-the-ai-era/" target="_blank" rel="noopener">スピードはコントロールなしでは意味がありません: AI 時代に品質を高く保つ方法</a>
@@ -602,7 +1036,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-17" class="topic-row"
+              data-title="MCP が Linux Foundation に参加: 次世代の AI ツールとエージェントを構築する開発者にとってこれが意味すること"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://github.blog/open-source/maintainers/mcp-joins-the-linux-foundation-what-this-means-for-developers-building-the-next-era-of-ai-tools-and-agents/" target="_blank" rel="noopener">MCP が Linux Foundation に参加: 次世代の AI ツールとエージェントを構築する開発者にとってこれが意味すること</a>
@@ -616,7 +1055,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-18" class="topic-row"
+              data-title="GitHub 可用性レポート: 2025 年 11 月"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://github.blog/news-insights/company-news/github-availability-report-november-2025/" target="_blank" rel="noopener">GitHub 可用性レポート: 2025 年 11 月</a>
@@ -630,7 +1074,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-19" class="topic-row"
+              data-title="GitHub アクションについて話しましょう"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://github.blog/news-insights/product-news/lets-talk-about-github-actions/" target="_blank" rel="noopener">GitHub アクションについて話しましょう</a>
@@ -646,8 +1095,18 @@
         
       </ul>
     
+      </div>
+  </section>
   
-    <h2>製造 <span class="tag">manufacturing</span></h2>
+  <section class="category-section" id="cat-manufacturing">
+    <div class="category-header">
+      <h2 style="margin:0">製造 <span class="tag">manufacturing</span></h2>
+      <button class="btn" type="button" onclick="toggleCat('manufacturing')">Toggle</button>
+    </div>
+
+    <div class="category-body">
+      <!-- ここに既存の topbox と topics list をそのまま置く -->
+
 
     <div class="topbox">
       <h3>注目TOP5（48h増分）</h3>
@@ -659,7 +1118,12 @@
     
       <ul>
         
-          <li>
+           <li id="topic-21" class="topic-row"
+              data-title="子会社（三菱ロジスネクスト株式会社）の連結業績予想の修正に関するお知らせ"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/25110703.html" target="_blank" rel="noopener">子会社（三菱ロジスネクスト株式会社）の連結業績予想の修正に関するお知らせ</a>
@@ -673,7 +1137,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-22" class="topic-row"
+              data-title="J-POWERと国内陸上風力発電事業の譲渡に関する基本合意について"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/25110702.html" target="_blank" rel="noopener">J-POWERと国内陸上風力発電事業の譲渡に関する基本合意について</a>
@@ -687,7 +1156,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-23" class="topic-row"
+              data-title="三菱重工業、2025年度上半期の受注、売上、利益の好調な伸びを発表、通期の受注、売上高見通しを引き上げ"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/25110701.html" target="_blank" rel="noopener">三菱重工業、2025年度上半期の受注、売上、利益の好調な伸びを発表、通期の受注、売上高見通しを引き上げ</a>
@@ -701,7 +1175,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-24" class="topic-row"
+              data-title="三菱重工、国営トルクメンヒミヤ向け大規模アンモニア・尿素肥料生産施設のEPC契約を締結"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/251110.html" target="_blank" rel="noopener">三菱重工、国営トルクメンヒミヤ向け大規模アンモニア・尿素肥料生産施設のEPC契約を締結</a>
@@ -715,7 +1194,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-25" class="topic-row"
+              data-title="三菱パワー、台湾・長春石化の苗栗工場向けにH-25ガスタービン2基目を受注&lt;br /&gt;高効率天然ガス焚きコージェネレーション設備向け"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/251112.html" target="_blank" rel="noopener">三菱パワー、台湾・長春石化の苗栗工場向けにH-25ガスタービン2基目を受注<br />高効率天然ガス焚きコージェネレーション設備向け</a>
@@ -729,7 +1213,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-26" class="topic-row"
+              data-title="キリングループと倉庫業務およびトラック積み下ろしの自動化実証を完了&lt;br /&gt; 荷役業務の自動化プロセスをEffectiveneと構築"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/25111301.html" target="_blank" rel="noopener">キリングループと倉庫業務およびトラック積み下ろしの自動化実証を完了<br /> 荷役業務の自動化プロセスをEffectiveneと構築</a>
@@ -743,7 +1232,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-27" class="topic-row"
+              data-title="三菱重工サーマルシステムズ、磁気軸受式ターボ冷凍機「ETI-N」シリーズを日本市場向けに発売"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/25111302.html" target="_blank" rel="noopener">三菱重工サーマルシステムズ、磁気軸受式ターボ冷凍機「ETI-N」シリーズを日本市場向けに発売</a>
@@ -757,7 +1251,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-28" class="topic-row"
+              data-title="三菱造船、大型カーフェリー「けやき」を新日本海フェリーと鉄道建設・運輸施設整備支援機構に引き渡し&lt;br /&gt;"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/251114.html" target="_blank" rel="noopener">三菱造船、大型カーフェリー「けやき」を新日本海フェリーと鉄道建設・運輸施設整備支援機構に引き渡し<br /></a>
@@ -771,7 +1270,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-29" class="topic-row"
+              data-title="日本ゼオン株式会社向けシクロオレフィンポリマープラントのEPC契約を受注"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/251125.html" target="_blank" rel="noopener">日本ゼオン株式会社向けシクロオレフィンポリマープラントのEPC契約を受注</a>
@@ -785,7 +1289,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-30" class="topic-row"
+              data-title="『MHI REPORT 2025』『SUSTAINABILITY DATABOOK 2025』を発行"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/25112801.html" target="_blank" rel="noopener">『MHI REPORT 2025』『SUSTAINABILITY DATABOOK 2025』を発行</a>
@@ -799,7 +1308,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-31" class="topic-row"
+              data-title="みちびき7号機を搭載したH3ロケット9号機（H3 F9）の打上げスケジュールについて"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/25120101.html" target="_blank" rel="noopener">みちびき7号機を搭載したH3ロケット9号機（H3 F9）の打上げスケジュールについて</a>
@@ -813,7 +1327,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-32" class="topic-row"
+              data-title="液化CO₂船および代替燃料船のMILESを活用した標準設計枠組みの構築に関する覚書を締結"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/25120102.html" target="_blank" rel="noopener">液化CO₂船および代替燃料船のMILESを活用した標準設計枠組みの構築に関する覚書を締結</a>
@@ -827,7 +1346,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-33" class="topic-row"
+              data-title="世界初、KF460鋼製低圧液化CO₂タンクが開発鋼材の一般設計承認（GDA）およびECAに基づく溶接後熱処理（PWHT）の免除を取得"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/251205.html" target="_blank" rel="noopener">世界初、KF460鋼製低圧液化CO₂タンクが開発鋼材の一般設計承認（GDA）およびECAに基づく溶接後熱処理（PWHT）の免除を取得</a>
@@ -841,7 +1365,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-34" class="topic-row"
+              data-title="三菱重工とウォーリー、ハイデルベルグ・マテリアルズ英国のパデスウッド・セメント工場向けに本格的な炭素回収施設を納入&lt;br /&gt;--プロジェクトはハイデルベルク・メーターに続き、三菱重工の炭素回収技術を導入する"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/251208.html" target="_blank" rel="noopener">三菱重工とウォーリー、ハイデルベルグ・マテリアルズ英国のパデスウッド・セメント工場向けに本格的な炭素回収施設を納入<br />--プロジェクトはハイデルベルク・メーターに続き、三菱重工の炭素回収技術を導入する</a>
@@ -855,7 +1384,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-35" class="topic-row"
+              data-title="三菱重工、アンモニア分解パイロットプラントで蒸気加熱による水素製造に成功"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.mhi.com/news/251210.html" target="_blank" rel="noopener">三菱重工、アンモニア分解パイロットプラントで蒸気加熱による水素製造に成功</a>
@@ -871,8 +1405,18 @@
         
       </ul>
     
+      </div>
+  </section>
   
-    <h2>セキュリティ <span class="tag">security</span></h2>
+  <section class="category-section" id="cat-security">
+    <div class="category-header">
+      <h2 style="margin:0">セキュリティ <span class="tag">security</span></h2>
+      <button class="btn" type="button" onclick="toggleCat('security')">Toggle</button>
+    </div>
+
+    <div class="category-body">
+      <!-- ここに既存の topbox と topics list をそのまま置く -->
+
 
     <div class="topbox">
       <h3>注目TOP5（48h増分）</h3>
@@ -884,7 +1428,12 @@
     
       <ul>
         
-          <li>
+           <li id="topic-240" class="topic-row"
+              data-title="アゼオテック DAQファクトリー"
+              data-summary="アゼオテックのDAQファクトリーに関するCISAのICSアドバイザリが報告され、脆弱性や攻撃手法について警戒が必要。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-345-03" target="_blank" rel="noopener">アゼオテック DAQファクトリー</a>
@@ -944,7 +1493,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-243" class="topic-row"
+              data-title="重要インフラストラクチャのサイバーセキュリティ パフォーマンス目標 2.0"
+              data-summary="重要インフラストラクチャ向けサイバーセキュリティパフォーマンス目標2.0が発表され、監視・脅威検知の改善と迅速な対応を求める新基準が提示された。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/alerts/2025/12/11/cybersecurity-performance-goals-20-critical-infrastructure" target="_blank" rel="noopener">重要インフラストラクチャのサイバーセキュリティ パフォーマンス目標 2.0</a>
@@ -1004,7 +1558,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-244" class="topic-row"
+              data-title="2025 CWE の最も危険なソフトウェアの弱点トップ 25"
+              data-summary="CISAが発表した2025年版CWEトップ25のソフトウェア弱点は、脆弱性対策の優先順位付けに不可欠であり、開発者とセキュリティチームが即時対応すべき重要項目を示している。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/alerts/2025/12/11/2025-cwe-top-25-most-dangerous-software-weaknesses" target="_blank" rel="noopener">2025 CWE の最も危険なソフトウェアの弱点トップ 25</a>
@@ -1064,7 +1623,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-245" class="topic-row"
+              data-title="Siemens SINEMA リモート接続サーバー"
+              data-summary="Siemens SINEMA Remote Connect Serverに脆弱性が報告され、リモート接続経由での不正アクセスや情報漏洩リスクが高まる。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-345-06" target="_blank" rel="noopener">Siemens SINEMA リモート接続サーバー</a>
@@ -1124,7 +1688,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-246" class="topic-row"
+              data-title="Siemens Building X - セキュリティ マネージャー エッジ コントローラー"
+              data-summary="Siemens Building XのSecurity Manager Edge Controllerに脆弱性が報告され、CISAが警告。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-345-07" target="_blank" rel="noopener">Siemens Building X - セキュリティ マネージャー エッジ コントローラー</a>
@@ -1184,7 +1753,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-247" class="topic-row"
+              data-title="Varex Imaging パノラマ歯科用イメージング ソフトウェア"
+              data-summary="Varex Imagingのパノラマ歯科用イメージングソフトウェアに脆弱性が報告され、医療機器への不正アクセスリスクが高まる可能性があります。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-medical-advisories/icsma-25-345-02" target="_blank" rel="noopener">Varex Imaging パノラマ歯科用イメージング ソフトウェア</a>
@@ -1244,7 +1818,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-248" class="topic-row"
+              data-title="シーメンス エネルギー サービス"
+              data-summary="シーメンス エネルギー サービスに関するセキュリティアドバイザリが公開され、ICS環境での脆弱性が報告された。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-345-08" target="_blank" rel="noopener">シーメンス エネルギー サービス</a>
@@ -1304,7 +1883,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-249" class="topic-row"
+              data-title="シーメンス IAM クライアント"
+              data-summary="シーメンスのIAMクライアントに脆弱性が報告され、CISAが警告。攻撃者は認証情報を取得し不正アクセスできる可能性がある。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-345-04" target="_blank" rel="noopener">シーメンス IAM クライアント</a>
@@ -1364,7 +1948,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-241" class="topic-row"
+              data-title="OpenPLC_V3"
+              data-summary="OpenPLC_V3に関するCISAのICSアドバイザリが報告され、脆弱性情報が公開された。"
+              data-imp="70"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-345-10" target="_blank" rel="noopener">OpenPLC_V3</a>
@@ -1424,7 +2013,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-242" class="topic-row"
+              data-title="草の根DICOM (GDCM)"
+              data-summary="Grassroots DICOM (GDCM) の脆弱性により、医療機器の画像データ処理で情報漏洩やサービス拒否が発生する可能性があります。"
+              data-imp="70"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-medical-advisories/icsma-25-345-01" target="_blank" rel="noopener">草の根DICOM (GDCM)</a>
@@ -1484,7 +2078,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-230" class="topic-row"
+              data-title="中国国家支援の攻撃者が公共部門および情報技術システム全体で BRICKSTORM マルウェアを使用"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/alerts/2025/12/04/prc-state-sponsored-actors-use-brickstorm-malware-across-public-sector-and-information-technology" target="_blank" rel="noopener">中国国家支援の攻撃者が公共部門および情報技術システム全体で BRICKSTORM マルウェアを使用</a>
@@ -1498,7 +2097,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-231" class="topic-row"
+              data-title="CISA、悪用された既知の脆弱性 1 つをカタログに追加"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/alerts/2025/12/09/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">CISA、悪用された既知の脆弱性 1 つをカタログに追加</a>
@@ -1512,7 +2116,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-232" class="topic-row"
+              data-title="日和見的な親ロシア派ハクティビストが米国と世界の重要インフラを攻撃"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/alerts/2025/12/09/opportunistic-pro-russia-hacktivists-attack-us-and-global-critical-infrastructure" target="_blank" rel="noopener">日和見的な親ロシア派ハクティビストが米国と世界の重要インフラを攻撃</a>
@@ -1526,7 +2135,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-233" class="topic-row"
+              data-title="インドに拠点を置く複数の監視カメラ"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-343-03" target="_blank" rel="noopener">インドに拠点を置く複数の監視カメラ</a>
@@ -1540,7 +2154,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-234" class="topic-row"
+              data-title="CISA が 3 つの産業用制御システムに関する勧告を発表"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/alerts/2025/12/11/cisa-releases-12-industrial-control-systems-advisories" target="_blank" rel="noopener">CISA が 3 つの産業用制御システムに関する勧告を発表</a>
@@ -1554,7 +2173,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-235" class="topic-row"
+              data-title="ユニバーサル ブート ローダー (U-Boot)"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-343-01" target="_blank" rel="noopener">ユニバーサル ブート ローダー (U-Boot)</a>
@@ -1568,7 +2192,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-236" class="topic-row"
+              data-title="Festo LX アプライアンス"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-343-02" target="_blank" rel="noopener">Festo LX アプライアンス</a>
@@ -1582,7 +2211,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-237" class="topic-row"
+              data-title="ジョンソンコントロールズ iSTAR ウルトラ"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-345-02" target="_blank" rel="noopener">ジョンソンコントロールズ iSTAR ウルトラ</a>
@@ -1596,7 +2230,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-238" class="topic-row"
+              data-title="Siemens Gridscale X プリペイド"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-345-09" target="_blank" rel="noopener">Siemens Gridscale X プリペイド</a>
@@ -1610,7 +2249,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-239" class="topic-row"
+              data-title="Siemens Advanced Licensing (SALT) ツールキット"
+              data-summary=""
+              data-imp="0"
+              data-recent="0">
+
             <div>
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-25-345-05" target="_blank" rel="noopener">Siemens Advanced Licensing (SALT) ツールキット</a>
@@ -1626,8 +2270,18 @@
         
       </ul>
     
+      </div>
+  </section>
   
-    <h2>システム <span class="tag">system</span></h2>
+  <section class="category-section" id="cat-system">
+    <div class="category-header">
+      <h2 style="margin:0">システム <span class="tag">system</span></h2>
+      <button class="btn" type="button" onclick="toggleCat('system')">Toggle</button>
+    </div>
+
+    <div class="category-body">
+      <!-- ここに既存の topbox と topics list をそのまま置く -->
+
 
     <div class="topbox">
       <h3>注目TOP5（48h増分）</h3>
@@ -1639,7 +2293,12 @@
     
       <ul>
         
-          <li>
+           <li id="topic-250" class="topic-row"
+              data-title="高速でコスト効率の高い推論モデルである Amazon Nova 2 Lite の紹介"
+              data-summary="Amazonが高速かつ低コストの推論モデル「Nova 2 Lite」を発表し、クラウドベースのAIサービスを拡充。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/introducing-amazon-nova-2-lite-a-fast-cost-effective-reasoning-model/" target="_blank" rel="noopener">高速でコスト効率の高い推論モデルである Amazon Nova 2 Lite の紹介</a>
@@ -1699,7 +2358,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-251" class="topic-row"
+              data-title="Amazon FSx for NetApp ONTAP が Amazon S3 と統合され、シームレスなデータ アクセスが可能になりました"
+              data-summary="Amazon FSx for NetApp ONTAP が Amazon S3 と統合され、データアクセスがシームレスに。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/amazon-fsx-for-netapp-ontap-now-integrates-with-amazon-s3-for-seamless-data-access/" target="_blank" rel="noopener">Amazon FSx for NetApp ONTAP が Amazon S3 と統合され、シームレスなデータ アクセスが可能になりました</a>
@@ -1759,7 +2423,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-254" class="topic-row"
+              data-title="メモリ集中型のワークロード向けに第 5 世代 AMD EPYC プロセッサを搭載した Amazon EC2 X8aedz インスタンスの紹介"
+              data-summary="Amazonがメモリ集中型ワークロード向けに第5世代AMD EPYCプロセッサ搭載のEC2 X8aedzインスタンスを発表。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/introducing-amazon-ec2-x8aedz-instances-powered-by-5th-gen-amd-epyc-processors-for-memory-intensive-workloads/" target="_blank" rel="noopener">メモリ集中型のワークロード向けに第 5 世代 AMD EPYC プロセッサを搭載した Amazon EC2 X8aedz インスタンスの紹介</a>
@@ -1819,7 +2488,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-255" class="topic-row"
+              data-title="Amazon Bedrock は、新しい Mistral Large 3 および Ministral 3 モデルを含む 18 のフルマネージド オープン ウェイト モデルを追加します"
+              data-summary="Amazon Bedrockが18のフルマネージドオープンウェイトモデルを追加し、Mistral Large 3とMinistral 3を含む新機能を発表。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/amazon-bedrock-adds-fully-managed-open-weight-models/" target="_blank" rel="noopener">Amazon Bedrock は、新しい Mistral Large 3 および Ministral 3 モデルを含む 18 のフルマネージド オープン ウェイト モデルを追加します</a>
@@ -1879,7 +2553,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-257" class="topic-row"
+              data-title="Amazon OpenSearch Service は、GPU アクセラレーションと自動最適化により、ベクトル データベースのパフォーマンスとコストを向上させます"
+              data-summary="Amazon OpenSearch Service がGPUアクセラレーションと自動最適化を導入し、ベクトルデータベースのパフォーマンス向上とコスト削減を実現。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/amazon-opensearch-service-improves-vector-database-performance-and-cost-with-gpu-acceleration-and-auto-optimization/" target="_blank" rel="noopener">Amazon OpenSearch Service は、GPU アクセラレーションと自動最適化により、ベクトル データベースのパフォーマンスとコストを向上させます</a>
@@ -1939,7 +2618,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-258" class="topic-row"
+              data-title="新しく強化された AWS サポート プランにより、専門家のガイダンスに AI 機能が追加されます"
+              data-summary="AWSが新しいサポートプランにAI機能を追加し、専門家のガイダンスを強化。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/new-and-enhanced-aws-support-plans-add-ai-capabilities-to-expert-guidance/" target="_blank" rel="noopener">新しく強化された AWS サポート プランにより、専門家のガイダンスに AI 機能が追加されます</a>
@@ -1999,7 +2683,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-260" class="topic-row"
+              data-title="AWS データベースのデータベース節約プランの導入"
+              data-summary="AWSがデータベース向けの節約プランを発表し、RDS・Aurora・Neptuneなどで利用可能に。従量課金よりも長期契約でコスト削減できる新サービスです。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/introducing-database-savings-plans-for-aws-databases/" target="_blank" rel="noopener">AWS データベースのデータベース節約プランの導入</a>
@@ -2046,7 +2735,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-261" class="topic-row"
+              data-title="Amazon RDS for SQL Server および Oracle のコストを最適化し、スケーラビリティを向上させる新機能"
+              data-summary="Amazon RDS for SQL Server と Oracle に新機能が追加され、コスト最適化とスケーラビリティ向上が実現。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/amazon-rds-for-oracle-and-rds-for-sql-server-add-new-capabilities-to-enhance-performance-and-optimize-costs/" target="_blank" rel="noopener">Amazon RDS for SQL Server および Oracle のコストを最適化し、スケーラビリティを向上させる新機能</a>
@@ -2106,7 +2800,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-263" class="topic-row"
+              data-title="Amazon Bedrock AgentCore は、信頼できる AI エージェントをデプロイするための品質評価とポリシー制御を追加します"
+              data-summary="Amazon Bedrock AgentCore が品質評価とポリシー制御を追加し、信頼できる AI エージェントのデプロイを容易にする新機能を発表。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/amazon-bedrock-agentcore-adds-quality-evaluations-and-policy-controls-for-deploying-trusted-ai-agents/" target="_blank" rel="noopener">Amazon Bedrock AgentCore は、信頼できる AI エージェントをデプロイするための品質評価とポリシー制御を追加します</a>
@@ -2166,7 +2865,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-264" class="topic-row"
+              data-title="Amazon S3 Storage Lens は、パフォーマンスメトリクス、数十億のプレフィックスのサポート、S3 テーブルへのエクスポートを追加します。"
+              data-summary="Amazon S3 Storage Lens がパフォーマンスメトリクス、数十億のプレフィックスサポート、S3テーブルへのエクスポート機能を追加し、データ分析と運用効率を向上させる。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/amazon-s3-storage-lens-adds-performance-metrics-support-for-billions-of-prefixes-and-export-to-s3-tables/" target="_blank" rel="noopener">Amazon S3 Storage Lens は、パフォーマンスメトリクス、数十億のプレフィックスのサポート、S3 テーブルへのエクスポートを追加します。</a>
@@ -2226,7 +2930,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-265" class="topic-row"
+              data-title="Amazon S3 テーブルのレプリケーション サポートとインテリジェント階層化の発表"
+              data-summary="AmazonがS3テーブルにレプリケーションとインテリジェント階層化を追加し、データ可用性とコスト最適化を強化。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/announcing-replication-support-and-intelligent-tiering-for-amazon-s3-tables/" target="_blank" rel="noopener">Amazon S3 テーブルのレプリケーション サポートとインテリジェント階層化の発表</a>
@@ -2286,7 +2995,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-266" class="topic-row"
+              data-title="Amazon SageMaker HyperPod でのチェックポイントレスで柔軟なトレーニングの導入"
+              data-summary="AmazonがSageMaker HyperPodでチェックポイントレス・エラスティックトレーニングを発表し、GPUリソースの効率化と学習時間短縮を実現。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/introducing-checkpointless-and-elastic-training-on-amazon-sagemaker-hyperpod/" target="_blank" rel="noopener">Amazon SageMaker HyperPod でのチェックポイントレスで柔軟なトレーニングの導入</a>
@@ -2346,7 +3060,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-268" class="topic-row"
+              data-title="Amazon Bedrock は強化の微調整を追加し、開発者がよりスマートで正確な AI モデルを構築する方法を簡素化します"
+              data-summary="Amazon Bedrockが強化学習による微調整機能を追加し、開発者はよりスマートで正確なAIモデルを簡単に構築できるようになった。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/improve-model-accuracy-with-reinforcement-fine-tuning-in-amazon-bedrock/" target="_blank" rel="noopener">Amazon Bedrock は強化の微調整を追加し、開発者がよりスマートで正確な AI モデルを構築する方法を簡素化します</a>
@@ -2406,7 +3125,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-269" class="topic-row"
+              data-title="AWS ウィークリーまとめ: AWS re:Invent 基調講演の要約、オンデマンドビデオなど (2025 年 12 月 8 日)"
+              data-summary="AWSがre:Invent基調講演の要約とオンデマンド動画を公開し、最新サービスや機能更新を紹介。"
+              data-imp="80"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/aws-weekly-roundup-aws-reinvent-keynote-recap-on-demand-videos-and-more-december-8-2025/" target="_blank" rel="noopener">AWS ウィークリーまとめ: AWS re:Invent 基調講演の要約、オンデマンドビデオなど (2025 年 12 月 8 日)</a>
@@ -2466,7 +3190,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-252" class="topic-row"
+              data-title="Amazon SageMaker AI とサーバーレス MLflow を使用して AI 開発を加速する"
+              data-summary="AmazonがSageMaker AIとサーバーレスMLflowを組み合わせ、AI開発の高速化を実現する新機能を発表。"
+              data-imp="70"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/accelerate-ai-development-using-amazon-sagemaker-ai-with-serverless-mlflow/" target="_blank" rel="noopener">Amazon SageMaker AI とサーバーレス MLflow を使用して AI 開発を加速する</a>
@@ -2526,7 +3255,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-253" class="topic-row"
+              data-title="AWS DevOps Agent は、インシデント対応を加速し、システムの信頼性を向上させるのに役立ちます (プレビュー)"
+              data-summary="AWS DevOps Agentがインシデント対応を高速化し、システム信頼性向上に寄与するプレビュー版を公開。"
+              data-imp="70"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/aws-devops-agent-helps-you-accelerate-incident-response-and-improve-system-reliability-preview/" target="_blank" rel="noopener">AWS DevOps Agent は、インシデント対応を加速し、システムの信頼性を向上させるのに役立ちます (プレビュー)</a>
@@ -2586,7 +3320,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-256" class="topic-row"
+              data-title="スケールとパフォーマンスが向上した Amazon S3 Vector が一般提供開始"
+              data-summary="Amazon S3 Vectorsが一般提供開始し、スケールとパフォーマンスが向上。"
+              data-imp="70"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/amazon-s3-vectors-now-generally-available-with-increased-scale-and-performance/" target="_blank" rel="noopener">スケールとパフォーマンスが向上した Amazon S3 Vector が一般提供開始</a>
@@ -2646,7 +3385,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-259" class="topic-row"
+              data-title="Amazon CloudWatch は、運用、セキュリティ、コンプライアンスのための統合データ管理と分析を導入します"
+              data-summary="Amazon CloudWatchが統合データ管理と分析機能を追加し、運用・セキュリティ・コンプライアンスの可視化と自動化を強化。"
+              data-imp="70"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/amazon-cloudwatch-introduces-unified-data-management-and-analytics-for-operations-security-and-compliance/" target="_blank" rel="noopener">Amazon CloudWatch は、運用、セキュリティ、コンプライアンスのための統合データ管理と分析を導入します</a>
@@ -2706,7 +3450,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-262" class="topic-row"
+              data-title="AWS Lambda の耐久性のある関数を使用して、複数ステップのアプリケーションと AI ワークフローを構築する"
+              data-summary="AWS Lambda の耐久性関数を使い、複数ステップのアプリやAIワークフローを構築できる新機能が発表。"
+              data-imp="70"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/build-multi-step-applications-and-ai-workflows-with-aws-lambda-durable-functions/" target="_blank" rel="noopener">AWS Lambda の耐久性のある関数を使用して、複数ステップのアプリケーションと AI ワークフローを構築する</a>
@@ -2766,7 +3515,12 @@
             
           </li>
         
-          <li>
+           <li id="topic-267" class="topic-row"
+              data-title="Amazon SageMaker AI の新しいサーバーレスカスタマイズによりモデルの微調整が高速化"
+              data-summary="Amazon SageMaker AI がサーバーレスカスタマイズを導入し、モデル微調整の速度と効率が大幅に向上した。"
+              data-imp="70"
+              data-recent="0">
+
             <div>
               
                 <a href="https://aws.amazon.com/blogs/aws/new-serverless-customization-in-amazon-sagemaker-ai-accelerates-model-fine-tuning/" target="_blank" rel="noopener">Amazon SageMaker AI の新しいサーバーレスカスタマイズによりモデルの微調整が高速化</a>
@@ -2824,6 +3578,45 @@
         
       </ul>
     
+      </div>
+  </section>
   
+<script>
+function applyFilter() {
+  const q = (document.getElementById('q')?.value || '').toLowerCase();
+  const impMin = parseInt(document.getElementById('impMin')?.value || '0', 10);
+  const recentMin = parseInt(document.getElementById('recentMin')?.value || '-999', 10);
+
+  document.querySelectorAll('.topic-row').forEach(el => {
+    const title = (el.dataset.title || '').toLowerCase();
+    const summary = (el.dataset.summary || '').toLowerCase();
+    const imp = parseInt(el.dataset.imp || '0', 10);
+    const recent = parseInt(el.dataset.recent || '0', 10);
+
+    const hitQ = !q || title.includes(q) || summary.includes(q);
+    const hitImp = imp >= impMin;
+    const hitRecent = recent >= recentMin;
+
+    el.style.display = (hitQ && hitImp && hitRecent) ? '' : 'none';
+  });
+}
+
+document.getElementById('q')?.addEventListener('input', applyFilter);
+document.getElementById('impMin')?.addEventListener('change', applyFilter);
+document.getElementById('recentMin')?.addEventListener('change', applyFilter);
+
+function toggleCat(id) {
+  const sec = document.getElementById('cat-' + id);
+  if (sec) sec.classList.toggle('collapsed');
+}
+let catsCollapsed = false;
+function toggleAllCats() {
+  catsCollapsed = !catsCollapsed;
+  document.querySelectorAll('.category-section').forEach(sec => {
+    sec.classList.toggle('collapsed', catsCollapsed);
+  });
+}
+</script>
+
 </body>
 </html>
