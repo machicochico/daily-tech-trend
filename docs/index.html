@@ -174,6 +174,10 @@
     .topic-row { scroll-margin-top: 88px; }
     
     #filter-count { color:#555; }
+    
+    #filter-hint { color:#666; }
+    #filter-hint strong { color:#444; }
+
   </style>
 </head>
 <body>
@@ -185,7 +189,7 @@
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2025-12-15 22:58:48 JST</div>
+        <div class="v">2025-12-15 23:05:42 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
@@ -219,6 +223,7 @@
       <button class="btn" type="button" onclick="toggleAllCats()">Toggle categories</button>
     </div>
     <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
+    <div id="filter-hint" class="small" style="margin-top:4px; display:none;"></div>
   </div>
 
   <section class="top-zone">
@@ -2790,7 +2795,7 @@
 
             <div>
               
-                <a href="https://www.cisa.gov/news-events/alerts/2025/12/11/cisa-releases-12-industrial-control-systems-advisories" target="_blank" rel="noopener">CISA が 3 つの産業用制御システムに関する勧告を発表</a>
+                <a href="https://www.cisa.gov/news-events/alerts/2025/12/09/cisa-releases-three-industrial-control-systems-advisories" target="_blank" rel="noopener">CISA が 3 つの産業用制御システムに関する勧告を発表</a>
               
 
               
@@ -4987,6 +4992,23 @@ function applyFilter() {
     box.style.display = '';
   } else {
     box.style.display = 'none';
+  }
+  
+    // ★ 0件時のヒント表示
+  const hint = document.getElementById('filter-hint');
+  if (!hint) return;
+
+  if (isFiltering && hit === 0) {
+    const tips = [];
+    if (q) tips.push('検索語を短くする／別表現にする');
+    if (impMin > 0) tips.push('重要度の下限を下げる');
+    if (recentMin > -999) tips.push('recent の条件を緩める');
+    tips.push('フィルタをすべてリセットする');
+
+    hint.innerHTML = `該当なし。<strong>条件を緩めてください：</strong> ${tips.join('・')}`;
+    hint.style.display = '';
+  } else {
+    hint.style.display = 'none';
   }
 }
 
