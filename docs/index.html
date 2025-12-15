@@ -184,11 +184,11 @@
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2025-12-15 22:50:31 JST</div>
+        <div class="v">2025-12-15 22:54:00 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">11 sec</div>
+        <div class="v">10 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
@@ -2788,7 +2788,7 @@
 
             <div>
               
-                <a href="https://www.cisa.gov/news-events/alerts/2025/12/11/cisa-releases-12-industrial-control-systems-advisories" target="_blank" rel="noopener">CISA が 3 つの産業用制御システムに関する勧告を発表</a>
+                <a href="https://www.cisa.gov/news-events/alerts/2025/12/09/cisa-releases-three-industrial-control-systems-advisories" target="_blank" rel="noopener">CISA が 3 つの産業用制御システムに関する勧告を発表</a>
               
 
               
@@ -5034,6 +5034,21 @@ window.addEventListener('load', () => {
 
 // 初期状態：カテゴリを折りたたむ（スマホ向け）
 toggleAllCats();
+
+// Accordion: details を1つだけ開く（同時に複数開かない）
+document.addEventListener('toggle', (e) => {
+  const det = e.target;
+  if (!(det instanceof HTMLDetailsElement)) return;
+  if (!det.matches('details.insight')) return;
+  if (!det.open) return;
+
+  // 同じカテゴリ内だけで1つにする（全体で1つにしたいなら selector を変える）
+  const scope = document;
+
+  scope.querySelectorAll('details.insight[open]').forEach(other => {
+    if (other !== det) other.open = false;
+  });
+}, true);
 
 </script>
 
