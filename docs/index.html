@@ -159,6 +159,17 @@
     details.insight[open] > *:not(summary) {
       margin-top: 6px;
     }
+    /* 開いている要約だけ影を付ける */
+    details.insight[open] {
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    /* スマホで浮きすぎないように微調整 */
+    @media (max-width: 640px) {
+      details.insight[open] {
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+      }
+    }
 
   </style>
 </head>
@@ -171,11 +182,11 @@
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2025-12-15 21:31:37 JST</div>
+        <div class="v">2025-12-15 21:37:39 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">11 sec</div>
+        <div class="v">12 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
@@ -2737,7 +2748,7 @@
 
             <div>
               
-                <a href="https://www.cisa.gov/news-events/alerts/2025/12/09/cisa-releases-three-industrial-control-systems-advisories" target="_blank" rel="noopener">CISA が 3 つの産業用制御システムに関する勧告を発表</a>
+                <a href="https://www.cisa.gov/news-events/alerts/2025/12/11/cisa-releases-12-industrial-control-systems-advisories" target="_blank" rel="noopener">CISA が 3 つの産業用制御システムに関する勧告を発表</a>
               
 
               
