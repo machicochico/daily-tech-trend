@@ -180,6 +180,22 @@
     #filter-hint strong { color:#444; }
 
     .nas .small{display:block;margin-top:2px}
+
+    .close-floating{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 9999;
+      padding: 10px 14px;
+      border-radius: 999px;
+    }
+    .category-header{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #fff; /* 背景必須 */
+    }
+
   </style>
 </head>
 <body>
@@ -187,19 +203,19 @@
   <div class="meta">カテゴリ別（最新テーマ）＋ 注目TOP5（48h増分）＋ LLM解説（ローカル）</div>
     <div class="summary-card">
     <div class="summary-title">今日の要点</div>
-
+    <button id="closeFloating" class="close-floating" hidden>閉じる</button>
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2025-12-18 15:25:07 JST</div>
+        <div class="v">2025-12-18 19:48:47 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">1506 sec</div>
+        <div class="v">0 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
-        <div class="v">484 <span class="small">(new48h 98)</span></div>
+        <div class="v">484 <span class="small">(new48h 91)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">RSS Sources</div>
@@ -2369,7 +2385,7 @@
               data-title="無料で高機能な画像編集・処理ソフト「GIMP」v3.2 RC2のほか【ダイジェストニュース】"
               data-summary="GIMPがバージョン3.2 RC2をリリースし、無料で高機能な画像編集・処理ソフトとしての位置づけを維持した。"
               data-imp="60"
-              data-recent="1">
+              data-recent="0">
 
             <div>
               
@@ -2382,8 +2398,6 @@
                 <span class="badge imp">重要度 60</span>
               
 
-              
-                <span class="badge">48h +1</span>
               
               
                 <span class="small">
@@ -2537,86 +2551,6 @@
                     根拠：
                     
                       <a href="https://forest.watch.impress.co.jp/docs/news/2072258.html" target="_blank" rel="noopener">https://forest.watch.impress.co.jp/docs/news/2072258.html</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-418" class="topic-row"
-              data-title="Canonical、「Ubuntu Pro for WSL」の一般提供を開始 ～個人利用であれば5台まで無料／最大15年間のエンタープライズサポートを「Microsoft Store」から簡単に有効化"
-              data-summary="CanonicalがUbuntu Pro for WSLの一般提供を開始し、Microsoft Storeから無料で5台まで個人利用できる。エンタープライズサポートは最大15年有効化可能。"
-              data-imp="45"
-              data-recent="1">
-
-            <div>
-              
-                <a href="https://forest.watch.impress.co.jp/docs/news/2071722.html" target="_blank" rel="noopener">Canonical、「Ubuntu Pro for WSL」の一般提供を開始 ～個人利用であれば5台まで無料／最大15年間のエンタープライズサポートを「Microsoft Store」から簡単に有効化</a>
-              
-              
-                <span class="small">（2025-12-16）</span>
-              
-              
-                <span class="badge imp">重要度 45</span>
-              
-
-              
-                <span class="badge">48h +1</span>
-              
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：CanonicalがUbuntu Pro for WSLの一般提供を開始し、Microsoft Storeから無料で5台まで個人利用できる。エンタープライズサポートは最大15年有効化可能。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                      <li>Ubuntu Pro for WSLが一般提供を開始した</li>
-                    
-                      <li>Microsoft Storeから入手できる</li>
-                    
-                      <li>個人利用は5台まで無料、エンタープライズサポートは最大15年間提供</li>
-                    
-                  </ul>
-                
-
-                
-                  <div style="margin-top:6px;">
-                    <strong>影響・示唆（推測含む）</strong>：推測：エンジニア視点ではWSL環境でのセキュリティ強化が容易になる。ビジネス視点では長期サポートにより導入コスト削減と安定稼働が期待できる。
-                  </div>
-                
-
-                
-                  <div style="margin-top:6px;"><strong>次アクション</strong></div>
-                  <ul class="nas">
-                    
-                      
-                        <li>
-                          <div><strong>Ubuntu Pro for WSLをインストールし、5台まで試験運用する</strong>
-                            <span class="badge">now</span>
-                          </div>
-                          
-                            <div class="small">→ WSL環境でのセキュリティ機能とサポート適用状況を確認できる</div>
-                          
-                        </li>
-                      
-                    
-                  </ul>
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://forest.watch.impress.co.jp/docs/news/2071722.html" target="_blank" rel="noopener">https://forest.watch.impress.co.jp/docs/news/2071722.html</a>
                     
                   </div>
                 
@@ -3424,6 +3358,84 @@
                     根拠：
                     
                       <a href="https://forest.watch.impress.co.jp/docs/news/2071381.html" target="_blank" rel="noopener">https://forest.watch.impress.co.jp/docs/news/2071381.html</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-418" class="topic-row"
+              data-title="Canonical、「Ubuntu Pro for WSL」の一般提供を開始 ～個人利用であれば5台まで無料／最大15年間のエンタープライズサポートを「Microsoft Store」から簡単に有効化"
+              data-summary="CanonicalがUbuntu Pro for WSLの一般提供を開始し、Microsoft Storeから無料で5台まで個人利用できる。エンタープライズサポートは最大15年有効化可能。"
+              data-imp="45"
+              data-recent="0">
+
+            <div>
+              
+                <a href="https://forest.watch.impress.co.jp/docs/news/2071722.html" target="_blank" rel="noopener">Canonical、「Ubuntu Pro for WSL」の一般提供を開始 ～個人利用であれば5台まで無料／最大15年間のエンタープライズサポートを「Microsoft Store」から簡単に有効化</a>
+              
+              
+                <span class="small">（2025-12-16）</span>
+              
+              
+                <span class="badge imp">重要度 45</span>
+              
+
+              
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：CanonicalがUbuntu Pro for WSLの一般提供を開始し、Microsoft Storeから無料で5台まで個人利用できる。エンタープライズサポートは最大15年有効化可能。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                      <li>Ubuntu Pro for WSLが一般提供を開始した</li>
+                    
+                      <li>Microsoft Storeから入手できる</li>
+                    
+                      <li>個人利用は5台まで無料、エンタープライズサポートは最大15年間提供</li>
+                    
+                  </ul>
+                
+
+                
+                  <div style="margin-top:6px;">
+                    <strong>影響・示唆（推測含む）</strong>：推測：エンジニア視点ではWSL環境でのセキュリティ強化が容易になる。ビジネス視点では長期サポートにより導入コスト削減と安定稼働が期待できる。
+                  </div>
+                
+
+                
+                  <div style="margin-top:6px;"><strong>次アクション</strong></div>
+                  <ul class="nas">
+                    
+                      
+                        <li>
+                          <div><strong>Ubuntu Pro for WSLをインストールし、5台まで試験運用する</strong>
+                            <span class="badge">now</span>
+                          </div>
+                          
+                            <div class="small">→ WSL環境でのセキュリティ機能とサポート適用状況を確認できる</div>
+                          
+                        </li>
+                      
+                    
+                  </ul>
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://forest.watch.impress.co.jp/docs/news/2071722.html" target="_blank" rel="noopener">https://forest.watch.impress.co.jp/docs/news/2071722.html</a>
                     
                   </div>
                 
@@ -10234,6 +10246,13 @@
   
 <script>
 let activeTag = "";
+const btn = document.getElementById('closeFloating');
+
+function setFloatingClose(open, closeFn){
+  if(!open){ btn.hidden = true; btn.onclick = null; return; }
+  btn.hidden = false;
+  btn.onclick = closeFn;
+}
 
 function setTagFilter(tg){
   activeTag = tg;
