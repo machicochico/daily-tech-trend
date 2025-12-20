@@ -1,0 +1,1051 @@
+
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ニュースダイジェスト</title>
+  <style>
+    
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;line-height:1.6}
+h1{margin:0 0 10px}
+h2{margin:22px 0 10px}
+.meta{color:#666;font-size:12px;margin:6px 0 14px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
+.nav a{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:6px 10px;text-decoration:none;color:#111}
+.nav a.active{border-color:#333;font-weight:700}
+.card{background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px 14px;margin:10px 0}
+.small{color:#666;font-size:12px}
+.badge{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
+.btn{padding:6px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer;display:inline-block;text-decoration:none}
+.btn:hover{background:#f7f7f7}
+ul{margin:0;padding-left:18px}
+li{margin:10px 0}
+a{color:inherit}
+
+    
+/* techの箱・構造を定義している部分をここへ集約 */
+.summary-card, .topbox, .top-col, .insight{
+  background:#fafafa;
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:12px 14px;
+}
+.top-col{ background:#fff; }
+
+/* techの見出し間隔・小文字 */
+.small{color:#666;font-size:12px}
+.badge{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
+
+/* もしtechにタグの見た目があるなら寄せる */
+.tag{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
+
+
+     /* --- UX改善①: 上部サマリー + 横断TOP --- */
+    .summary-card{background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px 14px;margin:10px 0 14px}
+    .summary-title{font-weight:800;font-size:16px;margin:0 0 6px}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:8px}
+    .summary-item .k{color:#666;font-size:11px}
+    .summary-item .v{font-size:13px;font-weight:650}
+
+    .top-zone{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 18px}
+    .top-col{background:#fff;border:1px solid #eee;border-radius:12px;padding:10px 12px}
+    .top-col h3{margin:0 0 8px;font-size:14px}
+    .top-list{margin:0;padding-left:18px}
+    .mini{color:#666;font-size:12px;margin-top:2px}
+
+    .quick-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+    #q{padding:6px 10px;border:1px solid #ddd;border-radius:10px;min-width:260px}
+    .btn{padding:6px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer}
+
+    .badge.hot{font-weight:800}
+    .badge.new{border-style:dashed}
+
+    .imp-5{border-color:#f33}
+    .imp-4{border-color:#f80}
+    .imp-3{border-color:#cc0}
+    .imp-2{border-color:#6c6}
+    .imp-1{border-color:#9ad}
+    .imp-0{border-color:#ccc}
+
+    .category-section{margin-top:18px}
+    .category-header{display:flex;align-items:center;gap:10px}
+    .category-body{margin-top:8px}
+    .category-section.collapsed .category-body{display:none}
+    
+    /* ===== Mobile-first overrides ===== */
+    h1{font-size:26px}
+    h2{font-size:18px}
+
+    .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .top-zone{grid-template-columns:1fr}
+    .top-list{padding-left:18px}
+    .top-item, .topic-row{margin:10px 0}
+
+    /* 長いタイトル対策（はみ出し防止） */
+    .topic-link, a{
+      display:inline;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    /* 検索・フィルタは縦積み気味に */
+    .quick-controls{gap:8px}
+    #q{min-width:0; width:100%}
+    .quick-controls label{font-size:12px}
+    .btn{padding:8px 12px} /* タップ領域増 */
+
+    /* カテゴリ見出し周り */
+    .category-header{gap:8px}
+    .category-header .btn{margin-left:auto}
+
+    /* スマホで「今日の要点」ゾーンを見やすく */
+    .summary-card{padding:12px}
+    .top-col{padding:10px}
+
+    /* 画面幅が広い時だけPCレイアウトへ */
+    @media (min-width: 820px){
+      body{margin:24px; font-size:16px}
+      .summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+      .top-zone{grid-template-columns:1fr 1fr}
+      #q{width:auto; min-width:260px}
+    }
+
+    /* デフォルト（スマホ）：固定しない */
+    .summary-card{
+      position: static;
+    }
+
+    /* PCサイズ以上のみ固定 */
+    @media (min-width: 820px){
+      .summary-card{
+        position: sticky;
+        top: 8px;
+        z-index: 10;
+      }
+    }
+    details.insight { margin-top:6px; }
+    details.insight > summary {
+      cursor:pointer;
+      list-style:none;
+    }
+    details.insight > summary::-webkit-details-marker {
+      display:none;
+    }
+    details.insight > summary::before {
+      content:"▶ ";
+    }
+    details.insight[open] > summary::before {
+      content:"▼ ";
+    }
+    /* details 展開時の視認性向上 */
+    details.insight {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 6px 8px;
+      background: #fff;
+    }
+
+    details.insight[open] {
+      background: #f7faff;           /* 薄い青 */
+      border-color: #dbe7ff;
+    }
+
+    /* summary（トグル）の見た目 */
+    details.insight > summary {
+      cursor: pointer;
+      padding: 4px 0;
+      font-weight: 500;
+    }
+
+    details.insight > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* 開閉アイコン */
+    details.insight > summary::before {
+      content: "▶ ";
+      color: #4c6ef5;
+    }
+    details.insight[open] > summary::before {
+      content: "▼ ";
+    }
+
+    /* 展開後の中身の余白 */
+    details.insight[open] > *:not(summary) {
+      margin-top: 6px;
+    }
+    /* 開いている要約だけ影を付ける */
+    details.insight[open] {
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    /* スマホで浮きすぎないように微調整 */
+    @media (max-width: 640px) {
+      details.insight[open] {
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+      }
+    }
+    /* ジャンプ時に sticky に隠れない */
+    .topic-row { scroll-margin-top: 88px; }
+    
+    #filter-count { color:#555; }
+    
+    #filter-hint { color:#666; }
+    #filter-hint strong { color:#444; }
+
+    .nas .small{display:block;margin-top:2px}
+
+    .close-floating{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 9999;
+      padding: 10px 14px;
+      border-radius: 999px;
+    }
+    .category-header{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #fff; /* 背景必須 */
+    }
+
+    /* Tag bar: wrap + mobile collapse */
+    .tag-bar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      align-items:center;
+    }
+
+    .btn-reset{
+      background:#f5f5f5;
+      border:1px solid #ccc;
+      font-weight:700;
+    }
+
+    .btn-more{
+      background:#fff;
+      border:1px dashed #ddd;
+      font-weight:650;
+    }
+
+    /* スマホ時：初期は7個まで表示（Reset + OR + タグ群含めて調整可） */
+    @media (max-width: 640px){
+      #tagBar.collapsed button:nth-of-type(n+8){
+        display:none;
+      }
+      /* ORチェックのラベルは常に見せたいなら、上のnth-of-type対象外にするため別classで扱う */
+      .tag-mode{ margin-left:4px; }
+    }
+    .date{
+      margin-left: 6px;
+      font-size: 0.85em;
+      color: #666;
+      white-space: nowrap;
+    }
+    /* techの主要ボックスをnewsの.cardに寄せる */
+    .summary-card, .topbox, .top-col, .insight{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:12px;
+      padding:12px 14px;
+    }
+    .top-col{ background:#fff; } /* 白カードは残すなら */
+
+  </style>
+</head>
+<body>
+  <h1>ニュースダイジェスト</h1>
+  <div class="small">技術背景としての国内・世界ニュース</div>
+
+  <div class="nav">
+    <a href="../tech/index.html" class="">技術</a>
+    <a href="../news/index.html" class="active">ニュース</a>
+  </div>
+
+  <!-- techと同じ：今日の要点 -->
+  <div class="summary-card">
+    <div class="summary-title">今日の要点（ニュース）</div>
+
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="k">Generated (JST)</div>
+        <div class="v">2025-12-20 19:24:19 JST</div>
+      </div>
+      <div class="summary-item">
+        <div class="k">News</div>
+        <div class="v">44 <span class="small">(new48h 35)</span></div>
+      </div>
+      <div class="summary-item">
+        <div class="k">Japan</div>
+        <div class="v">17</div>
+      </div>
+      <div class="summary-item">
+        <div class="k">Global</div>
+        <div class="v">27</div>
+      </div>
+    </div>
+
+    <!-- techと同じ：タグバー -->
+    <div class="small" style="margin-top:10px">
+      <span class="badge">Tags</span>
+      <div id="tagBar" class="tag-bar collapsed" style="margin-top:6px">
+        <button class="btn btn-reset" type="button" onclick="clearTagFilter()">🔄 Reset</button>
+        <label class="small tag-mode">
+          <input type="checkbox" id="tagModeOr"> OR（どれか）
+        </label>
+        
+          <button class="btn" type="button" data-tag-btn="news" onclick="toggleTag('news')">
+            news (44)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="BBC World (Global)" onclick="toggleTag('BBC World (Global)')">
+            BBC World (Global) (27)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="global" onclick="toggleTag('global')">
+            global (27)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="jp" onclick="toggleTag('jp')">
+            jp (17)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="Jiji Press (Japan)" onclick="toggleTag('Jiji Press (Japan)')">
+            Jiji Press (Japan) (10)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="NHK NEWS (Japan)" onclick="toggleTag('NHK NEWS (Japan)')">
+            NHK NEWS (Japan) (7)
+          </button>
+        
+      </div>
+      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ more</button>
+    </div>
+
+    <div id="tag-active" class="small" style="margin-top:6px; display:none;"></div>
+
+    <!-- techと同じ：検索（imp/recentはnewsでは使わないので固定） -->
+    <div class="quick-controls">
+      <input id="q" type="search" placeholder="Search title/summary..." />
+      <input id="impMin" type="hidden" value="0" />
+      <input id="recentMin" type="hidden" value="-999" />
+      <button class="btn" type="button" onclick="toggleAllCats()">Toggle categories</button>
+    </div>
+    <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
+    <div id="filter-hint" class="small" style="margin-top:4px; display:none;"></div>
+  </div>
+
+  <!-- techと同じ：Top-zone 2カラム -->
+  <section class="top-zone">
+  <div class="top-col">
+    <h3>🇯🇵 国内 Top 10（latest）</h3>
+    <ol class="top-list">
+      
+        <li class="topic-row"
+            data-title="住宅内で親子４人意識不明　チェーンで施錠、無理心中の可能性―警視庁"
+            data-summary="Jiji Press (Japan) / 2025/12/19 21:10"
+            data-tags="jp,news,Jiji Press (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025121901076&g=soc&m=rss" target="_blank" rel="noopener">住宅内で親子４人意識不明　チェーンで施錠、無理心中の可能性―警視庁</a>
+          <span class="date">2025/12/19 21:10</span>
+          <div class="mini">Jiji Press (Japan)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="“台北中心部 男が刃物で切りつけ 複数けが人” 台湾メディア"
+            data-summary="NHK NEWS (Japan) / 2025/12/19 20:40"
+            data-tags="jp,news,NHK NEWS (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251219/k10015008941000.html" target="_blank" rel="noopener">“台北中心部 男が刃物で切りつけ 複数けが人” 台湾メディア</a>
+          <span class="date">2025/12/19 20:40</span>
+          <div class="mini">NHK NEWS (Japan)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="【詳しく】自民 維新 与党税制改正大綱を決定 何が変わる？"
+            data-summary="NHK NEWS (Japan) / 2025/12/19 20:21"
+            data-tags="jp,news,NHK NEWS (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251219/k10015008271000.html" target="_blank" rel="noopener">【詳しく】自民 維新 与党税制改正大綱を決定 何が変わる？</a>
+          <span class="date">2025/12/19 20:21</span>
+          <div class="mini">NHK NEWS (Japan)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="「あらゆる選択肢排除せず」　非核三原則で小泉防衛相"
+            data-summary="Jiji Press (Japan) / 2025/12/19 20:02"
+            data-tags="jp,news,Jiji Press (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025121901146&g=pol&m=rss" target="_blank" rel="noopener">「あらゆる選択肢排除せず」　非核三原則で小泉防衛相</a>
+          <span class="date">2025/12/19 20:02</span>
+          <div class="mini">Jiji Press (Japan)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="「核保有発言」警戒必要　中国外務省"
+            data-summary="Jiji Press (Japan) / 2025/12/19 19:57"
+            data-tags="jp,news,Jiji Press (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025121901144&g=int&m=rss" target="_blank" rel="noopener">「核保有発言」警戒必要　中国外務省</a>
+          <span class="date">2025/12/19 19:57</span>
+          <div class="mini">Jiji Press (Japan)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="戦場・交渉でロシアに主導権　プーチン氏が記者会見"
+            data-summary="Jiji Press (Japan) / 2025/12/19 19:52"
+            data-tags="jp,news,Jiji Press (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025121900680&g=int&m=rss" target="_blank" rel="noopener">戦場・交渉でロシアに主導権　プーチン氏が記者会見</a>
+          <span class="date">2025/12/19 19:52</span>
+          <div class="mini">Jiji Press (Japan)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="右腕モレッタを獲得　プロ野球・阪神"
+            data-summary="Jiji Press (Japan) / 2025/12/19 19:51"
+            data-tags="jp,news,Jiji Press (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025121901139&g=spo&m=rss" target="_blank" rel="noopener">右腕モレッタを獲得　プロ野球・阪神</a>
+          <span class="date">2025/12/19 19:51</span>
+          <div class="mini">Jiji Press (Japan)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="首都直下地震 被害想定を新たに公表 “死者 最大1万8000人”"
+            data-summary="NHK NEWS (Japan) / 2025/12/19 19:32"
+            data-tags="jp,news,NHK NEWS (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251219/k10015004331000.html" target="_blank" rel="noopener">首都直下地震 被害想定を新たに公表 “死者 最大1万8000人”</a>
+          <span class="date">2025/12/19 19:32</span>
+          <div class="mini">NHK NEWS (Japan)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="東京 西東京の住宅 親子４人意識なし 無理心中図った可能性"
+            data-summary="NHK NEWS (Japan) / 2025/12/19 19:28"
+            data-tags="jp,news,NHK NEWS (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251219/k10015008771000.html" target="_blank" rel="noopener">東京 西東京の住宅 親子４人意識なし 無理心中図った可能性</a>
+          <span class="date">2025/12/19 19:28</span>
+          <div class="mini">NHK NEWS (Japan)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="日銀 利上げ決定 政策金利0.75％に引き上げ 30年ぶり高水準"
+            data-summary="NHK NEWS (Japan) / 2025/12/19 19:26"
+            data-tags="jp,news,NHK NEWS (Japan)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251219/k10015008081000.html" target="_blank" rel="noopener">日銀 利上げ決定 政策金利0.75％に引き上げ 30年ぶり高水準</a>
+          <span class="date">2025/12/19 19:26</span>
+          <div class="mini">NHK NEWS (Japan)</div>
+        </li>
+      
+    </ol>
+  </div>
+
+  <div class="top-col">
+    <h3>🌍 世界 Top 10（latest）</h3>
+    <ol class="top-list">
+      
+        <li class="topic-row"
+            data-title="米国が難民センター襲撃で「結果」を脅かすと南アフリカが反抗的"
+            data-summary="BBC World (Global) / 2025/12/19 20:59"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/articles/cj69px875ewo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国が難民センター襲撃で「結果」を脅かすと南アフリカが反抗的</a>
+          <span class="date">2025/12/19 20:59</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="バングラデシュの新聞社スタッフ、オフィスが放火される中「息を切らした」と回想"
+            data-summary="BBC World (Global) / 2025/12/19 19:54"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/articles/c2462r82864o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">バングラデシュの新聞社スタッフ、オフィスが放火される中「息を切らした」と回想</a>
+          <span class="date">2025/12/19 19:54</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="TikTokの契約はアメリカのユーザーにとって何を意味するのでしょうか？"
+            data-summary="BBC World (Global) / 2025/12/19 18:22"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/videos/c5yje8pvg8jo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">TikTokの契約はアメリカのユーザーにとって何を意味するのでしょうか？</a>
+          <span class="date">2025/12/19 18:22</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="米国、ブラウン銃撃を受けてグリーンカード抽選制度を一時停止"
+            data-summary="BBC World (Global) / 2025/12/19 16:56"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/articles/c4gp4ze002mo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国、ブラウン銃撃を受けてグリーンカード抽選制度を一時停止</a>
+          <span class="date">2025/12/19 16:56</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="TikTokオーナーが米国の禁止を回避する契約に署名"
+            data-summary="BBC World (Global) / 2025/12/19 16:27"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/articles/cgexp1q8wn1o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">TikTokオーナーが米国の禁止を回避する契約に署名</a>
+          <span class="date">2025/12/19 16:27</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="サラセミアの子供たちがHIV陽性反応を示し、インドの親たちはショックを受けた"
+            data-summary="BBC World (Global) / 2025/12/19 16:11"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/articles/c4g94ywgxd6o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">サラセミアの子供たちがHIV陽性反応を示し、インドの親たちはショックを受けた</a>
+          <span class="date">2025/12/19 16:11</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="ボンディの勇気: ライフガード、「スーパーヒーロー」の母親、そして戦死した夫婦"
+            data-summary="BBC World (Global) / 2025/12/19 13:50"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/articles/czxp998rd9ko?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ボンディの勇気: ライフガード、「スーパーヒーロー」の母親、そして戦死した夫婦</a>
+          <span class="date">2025/12/19 13:50</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="EU、ウクライナへの900億ユーロ融資で合意、ただしロシア資産は使わず"
+            data-summary="BBC World (Global) / 2025/12/19 12:55"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/articles/c3e025vyppeo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">EU、ウクライナへの900億ユーロ融資で合意、ただしロシア資産は使わず</a>
+          <span class="date">2025/12/19 12:55</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="サーファーと水泳選手がボンダイ銃乱射事件の犠牲者に追悼の意を表する"
+            data-summary="BBC World (Global) / 2025/12/19 11:43"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/videos/cjdrpx4yjv5o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">サーファーと水泳選手がボンダイ銃乱射事件の犠牲者に追悼の意を表する</a>
+          <span class="date">2025/12/19 11:43</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+        <li class="topic-row"
+            data-title="オーストラリア、ボンダイ襲撃を受け銃買い取り計画を発表"
+            data-summary="BBC World (Global) / 2025/12/19 11:30"
+            data-tags="global,news,BBC World (Global)">
+          <span class="badge">news</span>
+          <a class="topic-link" href="https://www.bbc.com/news/articles/cn09p4kjj4wo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">オーストラリア、ボンダイ襲撃を受け銃買い取り計画を発表</a>
+          <span class="date">2025/12/19 11:30</span>
+          <div class="mini">BBC World (Global)</div>
+        </li>
+      
+    </ol>
+  </div>
+</section>
+
+  <!-- techと同じ：カテゴリ（折りたたみ） -->
+ 
+  <section class="category-section" id="cat-jp">
+    <div class="category-header">
+      <h2>
+        🇯🇵 国内ニュース
+        <span class="badge">17</span>
+        
+          <span class="badge">+15/48h</span>
+        
+      </h2>
+    </div>
+
+    <div class="category-body">
+      <ul>
+        
+          <li class="topic-row"
+              data-title="住宅内で親子４人意識不明　チェーンで施錠、無理心中の可能性―警視庁"
+              data-summary="Jiji Press (Japan) / 2025/12/19 21:10"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121901076&g=soc&m=rss" target="_blank" rel="noopener">住宅内で親子４人意識不明　チェーンで施錠、無理心中の可能性―警視庁</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/19 21:10</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="“台北中心部 男が刃物で切りつけ 複数けが人” 台湾メディア"
+              data-summary="NHK NEWS (Japan) / 2025/12/19 20:40"
+              data-tags="jp,NHK NEWS (Japan),news">
+            <a href="http://www3.nhk.or.jp/news/html/20251219/k10015008941000.html" target="_blank" rel="noopener">“台北中心部 男が刃物で切りつけ 複数けが人” 台湾メディア</a>
+            <div class="small">NHK NEWS (Japan) / 2025/12/19 20:40</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="【詳しく】自民 維新 与党税制改正大綱を決定 何が変わる？"
+              data-summary="NHK NEWS (Japan) / 2025/12/19 20:21"
+              data-tags="jp,NHK NEWS (Japan),news">
+            <a href="http://www3.nhk.or.jp/news/html/20251219/k10015008271000.html" target="_blank" rel="noopener">【詳しく】自民 維新 与党税制改正大綱を決定 何が変わる？</a>
+            <div class="small">NHK NEWS (Japan) / 2025/12/19 20:21</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="「あらゆる選択肢排除せず」　非核三原則で小泉防衛相"
+              data-summary="Jiji Press (Japan) / 2025/12/19 20:02"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121901146&g=pol&m=rss" target="_blank" rel="noopener">「あらゆる選択肢排除せず」　非核三原則で小泉防衛相</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/19 20:02</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="「核保有発言」警戒必要　中国外務省"
+              data-summary="Jiji Press (Japan) / 2025/12/19 19:57"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121901144&g=int&m=rss" target="_blank" rel="noopener">「核保有発言」警戒必要　中国外務省</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/19 19:57</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="戦場・交渉でロシアに主導権　プーチン氏が記者会見"
+              data-summary="Jiji Press (Japan) / 2025/12/19 19:52"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121900680&g=int&m=rss" target="_blank" rel="noopener">戦場・交渉でロシアに主導権　プーチン氏が記者会見</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/19 19:52</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="右腕モレッタを獲得　プロ野球・阪神"
+              data-summary="Jiji Press (Japan) / 2025/12/19 19:51"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121901139&g=spo&m=rss" target="_blank" rel="noopener">右腕モレッタを獲得　プロ野球・阪神</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/19 19:51</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="首都直下地震 被害想定を新たに公表 “死者 最大1万8000人”"
+              data-summary="NHK NEWS (Japan) / 2025/12/19 19:32"
+              data-tags="jp,NHK NEWS (Japan),news">
+            <a href="http://www3.nhk.or.jp/news/html/20251219/k10015004331000.html" target="_blank" rel="noopener">首都直下地震 被害想定を新たに公表 “死者 最大1万8000人”</a>
+            <div class="small">NHK NEWS (Japan) / 2025/12/19 19:32</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="東京 西東京の住宅 親子４人意識なし 無理心中図った可能性"
+              data-summary="NHK NEWS (Japan) / 2025/12/19 19:28"
+              data-tags="jp,NHK NEWS (Japan),news">
+            <a href="http://www3.nhk.or.jp/news/html/20251219/k10015008771000.html" target="_blank" rel="noopener">東京 西東京の住宅 親子４人意識なし 無理心中図った可能性</a>
+            <div class="small">NHK NEWS (Japan) / 2025/12/19 19:28</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="日銀 利上げ決定 政策金利0.75％に引き上げ 30年ぶり高水準"
+              data-summary="NHK NEWS (Japan) / 2025/12/19 19:26"
+              data-tags="jp,NHK NEWS (Japan),news">
+            <a href="http://www3.nhk.or.jp/news/html/20251219/k10015008081000.html" target="_blank" rel="noopener">日銀 利上げ決定 政策金利0.75％に引き上げ 30年ぶり高水準</a>
+            <div class="small">NHK NEWS (Japan) / 2025/12/19 19:26</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="赤坂サウナ店火災 非常ボタンは全室で正常作動 警察現場検証で"
+              data-summary="NHK NEWS (Japan) / 2025/12/19 18:55"
+              data-tags="jp,NHK NEWS (Japan),news">
+            <a href="http://www3.nhk.or.jp/news/html/20251219/k10015008691000.html" target="_blank" rel="noopener">赤坂サウナ店火災 非常ボタンは全室で正常作動 警察現場検証で</a>
+            <div class="small">NHK NEWS (Japan) / 2025/12/19 18:55</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="野党、「核保有発言」首相に罷免要求　政府、沈静化目指す"
+              data-summary="Jiji Press (Japan) / 2025/12/19 18:32"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121900313&g=pol&m=rss" target="_blank" rel="noopener">野党、「核保有発言」首相に罷免要求　政府、沈静化目指す</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/19 18:32</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="国民民主は「完全に与党」　野田立民代表"
+              data-summary="Jiji Press (Japan) / 2025/12/19 17:28"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121900977&g=pol&m=rss" target="_blank" rel="noopener">国民民主は「完全に与党」　野田立民代表</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/19 17:28</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="ニデック 永守重信氏 代表取締役辞任 不適切会計問題で調査中"
+              data-summary="NHK NEWS (Japan) / 2025/12/19 17:21"
+              data-tags="jp,NHK NEWS (Japan),news">
+            <a href="http://www3.nhk.or.jp/news/html/20251219/k10015008591000.html" target="_blank" rel="noopener">ニデック 永守重信氏 代表取締役辞任 不適切会計問題で調査中</a>
+            <div class="small">NHK NEWS (Japan) / 2025/12/19 17:21</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="「核発言」高官の更迭要求　立民幹部"
+              data-summary="Jiji Press (Japan) / 2025/12/19 14:37"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121900747&g=pol&m=rss" target="_blank" rel="noopener">「核発言」高官の更迭要求　立民幹部</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/19 14:37</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="政府高官「日本は核保有すべき」　高市政権下では「困難」とも"
+              data-summary="Jiji Press (Japan) / 2025/12/18 22:13"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121801106&g=pol&m=rss" target="_blank" rel="noopener">政府高官「日本は核保有すべき」　高市政権下では「困難」とも</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/18 22:13</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="米上院に日本支持の決議案　台湾答弁巡り「中国が圧力」"
+              data-summary="Jiji Press (Japan) / 2025/12/18 15:33"
+              data-tags="jp,Jiji Press (Japan),news">
+            <a href="https://www.jiji.com/jc/article?k=2025121800683&g=int&m=rss" target="_blank" rel="noopener">米上院に日本支持の決議案　台湾答弁巡り「中国が圧力」</a>
+            <div class="small">Jiji Press (Japan) / 2025/12/18 15:33</div>
+          </li>
+        
+      </ul>
+    </div>
+  </section>
+  
+  <section class="category-section" id="cat-global">
+    <div class="category-header">
+      <h2>
+        🌍 世界ニュース
+        <span class="badge">27</span>
+        
+          <span class="badge">+20/48h</span>
+        
+      </h2>
+    </div>
+
+    <div class="category-body">
+      <ul>
+        
+          <li class="topic-row"
+              data-title="米国が難民センター襲撃で「結果」を脅かすと南アフリカが反抗的"
+              data-summary="BBC World (Global) / 2025/12/19 20:59"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cj69px875ewo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国が難民センター襲撃で「結果」を脅かすと南アフリカが反抗的</a>
+            <div class="small">BBC World (Global) / 2025/12/19 20:59</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="バングラデシュの新聞社スタッフ、オフィスが放火される中「息を切らした」と回想"
+              data-summary="BBC World (Global) / 2025/12/19 19:54"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c2462r82864o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">バングラデシュの新聞社スタッフ、オフィスが放火される中「息を切らした」と回想</a>
+            <div class="small">BBC World (Global) / 2025/12/19 19:54</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="TikTokの契約はアメリカのユーザーにとって何を意味するのでしょうか？"
+              data-summary="BBC World (Global) / 2025/12/19 18:22"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/videos/c5yje8pvg8jo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">TikTokの契約はアメリカのユーザーにとって何を意味するのでしょうか？</a>
+            <div class="small">BBC World (Global) / 2025/12/19 18:22</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="米国、ブラウン銃撃を受けてグリーンカード抽選制度を一時停止"
+              data-summary="BBC World (Global) / 2025/12/19 16:56"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c4gp4ze002mo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国、ブラウン銃撃を受けてグリーンカード抽選制度を一時停止</a>
+            <div class="small">BBC World (Global) / 2025/12/19 16:56</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="TikTokオーナーが米国の禁止を回避する契約に署名"
+              data-summary="BBC World (Global) / 2025/12/19 16:27"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cgexp1q8wn1o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">TikTokオーナーが米国の禁止を回避する契約に署名</a>
+            <div class="small">BBC World (Global) / 2025/12/19 16:27</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="サラセミアの子供たちがHIV陽性反応を示し、インドの親たちはショックを受けた"
+              data-summary="BBC World (Global) / 2025/12/19 16:11"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c4g94ywgxd6o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">サラセミアの子供たちがHIV陽性反応を示し、インドの親たちはショックを受けた</a>
+            <div class="small">BBC World (Global) / 2025/12/19 16:11</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="ボンディの勇気: ライフガード、「スーパーヒーロー」の母親、そして戦死した夫婦"
+              data-summary="BBC World (Global) / 2025/12/19 13:50"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/czxp998rd9ko?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ボンディの勇気: ライフガード、「スーパーヒーロー」の母親、そして戦死した夫婦</a>
+            <div class="small">BBC World (Global) / 2025/12/19 13:50</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="EU、ウクライナへの900億ユーロ融資で合意、ただしロシア資産は使わず"
+              data-summary="BBC World (Global) / 2025/12/19 12:55"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c3e025vyppeo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">EU、ウクライナへの900億ユーロ融資で合意、ただしロシア資産は使わず</a>
+            <div class="small">BBC World (Global) / 2025/12/19 12:55</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="サーファーと水泳選手がボンダイ銃乱射事件の犠牲者に追悼の意を表する"
+              data-summary="BBC World (Global) / 2025/12/19 11:43"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/videos/cjdrpx4yjv5o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">サーファーと水泳選手がボンダイ銃乱射事件の犠牲者に追悼の意を表する</a>
+            <div class="small">BBC World (Global) / 2025/12/19 11:43</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="オーストラリア、ボンダイ襲撃を受け銃買い取り計画を発表"
+              data-summary="BBC World (Global) / 2025/12/19 11:30"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cn09p4kjj4wo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">オーストラリア、ボンダイ襲撃を受け銃買い取り計画を発表</a>
+            <div class="small">BBC World (Global) / 2025/12/19 11:30</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="「間違った死に方をした」ウクライナの忘れられた兵士への汚名"
+              data-summary="BBC World (Global) / 2025/12/19 09:00"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cwypp1jwjz1o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">「間違った死に方をした」ウクライナの忘れられた兵士への汚名</a>
+            <div class="small">BBC World (Global) / 2025/12/19 09:00</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="オーストラリア首相、ボンディ銃乱射事件を受けヘイトスピーチの取り締まりを発表"
+              data-summary="BBC World (Global) / 2025/12/19 08:54"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cgmneem1e89o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">オーストラリア首相、ボンディ銃乱射事件を受けヘイトスピーチの取り締まりを発表</a>
+            <div class="small">BBC World (Global) / 2025/12/19 08:54</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="米飛行機事故で死亡した7人のうち元ナスカー運転手とその家族"
+              data-summary="BBC World (Global) / 2025/12/19 08:46"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c741r9ve3z7o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米飛行機事故で死亡した7人のうち元ナスカー運転手とその家族</a>
+            <div class="small">BBC World (Global) / 2025/12/19 08:46</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="レオ教皇、ロナルド・ヒックスを次期ニューヨーク大司教に任命"
+              data-summary="BBC World (Global) / 2025/12/19 08:43"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c8983vzg79go?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">レオ教皇、ロナルド・ヒックスを次期ニューヨーク大司教に任命</a>
+            <div class="small">BBC World (Global) / 2025/12/19 08:43</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="「私たちはバングラデシュ出身ではなく、インド人です。なぜ彼らは私たちにこんなことをしたのですか？』"
+              data-summary="BBC World (Global) / 2025/12/19 08:43"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cze80j943zlo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">「私たちはバングラデシュ出身ではなく、インド人です。なぜ彼らは私たちにこんなことをしたのですか？』</a>
+            <div class="small">BBC World (Global) / 2025/12/19 08:43</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="「生き残りの問題」：脱毛治療への資金援助を希望する大統領"
+              data-summary="BBC World (Global) / 2025/12/19 08:02"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c773mnpre07o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">「生き残りの問題」：脱毛治療への資金援助を希望する大統領</a>
+            <div class="small">BBC World (Global) / 2025/12/19 08:02</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="司法省の期限が迫る中、民主党がエプスタインの最新写真を公開"
+              data-summary="BBC World (Global) / 2025/12/19 05:29"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cy472pygwljo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">司法省の期限が迫る中、民主党がエプスタインの最新写真を公開</a>
+            <div class="small">BBC World (Global) / 2025/12/19 05:29</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="トランプ大統領、麻薬政策の大きな転換で大麻へのアクセスを拡大"
+              data-summary="BBC World (Global) / 2025/12/19 05:17"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cp8z684r6vlo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">トランプ大統領、麻薬政策の大きな転換で大麻へのアクセスを拡大</a>
+            <div class="small">BBC World (Global) / 2025/12/19 05:17</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="話題になったコールドプレイの動画で人事幹部が虐待、脅迫、新しい職探しについて語る"
+              data-summary="BBC World (Global) / 2025/12/19 05:07"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cg7vp937jyxo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">話題になったコールドプレイの動画で人事幹部が虐待、脅迫、新しい職探しについて語る</a>
+            <div class="small">BBC World (Global) / 2025/12/19 05:07</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="ウィズ・カリファ、ルーマニアでステージ上で大麻吸引の罪で懲役9か月の実刑判決"
+              data-summary="BBC World (Global) / 2025/12/19 05:00"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c93wxp2p05xo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ウィズ・カリファ、ルーマニアでステージ上で大麻吸引の罪で懲役9か月の実刑判決</a>
+            <div class="small">BBC World (Global) / 2025/12/19 05:00</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="トランプ・メディア、60億ドルの契約で核融合エネルギー会社と合併へ"
+              data-summary="BBC World (Global) / 2025/12/19 02:32"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cp9kv9lld38o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">トランプ・メディア、60億ドルの契約で核融合エネルギー会社と合併へ</a>
+            <div class="small">BBC World (Global) / 2025/12/19 02:32</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="ピューリッツァー賞受賞戦争記者ピーター・アーネット氏死去、91歳"
+              data-summary="BBC World (Global) / 2025/12/18 23:07"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/ce86j7n6d3do?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ピューリッツァー賞受賞戦争記者ピーター・アーネット氏死去、91歳</a>
+            <div class="small">BBC World (Global) / 2025/12/18 23:07</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="終身刑の患者を毒殺したフランスの「ドクター・デス」"
+              data-summary="BBC World (Global) / 2025/12/18 22:24"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c2epv08xwz7o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">終身刑の患者を毒殺したフランスの「ドクター・デス」</a>
+            <div class="small">BBC World (Global) / 2025/12/18 22:24</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="家族がビーチでマチルダさんのビデオを公開、叔母が「幸せと愛」を呼びかける"
+              data-summary="BBC World (Global) / 2025/12/18 19:38"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/videos/clyx60v23g6o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">家族がビーチでマチルダさんのビデオを公開、叔母が「幸せと愛」を呼びかける</a>
+            <div class="small">BBC World (Global) / 2025/12/18 19:38</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="この秘密ミサイル工場で、ウクライナは国内の兵器産業を強化している"
+              data-summary="BBC World (Global) / 2025/12/18 09:00"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/c1dz6wgn2w9o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">この秘密ミサイル工場で、ウクライナは国内の兵器産業を強化している</a>
+            <div class="small">BBC World (Global) / 2025/12/18 09:00</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="インドの科学者が鳥インフルエンザがどのようにして人間に感染するかを予測"
+              data-summary="BBC World (Global) / 2025/12/18 08:56"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/articles/cgl66ez489po?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">インドの科学者が鳥インフルエンザがどのようにして人間に感染するかを予測</a>
+            <div class="small">BBC World (Global) / 2025/12/18 08:56</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="動画: ニック・ライナーがコンビニで目撃され逮捕される瞬間"
+              data-summary="BBC World (Global) / 2025/12/18 07:35"
+              data-tags="global,BBC World (Global),news">
+            <a href="https://www.bbc.com/news/videos/cn81dzj79glo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">動画: ニック・ライナーがコンビニで目撃され逮捕される瞬間</a>
+            <div class="small">BBC World (Global) / 2025/12/18 07:35</div>
+          </li>
+        
+      </ul>
+    </div>
+  </section>
+  
+
+
+<script>
+/* techのJSをそのまま使う（newsではimp/recentはhidden固定） */
+const selectedTags = new Set();
+let tagMode = "AND";
+
+function updateTagActiveView(){
+  const box = document.getElementById('tag-active');
+  if (!box) return;
+  if (selectedTags.size === 0){
+    box.style.display = 'none';
+    box.textContent = '';
+    return;
+  }
+  box.style.display = '';
+  box.textContent = `tags: ${[...selectedTags].join(', ')} (${tagMode})`;
+}
+
+function toggleTag(tg){
+  if (selectedTags.has(tg)) selectedTags.delete(tg);
+  else selectedTags.add(tg);
+  document.querySelectorAll(`[data-tag-btn="${tg}"]`).forEach(b=>{
+    b.classList.toggle('active', selectedTags.has(tg));
+  });
+  updateTagActiveView();
+  applyFilter();
+}
+
+function clearTagFilter(){
+  selectedTags.clear();
+  document.querySelectorAll('[data-tag-btn]').forEach(b=>b.classList.remove('active'));
+  updateTagActiveView();
+  applyFilter();
+}
+
+function applyFilter() {
+  const q = (document.getElementById('q')?.value || '').toLowerCase();
+  const rows = document.querySelectorAll('.category-body .topic-row');
+  let hit = 0;
+
+  rows.forEach(el => {
+    const title = (el.dataset.title || '').toLowerCase();
+    const summary = (el.dataset.summary || '').toLowerCase();
+    const tags = (el.dataset.tags || '');
+    const hitQ = !q || title.includes(q) || summary.includes(q);
+
+    const itemTags = tags.split(',').map(s=>s.trim()).filter(Boolean);
+    let hitTag = true;
+    if (selectedTags.size > 0){
+      const sel = [...selectedTags];
+      hitTag = (tagMode === "AND")
+        ? sel.every(t => itemTags.includes(t))
+        : sel.some(t => itemTags.includes(t));
+    }
+
+    const show = hitQ && hitTag;
+    el.style.display = show ? '' : 'none';
+    if (show) hit++;
+  });
+
+  const box = document.getElementById('filter-count');
+  if (box){
+    const isFiltering = q || selectedTags.size > 0;
+    if (isFiltering) {
+      box.textContent = `該当: ${hit}件`;
+      box.style.display = '';
+    } else {
+      box.style.display = 'none';
+    }
+  }
+}
+
+document.getElementById('q')?.addEventListener('input', applyFilter);
+document.getElementById('tagModeOr')?.addEventListener('change', (e) => {
+  tagMode = e.target.checked ? "OR" : "AND";
+  updateTagActiveView();
+  applyFilter();
+});
+
+function toggleCat(id) {
+  const sec = document.getElementById('cat-' + id);
+  if (sec) sec.classList.toggle('collapsed');
+}
+let catsCollapsed = false;
+function toggleAllCats() {
+  catsCollapsed = !catsCollapsed;
+  document.querySelectorAll('.category-section').forEach(sec => {
+    sec.classList.toggle('collapsed', catsCollapsed);
+  });
+}
+
+document.getElementById('tagMore')?.addEventListener('click', () => {
+  const bar = document.getElementById('tagBar');
+  if (!bar) return;
+  bar.classList.toggle('collapsed');
+  const more = document.getElementById('tagMore');
+  if (more) more.textContent = bar.classList.contains('collapsed') ? '＋ more' : '− less';
+});
+
+</script>
+
+</body>
+</html>
