@@ -254,6 +254,7 @@ a{color:inherit}
     }
     .top-col{ background:#fff; } /* 白カードは残すなら */
 
+    .category-header{ position: static; }
   </style>
 </head>
 <body>
@@ -272,11 +273,11 @@ a{color:inherit}
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2025-12-21 19:03:39 JST</div>
+        <div class="v">2025-12-22 07:01:17 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">News</div>
-        <div class="v">60 <span class="small">(new48h 61)</span></div>
+        <div class="v">60 <span class="small">(new48h 63)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">Japan</div>
@@ -333,6 +334,22 @@ a{color:inherit}
       <input id="impMin" type="hidden" value="0" />
       <input id="recentMin" type="hidden" value="-999" />
       <button class="btn" type="button" onclick="toggleAllCats()">Toggle categories</button>
+      <label class="small">sort
+        <select id="sortKey">
+          <option value="date">日付</option>
+          <option value="importance">重要度</option>
+        </select>
+      </label>
+
+      <label class="small">order
+        <select id="sortDir">
+          <option value="desc">降順</option>
+          <option value="asc">昇順</option>
+        </select>
+      </label>
+
+      <button class="btn" type="button" onclick="applySort()">Apply</button>
+
     </div>
     <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
     <div id="filter-hint" class="small" style="margin-top:4px; display:none;"></div>
@@ -345,122 +362,272 @@ a{color:inherit}
       <ol class="top-list">
         
           <li class="topic-row"
-              data-title="経産省 国産AI開発へ 来年度から5年間 1兆円規模の支援検討へ"
-              data-summary="NHK NEWS (Japan) / 2025/12/21 17:36"
+              data-title="村上宗隆 大リーグホワイトソックスと契約合意“2年53億円余”"
+              data-summary="NHK NEWS (Japan) / 2025/12/22 05:38"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T20:38:27+00:00"
               data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009831000.html" target="_blank" rel="noopener">経産省 国産AI開発へ 来年度から5年間 1兆円規模の支援検討へ</a>
-            <span class="date">2025/12/21 17:36</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251222/k10015009981000.html" target="_blank" rel="noopener">村上宗隆 大リーグホワイトソックスと契約合意“2年53億円余”</a>
+            <span class="date">2025/12/22 05:38</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+
             <div class="mini">NHK NEWS (Japan)</div>
           </li>
         
           <li class="topic-row"
-              data-title="全国高校駅伝 男子 学法石川が初優勝 大会新記録で【全結果】"
-              data-summary="NHK NEWS (Japan) / 2025/12/21 17:26"
+              data-title="ロシア ウクライナ双方が和平案めぐりアメリカと協議"
+              data-summary="NHK NEWS (Japan) / 2025/12/22 05:34"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T20:34:05+00:00"
               data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015007911000.html" target="_blank" rel="noopener">全国高校駅伝 男子 学法石川が初優勝 大会新記録で【全結果】</a>
-            <span class="date">2025/12/21 17:26</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251222/k10015010151000.html" target="_blank" rel="noopener">ロシア ウクライナ双方が和平案めぐりアメリカと協議</a>
+            <span class="date">2025/12/22 05:34</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+
             <div class="mini">NHK NEWS (Japan)</div>
           </li>
         
           <li class="topic-row"
-              data-title="自民、非核三原則「議論すべき課題」　武器輸出５類型、立民は維持主張"
-              data-summary="Jiji Press (Japan) / 2025/12/21 17:23"
+              data-title="来年度予算案 一般会計総額 120兆円超で過去最大となる見通し"
+              data-summary="NHK NEWS (Japan) / 2025/12/22 05:12"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T20:12:40+00:00"
+              data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251222/k10015009911000.html" target="_blank" rel="noopener">来年度予算案 一般会計総額 120兆円超で過去最大となる見通し</a>
+            <span class="date">2025/12/22 05:12</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+
+            <div class="mini">NHK NEWS (Japan)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="フィギュア 五輪代表 鍵山優真や坂本花織など12人内定"
+              data-summary="NHK NEWS (Japan) / 2025/12/22 02:16"
+              data-imp="0"
+              data-date="2025-12-21T17:16:55+00:00"
+              data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015010101000.html" target="_blank" rel="noopener">フィギュア 五輪代表 鍵山優真や坂本花織など12人内定</a>
+            <span class="date">2025/12/22 02:16</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+
+            <div class="mini">NHK NEWS (Japan)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="日本生命社長 “出向先情報持ち出し 本部のプレッシャー背景”"
+              data-summary="NHK NEWS (Japan) / 2025/12/22 00:27"
+              data-imp="0"
+              data-date="2025-12-21T15:27:51+00:00"
+              data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251222/k10015009931000.html" target="_blank" rel="noopener">日本生命社長 “出向先情報持ち出し 本部のプレッシャー背景”</a>
+            <span class="date">2025/12/22 00:27</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+
+            <div class="mini">NHK NEWS (Japan)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="五輪代表選手の横顔（フィギュアスケート）"
+              data-summary="Jiji Press (Japan) / 2025/12/21 23:29"
+              data-imp="0"
+              data-date="2025-12-21T14:29:00+00:00"
               data-tags="jp,news,Jiji Press (Japan)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100145&g=pol&m=rss" target="_blank" rel="noopener">自民、非核三原則「議論すべき課題」　武器輸出５類型、立民は維持主張</a>
-            <span class="date">2025/12/21 17:23</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100334&g=spo&m=rss" target="_blank" rel="noopener">五輪代表選手の横顔（フィギュアスケート）</a>
+            <span class="date">2025/12/21 23:29</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+
             <div class="mini">Jiji Press (Japan)</div>
           </li>
         
           <li class="topic-row"
-              data-title="高市優良内閣発足2か月 「近く公邸に居住する」 「X」に投稿"
-              data-summary="NHK NEWS (Japan) / 2025/12/21 15:57"
+              data-title="乗り越えた千葉百音　衣装も気持ちも新たに―全日本フィギュア"
+              data-summary="Jiji Press (Japan) / 2025/12/21 22:39"
               data-imp="0"
-              data-recent="0"
-              data-tags="jp,news,NHK NEWS (Japan)">
-            <span class="badge">news</span>
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009751000.html" target="_blank" rel="noopener">高市優良内閣発足2か月 「近く公邸に居住する」 「X」に投稿</a>
-            <span class="date">2025/12/21 15:57</span>
-            <div class="mini">NHK NEWS (Japan)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="学法石川、大会新で初優勝　女子は長野東が連覇―全国高校駅伝"
-              data-summary="Jiji Press (Japan) / 2025/12/21 15:26"
-              data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T13:39:00+00:00"
               data-tags="jp,news,Jiji Press (Japan)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100141&g=spo&m=rss" target="_blank" rel="noopener">学法石川、大会新で初優勝　女子は長野東が連覇―全国高校駅伝</a>
-            <span class="date">2025/12/21 15:26</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100327&g=spo&m=rss" target="_blank" rel="noopener">乗り越えた千葉百音　衣装も気持ちも新たに―全日本フィギュア</a>
+            <span class="date">2025/12/21 22:39</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+
             <div class="mini">Jiji Press (Japan)</div>
           </li>
         
           <li class="topic-row"
-              data-title="高市首相、近日中に公邸引っ越し　「危機管理、国家経営の要諦」"
-              data-summary="Jiji Press (Japan) / 2025/12/21 15:22"
+              data-title="天皇ご一家 空襲被害や戦時下の暮らし伝える写真展 ご覧に"
+              data-summary="NHK NEWS (Japan) / 2025/12/21 21:12"
               data-imp="0"
-              data-recent="0"
-              data-tags="jp,news,Jiji Press (Japan)">
+              data-date="2025-12-21T12:12:44+00:00"
+              data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100203&g=pol&m=rss" target="_blank" rel="noopener">高市首相、近日中に公邸引っ越し　「危機管理、国家経営の要諦」</a>
-            <span class="date">2025/12/21 15:22</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015010051000.html" target="_blank" rel="noopener">天皇ご一家 空襲被害や戦時下の暮らし伝える写真展 ご覧に</a>
+            <span class="date">2025/12/21 21:12</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+
+            <div class="mini">NHK NEWS (Japan)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="追悼続くボンダイビーチ　豪銃撃１週間、心のケア支援"
+              data-summary="Jiji Press (Japan) / 2025/12/21 20:17"
+              data-imp="0"
+              data-date="2025-12-21T11:17:00+00:00"
+              data-tags="jp,news,Jiji Press (Japan)">
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100184&g=int&m=rss" target="_blank" rel="noopener">追悼続くボンダイビーチ　豪銃撃１週間、心のケア支援</a>
+            <span class="date">2025/12/21 20:17</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+
             <div class="mini">Jiji Press (Japan)</div>
           </li>
         
           <li class="topic-row"
-              data-title="米メディア“富豪エプスタイン氏めぐる捜査資料公開”連日報道"
-              data-summary="NHK NEWS (Japan) / 2025/12/21 14:12"
+              data-title="M9クラス巨大地震 100年に満たない落ち着きで目覚める可能性も"
+              data-summary="NHK NEWS (Japan) / 2025/12/21 20:06"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T11:06:44+00:00"
               data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009701000.html" target="_blank" rel="noopener">米メディア“富豪エプスタイン氏めぐる捜査資料公開”連日報道</a>
-            <span class="date">2025/12/21 14:12</span>
-            <div class="mini">NHK NEWS (Japan)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="栃木大田原銀行の出張所でATMなど壊れる重機使用し破壊か"
-              data-summary="NHK NEWS (Japan) / 2025/12/21 12:59"
-              data-imp="0"
-              data-recent="0"
-              data-tags="jp,news,NHK NEWS (Japan)">
-            <span class="badge">news</span>
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009671000.html" target="_blank" rel="noopener">栃木大田原銀行の出張所でATMなど壊れる重機使用し破壊か</a>
-            <span class="date">2025/12/21 12:59</span>
-            <div class="mini">NHK NEWS (Japan)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="日曜討論 防衛装備品の移転 運用指針めぐり与野党が論戦"
-              data-summary="NHK NEWS (Japan) / 2025/12/21 12:05"
-              data-imp="0"
-              data-recent="0"
-              data-tags="jp,news,NHK NEWS (Japan)">
-            <span class="badge">news</span>
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009601000.html" target="_blank" rel="noopener">日曜討論 防衛装備品の移転 運用指針めぐり与野党が論戦</a>
-            <span class="date">2025/12/21 12:05</span>
-            <div class="mini">NHK NEWS (Japan)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="【速報中】全国高校駅伝 女子 連覇ねらう長野東 トップで3区へ"
-              data-summary="NHK NEWS (Japan) / 2025/12/21 10:59"
-              data-imp="0"
-              data-recent="0"
-              data-tags="jp,news,NHK NEWS (Japan)">
-            <span class="badge">news</span>
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015007901000.html" target="_blank" rel="noopener">【速報中】全国高校駅伝 女子 連覇ねらう長野東 トップで3区へ</a>
-            <span class="date">2025/12/21 10:59</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009711000.html" target="_blank" rel="noopener">M9クラス巨大地震 100年に満たない落ち着きで目覚める可能性も</a>
+            <span class="date">2025/12/21 20:06</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+
             <div class="mini">NHK NEWS (Japan)</div>
           </li>
         
@@ -472,14 +639,110 @@ a{color:inherit}
       <ol class="top-list">
         
           <li class="topic-row"
+              data-title="イスラエル、占領下のヨルダン川西岸地区に19の新たな入植地を承認"
+              data-summary="BBC World (Global) / 2025/12/21 23:38"
+              data-imp="0"
+              data-date="2025-12-21T14:38:12+00:00"
+              data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cqjg18xe0wwo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">イスラエル、占領下のヨルダン川西岸地区に19の新たな入植地を承認</a>
+            <span class="date">2025/12/21 23:38</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="サウジアラビアの新記録となる死刑執行を人権団体が非難"
+              data-summary="BBC World (Global) / 2025/12/21 21:08"
+              data-imp="0"
+              data-date="2025-12-21T12:08:10+00:00"
+              data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cg5m49j14pyo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">サウジアラビアの新記録となる死刑執行を人権団体が非難</a>
+            <span class="date">2025/12/21 21:08</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="ボンダイビーチ襲撃事件の犠牲者を追悼するために黙祷が捧げられた"
+              data-summary="BBC World (Global) / 2025/12/21 20:20"
+              data-imp="0"
+              data-date="2025-12-21T11:20:24+00:00"
+              data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cre3l2xq9nzo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ボンダイビーチ襲撃事件の犠牲者を追悼するために黙祷が捧げられた</a>
+            <span class="date">2025/12/21 20:20</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
               data-title="オーストラリア首相、ボンダイ攻撃を悼む中、情報調査を発表"
               data-summary="BBC World (Global) / 2025/12/21 17:30"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T08:30:09+00:00"
               data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
+
             <a class="topic-link" href="https://www.bbc.com/news/articles/c5ydzl0nwqeo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">オーストラリア首相、ボンダイ攻撃を悼む中、情報調査を発表</a>
             <span class="date">2025/12/21 17:30</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
             <div class="mini">BBC World (Global)</div>
           </li>
         
@@ -487,11 +750,26 @@ a{color:inherit}
               data-title="南アフリカの居酒屋襲撃で武装集団9人死亡"
               data-summary="BBC World (Global) / 2025/12/21 15:10"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T06:10:47+00:00"
               data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
+
             <a class="topic-link" href="https://www.bbc.com/news/articles/c79xyxdpzrxo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">南アフリカの居酒屋襲撃で武装集団9人死亡</a>
             <span class="date">2025/12/21 15:10</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
             <div class="mini">BBC World (Global)</div>
           </li>
         
@@ -499,11 +777,26 @@ a{color:inherit}
               data-title="イスラエルの草の根人質家族団体はいかにして強力な国際勢力になったのか"
               data-summary="BBC World (Global) / 2025/12/21 15:05"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T06:05:14+00:00"
               data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
+
             <a class="topic-link" href="https://www.bbc.com/news/articles/cm20ppy0rreo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">イスラエルの草の根人質家族団体はいかにして強力な国際勢力になったのか</a>
             <span class="date">2025/12/21 15:05</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
             <div class="mini">BBC World (Global)</div>
           </li>
         
@@ -511,11 +804,53 @@ a{color:inherit}
               data-title="インドの急行列車、線路を渡る象7頭死亡"
               data-summary="BBC World (Global) / 2025/12/21 10:18"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T01:18:23+00:00"
               data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
+
             <a class="topic-link" href="https://www.bbc.com/news/articles/c9qe2yln2nlo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">インドの急行列車、線路を渡る象7頭死亡</a>
             <span class="date">2025/12/21 10:18</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="コメディアンのボーエン・ヤンがサタデー・ナイト・ライブからの降板を発表"
+              data-summary="BBC World (Global) / 2025/12/21 09:30"
+              data-imp="0"
+              data-date="2025-12-21T00:30:34+00:00"
+              data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/clyz01l98vjo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">コメディアンのボーエン・ヤンがサタデー・ナイト・ライブからの降板を発表</a>
+            <span class="date">2025/12/21 09:30</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
             <div class="mini">BBC World (Global)</div>
           </li>
         
@@ -523,71 +858,53 @@ a{color:inherit}
               data-title="ロシアでもフランスでもない：西アフリカの一国が外交上の綱渡りをしている"
               data-summary="BBC World (Global) / 2025/12/21 09:25"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T00:25:22+00:00"
               data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
+
             <a class="topic-link" href="https://www.bbc.com/news/articles/c4gp4v32z0lo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ロシアでもフランスでもない：西アフリカの一国が外交上の綱渡りをしている</a>
             <span class="date">2025/12/21 09:25</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
             <div class="mini">BBC World (Global)</div>
           </li>
         
           <li class="topic-row"
-              data-title="この億万長者は中国の限界を試した。それは彼の自由を犠牲にした"
-              data-summary="BBC World (Global) / 2025/12/21 07:58"
+              data-title="なぜイギリスのユダヤ人は60年間で最大の変化を経験しているのか"
+              data-summary="BBC World (Global) / 2025/12/21 09:25"
               data-imp="0"
-              data-recent="0"
+              data-date="2025-12-21T00:25:03+00:00"
               data-tags="global,news,BBC World (Global)">
+            <span class="badge imp-0">重要度 0</span>
             <span class="badge">news</span>
-            <a class="topic-link" href="https://www.bbc.com/news/articles/c5yqr485d84o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">この億万長者は中国の限界を試した。それは彼の自由を犠牲にした</a>
-            <span class="date">2025/12/21 07:58</span>
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="生存者らは残りのエプスタインファイルの公開に「神経質で懐疑的」"
-              data-summary="BBC World (Global) / 2025/12/21 05:33"
-              data-imp="0"
-              data-recent="0"
-              data-tags="global,news,BBC World (Global)">
-            <span class="badge">news</span>
-            <a class="topic-link" href="https://www.bbc.com/news/articles/c14vy02847vo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">生存者らは残りのエプスタインファイルの公開に「神経質で懐疑的」</a>
-            <span class="date">2025/12/21 05:33</span>
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="米国がベネズエラ沖で船舶を拿捕、当局者発表"
-              data-summary="BBC World (Global) / 2025/12/21 04:27"
-              data-imp="0"
-              data-recent="0"
-              data-tags="global,news,BBC World (Global)">
-            <span class="badge">news</span>
-            <a class="topic-link" href="https://www.bbc.com/news/articles/c0mpy1ynnzzo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国がベネズエラ沖で船舶を拿捕、当局者発表</a>
-            <span class="date">2025/12/21 04:27</span>
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="エンジニアが車椅子ユーザーとして初めて宇宙へ行く"
-              data-summary="BBC World (Global) / 2025/12/21 04:16"
-              data-imp="0"
-              data-recent="0"
-              data-tags="global,news,BBC World (Global)">
-            <span class="badge">news</span>
-            <a class="topic-link" href="https://www.bbc.com/news/articles/c5y9z0g7lleo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">エンジニアが車椅子ユーザーとして初めて宇宙へ行く</a>
-            <span class="date">2025/12/21 04:16</span>
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="エプスタインファイルには誰が、そして何が入っているのでしょうか?"
-              data-summary="BBC World (Global) / 2025/12/20 21:44"
-              data-imp="0"
-              data-recent="0"
-              data-tags="global,news,BBC World (Global)">
-            <span class="badge">news</span>
-            <a class="topic-link" href="https://www.bbc.com/news/articles/c8r38ne1x2mo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">エプスタインファイルには誰が、そして何が入っているのでしょうか?</a>
-            <span class="date">2025/12/20 21:44</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c5ye91zxqv5o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">なぜイギリスのユダヤ人は60年間で最大の変化を経験しているのか</a>
+            <span class="date">2025/12/21 09:25</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
             <div class="mini">BBC World (Global)</div>
           </li>
         
@@ -603,163 +920,1054 @@ a{color:inherit}
         🇯🇵 国内ニュース
         <span class="badge">30</span>
         
-          <span class="badge">+36/48h</span>
+          <span class="badge">+44/48h</span>
         
       </h2>
+      <button class="btn" type="button" onclick="toggleCat('jp')">Toggle</button>
     </div>
 
     <div class="category-body">
       <ul>
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009831000.html" target="_blank">経産省 国産AI開発へ 来年度から5年間 1兆円規模の支援検討へ</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 17:36</div>
+          <li class="topic-row"
+            data-title="村上宗隆 大リーグホワイトソックスと契約合意“2年53億円余”"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T20:38:27+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251222/k10015009981000.html" target="_blank" rel="noopener">村上宗隆 大リーグホワイトソックスと契約合意“2年53億円余”</a>
+            <span class="date">2025/12/22 05:38</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015007911000.html" target="_blank">全国高校駅伝 男子 学法石川が初優勝 大会新記録で【全結果】</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 17:26</div>
+          <li class="topic-row"
+            data-title="ロシア ウクライナ双方が和平案めぐりアメリカと協議"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T20:34:05+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251222/k10015010151000.html" target="_blank" rel="noopener">ロシア ウクライナ双方が和平案めぐりアメリカと協議</a>
+            <span class="date">2025/12/22 05:34</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122100145&g=pol&m=rss" target="_blank">自民、非核三原則「議論すべき課題」　武器輸出５類型、立民は維持主張</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/21 17:23</div>
+          <li class="topic-row"
+            data-title="来年度予算案 一般会計総額 120兆円超で過去最大となる見通し"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T20:12:40+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251222/k10015009911000.html" target="_blank" rel="noopener">来年度予算案 一般会計総額 120兆円超で過去最大となる見通し</a>
+            <span class="date">2025/12/22 05:12</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009751000.html" target="_blank">高市優良内閣発足2か月 「近く公邸に居住する」 「X」に投稿</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 15:57</div>
+          <li class="topic-row"
+            data-title="フィギュア 五輪代表 鍵山優真や坂本花織など12人内定"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T17:16:55+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015010101000.html" target="_blank" rel="noopener">フィギュア 五輪代表 鍵山優真や坂本花織など12人内定</a>
+            <span class="date">2025/12/22 02:16</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122100141&g=spo&m=rss" target="_blank">学法石川、大会新で初優勝　女子は長野東が連覇―全国高校駅伝</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/21 15:26</div>
+          <li class="topic-row"
+            data-title="日本生命社長 “出向先情報持ち出し 本部のプレッシャー背景”"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T15:27:51+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251222/k10015009931000.html" target="_blank" rel="noopener">日本生命社長 “出向先情報持ち出し 本部のプレッシャー背景”</a>
+            <span class="date">2025/12/22 00:27</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122100203&g=pol&m=rss" target="_blank">高市首相、近日中に公邸引っ越し　「危機管理、国家経営の要諦」</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/21 15:22</div>
+          <li class="topic-row"
+            data-title="五輪代表選手の横顔（フィギュアスケート）"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T14:29:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100334&g=spo&m=rss" target="_blank" rel="noopener">五輪代表選手の横顔（フィギュアスケート）</a>
+            <span class="date">2025/12/21 23:29</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009701000.html" target="_blank">米メディア“富豪エプスタイン氏めぐる捜査資料公開”連日報道</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 14:12</div>
+          <li class="topic-row"
+            data-title="乗り越えた千葉百音　衣装も気持ちも新たに―全日本フィギュア"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T13:39:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100327&g=spo&m=rss" target="_blank" rel="noopener">乗り越えた千葉百音　衣装も気持ちも新たに―全日本フィギュア</a>
+            <span class="date">2025/12/21 22:39</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009671000.html" target="_blank">栃木大田原銀行の出張所でATMなど壊れる重機使用し破壊か</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 12:59</div>
+          <li class="topic-row"
+            data-title="天皇ご一家 空襲被害や戦時下の暮らし伝える写真展 ご覧に"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T12:12:44+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015010051000.html" target="_blank" rel="noopener">天皇ご一家 空襲被害や戦時下の暮らし伝える写真展 ご覧に</a>
+            <span class="date">2025/12/21 21:12</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009601000.html" target="_blank">日曜討論 防衛装備品の移転 運用指針めぐり与野党が論戦</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 12:05</div>
+          <li class="topic-row"
+            data-title="追悼続くボンダイビーチ　豪銃撃１週間、心のケア支援"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T11:17:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100184&g=int&m=rss" target="_blank" rel="noopener">追悼続くボンダイビーチ　豪銃撃１週間、心のケア支援</a>
+            <span class="date">2025/12/21 20:17</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015007901000.html" target="_blank">【速報中】全国高校駅伝 女子 連覇ねらう長野東 トップで3区へ</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 10:59</div>
+          <li class="topic-row"
+            data-title="M9クラス巨大地震 100年に満たない落ち着きで目覚める可能性も"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T11:06:44+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009711000.html" target="_blank" rel="noopener">M9クラス巨大地震 100年に満たない落ち着きで目覚める可能性も</a>
+            <span class="date">2025/12/21 20:06</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009511000.html" target="_blank">【地震速報】青森・岩手で震度4 津波の心配なし（10:29）</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 10:49</div>
+          <li class="topic-row"
+            data-title="副首都、維新案に自民反発　「大阪ありき」協議難航も―首都直下地震"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T10:00:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100060&g=pol&m=rss" target="_blank" rel="noopener">副首都、維新案に自民反発　「大阪ありき」協議難航も―首都直下地震</a>
+            <span class="date">2025/12/21 19:00</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122100095&g=int&m=rss" target="_blank">米、再び石油タンカー拿捕　ベネズエラ沖公海上で</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/21 09:51</div>
+          <li class="topic-row"
+            data-title="経産省 国産AI開発へ 来年度から5年間 1兆円規模の支援検討へ"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T08:36:30+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009831000.html" target="_blank" rel="noopener">経産省 国産AI開発へ 来年度から5年間 1兆円規模の支援検討へ</a>
+            <span class="date">2025/12/21 17:36</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122100116&g=spo&m=rss" target="_blank">三笘薫、期待に応えられず　欧州サッカー</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/21 09:07</div>
+          <li class="topic-row"
+            data-title="全国高校駅伝 男子 学法石川が初優勝 大会新記録で【全結果】"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T08:26:11+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015007911000.html" target="_blank" rel="noopener">全国高校駅伝 男子 学法石川が初優勝 大会新記録で【全結果】</a>
+            <span class="date">2025/12/21 17:26</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122000296&g=spo&m=rss" target="_blank">横浜、窮地で執念の守り　重圧と闘い続けた春王者―高校野球</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/21 07:12</div>
+          <li class="topic-row"
+            data-title="自民、非核三原則「議論すべき課題」　武器輸出５類型、立民は維持主張"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T08:23:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100145&g=pol&m=rss" target="_blank" rel="noopener">自民、非核三原則「議論すべき課題」　武器輸出５類型、立民は維持主張</a>
+            <span class="date">2025/12/21 17:23</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122000273&g=int&m=rss" target="_blank">ヒマラヤに消えた核物質　中国監視で米秘密作戦、流出危惧も―インド</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/21 07:08</div>
+          <li class="topic-row"
+            data-title="ＧＰＳ信号妨害で混乱　カーナビ６時間異常―中国・南京"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T08:04:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100237&g=int&m=rss" target="_blank" rel="noopener">ＧＰＳ信号妨害で混乱　カーナビ６時間異常―中国・南京</a>
+            <span class="date">2025/12/21 17:04</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122000278&g=pol&m=rss" target="_blank">対中議員外交に首相答弁の影　自民・萩生田氏ら訪台ラッシュ</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/21 07:07</div>
+          <li class="topic-row"
+            data-title="高市優良内閣発足2か月 「近く公邸に居住する」 「X」に投稿"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T06:57:04+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009751000.html" target="_blank" rel="noopener">高市優良内閣発足2か月 「近く公邸に居住する」 「X」に投稿</a>
+            <span class="date">2025/12/21 15:57</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009551000.html" target="_blank">ゼレンスキー大統領 “ロシア占領地域では大統領選できない”</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 04:44</div>
+          <li class="topic-row"
+            data-title="学法石川、大会新で初優勝　女子は長野東が連覇―全国高校駅伝"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T06:26:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100141&g=spo&m=rss" target="_blank" rel="noopener">学法石川、大会新で初優勝　女子は長野東が連覇―全国高校駅伝</a>
+            <span class="date">2025/12/21 15:26</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009341000.html" target="_blank">働く障害者 70万人超で過去最多 法定雇用率達成した企業は46％</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 04:40</div>
+          <li class="topic-row"
+            data-title="高市首相、近日中に公邸引っ越し　「危機管理、国家経営の要諦」"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T06:22:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100203&g=pol&m=rss" target="_blank" rel="noopener">高市首相、近日中に公邸引っ越し　「危機管理、国家経営の要諦」</a>
+            <span class="date">2025/12/21 15:22</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009461000.html" target="_blank">警察とメガバンクなど連携 詐欺被害金 追跡や回収の新拠点検討</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 04:38</div>
+          <li class="topic-row"
+            data-title="米メディア“富豪エプスタイン氏めぐる捜査資料公開”連日報道"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T05:12:15+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009701000.html" target="_blank" rel="noopener">米メディア“富豪エプスタイン氏めぐる捜査資料公開”連日報道</a>
+            <span class="date">2025/12/21 14:12</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251221/k10015009531000.html" target="_blank">台北 3人死亡殺傷事件 頼総統 “市民の安全や社会の安定守る”</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/21 03:12</div>
+          <li class="topic-row"
+            data-title="栃木大田原銀行の出張所でATMなど壊れる重機使用し破壊か"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T03:59:25+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009671000.html" target="_blank" rel="noopener">栃木大田原銀行の出張所でATMなど壊れる重機使用し破壊か</a>
+            <span class="date">2025/12/21 12:59</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122000383&g=spo&m=rss" target="_blank">出し切って五輪に前進　三浦、３枠目へ熱演―全日本フィギュア</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/20 23:07</div>
+          <li class="topic-row"
+            data-title="日曜討論 防衛装備品の移転 運用指針めぐり与野党が論戦"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T03:05:15+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009601000.html" target="_blank" rel="noopener">日曜討論 防衛装備品の移転 運用指針めぐり与野党が論戦</a>
+            <span class="date">2025/12/21 12:05</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251220/k10015009521000.html" target="_blank">北海道東部で地震相次ぐ 根室市で震度3の揺れを2回観測</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/20 22:33</div>
+          <li class="topic-row"
+            data-title="【速報中】全国高校駅伝 女子 連覇ねらう長野東 トップで3区へ"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T01:59:56+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015007901000.html" target="_blank" rel="noopener">【速報中】全国高校駅伝 女子 連覇ねらう長野東 トップで3区へ</a>
+            <span class="date">2025/12/21 10:59</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251220/k10015009401000.html" target="_blank">JAXA H3ロケット8号機打ち上げ中止原因は作業手順の変更</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/20 22:12</div>
+          <li class="topic-row"
+            data-title="【地震速報】青森・岩手で震度4 津波の心配なし（10:29）"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T01:49:56+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009511000.html" target="_blank" rel="noopener">【地震速報】青森・岩手で震度4 津波の心配なし（10:29）</a>
+            <span class="date">2025/12/21 10:49</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251220/k10015009411000.html" target="_blank">立民 枝野元代表 核保有発言 “国際情勢理解せず更迭すべき”</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/20 20:49</div>
+          <li class="topic-row"
+            data-title="米、再び石油タンカー拿捕　ベネズエラ沖公海上で"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T00:51:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100095&g=int&m=rss" target="_blank" rel="noopener">米、再び石油タンカー拿捕　ベネズエラ沖公海上で</a>
+            <span class="date">2025/12/21 09:51</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122000276&g=soc&m=rss" target="_blank">「過労死なくならない」　高橋まつりさん母、悲痛な思い―電通社員自殺、２５日で１０年</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/20 20:26</div>
+          <li class="topic-row"
+            data-title="三笘薫、期待に応えられず　欧州サッカー"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T00:07:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122100116&g=spo&m=rss" target="_blank" rel="noopener">三笘薫、期待に応えられず　欧州サッカー</a>
+            <span class="date">2025/12/21 09:07</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251220/k10015009421000.html" target="_blank">維新 吉村代表 衆院定数削減法案 来年通常国会での成立に全力</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/20 20:21</div>
+          <li class="topic-row"
+            data-title="横浜、窮地で執念の守り　重圧と闘い続けた春王者―高校野球"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-20T22:12:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122000296&g=spo&m=rss" target="_blank" rel="noopener">横浜、窮地で執念の守り　重圧と闘い続けた春王者―高校野球</a>
+            <span class="date">2025/12/21 07:12</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122000150&g=int&m=rss" target="_blank">無差別襲撃３人死亡　駅・繁華街で凶行、１１人重軽傷―台北</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/20 19:32</div>
+          <li class="topic-row"
+            data-title="ヒマラヤに消えた核物質　中国監視で米秘密作戦、流出危惧も―インド"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-20T22:08:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122000273&g=int&m=rss" target="_blank" rel="noopener">ヒマラヤに消えた核物質　中国監視で米秘密作戦、流出危惧も―インド</a>
+            <span class="date">2025/12/21 07:08</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122000356&g=pol&m=rss" target="_blank">維新代表、核保有発言を擁護　政府高官の「個人的見解」</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/20 19:12</div>
+          <li class="topic-row"
+            data-title="対中議員外交に首相答弁の影　自民・萩生田氏ら訪台ラッシュ"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-20T22:07:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122000278&g=pol&m=rss" target="_blank" rel="noopener">対中議員外交に首相答弁の影　自民・萩生田氏ら訪台ラッシュ</a>
+            <span class="date">2025/12/21 07:07</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="http://www3.nhk.or.jp/news/html/20251220/k10015009081000.html" target="_blank">台北 殺傷事件 3人死亡 容疑者は事前に現場に 計画的犯行か</a>
-            <div class="small">NHK NEWS (Japan) / 2025/12/20 19:10</div>
+          <li class="topic-row"
+            data-title="ゼレンスキー大統領 “ロシア占領地域では大統領選できない”"
+            data-summary="ゼレンスキー大統領はロシア占領地域での選挙を不可能とし、介入恐れを指摘。"
+            data-imp="30"
+            data-date="2025-12-20T19:44:30+00:00"
+            data-tags="政治,選挙,ウクライナ">
+
+           <div>
+            <span class="badge imp-30">重要度 30</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009551000.html" target="_blank" rel="noopener">ゼレンスキー大統領 “ロシア占領地域では大統領選できない”</a>
+            <span class="date">2025/12/21 04:44</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">政治</span>
+                
+                  <span class="badge">選挙</span>
+                
+                  <span class="badge">ウクライナ</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：ゼレンスキー大統領はロシア占領地域での選挙を不可能とし、介入恐れを指摘。</div>
+
+                
+                  <ul class="kps">
+                    <li>プーチン大統領がウクライナで選挙実施を促したこと</li><li>ゼレンスキー大統領が占領地域では選挙不可と述べたこと</li><li>ロシアの介入恐れを理由に不可能と認識したこと</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 選挙管理システムや投票インフラへの影響は限定的だが、占領下でのデータ保護・通信セキュリティ対策は検討すべき。</div>
+                    <div><b>経営者目線</b>: 政治的不安定により市場リスクが増大する可能性あり。事業継続計画を再確認し、投資判断を慎重化する必要がある。</div>
+                    <div><b>消費者目線</b>: 選挙権行使の機会が制限されることで不満が高まる恐れがある。情報アクセスや市民参加の場を確保することが重要だ。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.jiji.com/jc/article?k=2025122000352&g=pol&m=rss" target="_blank">吉村維新代表、連立解消に否定的　定数削減、来年不成立でも</a>
-            <div class="small">Jiji Press (Japan) / 2025/12/20 19:06</div>
+          <li class="topic-row"
+            data-title="働く障害者 70万人超で過去最多 法定雇用率達成した企業は46％"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-20T19:40:36+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251221/k10015009341000.html" target="_blank" rel="noopener">働く障害者 70万人超で過去最多 法定雇用率達成した企業は46％</a>
+            <span class="date">2025/12/21 04:40</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+
           </li>
+
         
       </ul>
     </div>
@@ -771,163 +1979,1242 @@ a{color:inherit}
         🌍 世界ニュース
         <span class="badge">30</span>
         
-          <span class="badge">+25/48h</span>
+          <span class="badge">+19/48h</span>
         
       </h2>
+      <button class="btn" type="button" onclick="toggleCat('global')">Toggle</button>
     </div>
 
     <div class="category-body">
       <ul>
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c5ydzl0nwqeo?at_medium=RSS&at_campaign=rss" target="_blank">オーストラリア首相、ボンダイ攻撃を悼む中、情報調査を発表</a>
-            <div class="small">BBC World (Global) / 2025/12/21 17:30</div>
+          <li class="topic-row"
+            data-title="イスラエル、占領下のヨルダン川西岸地区に19の新たな入植地を承認"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T14:38:12+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cqjg18xe0wwo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">イスラエル、占領下のヨルダン川西岸地区に19の新たな入植地を承認</a>
+            <span class="date">2025/12/21 23:38</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c79xyxdpzrxo?at_medium=RSS&at_campaign=rss" target="_blank">南アフリカの居酒屋襲撃で武装集団9人死亡</a>
-            <div class="small">BBC World (Global) / 2025/12/21 15:10</div>
+          <li class="topic-row"
+            data-title="サウジアラビアの新記録となる死刑執行を人権団体が非難"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T12:08:10+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cg5m49j14pyo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">サウジアラビアの新記録となる死刑執行を人権団体が非難</a>
+            <span class="date">2025/12/21 21:08</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cm20ppy0rreo?at_medium=RSS&at_campaign=rss" target="_blank">イスラエルの草の根人質家族団体はいかにして強力な国際勢力になったのか</a>
-            <div class="small">BBC World (Global) / 2025/12/21 15:05</div>
+          <li class="topic-row"
+            data-title="ボンダイビーチ襲撃事件の犠牲者を追悼するために黙祷が捧げられた"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T11:20:24+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cre3l2xq9nzo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ボンダイビーチ襲撃事件の犠牲者を追悼するために黙祷が捧げられた</a>
+            <span class="date">2025/12/21 20:20</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c9qe2yln2nlo?at_medium=RSS&at_campaign=rss" target="_blank">インドの急行列車、線路を渡る象7頭死亡</a>
-            <div class="small">BBC World (Global) / 2025/12/21 10:18</div>
+          <li class="topic-row"
+            data-title="オーストラリア首相、ボンダイ攻撃を悼む中、情報調査を発表"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T08:30:09+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c5ydzl0nwqeo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">オーストラリア首相、ボンダイ攻撃を悼む中、情報調査を発表</a>
+            <span class="date">2025/12/21 17:30</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c4gp4v32z0lo?at_medium=RSS&at_campaign=rss" target="_blank">ロシアでもフランスでもない：西アフリカの一国が外交上の綱渡りをしている</a>
-            <div class="small">BBC World (Global) / 2025/12/21 09:25</div>
+          <li class="topic-row"
+            data-title="南アフリカの居酒屋襲撃で武装集団9人死亡"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T06:10:47+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c79xyxdpzrxo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">南アフリカの居酒屋襲撃で武装集団9人死亡</a>
+            <span class="date">2025/12/21 15:10</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c5yqr485d84o?at_medium=RSS&at_campaign=rss" target="_blank">この億万長者は中国の限界を試した。それは彼の自由を犠牲にした</a>
-            <div class="small">BBC World (Global) / 2025/12/21 07:58</div>
+          <li class="topic-row"
+            data-title="イスラエルの草の根人質家族団体はいかにして強力な国際勢力になったのか"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T06:05:14+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cm20ppy0rreo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">イスラエルの草の根人質家族団体はいかにして強力な国際勢力になったのか</a>
+            <span class="date">2025/12/21 15:05</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c14vy02847vo?at_medium=RSS&at_campaign=rss" target="_blank">生存者らは残りのエプスタインファイルの公開に「神経質で懐疑的」</a>
-            <div class="small">BBC World (Global) / 2025/12/21 05:33</div>
+          <li class="topic-row"
+            data-title="インドの急行列車、線路を渡る象7頭死亡"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T01:18:23+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c9qe2yln2nlo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">インドの急行列車、線路を渡る象7頭死亡</a>
+            <span class="date">2025/12/21 10:18</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c0mpy1ynnzzo?at_medium=RSS&at_campaign=rss" target="_blank">米国がベネズエラ沖で船舶を拿捕、当局者発表</a>
-            <div class="small">BBC World (Global) / 2025/12/21 04:27</div>
+          <li class="topic-row"
+            data-title="コメディアンのボーエン・ヤンがサタデー・ナイト・ライブからの降板を発表"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T00:30:34+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/clyz01l98vjo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">コメディアンのボーエン・ヤンがサタデー・ナイト・ライブからの降板を発表</a>
+            <span class="date">2025/12/21 09:30</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c5y9z0g7lleo?at_medium=RSS&at_campaign=rss" target="_blank">エンジニアが車椅子ユーザーとして初めて宇宙へ行く</a>
-            <div class="small">BBC World (Global) / 2025/12/21 04:16</div>
+          <li class="topic-row"
+            data-title="ロシアでもフランスでもない：西アフリカの一国が外交上の綱渡りをしている"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T00:25:22+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c4gp4v32z0lo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ロシアでもフランスでもない：西アフリカの一国が外交上の綱渡りをしている</a>
+            <span class="date">2025/12/21 09:25</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c8r38ne1x2mo?at_medium=RSS&at_campaign=rss" target="_blank">エプスタインファイルには誰が、そして何が入っているのでしょうか?</a>
-            <div class="small">BBC World (Global) / 2025/12/20 21:44</div>
+          <li class="topic-row"
+            data-title="なぜイギリスのユダヤ人は60年間で最大の変化を経験しているのか"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-21T00:25:03+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c5ye91zxqv5o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">なぜイギリスのユダヤ人は60年間で最大の変化を経験しているのか</a>
+            <span class="date">2025/12/21 09:25</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c5yq7zzw618o?at_medium=RSS&at_campaign=rss" target="_blank">米国、シリアでISに対して「大規模な」攻撃を実施</a>
-            <div class="small">BBC World (Global) / 2025/12/20 20:44</div>
+          <li class="topic-row"
+            data-title="この億万長者は中国の限界を試した。それは彼の自由を犠牲にした"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-20T22:58:58+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c5yqr485d84o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">この億万長者は中国の限界を試した。それは彼の自由を犠牲にした</a>
+            <span class="date">2025/12/21 07:58</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c62vx2pgl0eo?at_medium=RSS&at_campaign=rss" target="_blank">イムラン・カーン夫妻に国家贈与詐欺事件でさらなる懲役刑が言い渡された</a>
-            <div class="small">BBC World (Global) / 2025/12/20 19:32</div>
+          <li class="topic-row"
+            data-title="生存者らは残りのエプスタインファイルの公開に「神経質で懐疑的」"
+            data-summary="米国議員が初期公開の不完全さを批判し、残りファイル公開に神経質・懐疑的。"
+            data-imp="30"
+            data-date="2025-12-20T20:33:04+00:00"
+            data-tags="documents,politics,lawmakers">
+
+           <div>
+            <span class="badge imp-30">重要度 30</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c14vy02847vo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">生存者らは残りのエプスタインファイルの公開に「神経質で懐疑的」</a>
+            <span class="date">2025/12/21 05:33</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">documents</span>
+                
+                  <span class="badge">politics</span>
+                
+                  <span class="badge">lawmakers</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：米国議員が初期公開の不完全さを批判し、残りファイル公開に神経質・懐疑的。</div>
+
+                
+                  <ul class="kps">
+                    <li>US議員が文書公開を推進したこと</li><li>初期リリースは不完全だと批判されたこと</li><li>残りのエプスタインファイル公開に対して神経質で懐疑的な姿勢が示されたこと</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 技術者としては、情報公開プロセスの透明性不足がシステム設計やデータ管理に影響を与える可能性があります。</div>
+                    <div><b>経営者目線</b>: 経営者視点では、政治的圧力と情報不完全さが企業イメージやリスクマネジメントに波及する恐れがあります。</div>
+                    <div><b>消費者目線</b>: 消費者としては、公正な情報公開の遅延が社会的不信感を高める懸念があります。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/videos/cn7kpnjnmklo?at_medium=RSS&at_campaign=rss" target="_blank">見る: エプスタイン ファイルからの画像、カセット、著名な人物</a>
-            <div class="small">BBC World (Global) / 2025/12/20 17:52</div>
+          <li class="topic-row"
+            data-title="米国がベネズエラ沖で船舶を拿捕、当局者発表"
+            data-summary="米国がベネズエラ沖で船舶を拿捕し、トランプ大統領の制裁対象油タンカーへの封鎖命令に従った。"
+            data-imp="40"
+            data-date="2025-12-20T19:27:31+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-40">重要度 40</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c0mpy1ynnzzo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国がベネズエラ沖で船舶を拿捕、当局者発表</a>
+            <span class="date">2025/12/21 04:27</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：米国がベネズエラ沖で船舶を拿捕し、トランプ大統領の制裁対象油タンカーへの封鎖命令に従った。</div>
+
+                
+                  <ul class="kps">
+                    <li>米国大統領ドナルド・トランプはベネズエラへの制裁対象油タンカーの進出と離脱をブロックするよう指示した。</li><li>その後、米国当局がベネズエラ沖で船舶を拿捕した。</li><li>この行動は先に発令された封鎖命令に基づくものである。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 海上輸送システムの設計者としては、制裁対象船舶の追跡・検知機能を強化する必要がある。既存の航路監視ソフトウェアで警告レベルを調整し、法的リスク回避策を実装すべきだ。</div>
+                    <div><b>経営者目線</b>: 経営者としては、サプライチェーンへの影響を評価し、代替ルートや保険オプションの検討が急務となる。市場での信頼維持と規制遵守を両立させる戦略的対応が求められる。</div>
+                    <div><b>消費者目線</b>: 一般消費者は輸入品価格に影響が出る可能性があるため、商品価格や供給状況に注意し、必要なら代替商品の検討を行うべきだ。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c14v23vppz8o?at_medium=RSS&at_campaign=rss" target="_blank">オーストラリア州、ボンディ銃乱射事件を受けてインティファーダの合唱を禁止する計画</a>
-            <div class="small">BBC World (Global) / 2025/12/20 16:20</div>
+          <li class="topic-row"
+            data-title="エンジニアが車椅子ユーザーとして初めて宇宙へ行く"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-20T19:16:21+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c5y9z0g7lleo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">エンジニアが車椅子ユーザーとして初めて宇宙へ行く</a>
+            <span class="date">2025/12/21 04:16</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cedx6vn5202o?at_medium=RSS&at_campaign=rss" target="_blank">「とてもクール」: 70 年代のアフロ ロック ジャンルが驚くべき復活を遂げている</a>
-            <div class="small">BBC World (Global) / 2025/12/20 11:18</div>
+          <li class="topic-row"
+            data-title="エプスタインファイルには誰が、そして何が入っているのでしょうか?"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-20T12:44:18+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c8r38ne1x2mo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">エプスタインファイルには誰が、そして何が入っているのでしょうか?</a>
+            <span class="date">2025/12/20 21:44</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cwyp8erjp82o?at_medium=RSS&at_campaign=rss" target="_blank">ケバブ、ビリヤニなど: ユネスコの料理リストに載っているインドの都市</a>
-            <div class="small">BBC World (Global) / 2025/12/20 10:41</div>
+          <li class="topic-row"
+            data-title="米国、シリアでISに対して「大規模な」攻撃を実施"
+            data-summary="米国がシリアでイスラム国に対し数十の標的を攻撃した。これは軍事作戦として実施されたもので、即時のシステム修正は不要だが、将来の紛争地域での運用リスクが高まる可能性がある。"
+            data-imp="45"
+            data-date="2025-12-20T11:44:36+00:00"
+            data-tags="IS,シリア,米軍">
+
+           <div>
+            <span class="badge imp-45">重要度 45</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c5yq7zzw618o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国、シリアでISに対して「大規模な」攻撃を実施</a>
+            <span class="date">2025/12/20 20:44</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">IS</span>
+                
+                  <span class="badge">シリア</span>
+                
+                  <span class="badge">米軍</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：米国がシリアでイスラム国に対し数十の標的を攻撃した。これは軍事作戦として実施されたもので、即時のシステム修正は不要だが、将来の紛争地域での運用リスクが高まる可能性がある。</div>
+
+                
+                  <ul class="kps">
+                    <li>米国がシリアで数十の標的を攻撃した</li><li>攻撃はイスラム国に対する報復として実施された</li><li>対象は昨週のイスラム国による米軍への致命的攻撃後である</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: この作戦は現行の通信インフラやサイバー防御体制に直接影響を与えるわけではないが、紛争地域でのネットワーク設計時にはリスク評価を見直す必要がある。</div>
+                    <div><b>経営者目線</b>: 米国軍事介入は政治的・経済的な波及効果を持つため、関連部署との連携や情報共有体制を強化し、将来の紛争対応策を検討するべきである。</div>
+                    <div><b>消費者目線</b>: 一般消費者にとっては直接的な影響は少ないが、国際情勢の変動がインフラサービスや価格に波及する可能性があるため注意が必要だ。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c5y27ekr26xo?at_medium=RSS&at_campaign=rss" target="_blank">韓国を再び偉大にする：幻滅した若者を説得する右翼団体</a>
-            <div class="small">BBC World (Global) / 2025/12/20 09:45</div>
+          <li class="topic-row"
+            data-title="イムラン・カーン夫妻に国家贈与詐欺事件でさらなる懲役刑が言い渡された"
+            data-summary="パキスタン元首相が既に服役中で、国家贈与詐欺事件の判決を上訴する予定。"
+            data-imp="30"
+            data-date="2025-12-20T10:32:21+00:00"
+            data-tags="政治,犯罪,司法">
+
+           <div>
+            <span class="badge imp-30">重要度 30</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c62vx2pgl0eo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">イムラン・カーン夫妻に国家贈与詐欺事件でさらなる懲役刑が言い渡された</a>
+            <span class="date">2025/12/20 19:32</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">政治</span>
+                
+                  <span class="badge">犯罪</span>
+                
+                  <span class="badge">司法</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：パキスタン元首相が既に服役中で、国家贈与詐欺事件の判決を上訴する予定。</div>
+
+                
+                  <ul class="kps">
+                    <li>元首相は既に刑務所で服役中。</li><li>国家贈与詐欺事件で懲役刑が言い渡された。</li><li>彼は判決に対して上訴を計画している。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 本件は技術的影響はほぼないが、政治的不安定性が企業のリスク評価に影響する可能性がある。</div>
+                    <div><b>経営者目線</b>: 経営者としては、パキスタン市場への投資リスクを再評価し、法規制遵守体制を強化すべきだと考える。</div>
+                    <div><b>消費者目線</b>: 一般消費者には直接的な影響は少ないが、政治情勢の変動により商品価格やサービス供給に波乱が生じる可能性がある。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c5y9ed5d1r4o?at_medium=RSS&at_campaign=rss" target="_blank">スティーブ・ローゼンバーグ: ヨーロッパでの戦争についての私の質問に対するプーチンの答えはオリーブの枝でしたか？</a>
-            <div class="small">BBC World (Global) / 2025/12/20 09:00</div>
+          <li class="topic-row"
+            data-title="見る: エプスタイン ファイルからの画像、カセット、著名な人物"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-20T08:52:05+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/videos/cn7kpnjnmklo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">見る: エプスタイン ファイルからの画像、カセット、著名な人物</a>
+            <span class="date">2025/12/20 17:52</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c2k422e7ykvo?at_medium=RSS&at_campaign=rss" target="_blank">米国、ボスニア戦犯容疑者の市民権剥奪へ</a>
-            <div class="small">BBC World (Global) / 2025/12/20 07:42</div>
+          <li class="topic-row"
+            data-title="オーストラリア州、ボンディ銃乱射事件を受けてインティファーダの合唱を禁止する計画"
+            data-summary="オーストラリア・ニューサウスウェールズ州が、30年ぶりの大規模銃乱射事件後にヘイトスピーチ法を検討する計画を発表した。"
+            data-imp="45"
+            data-date="2025-12-20T07:20:49+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-45">重要度 45</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c14v23vppz8o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">オーストラリア州、ボンディ銃乱射事件を受けてインティファーダの合唱を禁止する計画</a>
+            <span class="date">2025/12/20 16:20</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：オーストラリア・ニューサウスウェールズ州が、30年ぶりの大規模銃乱射事件後にヘイトスピーチ法を検討する計画を発表した。</div>
+
+                
+                  <ul class="kps">
+                    <li>ニューヨーク州はヘイトスピーチ法の制定を検討中である。</li><li>オーストラリアで30年ぶりの最大規模の銃乱射事件が起きた。</li><li>今回の事件は大規模な銃撃事件であった。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: ヘイトスピーチ法の制定により、テキスト解析やフィルタリングシステムへの影響が懸念される。既存の自然言語処理モデルを再評価し、違反検出精度を向上させる必要がある。</div>
+                    <div><b>経営者目線</b>: 新たな規制は企業のコンプライアンスコスト増大を招く可能性がある。一方で社会的責任を果たすことでブランド価値向上も期待できる。</div>
+                    <div><b>消費者目線</b>: 一般ユーザーは発言の自由と安全性のバランスに関心を持つ。規制強化によって不適切な表現が減少する一方、誤検知で自らの意見が抑えられるリスクもある。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c8dy8r7lq0go?at_medium=RSS&at_campaign=rss" target="_blank">パレスチナ人、イスラエルの刑務所で性的虐待を受けたとBBCに語る</a>
-            <div class="small">BBC World (Global) / 2025/12/20 07:01</div>
+          <li class="topic-row"
+            data-title="「とてもクール」: 70 年代のアフロ ロック ジャンルが驚くべき復活を遂げている"
+            data-summary="1970年代ザンビアのZamrockが音楽革命を起こし、現在再び復活している。大手アーティストも参画し注目を集めている。"
+            data-imp="20"
+            data-date="2025-12-20T02:18:35+00:00"
+            data-tags="Zamrock,music revival,70s">
+
+           <div>
+            <span class="badge imp-20">重要度 20</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cedx6vn5202o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">「とてもクール」: 70 年代のアフロ ロック ジャンルが驚くべき復活を遂げている</a>
+            <span class="date">2025/12/20 11:18</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">Zamrock</span>
+                
+                  <span class="badge">music revival</span>
+                
+                  <span class="badge">70s</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：1970年代ザンビアのZamrockが音楽革命を起こし、現在再び復活している。大手アーティストも参画し注目を集めている。</div>
+
+                
+                  <ul class="kps">
+                    <li>1970年代にザンビアでZamrockが音楽革命を引き起こした。</li><li>Zamrockは現在再び人気を取り戻している。</li><li>復活の中には大手アーティストも参画している。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: Zamrockの復活は音楽制作ツールや配信プラットフォームに新たな需要を生む可能性がある。既存のレコード会社やデジタル配信サービスは、再興するジャンルへの対応策を検討すべきだ。</div>
+                    <div><b>経営者目線</b>: ビジネス側ではZamrockの人気回復を活かし、新しい音楽フェスやマーケティングキャンペーンを企画できる。市場拡大と収益機会が期待される。</div>
+                    <div><b>消費者目線</b>: ファンにとっては、70年代のレトロなサウンドが再び手に入る喜びだ。新しいアーティストの登場で多様な音楽体験が楽しめる。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cp89p082y2xo?at_medium=RSS&at_campaign=rss" target="_blank">プーチン大統領、西側諸国がロシアに敬意を持って接するなら、もう戦争はしないと誓う</a>
-            <div class="small">BBC World (Global) / 2025/12/20 06:43</div>
+          <li class="topic-row"
+            data-title="ケバブ、ビリヤニなど: ユネスコの料理リストに載っているインドの都市"
+            data-summary="Lucknowが世界のグルメ都市リストに選ばれ、ユネスコ認定を受けた。"
+            data-imp="30"
+            data-date="2025-12-20T01:41:12+00:00"
+            data-tags="UNESCO,cuisine,Lucknow">
+
+           <div>
+            <span class="badge imp-30">重要度 30</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cwyp8erjp82o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ケバブ、ビリヤニなど: ユネスコの料理リストに載っているインドの都市</a>
+            <span class="date">2025/12/20 10:41</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">UNESCO</span>
+                
+                  <span class="badge">cuisine</span>
+                
+                  <span class="badge">Lucknow</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：Lucknowが世界のグルメ都市リストに選ばれ、ユネスコ認定を受けた。</div>
+
+                
+                  <ul class="kps">
+                    <li>Lucknowがグローバルな料理都市リストに加わった。</li><li>このリストは食文化の優秀さで評価される。</li><li>ユネスコが認定したことが報じられた。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: システム側では特別な変更は不要だが、データベースに新都市情報を追加する必要がある。</div>
+                    <div><b>経営者目線</b>: ブランド価値向上の機会として活用できる。観光・飲食業界への投資判断に影響し得る。</div>
+                    <div><b>消費者目線</b>: 地元料理や旅行先としてLucknowが注目され、消費者の興味を引く可能性が高い。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cn98pzr8x79o?at_medium=RSS&at_campaign=rss" target="_blank">ベン＆ジェリーの椅子を撤去、マグナムは彼女を「汚す」のが目的だったと語る</a>
-            <div class="small">BBC World (Global) / 2025/12/20 05:48</div>
+          <li class="topic-row"
+            data-title="韓国を再び偉大にする：幻滅した若者を説得する右翼団体"
+            data-summary="韓国の元大統領・尹錫悦氏が失脚後、反政府感情の象徴となり、右翼団体が若者を説得しようとしている。"
+            data-imp="20"
+            data-date="2025-12-20T00:45:23+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-20">重要度 20</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c5y27ekr26xo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">韓国を再び偉大にする：幻滅した若者を説得する右翼団体</a>
+            <span class="date">2025/12/20 09:45</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：韓国の元大統領・尹錫悦氏が失脚後、反政府感情の象徴となり、右翼団体が若者を説得しようとしている。</div>
+
+                
+                  <ul class="kps">
+                    <li>尹錫悦氏は失脚した大統領である。</li><li>彼は反政府感情の象徴となっている。</li><li>右翼団体が若者を説得しようとしている。</li>
+                  </ul>
+                
+
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cx251p7k23mo?at_medium=RSS&at_campaign=rss" target="_blank">台湾の地下鉄に発煙爆撃、ナイフ襲撃犯が3人死亡</a>
-            <div class="small">BBC World (Global) / 2025/12/20 05:33</div>
+          <li class="topic-row"
+            data-title="スティーブ・ローゼンバーグ: ヨーロッパでの戦争についての私の質問に対するプーチンの答えはオリーブの枝でしたか？"
+            data-summary="ロシア指導者がヨーロッパへの攻撃計画は「ゴミ」であると発言し、報道機関に対して否定的な見解を示した。"
+            data-imp="30"
+            data-date="2025-12-20T00:00:19+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-30">重要度 30</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c5y9ed5d1r4o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">スティーブ・ローゼンバーグ: ヨーロッパでの戦争についての私の質問に対するプーチンの答えはオリーブの枝でしたか？</a>
+            <span class="date">2025/12/20 09:00</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：ロシア指導者がヨーロッパへの攻撃計画は「ゴミ」であると発言し、報道機関に対して否定的な見解を示した。</div>
+
+                
+                  <ul class="kps">
+                    <li>ロシアの指導者がロシア編集者に対し、ヨーロッパへの攻撃計画は"ゴミ"であると述べた。</li><li>彼はその主張を根拠のないものとして否定した。</li><li>発言はBBCのロシア編集中に行われた。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 技術者としては、政治的声明がインフラやサイバーセキュリティへの直接的な影響は少ないと判断される。将来的に戦争関連の規制変更がある場合、システム設計を見直す必要が出てくる可能性はあるが、現時点では大きな技術的課題は想定できない。</div>
+                    <div><b>経営者目線</b>: 経営者視点では、国際情勢の変動が市場やサプライチェーンに与えるリスクを評価することが重要である。本発言自体は即時のビジネス影響は限定的だが、長期的な投資判断や地域戦略に慎重さを要する。</div>
+                    <div><b>消費者目線</b>: 消費者としては、政治的発言が日常生活に直結することは稀である。しかし、国際情勢の不安定化が商品価格やサービス提供に影響を与える可能性も考慮すべきだと感じる。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cp89p41gr06o?at_medium=RSS&at_campaign=rss" target="_blank">ローマのトレビの泉に近づく観光客に2ユーロの手数料がかかる</a>
-            <div class="small">BBC World (Global) / 2025/12/20 05:05</div>
+          <li class="topic-row"
+            data-title="米国、ボスニア戦犯容疑者の市民権剥奪へ"
+            data-summary="米国がボスニア戦犯容疑者Kemal Mrndzicの市民権剥奪を検討。彼は虐殺発生した収容所でガードを務めた事実を自然化申請時に開示せず、官房がこれを指摘している。"
+            data-imp="25"
+            data-date="2025-12-19T22:42:55+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-25">重要度 25</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c2k422e7ykvo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国、ボスニア戦犯容疑者の市民権剥奪へ</a>
+            <span class="date">2025/12/20 07:42</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：米国がボスニア戦犯容疑者Kemal Mrndzicの市民権剥奪を検討。彼は虐殺発生した収容所でガードを務めた事実を自然化申請時に開示せず、官房がこれを指摘している。</div>
+
+                
+                  <ul class="kps">
+                    <li>Kemal Mrndzicは虐殺が起きた収容所のガードとして勤務し、その事実を自然化申請時に隠蔽したことが判明した。</li>
+                  </ul>
+                
+
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cqxql12317qo?at_medium=RSS&at_campaign=rss" target="_blank">オーストラリアは銃規制の世界リーダーとみなされていた - ボンディはより複雑な現実を暴露した</a>
-            <div class="small">BBC World (Global) / 2025/12/20 04:04</div>
+          <li class="topic-row"
+            data-title="パレスチナ人、イスラエルの刑務所で性的虐待を受けたとBBCに語る"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-19T22:01:20+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c8dy8r7lq0go?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">パレスチナ人、イスラエルの刑務所で性的虐待を受けたとBBCに語る</a>
+            <span class="date">2025/12/20 07:01</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/videos/cj01pdve7rpo?at_medium=RSS&at_campaign=rss" target="_blank">プーチン大統領、BBCに対し西側指導者はロシアを欺いていたと語る</a>
-            <div class="small">BBC World (Global) / 2025/12/20 03:15</div>
+          <li class="topic-row"
+            data-title="プーチン大統領、西側諸国がロシアに敬意を持って接するなら、もう戦争はしないと誓う"
+            data-summary="プーチン大統領がテレビマラソンで、ヨーロッパへの攻撃計画の主張を無意味だと述べた。"
+            data-imp="20"
+            data-date="2025-12-19T21:43:18+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-20">重要度 20</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cp89p082y2xo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">プーチン大統領、西側諸国がロシアに敬意を持って接するなら、もう戦争はしないと誓う</a>
+            <span class="date">2025/12/20 06:43</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：プーチン大統領がテレビマラソンで、ヨーロッパへの攻撃計画の主張を無意味だと述べた。</div>
+
+                
+                  <ul class="kps">
+                    <li>ロシア大統領がテレビマラソン中に発言した。</li><li>ヨーロッパへの攻撃計画は「無意味」とされた。</li><li>この発表は国際的な緊張緩和の意図を示唆している。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 技術者としては、政治的声明が直接システム設計に影響するわけではないが、サイバーセキュリティ上の脅威評価においては国際情勢の変化を考慮すべきである。</div>
+                    <div><b>経営者目線</b>: 経営者視点では、地政学的な不安定要因が市場や供給チェーンに与える影響をモニタリングし、リスク管理策を再検討する必要がある。</div>
+                    <div><b>消費者目線</b>: 消費者としては、政治的発言が日常生活に直接影響することは少ないものの、情報源の信頼性や安全性への関心が高まる可能性がある。</div>
+                  </div>
+                
+              </details>
+          
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cp84p722m3do?at_medium=RSS&at_campaign=rss" target="_blank">チャーリー・カークの未亡人エリカ、JD・ヴァンスを大統領候補に支持</a>
-            <div class="small">BBC World (Global) / 2025/12/20 03:05</div>
+          <li class="topic-row"
+            data-title="ベン＆ジェリーの椅子を撤去、マグナムは彼女を「汚す」のが目的だったと語る"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-19T20:48:44+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cn98pzr8x79o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ベン＆ジェリーの椅子を撤去、マグナムは彼女を「汚す」のが目的だったと語る</a>
+            <span class="date">2025/12/20 05:48</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/cm21pxen1jno?at_medium=RSS&at_campaign=rss" target="_blank">ドイツ裁判所、妻に薬物投与、強姦、撮影の罪で男に長年禁錮刑</a>
-            <div class="small">BBC World (Global) / 2025/12/20 02:40</div>
+          <li class="topic-row"
+            data-title="台湾の地下鉄に発煙爆撃、ナイフ襲撃犯が3人死亡"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-19T20:33:58+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cx251p7k23mo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">台湾の地下鉄に発煙爆撃、ナイフ襲撃犯が3人死亡</a>
+            <span class="date">2025/12/20 05:33</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/videos/cly5p1vkm39o?at_medium=RSS&at_campaign=rss" target="_blank">ロス・アトキンス氏が語る… UAEとスーダン内戦との関連疑惑</a>
-            <div class="small">BBC World (Global) / 2025/12/20 01:16</div>
+          <li class="topic-row"
+            data-title="ローマのトレビの泉に近づく観光客に2ユーロの手数料がかかる"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-19T20:05:52+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cp89p41gr06o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ローマのトレビの泉に近づく観光客に2ユーロの手数料がかかる</a>
+            <span class="date">2025/12/20 05:05</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
-          <li class="topic-row">
-            <a href="https://www.bbc.com/news/articles/c5y9x4pj54eo?at_medium=RSS&at_campaign=rss" target="_blank">フランス裁判所、子供のようなダッチワイフをめぐるSheinウェブサイトの停止を却下</a>
-            <div class="small">BBC World (Global) / 2025/12/20 00:49</div>
+          <li class="topic-row"
+            data-title="オーストラリアは銃規制の世界リーダーとみなされていた - ボンディはより複雑な現実を暴露した"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-19T19:04:13+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp-0">重要度 0</span>
+            <span class="badge">news</span>
+
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cqxql12317qo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">オーストラリアは銃規制の世界リーダーとみなされていた - ボンディはより複雑な現実を暴露した</a>
+            <span class="date">2025/12/20 04:04</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+
           </li>
+
         
       </ul>
     </div>
@@ -1032,6 +3319,67 @@ document.getElementById('tagMore')?.addEventListener('click', () => {
   const more = document.getElementById('tagMore');
   if (more) more.textContent = bar.classList.contains('collapsed') ? '＋ more' : '− less';
 });
+function parseDateValue(v){
+  if (!v) return 0;
+  // 例: "2025-12-21T10:00:00+00:00" / "2025-12-21 10:00:00" などを許容
+  const t = Date.parse(String(v).replace(' ', 'T'));
+  return isNaN(t) ? 0 : t;
+}
+
+function applySort(){
+  const key = (document.getElementById('sortKey')?.value || 'date');
+  const dir = (document.getElementById('sortDir')?.value || 'desc');
+  const sign = (dir === 'asc') ? 1 : -1;
+
+  // 対象: Top list + 各カテゴリの直下 ul + topbox(tech) の ul
+  const lists = [
+    ...document.querySelectorAll('ol.top-list'),
+    ...document.querySelectorAll('.category-body > ul'),
+    ...document.querySelectorAll('.topbox > ul')
+  ];
+
+  for (const list of lists){
+    const items = [...list.querySelectorAll(':scope > li.topic-row')];
+    if (items.length <= 1) continue;
+
+    items.sort((a,b) => {
+      if (key === 'importance'){
+        const av = parseInt(a.dataset.imp || '0', 10) || 0;
+        const bv = parseInt(b.dataset.imp || '0', 10) || 0;
+        if (av !== bv) return (av - bv) * sign;
+      } else {
+        const av = parseDateValue(a.dataset.date);
+        const bv = parseDateValue(b.dataset.date);
+        if (av !== bv) return (av - bv) * sign;
+      }
+      // 同点のときは安定化（タイトル）
+      const at = (a.dataset.title || '');
+      const bt = (b.dataset.title || '');
+      return at.localeCompare(bt);
+    });
+
+    for (const li of items) list.appendChild(li);
+  }
+
+  // 保存（任意：次回アクセス時も同じ）
+  try{
+    localStorage.setItem('sortKey', key);
+    localStorage.setItem('sortDir', dir);
+  }catch(e){}
+}
+
+// 初期反映（任意）
+(function initSortUI(){
+  try{
+    const k = localStorage.getItem('sortKey');
+    const d = localStorage.getItem('sortDir');
+    if (k && document.getElementById('sortKey')) document.getElementById('sortKey').value = k;
+    if (d && document.getElementById('sortDir')) document.getElementById('sortDir').value = d;
+  }catch(e){}
+  applySort();
+})();
+
+toggleAllCats();
 
 </script>
 
