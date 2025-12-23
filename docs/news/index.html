@@ -7,63 +7,118 @@
   <title>ニュースダイジェスト</title>
   <style>
     
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;line-height:1.6}
+:root{
+  /* Base */
+  --bg: #fff;
+  --panel: #f9fafb;
+  --text-main: #1f2937;
+  --text-sub: #6b7280;
+  --border: #e5e7eb;
+
+  /* Accent */
+  --accent: #2563eb;
+  --accent-soft: #dbeafe;
+
+  /* Status */
+  --new: #dc2626;
+  --new-soft: #fee2e2;
+
+  --important: #f59e0b;
+  --important-soft: #fef3c7;
+}
+body{
+  background:var(--bg);
+  color:var(--text-main);
+}
 h1{margin:0 0 10px}
 h2{margin:22px 0 10px}
-.meta{color:#666;font-size:12px;margin:6px 0 14px}
+.meta{color:var(--text-sub);font-size:12px;margin:6px 0 14px}
 .nav{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
-.nav a{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:6px 10px;text-decoration:none;color:#111}
+.nav a{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:6px 10px;text-decoration:none;color:#111}
 .nav a.active{border-color:#333;font-weight:700}
-.card{background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px 14px;margin:10px 0}
-.small{color:#666;font-size:12px}
-.badge{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
-.btn{padding:6px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer;display:inline-block;text-decoration:none}
-.btn:hover{background:#f7f7f7}
+.meta,.small{
+  color:var(--text-sub);
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+}
+
+.badge{
+  border:1px solid var(--border);
+  color:var(--text-main);
+}
+.badge.recent{
+  background:var(--new-soft);
+  color:var(--new);
+  border-color:var(--new);
+  font-weight:700;
+}
+.btn{padding:6px 10px;border:1px solid var(--border);border-radius:10px;background:var(--bg);cursor:pointer;display:inline-block;text-decoration:none}
+.btn:hover{background:var(--panel)}
 ul{margin:0;padding-left:18px}
 li{margin:10px 0}
 a{color:inherit}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+a:hover{
+  color:var(--accent);
+}
+
+.nav a.active{
+  color:var(--accent);
+  border-color:var(--accent);
+  font-weight:700;
+}
+
 
     
 /* techの箱・構造を定義している部分をここへ集約 */
 .summary-card, .topbox, .top-col, .insight{
   background:#fafafa;
-  border:1px solid #eee;
+  border:1px solid var(--border);
   border-radius:12px;
   padding:12px 14px;
 }
-.top-col{ background:#fff; }
+.top-col{ background:var(--bg); }
 
 /* techの見出し間隔・小文字 */
 .small{color:#666;font-size:12px}
-.badge{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
+.badge{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
 
 /* もしtechにタグの見た目があるなら寄せる */
-.tag{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
+.tag{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
 
 
      /* --- UX改善①: 上部サマリー + 横断TOP --- */
-    .summary-card{background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px 14px;margin:10px 0 14px}
+    .summary-card{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin:10px 0 14px}
     .summary-title{font-weight:800;font-size:16px;margin:0 0 6px}
     .summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:8px}
     .summary-item .k{color:#666;font-size:11px}
     .summary-item .v{font-size:13px;font-weight:650}
 
     .top-zone{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 18px}
-    .top-col{background:#fff;border:1px solid #eee;border-radius:12px;padding:10px 12px}
+    .top-col{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 12px}
     .top-col h3{margin:0 0 8px;font-size:14px}
     .top-list{margin:0;padding-left:18px}
     .mini{color:#666;font-size:12px;margin-top:2px}
 
     .quick-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
-    #q{padding:6px 10px;border:1px solid #ddd;border-radius:10px;min-width:260px}
-    .btn{padding:6px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer}
+    #q{padding:6px 10px;border:1px solid var(--border);border-radius:10px;min-width:260px}
+    .btn{padding:6px 10px;border:1px solid var(--border);border-radius:10px;background:var(--bg);cursor:pointer}
 
     .badge.hot{font-weight:800}
     .badge.new{border-style:dashed}
 
-    .imp-5{border-color:#f33}
-    .imp-4{border-color:#f80}
-    .imp-3{border-color:#cc0}
+   .badge.imp{
+      background:var(--important-soft);
+      color:var(--important);
+      border-color:var(--important);
+    }
     .imp-2{border-color:#6c6}
     .imp-1{border-color:#9ad}
     .imp-0{border-color:#ccc}
@@ -140,10 +195,10 @@ a{color:inherit}
     }
     /* details 展開時の視認性向上 */
     details.insight {
-      border: 1px solid #eee;
+      border: 1px solid var(--border);
       border-radius: 10px;
       padding: 6px 8px;
-      background: #fff;
+      background: var(--bg);
     }
 
     details.insight[open] {
@@ -208,7 +263,7 @@ a{color:inherit}
       position: sticky;
       top: 0;
       z-index: 10;
-      background: #fff; /* 背景必須 */
+      background: var(--bg); /* 背景必須 */
     }
 
     /* Tag bar: wrap + mobile collapse */
@@ -226,8 +281,8 @@ a{color:inherit}
     }
 
     .btn-more{
-      background:#fff;
-      border:1px dashed #ddd;
+      background:var(--bg);
+      border:1px dashed var(--border);
       font-weight:650;
     }
 
@@ -245,14 +300,6 @@ a{color:inherit}
       color: #666;
       white-space: nowrap;
     }
-    /* techの主要ボックスをnewsの.cardに寄せる */
-    .summary-card, .topbox, .top-col, .insight{
-      background:#fafafa;
-      border:1px solid #eee;
-      border-radius:12px;
-      padding:12px 14px;
-    }
-    .top-col{ background:#fff; } /* 白カードは残すなら */
 
   </style>
 </head>
@@ -272,11 +319,11 @@ a{color:inherit}
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2025-12-23 21:18:46 JST</div>
+        <div class="v">2025-12-24 06:34:28 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">News</div>
-        <div class="v">60 <span class="small">(new48h 131)</span></div>
+        <div class="v">60 <span class="small">(new48h 118)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">Japan</div>
@@ -313,12 +360,12 @@ a{color:inherit}
             jp (30)
           </button>
         
-          <button class="btn" type="button" data-tag-btn="Jiji Press (Japan)" onclick="toggleTag('Jiji Press (Japan)')">
-            Jiji Press (Japan) (15)
+          <button class="btn" type="button" data-tag-btn="NHK NEWS (Japan)" onclick="toggleTag('NHK NEWS (Japan)')">
+            NHK NEWS (Japan) (16)
           </button>
         
-          <button class="btn" type="button" data-tag-btn="NHK NEWS (Japan)" onclick="toggleTag('NHK NEWS (Japan)')">
-            NHK NEWS (Japan) (15)
+          <button class="btn" type="button" data-tag-btn="Jiji Press (Japan)" onclick="toggleTag('Jiji Press (Japan)')">
+            Jiji Press (Japan) (14)
           </button>
         
       </div>
@@ -359,16 +406,15 @@ a{color:inherit}
       <ol class="top-list">
         
           <li class="topic-row"
-              data-title="【会見ライブ】福井 転換炉「ふげん」でトリチウム含む水漏れ"
-              data-summary="福井県敦賀市の新型転換炉「ふげん」で、試験装置解体中にトリチウムを含む水約20mlが漏れたが、作業員は被ばくせず外部環境への影響もないと報告された。"
-              data-imp="30"
-              data-date="2025-12-23T11:49:58+00:00"
+              data-title="診療報酬 来年度の改定率きょう決定 全体で2.22％プラス改定へ"
+              data-summary="診療報酬改定率が来年度2.22％増となり、医療従事者の人件費は3.09％上昇、薬価は0.87％減。自己負担見直しで保険料増を抑制する方針。"
+              data-imp="45"
+              data-date="2025-12-23T20:49:37+00:00"
               data-tags="jp,news,NHK NEWS (Japan)">
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="#news-44414">【会見ライブ】福井 転換炉「ふげん」でトリチウム含む水漏れ</a>
-            <a class="small" href="http://www3.nhk.or.jp/news/html/20251223/k10015011761000.html" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 20:49</span>
+            <span class="badge imp">重要度 45</span>            
+            <a class="topic-link" href="#news-44798">診療報酬 来年度の改定率きょう決定 全体で2.22％プラス改定へ</a>
+            <a class="small" href="http://www3.nhk.or.jp/news/html/20251224/k10015011991000.html" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 05:49</span>
 
             
               <span class="small">
@@ -386,25 +432,24 @@ a{color:inherit}
           </li>
         
           <li class="topic-row"
-              data-title="赤澤経産相 24日～1月5日まで入院 健康管理のための軽微手術で"
-              data-summary="赤澤経産相が健康管理のため軽微手術を受け、24日から1月5日まで入院。公務に支障が出ないよう代理担当者が配置される。"
-              data-imp="0"
-              data-date="2025-12-23T11:45:51+00:00"
-              data-tags="politics,health,minister">
-            <span class="badge imp-0">重要度 0</span>
-            
-            <a class="topic-link" href="#news-44420">赤澤経産相 24日～1月5日まで入院 健康管理のための軽微手術で</a>
-            <a class="small" href="http://www3.nhk.or.jp/news/html/20251223/k10015011841000.html" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 20:45</span>
+              data-title="総務省 生成AIが出した回答のリスク評価 新基盤システム開発へ"
+              data-summary="総務省が生成AI回答のリスク評価基盤システムを開発し、利用者がAI選択時に活用できるよう方針を示した。"
+              data-imp="40"
+              data-date="2025-12-23T20:10:22+00:00"
+              data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp">重要度 40</span>            
+            <a class="topic-link" href="#news-44799">総務省 生成AIが出した回答のリスク評価 新基盤システム開発へ</a>
+            <a class="small" href="http://www3.nhk.or.jp/news/html/20251224/k10015011931000.html" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 05:10</span>
 
             
               <span class="small">
                 
-                  <span class="badge">politics</span>
+                  <span class="badge">jp</span>
                 
-                  <span class="badge">health</span>
+                  <span class="badge">news</span>
                 
-                  <span class="badge">minister</span>
+                  <span class="badge">NHK NEWS (Japan)</span>
                 
               </span>
             
@@ -413,50 +458,102 @@ a{color:inherit}
           </li>
         
           <li class="topic-row"
-              data-title="三井住友トラストグループ 新社長に大山一也氏が昇格"
-              data-summary="三井住友トラストグループが新社長に傘下銀行の大山一也氏を昇格させ、資産運用ビジネス強化へ注力する方針を示した。"
-              data-imp="20"
-              data-date="2025-12-23T11:44:20+00:00"
-              data-tags="人事,金融,資産運用">
-            <span class="badge imp-20">重要度 20</span>
+              data-title="メガソーラー支援廃止含め検討 太陽光発電の目標達成へ道筋は"
+              data-summary="政府がメガソーラー導入支援を再来年度以降廃止することを検討し、2040年度までに太陽光発電比率を倍増させる計画を示した。"
+              data-imp="45"
+              data-date="2025-12-23T20:06:11+00:00"
+              data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp">重要度 45</span>            
+            <a class="topic-link" href="#news-44797">メガソーラー支援廃止含め検討 太陽光発電の目標達成へ道筋は</a>
+            <a class="small" href="http://www3.nhk.or.jp/news/html/20251224/k10015012011000.html" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 05:06</span>
+
             
-            <a class="topic-link" href="#news-44418">三井住友トラストグループ 新社長に大山一也氏が昇格</a>
-            <a class="small" href="http://www3.nhk.or.jp/news/html/20251223/k10015011831000.html" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 20:44</span>
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+
+            <div class="mini">NHK NEWS (Japan)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="外国人住民 全国の市区町村96％で増加 うち半数で2倍以上に"
+              data-summary="日本の市区町村96％で外国人住民が増加し、半数は2倍以上になった。国は早急に受け入れ体制を整備すべきと専門家が指摘している。"
+              data-imp="30"
+              data-date="2025-12-23T19:39:14+00:00"
+              data-tags="外国人,人口増加,受け入れ体制">
+            <span class="badge imp">重要度 30</span>            
+            <a class="topic-link" href="#news-44800">外国人住民 全国の市区町村96％で増加 うち半数で2倍以上に</a>
+            <a class="small" href="http://www3.nhk.or.jp/news/html/20251224/k10015011861000.html" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 04:39</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">外国人</span>
+                
+                  <span class="badge">人口増加</span>
+                
+                  <span class="badge">受け入れ体制</span>
+                
+              </span>
+            
+
+            <div class="mini">NHK NEWS (Japan)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="トランプ大統領FRBパウエル議長後任近く発表へ人事の行方は"
+              data-summary="アメリカのトランプ大統領がFRBパウエル議長後任を近く発表予定で、金融政策に影響を与える人物が有力視されている。"
+              data-imp="70"
+              data-date="2025-12-23T19:25:04+00:00"
+              data-tags="金融政策,FRB,トランプ">
+            <span class="badge imp">重要度 70</span>            
+            <a class="topic-link" href="#news-44802">トランプ大統領FRBパウエル議長後任近く発表へ人事の行方は</a>
+            <a class="small" href="http://www3.nhk.or.jp/news/html/20251224/k10015011981000.html" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 04:25</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">金融政策</span>
+                
+                  <span class="badge">FRB</span>
+                
+                  <span class="badge">トランプ</span>
+                
+              </span>
+            
+
+            <div class="mini">NHK NEWS (Japan)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="三重県 外国籍の県職員採用 来年度から取りやめる方向で検討"
+              data-summary="三重県が1999年度以降の外国籍県職員採用を来年度から取りやめる方向で検討し、1万人へのアンケート後に正式決定予定。"
+              data-imp="20"
+              data-date="2025-12-23T18:09:42+00:00"
+              data-tags="人事,外国籍,個人情報">
+            <span class="badge imp">重要度 20</span>            
+            <a class="topic-link" href="#news-44796">三重県 外国籍の県職員採用 来年度から取りやめる方向で検討</a>
+            <a class="small" href="http://www3.nhk.or.jp/news/html/20251224/k10015012091000.html" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 03:09</span>
 
             
               <span class="small">
                 
                   <span class="badge">人事</span>
                 
-                  <span class="badge">金融</span>
+                  <span class="badge">外国籍</span>
                 
-                  <span class="badge">資産運用</span>
-                
-              </span>
-            
-
-            <div class="mini">NHK NEWS (Japan)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="サッカーJリーグ J1町田 黒田監督に懲罰処分 暴言や無双指導"
-              data-summary="J1サッカーリーグがFC町田ゼルビアの黒田剛監督に対し、暴言や不適切指導を理由にけん責の懲罰処分を決定した。"
-              data-imp="20"
-              data-date="2025-12-23T11:42:21+00:00"
-              data-tags="sports,discipline">
-            <span class="badge imp-20">重要度 20</span>
-            
-            <a class="topic-link" href="#news-44416">サッカーJリーグ J1町田 黒田監督に懲罰処分 暴言や無双指導</a>
-            <a class="small" href="http://www3.nhk.or.jp/news/html/20251223/k10015011851000.html" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 20:42</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">sports</span>
-                
-                  <span class="badge">discipline</span>
+                  <span class="badge">個人情報</span>
                 
               </span>
             
@@ -465,23 +562,24 @@ a{color:inherit}
           </li>
         
           <li class="topic-row"
-              data-title="高市首相 来年度予算案“来年のできるだけ早期に成立目指す”"
-              data-summary="高市首相は来年度予算案をできるだけ早期に国会成立させる方針を示した。"
-              data-imp="20"
-              data-date="2025-12-23T11:18:12+00:00"
-              data-tags="budget,politics">
-            <span class="badge imp-20">重要度 20</span>
-            
-            <a class="topic-link" href="#news-44415">高市首相 来年度予算案“来年のできるだけ早期に成立目指す”</a>
-            <a class="small" href="http://www3.nhk.or.jp/news/html/20251223/k10015011821000.html" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 20:18</span>
+              data-title="陸自オスプレイ 平均稼働率40％切る状態続く 整備員不足課題"
+              data-summary="陸上自衛隊のオスプレイ平均稼働率が40％未満で続き、整備員と部品不足が原因。整備員優先配置を検討中。"
+              data-imp="45"
+              data-date="2025-12-23T18:07:53+00:00"
+              data-tags="jp,news,NHK NEWS (Japan)">
+            <span class="badge imp">重要度 45</span>            
+            <a class="topic-link" href="#news-44801">陸自オスプレイ 平均稼働率40％切る状態続く 整備員不足課題</a>
+            <a class="small" href="http://www3.nhk.or.jp/news/html/20251224/k10015012131000.html" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 03:07</span>
 
             
               <span class="small">
                 
-                  <span class="badge">budget</span>
+                  <span class="badge">jp</span>
                 
-                  <span class="badge">politics</span>
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
                 
               </span>
             
@@ -490,124 +588,15 @@ a{color:inherit}
           </li>
         
           <li class="topic-row"
-              data-title="男女参画計画、年内策定見送り　旧姓法制化巡る調整難航―政府・自民"
-              data-summary="男女参画計画の年内策定を見送り、旧姓法制化に関する調整が難航している。"
-              data-imp="30"
-              data-date="2025-12-23T10:48:00+00:00"
-              data-tags="政府,女性参画,法改正">
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="#news-44428">男女参画計画、年内策定見送り　旧姓法制化巡る調整難航―政府・自民</a>
-            <a class="small" href="https://www.jiji.com/jc/article?k=2025122300719&g=pol&m=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 19:48</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">政府</span>
-                
-                  <span class="badge">女性参画</span>
-                
-                  <span class="badge">法改正</span>
-                
-              </span>
-            
-
-            <div class="mini">Jiji Press (Japan)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="静岡 長泉町強盗事件 3人組の男ら2時間以上前から付近下見か"
-              data-summary="静岡長泉町の住宅兼店舗で約1000万円を奪う強盗事件が発生し、犯人らは2時間以上前から下見していたと警察が確認した。"
-              data-imp="30"
-              data-date="2025-12-23T10:44:46+00:00"
-              data-tags="強盗,防犯カメラ,現金">
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="#news-44417">静岡 長泉町強盗事件 3人組の男ら2時間以上前から付近下見か</a>
-            <a class="small" href="http://www3.nhk.or.jp/news/html/20251223/k10015011721000.html" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 19:44</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">強盗</span>
-                
-                  <span class="badge">防犯カメラ</span>
-                
-                  <span class="badge">現金</span>
-                
-              </span>
-            
-
-            <div class="mini">NHK NEWS (Japan)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="秋田 卸売市場倉庫に入り込んでいたクマ 箱わなで捕獲され駆除"
-              data-summary="秋田市の公設地方卸売市場倉庫にクマが侵入し、箱わなで捕獲後駆除された。"
+              data-title="米ＧＤＰ、４．３％増　強い成長、さらに加速―７～９月期"
+              data-summary="Jiji Press (Japan) / 2025/12/23 23:09"
               data-imp="0"
-              data-date="2025-12-23T10:15:30+00:00"
-              data-tags="野生動物,市場,秋田">
-            <span class="badge imp-0">重要度 0</span>
-            
-            <a class="topic-link" href="#news-44419">秋田 卸売市場倉庫に入り込んでいたクマ 箱わなで捕獲され駆除</a>
-            <a class="small" href="http://www3.nhk.or.jp/news/html/20251223/k10015011751000.html" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 19:15</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">野生動物</span>
-                
-                  <span class="badge">市場</span>
-                
-                  <span class="badge">秋田</span>
-                
-              </span>
-            
-
-            <div class="mini">NHK NEWS (Japan)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="高市首相、柏崎原発視察に意欲"
-              data-summary="高市首相が柏崎原発を視察し、再稼働への意欲を示した。"
-              data-imp="30"
-              data-date="2025-12-23T10:03:00+00:00"
-              data-tags="原発,再稼働,安全性">
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="#news-44425">高市首相、柏崎原発視察に意欲</a>
-            <a class="small" href="https://www.jiji.com/jc/article?k=2025122300847&g=pol&m=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 19:03</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">原発</span>
-                
-                  <span class="badge">再稼働</span>
-                
-                  <span class="badge">安全性</span>
-                
-              </span>
-            
-
-            <div class="mini">Jiji Press (Japan)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="千葉ロッテが不当表示疑い　改善計画認定、サインボール巡り―消費者庁"
-              data-summary="千葉ロッテが不当表示疑いで改善計画を認定され、サインボールの巡り問題が指摘された。"
-              data-imp="40"
-              data-date="2025-12-23T09:31:00+00:00"
+              data-date="2025-12-23T14:09:00+00:00"
               data-tags="jp,news,Jiji Press (Japan)">
-            <span class="badge imp-40">重要度 40</span>
-            
-            <a class="topic-link" href="#news-44427">千葉ロッテが不当表示疑い　改善計画認定、サインボール巡り―消費者庁</a>
-            <a class="small" href="https://www.jiji.com/jc/article?k=2025122300694&g=soc&m=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 18:31</span>
+            <span class="badge imp">重要度 0</span>            
+            <a class="topic-link" href="#news-44807">米ＧＤＰ、４．３％増　強い成長、さらに加速―７～９月期</a>
+            <a class="small" href="https://www.jiji.com/jc/article?k=2025122300974&g=int&m=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/23 23:09</span>
 
             
               <span class="small">
@@ -624,6 +613,54 @@ a{color:inherit}
             <div class="mini">Jiji Press (Japan)</div>
           </li>
         
+          <li class="topic-row"
+              data-title="少女の母親、台湾からタイに移送　東京マッサージ店事件"
+              data-summary="少女の母親が台湾からタイへ移送され、東京マッサージ店事件に関与したと報じられた。"
+              data-imp="30"
+              data-date="2025-12-23T12:59:00+00:00"
+              data-tags="マッサージ店事件,台湾,タイ">
+            <span class="badge imp">重要度 30</span>            
+            <a class="topic-link" href="#news-44805">少女の母親、台湾からタイに移送　東京マッサージ店事件</a>
+            <a class="small" href="https://www.jiji.com/jc/article?k=2025122300672&g=int&m=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/23 21:59</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">マッサージ店事件</span>
+                
+                  <span class="badge">台湾</span>
+                
+                  <span class="badge">タイ</span>
+                
+              </span>
+            
+
+            <div class="mini">Jiji Press (Japan)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="高市首相、総裁選支援議員と会合"
+              data-summary="高市首相は総裁選支援議員と会合したが、詳細な内容は不明で実務への影響は小さい。"
+              data-imp="0"
+              data-date="2025-12-23T12:43:00+00:00"
+              data-tags="政治">
+            <span class="badge imp">重要度 0</span>            
+            <a class="topic-link" href="#news-44809">高市首相、総裁選支援議員と会合</a>
+            <a class="small" href="https://www.jiji.com/jc/article?k=2025122300949&g=pol&m=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/23 21:43</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">政治</span>
+                
+              </span>
+            
+
+            <div class="mini">Jiji Press (Japan)</div>
+          </li>
+        
       </ol>
     </div>
 
@@ -632,13 +669,198 @@ a{color:inherit}
       <ol class="top-list">
         
           <li class="topic-row"
+              data-title="リビア軍司令官、トルコでの航空事故で死亡"
+              data-summary="リビア軍司令官がトルコで航空機事故により死亡。アンカラ発のジェット離陸後、信号喪失し墜落。"
+              data-imp="20"
+              data-date="2025-12-23T20:36:35+00:00"
+              data-tags="global,news,BBC World (Global)">
+            <span class="badge imp">重要度 20</span>           
+            <a class="topic-link" href="#news-44815">リビア軍司令官、トルコでの航空事故で死亡</a>
+            <a class="small" href="https://www.bbc.com/news/articles/cyvgzyepdqno?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 05:36</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="トランプ氏はこれまで考えられていたよりもエプスタイン氏の飛行機に乗って移動していた、と検察官が語る"
+              data-summary="トランプ大統領は、ジェフリー・エプスタインの飛行機に乗ったことを否認しているが、検察官は実際には以前より多く乗っていたと主張する。"
+              data-imp="20"
+              data-date="2025-12-23T19:46:42+00:00"
+              data-tags="global,news,BBC World (Global)">
+            <span class="badge imp">重要度 20</span>           
+            <a class="topic-link" href="#news-44813">トランプ氏はこれまで考えられていたよりもエプスタイン氏の飛行機に乗って移動していた、と検察官が語る</a>
+            <a class="small" href="https://www.bbc.com/news/articles/c74xgp81pqgo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 04:46</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="ウクライナ、激戦地東部の町を失う"
+              data-summary="ロシア軍がドネツク州のシヴェルスクを占領し、ウクライナ側に残る「要塞帯」都市への接近を加速させた。"
+              data-imp="20"
+              data-date="2025-12-23T18:53:43+00:00"
+              data-tags="戦争,ウクライナ,ドネツク,シヴェルスク,要塞帯">
+            <span class="badge imp">重要度 20</span>           
+            <a class="topic-link" href="#news-44814">ウクライナ、激戦地東部の町を失う</a>
+            <a class="small" href="https://www.bbc.com/news/articles/cr4d99p63y4o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 03:53</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">戦争</span>
+                
+                  <span class="badge">ウクライナ</span>
+                
+                  <span class="badge">ドネツク</span>
+                
+                  <span class="badge">シヴェルスク</span>
+                
+                  <span class="badge">要塞帯</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="米国経済はここ 2 年間で最も速いペースで成長"
+              data-summary="米国経済が2年ぶりの高速成長を示し、消費者支出が予想以上に伸びた。"
+              data-imp="20"
+              data-date="2025-12-23T15:56:57+00:00"
+              data-tags="global,news,BBC World (Global)">
+            <span class="badge imp">重要度 20</span>           
+            <a class="topic-link" href="#news-44816">米国経済はここ 2 年間で最も速いペースで成長</a>
+            <a class="small" href="https://www.bbc.com/news/articles/c62n9ynzrdpo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/24 00:56</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="ナイジェリア中部で武装集団がイスラム教徒旅行者28人を拉致"
+              data-summary="中央ナイジェリアで28人のムスリム旅行者が誘拐され、女性と子どもを含む犠牲者が宗教祭へ向かう途中に襲撃された。"
+              data-imp="20"
+              data-date="2025-12-23T14:10:19+00:00"
+              data-tags="global,news,BBC World (Global)">
+            <span class="badge imp">重要度 20</span>           
+            <a class="topic-link" href="#news-44819">ナイジェリア中部で武装集団がイスラム教徒旅行者28人を拉致</a>
+            <a class="small" href="https://www.bbc.com/news/articles/czj0ll7ppewo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/23 23:10</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="コンゴ民主共和国の暴力から逃れる数千人、ブルンジで「悲惨な状況」に直面―援助機関"
+              data-summary="DRコロンビアの暴力から逃れた数千人がブルンジで過酷な状況に直面し、特に子どもと妊婦は食糧不足で苦しんでいる。"
+              data-imp="30"
+              data-date="2025-12-23T12:21:26+00:00"
+              data-tags="global,news,BBC World (Global)">
+            <span class="badge imp">重要度 30</span>           
+            <a class="topic-link" href="#news-44820">コンゴ民主共和国の暴力から逃れる数千人、ブルンジで「悲惨な状況」に直面―援助機関</a>
+            <a class="small" href="https://www.bbc.com/news/articles/cjdr4vx4n8ro?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/23 21:21</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
+              data-title="イスラエル、外国放送局の閉鎖を認める命令を延長"
+              data-summary="イスラエル議会がガザ戦争中に導入された一時的な放送停止権を拡張し、セキュリティ脅威と見なされる外国放送局の閉鎖を可能にした。"
+              data-imp="40"
+              data-date="2025-12-23T11:55:57+00:00"
+              data-tags="security,broadcasting,Israel">
+            <span class="badge imp">重要度 40</span>           
+            <a class="topic-link" href="#news-44822">イスラエル、外国放送局の閉鎖を認める命令を延長</a>
+            <a class="small" href="https://www.bbc.com/news/articles/c2k47wg2j90o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
+            <span class="date">2025/12/23 20:55</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">security</span>
+                
+                  <span class="badge">broadcasting</span>
+                
+                  <span class="badge">Israel</span>
+                
+              </span>
+            
+
+            <div class="mini">BBC World (Global)</div>
+          </li>
+        
+          <li class="topic-row"
               data-title="トランプ大統領、米国はベネズエラから押収した石油を保管または売却すると発言"
               data-summary="米大統領は、ベネズエラ沖で押収したタンカーを保持する方針を示し、石油の処理に関して米国が介入する意向を表明した。"
               data-imp="20"
               data-date="2025-12-23T09:51:47+00:00"
               data-tags="oil,Venezuela,US">
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>           
             <a class="topic-link" href="#news-44432">トランプ大統領、米国はベネズエラから押収した石油を保管または売却すると発言</a>
             <a class="small" href="https://www.bbc.com/news/articles/c87lnn09yj8o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
             <span class="date">2025/12/23 18:51</span>
@@ -664,8 +886,7 @@ a{color:inherit}
               data-imp="30"
               data-date="2025-12-23T08:58:46+00:00"
               data-tags="航空事故,慈善活動,火傷患者">
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>           
             <a class="topic-link" href="#news-44434">テキサス州で子供乗せ飛行機墜落、被害者火傷 ５人死亡</a>
             <a class="small" href="https://www.bbc.com/news/articles/c1lr1yvqge5o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
             <span class="date">2025/12/23 17:58</span>
@@ -691,8 +912,7 @@ a{color:inherit}
               data-imp="20"
               data-date="2025-12-23T06:06:34+00:00"
               data-tags="incident,crime">
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>           
             <a class="topic-link" href="#news-44431">「奇跡」：病院から帰宅するボンディ襲撃中に警官が頭を撃たれる</a>
             <a class="small" href="https://www.bbc.com/news/articles/cd0kxrr2jyko?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
             <span class="date">2025/12/23 15:06</span>
@@ -703,199 +923,6 @@ a{color:inherit}
                   <span class="badge">incident</span>
                 
                   <span class="badge">crime</span>
-                
-              </span>
-            
-
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="アマゾン、北朝鮮工作員と疑われる者からの1,800件の求人応募をブロック"
-              data-summary="Amazonは北朝鮮疑惑のエージェントが偽造・盗用IDでリモートIT職に応募したことを検知し、1,800件の応募をブロックしました。"
-              data-imp="45"
-              data-date="2025-12-23T02:49:45+00:00"
-              data-tags="北朝鮮,サイバーセキュリティ,リモートワーク">
-            <span class="badge imp-45">重要度 45</span>
-            
-            <a class="topic-link" href="#news-44053">アマゾン、北朝鮮工作員と疑われる者からの1,800件の求人応募をブロック</a>
-            <a class="small" href="https://www.bbc.com/news/articles/c3e0kw80wwzo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 11:49</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">北朝鮮</span>
-                
-                  <span class="badge">サイバーセキュリティ</span>
-                
-                  <span class="badge">リモートワーク</span>
-                
-              </span>
-            
-
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="米国の規制当局がWegovy減量薬の錠剤形態を承認"
-              data-summary="米国規制当局がWegovyの錠剤を承認し、注射型から経口薬へ転換した。"
-              data-imp="30"
-              data-date="2025-12-23T01:29:07+00:00"
-              data-tags="drug,regulation,weightloss">
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="#news-43662">米国の規制当局がWegovy減量薬の錠剤形態を承認</a>
-            <a class="small" href="https://www.bbc.com/news/articles/ce86le5dyxyo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 10:29</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">drug</span>
-                
-                  <span class="badge">regulation</span>
-                
-                  <span class="badge">weightloss</span>
-                
-              </span>
-            
-
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="『コール オブ デューティ』の共同制作者ビンス・ザンペラ氏がカリフォルニアの自動車事故で死亡"
-              data-summary="ビデオゲーム開発者ヴィンス・ザンペラ氏がロサンゼルスの高速道路で車両事故後火災により死亡。"
-              data-imp="0"
-              data-date="2025-12-23T00:48:58+00:00"
-              data-tags="video game,developer,car crash">
-            <span class="badge imp-0">重要度 0</span>
-            
-            <a class="topic-link" href="#news-43668">『コール オブ デューティ』の共同制作者ビンス・ザンペラ氏がカリフォルニアの自動車事故で死亡</a>
-            <a class="small" href="https://www.bbc.com/news/articles/cx25rled0ylo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 09:48</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">video game</span>
-                
-                  <span class="badge">developer</span>
-                
-                  <span class="badge">car crash</span>
-                
-              </span>
-            
-
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="トランプ大統領、自身の名を冠した戦艦「ゴールデン・フリート」の計画を発表"
-              data-summary="米大統領が中国に追いつくため、金の艦隊を復活させる計画を発表。船舶建造業の再興を宣言した。"
-              data-imp="30"
-              data-date="2025-12-23T00:36:38+00:00"
-              data-tags="global,news,BBC World (Global)">
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="#news-43667">トランプ大統領、自身の名を冠した戦艦「ゴールデン・フリート」の計画を発表</a>
-            <a class="small" href="https://www.bbc.com/news/articles/c2084nq2npjo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 09:36</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">global</span>
-                
-                  <span class="badge">news</span>
-                
-                  <span class="badge">BBC World (Global)</span>
-                
-              </span>
-            
-
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="圧倒的なエプスタインファイルの公開がトランプとマガにとって何を意味するか"
-              data-summary="BBCが報じたエプスタインファイルには、ビル・クリントンやマイケル・ジャクソンなどの著名人が含まれていると確認された。"
-              data-imp="20"
-              data-date="2025-12-23T00:24:25+00:00"
-              data-tags="high-profile,files,publicity">
-            <span class="badge imp-20">重要度 20</span>
-            
-            <a class="topic-link" href="#news-43684">圧倒的なエプスタインファイルの公開がトランプとマガにとって何を意味するか</a>
-            <a class="small" href="https://www.bbc.com/news/articles/cy95w0x9889o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 09:24</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">high-profile</span>
-                
-                  <span class="badge">files</span>
-                
-                  <span class="badge">publicity</span>
-                
-              </span>
-            
-
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="データセンター技術をクールに保つシャワーとバス"
-              data-summary="データセンターの冷却を環境に優しい方法で行うことが課題となっている。"
-              data-imp="30"
-              data-date="2025-12-23T00:04:45+00:00"
-              data-tags="cooling,data centre,green">
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="#news-43687">データセンター技術をクールに保つシャワーとバス</a>
-            <a class="small" href="https://www.bbc.com/news/articles/cp8zd176516o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 09:04</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">cooling</span>
-                
-                  <span class="badge">data centre</span>
-                
-                  <span class="badge">green</span>
-                
-              </span>
-            
-
-            <div class="mini">BBC World (Global)</div>
-          </li>
-        
-          <li class="topic-row"
-              data-title="インドの雇用保証制度：世界モデルが脅威にさらされている？"
-              data-summary="インドの農村雇用保証制度が新法で再構築され、グローバルモデルとしての位置づけに対する論争が高まっている。"
-              data-imp="40"
-              data-date="2025-12-22T23:33:51+00:00"
-              data-tags="jobs,policy,India,rural,guarantee">
-            <span class="badge imp-40">重要度 40</span>
-            
-            <a class="topic-link" href="#news-43686">インドの雇用保証制度：世界モデルが脅威にさらされている？</a>
-            <a class="small" href="https://www.bbc.com/news/articles/c1lr980vvjpo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">open</a>
-            <span class="date">2025/12/23 08:33</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">jobs</span>
-                
-                  <span class="badge">policy</span>
-                
-                  <span class="badge">India</span>
-                
-                  <span class="badge">rural</span>
-                
-                  <span class="badge">guarantee</span>
                 
               </span>
             
@@ -915,7 +942,7 @@ a{color:inherit}
         🇯🇵 国内ニュース
         <span class="badge">30</span>
         
-          <span class="badge">+95/48h</span>
+          <span class="badge">+86/48h</span>
         
       </h2>
       <button class="btn" type="button" onclick="toggleCat('jp')">Toggle</button>
@@ -923,6 +950,644 @@ a{color:inherit}
 
     <div class="category-body">
       <ul>
+        
+          <li id="news-44798" class="topic-row"
+            data-title="診療報酬 来年度の改定率きょう決定 全体で2.22％プラス改定へ"
+            data-summary="診療報酬改定率が来年度2.22％増となり、医療従事者の人件費は3.09％上昇、薬価は0.87％減。自己負担見直しで保険料増を抑制する方針。"
+            data-imp="45"
+            data-date="2025-12-23T20:49:37+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp">重要度 45</span>
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251224/k10015011991000.html" target="_blank" rel="noopener">診療報酬 来年度の改定率きょう決定 全体で2.22％プラス改定へ</a>
+            <span class="date">2025/12/24 05:49</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：診療報酬改定率が来年度2.22％増となり、医療従事者の人件費は3.09％上昇、薬価は0.87％減。自己負担見直しで保険料増を抑制する方針。</div>
+
+                
+                  <ul class="kps">
+                    <li>改定率全体が2.22％プラスに決定。</li><li>本体（人件費等）は3.09％引き上げられる。</li><li>薬価は0.87％減少し、OTC類似薬の自己負担見直しを進める。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 診療報酬改定に伴いシステム調整が必要となる</div>
+                    
+                    
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251224/k10015011991000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251224/k10015011991000.html</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44799" class="topic-row"
+            data-title="総務省 生成AIが出した回答のリスク評価 新基盤システム開発へ"
+            data-summary="総務省が生成AI回答のリスク評価基盤システムを開発し、利用者がAI選択時に活用できるよう方針を示した。"
+            data-imp="40"
+            data-date="2025-12-23T20:10:22+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp">重要度 40</span>
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251224/k10015011931000.html" target="_blank" rel="noopener">総務省 生成AIが出した回答のリスク評価 新基盤システム開発へ</a>
+            <span class="date">2025/12/24 05:10</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：総務省が生成AI回答のリスク評価基盤システムを開発し、利用者がAI選択時に活用できるよう方針を示した。</div>
+
+                
+                  <ul class="kps">
+                    <li>総務省は生成AI回答などのリスクを評価する新たな基盤システムを開発する方針を示した。</li><li>利用者が判断する際にこのシステムを活用してもらいたいと考えている。</li><li>どの生成AIを使うかを決定するために利用される予定である。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 新基盤システムは既存開発プロセスへの統合が必要となり、設計・実装段階でリスク評価ロジックを組み込む工数増加が見込まれる。</div>
+                    <div><b>経営者目線</b>: 政府主導のAIリスク管理策は業界全体に影響を与え、投資判断やコンプライアンス方針の再検討を促す可能性がある。</div>
+                    <div><b>消費者目線</b>: 利用者はAI回答の信頼性を高めるためにシステムを参照できるようになるが、選択肢が増えることで混乱も生じ得る。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251224/k10015011931000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251224/k10015011931000.html</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44797" class="topic-row"
+            data-title="メガソーラー支援廃止含め検討 太陽光発電の目標達成へ道筋は"
+            data-summary="政府がメガソーラー導入支援を再来年度以降廃止することを検討し、2040年度までに太陽光発電比率を倍増させる計画を示した。"
+            data-imp="45"
+            data-date="2025-12-23T20:06:11+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp">重要度 45</span>
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251224/k10015012011000.html" target="_blank" rel="noopener">メガソーラー支援廃止含め検討 太陽光発電の目標達成へ道筋は</a>
+            <span class="date">2025/12/24 05:06</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：政府がメガソーラー導入支援を再来年度以降廃止することを検討し、2040年度までに太陽光発電比率を倍増させる計画を示した。</div>
+
+                
+                  <ul class="kps">
+                    <li>政府は23日、大規模太陽光発電施設「メガソーラー」の導入支援を再来年度以降廃止することも含めて検討する旨を発表した。</li><li>エネルギー基本計画では2040年度に太陽光発電の割合を現在の2倍以上に増やす目標が設定されている。</li><li>達成への具体的な道筋を示すことが課題とされた。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: メガソーラー支援廃止は設計・施工段階でのコスト削減につながる可能性がある。一方、再生可能エネルギー比率増加目標に対して技術的な代替策を検討する必要がある。</div>
+                    <div><b>経営者目線</b>: 企業としては支援廃止による投資リスク低減と同時に、2040年度の発電比率拡大に向けた長期戦略の再構築が求められる。市場シェア維持には新規技術導入や提携も視野に入れるべきだ。</div>
+                    <div><b>消費者目線</b>: 一般消費者は太陽光発電比率増加でクリーンエネルギー供給が拡大し、長期的な電力価格安定化が期待できる。一方、導入支援廃止による初期投資負担増の懸念もある。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251224/k10015012011000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251224/k10015012011000.html</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44800" class="topic-row"
+            data-title="外国人住民 全国の市区町村96％で増加 うち半数で2倍以上に"
+            data-summary="日本の市区町村96％で外国人住民が増加し、半数は2倍以上になった。国は早急に受け入れ体制を整備すべきと専門家が指摘している。"
+            data-imp="30"
+            data-date="2025-12-23T19:39:14+00:00"
+            data-tags="外国人,人口増加,受け入れ体制">
+
+           <div>
+            <span class="badge imp">重要度 30</span>
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251224/k10015011861000.html" target="_blank" rel="noopener">外国人住民 全国の市区町村96％で増加 うち半数で2倍以上に</a>
+            <span class="date">2025/12/24 04:39</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">外国人</span>
+                
+                  <span class="badge">人口増加</span>
+                
+                  <span class="badge">受け入れ体制</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：日本の市区町村96％で外国人住民が増加し、半数は2倍以上になった。国は早急に受け入れ体制を整備すべきと専門家が指摘している。</div>
+
+                
+                  <ul class="kps">
+                    <li>外国人住民は全国の市区町村96％（約1600自治体）で増加した</li><li>そのうち半数の自治体では外国人住民が2倍以上に増えた</li><li>専門家は担い手不足を背景に急激な増加を指摘し、国への早期受け入れ体制整備を要請している</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 都市インフラや公共サービスの設計・運用において、多様な言語・文化対応が必要になる可能性があります。既存システムの多言語化や障害者支援機能の拡充を検討すべきです。</div>
+                    <div><b>経営者目線</b>: 人材不足解消と地域活性化の観点から、外国人受け入れ体制強化は経営戦略に組み込む価値があります。投資先やパートナーシップを早期に確定することが重要です。</div>
+                    <div><b>消費者目線</b>: 住民としては多様な文化交流が期待できる一方で、サービス利用時の言語障壁や情報不足が不安要因となります。自治体からの情報提供とサポート体制が求められます。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251224/k10015011861000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251224/k10015011861000.html</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44802" class="topic-row"
+            data-title="トランプ大統領FRBパウエル議長後任近く発表へ人事の行方は"
+            data-summary="アメリカのトランプ大統領がFRBパウエル議長後任を近く発表予定で、金融政策に影響を与える人物が有力視されている。"
+            data-imp="70"
+            data-date="2025-12-23T19:25:04+00:00"
+            data-tags="金融政策,FRB,トランプ">
+
+           <div>
+            <span class="badge imp">重要度 70</span>
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251224/k10015011981000.html" target="_blank" rel="noopener">トランプ大統領FRBパウエル議長後任近く発表へ人事の行方は</a>
+            <span class="date">2025/12/24 04:25</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">金融政策</span>
+                
+                  <span class="badge">FRB</span>
+                
+                  <span class="badge">トランプ</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：アメリカのトランプ大統領がFRBパウエル議長後任を近く発表予定で、金融政策に影響を与える人物が有力視されている。</div>
+
+                
+                  <ul class="kps">
+                    <li>トランプ大統領はFRBパウエル議長後任を近く発表する方針とした。</li><li>ハセット氏やウォーシュ氏などが有力候補として挙げられている。</li><li>FRB議長人事は世界の金融市場に影響を及ぼす可能性がある。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: FRB議長の変更は金利政策や金融規制に直結し、金融機関のリスク管理・システム設計に即時的な調整が必要になる可能性があります。</div>
+                    <div><b>経営者目線</b>: 経営層としては金利変動による資金調達コストや投資判断への影響を早期に評価し、戦略的対応策を検討するべきです。</div>
+                    <div><b>消費者目線</b>: 一般消費者は金利上昇・低下が住宅ローンやクレジットカードの金利に直結し、生活費や貯蓄計画に影響を与えるため注意が必要です。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251224/k10015011981000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251224/k10015011981000.html</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44796" class="topic-row"
+            data-title="三重県 外国籍の県職員採用 来年度から取りやめる方向で検討"
+            data-summary="三重県が1999年度以降の外国籍県職員採用を来年度から取りやめる方向で検討し、1万人へのアンケート後に正式決定予定。"
+            data-imp="20"
+            data-date="2025-12-23T18:09:42+00:00"
+            data-tags="人事,外国籍,個人情報">
+
+           <div>
+            <span class="badge imp">重要度 20</span>
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251224/k10015012091000.html" target="_blank" rel="noopener">三重県 外国籍の県職員採用 来年度から取りやめる方向で検討</a>
+            <span class="date">2025/12/24 03:09</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">人事</span>
+                
+                  <span class="badge">外国籍</span>
+                
+                  <span class="badge">個人情報</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：三重県が1999年度以降の外国籍県職員採用を来年度から取りやめる方向で検討し、1万人へのアンケート後に正式決定予定。</div>
+
+                
+                  <ul class="kps">
+                    <li>1999年度以降行ってきた外国籍県職員採用を取りやめる方針を検討中</li><li>三重県は秘匿性の高い個人情報が守れなくなる恐れを理由にしている</li><li>来月から約1万人へのアンケート調査を実施し、正式決定する予定</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 採用停止による業務プロセスやシステム統合の見直しが必要になる可能性がある。人事情報管理システムのアクセス権限設定やデータ保護対策を再評価すべきだと考える。</div>
+                    <div><b>経営者目線</b>: 組織として多様性確保と個人情報保護のバランスを取ることは重要であり、今回の方針変更はリスク管理上正当化されるが、採用停止による業務負荷増大やブランドイメージへの影響も考慮すべき。</div>
+                    <div><b>消費者目線</b>: 県民としては個人情報保護を重視する姿勢に安心感を覚える一方で、外国籍職員の減少が行政サービスの多様性や専門性に影響を与える懸念もある。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251224/k10015012091000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251224/k10015012091000.html</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44801" class="topic-row"
+            data-title="陸自オスプレイ 平均稼働率40％切る状態続く 整備員不足課題"
+            data-summary="陸上自衛隊のオスプレイ平均稼働率が40％未満で続き、整備員と部品不足が原因。整備員優先配置を検討中。"
+            data-imp="45"
+            data-date="2025-12-23T18:07:53+00:00"
+            data-tags="jp,news,NHK NEWS (Japan)">
+
+           <div>
+            <span class="badge imp">重要度 45</span>
+            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251224/k10015012131000.html" target="_blank" rel="noopener">陸自オスプレイ 平均稼働率40％切る状態続く 整備員不足課題</a>
+            <span class="date">2025/12/24 03:07</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">NHK NEWS (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">NHK NEWS (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：陸上自衛隊のオスプレイ平均稼働率が40％未満で続き、整備員と部品不足が原因。整備員優先配置を検討中。</div>
+
+                
+                  <ul class="kps">
+                    <li>オスプレイ平均稼働率が40％未満に低下している。</li><li>整備員不足が主要因として挙げられている。</li><li>部品不足も問題点として指摘されている。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 整備員とパーツ供給のボトルネックは、システム全体の稼働率に直結するため、メンテナンススケジュールや在庫管理を見直す必要がある。短期的には人員配置の最適化で改善可能だが、長期的には自動化支援ツール導入も検討すべき。</div>
+                    <div><b>経営者目線</b>: 稼働率低下は任務遂行能力に影響し、予算超過や信頼性低下を招くリスクがある。人員投入と資材調達の優先順位を再評価し、短期的対策として緊急採用や外部委託を検討するべきだ。</div>
+                    <div><b>消費者目線</b>: 一般市民にとっては防衛力への不安要因となり得るが、具体的な影響は限定的である。情報公開と透明性の確保が重要で、国民の安心感を維持するためにも改善策の進捗報告が望まれる。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251224/k10015012131000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251224/k10015012131000.html</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44807" class="topic-row"
+            data-title="米ＧＤＰ、４．３％増　強い成長、さらに加速―７～９月期"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-23T14:09:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp">重要度 0</span>
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300974&g=int&m=rss" target="_blank" rel="noopener">米ＧＤＰ、４．３％増　強い成長、さらに加速―７～９月期</a>
+            <span class="date">2025/12/23 23:09</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+
+          </li>
+
+        
+          <li id="news-44805" class="topic-row"
+            data-title="少女の母親、台湾からタイに移送　東京マッサージ店事件"
+            data-summary="少女の母親が台湾からタイへ移送され、東京マッサージ店事件に関与したと報じられた。"
+            data-imp="30"
+            data-date="2025-12-23T12:59:00+00:00"
+            data-tags="マッサージ店事件,台湾,タイ">
+
+           <div>
+            <span class="badge imp">重要度 30</span>
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300672&g=int&m=rss" target="_blank" rel="noopener">少女の母親、台湾からタイに移送　東京マッサージ店事件</a>
+            <span class="date">2025/12/23 21:59</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">マッサージ店事件</span>
+                
+                  <span class="badge">台湾</span>
+                
+                  <span class="badge">タイ</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：少女の母親が台湾からタイへ移送され、東京マッサージ店事件に関与したと報じられた。</div>
+
+                
+                  <ul class="kps">
+                    <li>少女の母親が台湾出身であること</li><li>彼女はタイへ移送されたこと</li><li>事件は東京のマッサージ店で起きたこと</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 技術的観点では、個人情報保護や国境を越えるデータ転送に関する法規制が影響し得る。</div>
+                    <div><b>経営者目線</b>: 経営面では、店舗運営のリスク管理と国際的な法令遵守が重要になる。</div>
+                    <div><b>消費者目線</b>: 消費者はサービス利用時の安全性と個人情報保護をより重視するようになるだろう。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300672&g=int&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300672&g=int&m=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44809" class="topic-row"
+            data-title="高市首相、総裁選支援議員と会合"
+            data-summary="高市首相は総裁選支援議員と会合したが、詳細な内容は不明で実務への影響は小さい。"
+            data-imp="0"
+            data-date="2025-12-23T12:43:00+00:00"
+            data-tags="政治">
+
+           <div>
+            <span class="badge imp">重要度 0</span>
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300949&g=pol&m=rss" target="_blank" rel="noopener">高市首相、総裁選支援議員と会合</a>
+            <span class="date">2025/12/23 21:43</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">政治</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：高市首相は総裁選支援議員と会合したが、詳細な内容は不明で実務への影響は小さい。</div>
+
+                
+                  <ul class="kps">
+                    <li>高市首相が総裁選支援議員と会合を行ったこと</li><li>会合の具体的な議題や結論については報道されていないこと</li><li>この出来事に関する情報は限定的であること</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 本件は技術面への直接影響が見られず、システム修正や検証の必要性も低い。将来的な政策変更がITインフラに波及する可能性は極めて小さいと判断される。</div>
+                    <div><b>経営者目線</b>: 経営者視点では、政治的関与が企業活動に直接影響を与えるケースは稀であり、本件は業務上のリスク管理対象外と見なせる。</div>
+                    <div><b>消費者目線</b>: 一般消費者としては、今回の会合が日常生活やサービス利用に直結する情報は乏しく、関心度も低いと考えられる。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300949&g=pol&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300949&g=pol&m=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44811" class="topic-row"
+            data-title="常在菌が変化、社会性向上か　犬を飼う家庭の子ども―麻布大や群馬大など"
+            data-summary="犬を飼う家庭の子どもで常在菌が変化し、社会性向上に寄与する可能性が示唆された。"
+            data-imp="30"
+            data-date="2025-12-23T12:34:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp">重要度 30</span>
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300579&g=soc&m=rss" target="_blank" rel="noopener">常在菌が変化、社会性向上か　犬を飼う家庭の子ども―麻布大や群馬大など</a>
+            <span class="date">2025/12/23 21:34</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：犬を飼う家庭の子どもで常在菌が変化し、社会性向上に寄与する可能性が示唆された。</div>
+
+                
+                  <ul class="kps">
+                    <li>犬を飼う子どもの腸内細菌叢が変化したことが報告された。</li><li>変化は社会的行動の改善と関連していると考えられる。</li><li>研究は麻布大学・群馬大学で実施された。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 犬飼育環境における微生物管理やデータ収集が重要になる可能性がある。既存の健康モニタリングシステムへの統合を検討すべきだ。</div>
+                    <div><b>経営者目線</b>: 子どもの社会性向上は教育・福祉分野で注目されるため、犬飼育支援策や関連サービスの市場拡大が期待できる。</div>
+                    <div><b>消費者目線</b>: ペットと暮らすことで子どもの発達に良い影響があるかもしれないと感じる親は増えるだろう。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300579&g=soc&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300579&g=soc&m=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
         
           <li id="news-44414" class="topic-row"
             data-title="【会見ライブ】福井 転換炉「ふげん」でトリチウム含む水漏れ"
@@ -932,8 +1597,7 @@ a{color:inherit}
             data-tags="jp,news,NHK NEWS (Japan)">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011761000.html" target="_blank" rel="noopener">【会見ライブ】福井 転換炉「ふげん」でトリチウム含む水漏れ</a>
             <span class="date">2025/12/23 20:49</span>
 
@@ -971,6 +1635,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者としては、今回の漏れによる環境汚染や健康被害は報告されていないため、安心できる情報だと感じられる。しかし、原子力施設に対する不安は残る可能性がある。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251223/k10015011761000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251223/k10015011761000.html</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -985,8 +1658,7 @@ a{color:inherit}
             data-tags="politics,health,minister">
 
            <div>
-            <span class="badge imp-0">重要度 0</span>
-            
+            <span class="badge imp">重要度 0</span>
             <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011841000.html" target="_blank" rel="noopener">赤澤経産相 24日～1月5日まで入院 健康管理のための軽微手術で</a>
             <span class="date">2025/12/23 20:45</span>
 
@@ -1024,6 +1696,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般市民に対しては、政府機関の重要ポジションに欠員が出た際の代理体制がしっかり機能していることへの安心感を提供できる。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251223/k10015011841000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251223/k10015011841000.html</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1038,8 +1719,7 @@ a{color:inherit}
             data-tags="人事,金融,資産運用">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011831000.html" target="_blank" rel="noopener">三井住友トラストグループ 新社長に大山一也氏が昇格</a>
             <span class="date">2025/12/23 20:44</span>
 
@@ -1077,6 +1757,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者には直接的なサービス変更はないものの、将来的により多様な投資商品や運用オプションが提供される可能性があるため期待が高まる。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251223/k10015011831000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251223/k10015011831000.html</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1091,8 +1780,7 @@ a{color:inherit}
             data-tags="sports,discipline">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011851000.html" target="_blank" rel="noopener">サッカーJリーグ J1町田 黒田監督に懲罰処分 暴言や無双指導</a>
             <span class="date">2025/12/23 20:42</span>
 
@@ -1128,6 +1816,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般ファンは監督の行為に失望し、チームへの支持姿勢が揺らぐ可能性がある。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251223/k10015011851000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251223/k10015011851000.html</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1142,8 +1839,7 @@ a{color:inherit}
             data-tags="budget,politics">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011821000.html" target="_blank" rel="noopener">高市首相 来年度予算案“来年のできるだけ早期に成立目指す”</a>
             <span class="date">2025/12/23 20:18</span>
 
@@ -1179,6 +1875,137 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者にとっては予算案の早期成立が生活インフラや福祉サービスへの投資につながり、将来的な負担軽減になる可能性がある。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251223/k10015011821000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251223/k10015011821000.html</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44808" class="topic-row"
+            data-title="町田の黒田監督にけん責　反省なし、口止め工作も―Ｊリーグ"
+            data-summary="Jリーグの町田クラブで黒田監督にけん責が入り、反省なしと批判され、さらに口止め工作も報じられた。"
+            data-imp="30"
+            data-date="2025-12-23T11:13:00+00:00"
+            data-tags="Jリーグ,けん責,口止め">
+
+           <div>
+            <span class="badge imp">重要度 30</span>
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300782&g=spo&m=rss" target="_blank" rel="noopener">町田の黒田監督にけん責　反省なし、口止め工作も―Ｊリーグ</a>
+            <span class="date">2025/12/23 20:13</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">Jリーグ</span>
+                
+                  <span class="badge">けん責</span>
+                
+                  <span class="badge">口止め</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：Jリーグの町田クラブで黒田監督にけん責が入り、反省なしと批判され、さらに口止め工作も報じられた。</div>
+
+                
+                  <ul class="kps">
+                    <li>町田クラブの黒田監督がけん責を受けたことが報道された。</li><li>報道では黒田監督に対して反省がないと指摘されている。</li><li>同時に、口止め工作が行われたという情報も含まれている。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 技術的観点からは直接の影響は少ないものの、組織内でのコミュニケーションやリーダーシップに関する教訓として留意すべき。</div>
+                    <div><b>経営者目線</b>: 経営者視点では、監督へのけん責がチームイメージに与える影響を評価し、内部統制と外部対応策を検討する必要がある。</div>
+                    <div><b>消費者目線</b>: ファンや一般消費者は選手・監督の行動に対して関心を持ち、クラブへの信頼感に変化が生じる可能性がある。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300782&g=spo&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300782&g=spo&m=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44812" class="topic-row"
+            data-title="海兵隊射撃訓練に重火器　米が意向、全国５演習場"
+            data-summary="米軍が海兵隊の重火器射撃訓練を全国5演習場で実施する意向を示した。"
+            data-imp="30"
+            data-date="2025-12-23T11:07:00+00:00"
+            data-tags="海兵隊,射撃訓練,米国">
+
+           <div>
+            <span class="badge imp">重要度 30</span>
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300898&g=pol&m=rss" target="_blank" rel="noopener">海兵隊射撃訓練に重火器　米が意向、全国５演習場</a>
+            <span class="date">2025/12/23 20:07</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">海兵隊</span>
+                
+                  <span class="badge">射撃訓練</span>
+                
+                  <span class="badge">米国</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：米軍が海兵隊の重火器射撃訓練を全国5演習場で実施する意向を示した。</div>
+
+                
+                  <ul class="kps">
+                    <li>米軍は海兵隊の重火器射撃訓練を全国5つの演習場で行う計画を発表した。</li><li></li><li></li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 現場エンジニアとしては、既存システムへの影響は限定的だが、装備や通信機材の更新・検証が必要になる可能性がある。</div>
+                    <div><b>経営者目線</b>: 経営者視点では、訓練拡大に伴うコスト増加とリスク管理を事前に評価し、予算配分を見直すべきである。</div>
+                    <div><b>消費者目線</b>: 一般消費者としては、軍事訓練の拡大が地域社会や安全保障への影響を考慮する必要があり、情報公開と透明性が求められる。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300898&g=pol&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300898&g=pol&m=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1193,8 +2020,7 @@ a{color:inherit}
             data-tags="政府,女性参画,法改正">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300719&g=pol&m=rss" target="_blank" rel="noopener">男女参画計画、年内策定見送り　旧姓法制化巡る調整難航―政府・自民</a>
             <span class="date">2025/12/23 19:48</span>
 
@@ -1232,6 +2058,76 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者としては、企業が男女平等を重視する姿勢が評価される一方で、遅延による社会的影響やサービス提供への影響も注目したい。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300719&g=pol&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300719&g=pol&m=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44810" class="topic-row"
+            data-title="ＮＥＸＩに国債１．７兆円交付　日米合意履行へ備え―閣僚折衝"
+            data-summary=""
+            data-imp="0"
+            data-date="2025-12-23T10:45:00+00:00"
+            data-tags="jp,news,Jiji Press (Japan)">
+
+           <div>
+            <span class="badge imp">重要度 0</span>
+            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300888&g=pol&m=rss" target="_blank" rel="noopener">ＮＥＸＩに国債１．７兆円交付　日米合意履行へ備え―閣僚折衝</a>
+            <span class="date">2025/12/23 19:45</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">jp</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">Jiji Press (Japan)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">Jiji Press (Japan)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+
+                
+                  <ul class="kps">
+                    <li></li><li></li><li></li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    
+                    
+                    
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300888&g=pol&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300888&g=pol&m=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1246,8 +2142,7 @@ a{color:inherit}
             data-tags="強盗,防犯カメラ,現金">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011721000.html" target="_blank" rel="noopener">静岡 長泉町強盗事件 3人組の男ら2時間以上前から付近下見か</a>
             <span class="date">2025/12/23 19:44</span>
 
@@ -1285,6 +2180,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 住民や利用者は防犯カメラ設置状況を確認し、安全意識を高める必要がある。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251223/k10015011721000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251223/k10015011721000.html</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1299,8 +2203,7 @@ a{color:inherit}
             data-tags="野生動物,市場,秋田">
 
            <div>
-            <span class="badge imp-0">重要度 0</span>
-            
+            <span class="badge imp">重要度 0</span>
             <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011751000.html" target="_blank" rel="noopener">秋田 卸売市場倉庫に入り込んでいたクマ 箱わなで捕獲され駆除</a>
             <span class="date">2025/12/23 19:15</span>
 
@@ -1338,6 +2241,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者にとっては、野生動物との接触リスクが低いものの、市場利用時には安全対策を確認し安心して取引できる環境づくりが求められる。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251223/k10015011751000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251223/k10015011751000.html</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1352,8 +2264,7 @@ a{color:inherit}
             data-tags="原発,再稼働,安全性">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300847&g=pol&m=rss" target="_blank" rel="noopener">高市首相、柏崎原発視察に意欲</a>
             <span class="date">2025/12/23 19:03</span>
 
@@ -1391,6 +2302,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者としては、安全性の確保が最優先であり、政府や運営会社からの透明な説明と監視体制の強化を求める。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300847&g=pol&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300847&g=pol&m=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1405,8 +2325,7 @@ a{color:inherit}
             data-tags="jp,news,Jiji Press (Japan)">
 
            <div>
-            <span class="badge imp-40">重要度 40</span>
-            
+            <span class="badge imp">重要度 40</span>
             <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300694&g=soc&m=rss" target="_blank" rel="noopener">千葉ロッテが不当表示疑い　改善計画認定、サインボール巡り―消費者庁</a>
             <span class="date">2025/12/23 18:31</span>
 
@@ -1444,6 +2363,15 @@ a{color:inherit}
                     
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300694&g=soc&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300694&g=soc&m=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1458,8 +2386,7 @@ a{color:inherit}
             data-tags="jp,news,Jiji Press (Japan)">
 
            <div>
-            <span class="badge imp-0">重要度 0</span>
-            
+            <span class="badge imp">重要度 0</span>
             <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300819&g=pol&m=rss" target="_blank" rel="noopener">国民・玉木氏、政権入りに慎重姿勢　「政策ごと判断する」</a>
             <span class="date">2025/12/23 18:14</span>
 
@@ -1497,6 +2424,15 @@ a{color:inherit}
                     
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300819&g=pol&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300819&g=pol&m=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1511,8 +2447,7 @@ a{color:inherit}
             data-tags="政治,選挙">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300797&g=pol&m=rss" target="_blank" rel="noopener">自民と選挙協力「不可能」　維新・藤田氏、定数減巡り不満</a>
             <span class="date">2025/12/23 17:48</span>
 
@@ -1548,6 +2483,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般市民には直接の影響は薄いが、選挙結果によって政策変更が生じる可能性を考慮すべき。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300797&g=pol&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300797&g=pol&m=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1562,8 +2506,7 @@ a{color:inherit}
             data-tags="jp,news,Jiji Press (Japan)">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300794&g=soc&m=rss" target="_blank" rel="noopener">メガソーラー導入支援、廃止を検討　２７年度以降―政府</a>
             <span class="date">2025/12/23 17:46</span>
 
@@ -1601,6 +2544,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者は電力料金への影響や環境負荷の増大を懸念する可能性があり、エネルギー選択の多様化が求められる。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300794&g=soc&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300794&g=soc&m=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1615,8 +2567,7 @@ a{color:inherit}
             data-tags="jp,news,Jiji Press (Japan)">
 
            <div>
-            <span class="badge imp-45">重要度 45</span>
-            
+            <span class="badge imp">重要度 45</span>
             <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300583&g=int&m=rss" target="_blank" rel="noopener">生きたままゆでるの禁止　ロブスターにも苦痛―英</a>
             <span class="date">2025/12/23 14:43</span>
 
@@ -1654,6 +2605,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 消費者はレストランで提供されるロブスター料理に対して、より倫理的な調理方法を期待し、規制遵守の証明や情報開示を求める傾向が強まると予想されます。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.jiji.com/jc/article?k=2025122300583&g=int&m=rss" target="_blank" rel="noopener">https://www.jiji.com/jc/article?k=2025122300583&g=int&m=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1668,8 +2628,7 @@ a{color:inherit}
             data-tags="宇宙,基金,技術開発">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011381000.html" target="_blank" rel="noopener">宇宙基本計画の新工程表決定 政府 1兆円規模の技術開発支援へ</a>
             <span class="date">2025/12/23 14:39</span>
 
@@ -1707,6 +2666,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者は、宇宙技術の進展によって通信や地球観測サービスの品質向上を期待できる。しかし、政府投資が民間サービス価格に影響を与える可能性もあるため注視する必要がある。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251223/k10015011381000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251223/k10015011381000.html</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -1721,8 +2689,7 @@ a{color:inherit}
             data-tags="核保有,非核三原則,被爆者抗議">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011371000.html" target="_blank" rel="noopener">“核保有”発言受け 被爆者ら抗議 非核三原則の堅持表明を要請</a>
             <span class="date">2025/12/23 14:26</span>
 
@@ -1760,710 +2727,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者視点では、核政策の変更が安全保障やエネルギー政策に直結する可能性があり、不安要因となりうる。</div>
                   </div>
                 
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-44031" class="topic-row"
-            data-title="トランプ政権 約30か国の大使や幹部に配置転換通告 米メディア"
-            data-summary="トランプ政権が約30か国の在外公館大使・幹部に配置転換を通告し、バイデン前政権で任命された人物が対象となった。"
-            data-imp="0"
-            data-date="2025-12-23T05:17:01+00:00"
-            data-tags="politics,foreignpolicy">
-
-           <div>
-            <span class="badge imp-0">重要度 0</span>
-            
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011391000.html" target="_blank" rel="noopener">トランプ政権 約30か国の大使や幹部に配置転換通告 米メディア</a>
-            <span class="date">2025/12/23 14:17</span>
-
-            
-              <span class="small">
                 
-                  <span class="badge">politics</span>
-                
-                  <span class="badge">foreignpolicy</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">NHK NEWS (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：トランプ政権が約30か国の在外公館大使・幹部に配置転換を通告し、バイデン前政権で任命された人物が対象となった。</div>
-
-                
-                  <ul class="kps">
-                    <li>トランプ政権は約30か国の在外公館に勤務する大使や幹部職員に対し配置転換を通告した。</li><li>いずれもバイデン前政権のもとで起用された人物だということです。</li><li>アメリカメディアがその情報を報じた。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術的な影響は少ないものの、外交関係に伴うシステム連携やデータ共有プロセスへの調整が必要になる可能性があります。</div>
-                    <div><b>経営者目線</b>: 経営層としては、国際取引先との信頼関係を維持するため、迅速な情報共有とリスク管理体制の強化が求められます。</div>
-                    <div><b>消費者目線</b>: 一般消費者に直接的な影響は限定的ですが、外交政策の変動が経済や貿易に波及する可能性があります。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-44030" class="topic-row"
-            data-title="メガソーラー導入支援 再来年度以降廃止含め検討 関係閣僚会議"
-            data-summary="政府がメガソーラープロジェクトの導入支援を再来年度以降廃止するか検討し、再エネ賦課金で資金調達する対策パッケージを決定した。"
-            data-imp="80"
-            data-date="2025-12-23T05:15:13+00:00"
-            data-tags="jp,news,NHK NEWS (Japan)">
-
-           <div>
-            <span class="badge imp-80">重要度 80</span>
-            
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011191000.html" target="_blank" rel="noopener">メガソーラー導入支援 再来年度以降廃止含め検討 関係閣僚会議</a>
-            <span class="date">2025/12/23 14:15</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">jp</span>
-                
-                  <span class="badge">news</span>
-                
-                  <span class="badge">NHK NEWS (Japan)</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">NHK NEWS (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：政府がメガソーラープロジェクトの導入支援を再来年度以降廃止するか検討し、再エネ賦課金で資金調達する対策パッケージを決定した。</div>
-
-                
-                  <ul class="kps">
-                    <li>政府は23日、メガソラー導入支援の再来年度以降廃止も含めて検討することを正式に決定した。</li><li>導入支援は再エネ賦課金を原資とする対策パッケージに組み込まれた。</li><li>メガソーラーは大規模太陽光発電施設で、日本の再生可能エネルギー政策に大きな転機となる。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 導入支援廃止検討は、既存メガソーラープロジェクトの資金調達計画を見直す必要がある。6か月以内に影響判断が求められ、設計・運用への変更が生じる可能性が高い。</div>
-                    <div><b>経営者目線</b>: 政策変更は再エネ市場全体に波及し、投資戦略の再構築が不可欠になる。廃止検討は業界競争環境を変える要因となり、長期的な収益計画への影響も大きい。</div>
-                    <div><b>消費者目線</b>: 一般消費者は電力料金に直接影響が出る可能性がある。再エネ賦課金の調整で価格変動が起こるため、将来の光熱費を見越した生活設計が必要になる。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-44033" class="topic-row"
-            data-title="神戸 エレベーター転落死亡事故 事故前に制御盤の回路変更か"
-            data-summary="神戸市の商業ビルで、開いたまま残っていたエレベーター扉から男性が転落死亡。調査部会は修理時に制御盤回路を通常と異なる方法で変更し、カゴなしでも扉が開くようになったと報告した。"
-            data-imp="60"
-            data-date="2025-12-23T05:01:24+00:00"
-            data-tags="elevator,safety,Japan">
-
-           <div>
-            <span class="badge imp-60">重要度 60</span>
-            
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011321000.html" target="_blank" rel="noopener">神戸 エレベーター転落死亡事故 事故前に制御盤の回路変更か</a>
-            <span class="date">2025/12/23 14:01</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">elevator</span>
-                
-                  <span class="badge">safety</span>
-                
-                  <span class="badge">Japan</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">NHK NEWS (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：神戸市の商業ビルで、開いたまま残っていたエレベーター扉から男性が転落死亡。調査部会は修理時に制御盤回路を通常と異なる方法で変更し、カゴなしでも扉が開くようになったと報告した。</div>
-
-                
-                  <ul class="kps">
-                    <li>神戸市の商業ビルでエレベーター扉から男性が転落死亡した</li><li>調査部会は修理時に制御盤回路を通常とは異なる方法で変更したと報告</li><li>その結果、カゴがなくても扉が開くようになっていた</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: エレベーターの制御盤回路変更は設計上の安全機構を破壊し、予期せぬ動作を招くリスクが高い。今後は修理時に標準手順と検証プロセスを徹底し、異常変更を防止する必要がある。</div>
-                    <div><b>経営者目線</b>: 今回の事故は企業イメージや顧客信頼に大きなダメージを与える可能性がある。安全管理体制の見直しと迅速な情報開示・対応策の実施が求められる。</div>
-                    <div><b>消費者目線</b>: 一般利用者としては、エレベーターの安全機能が確保されているか不安になる。企業側は透明性を持って対策を説明し、安心感を提供することが重要だ。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-44034" class="topic-row"
-            data-title="外国人材123万人余受け入れへ 特定技能制度と育成就労制度で"
-            data-summary="政府は2029年3月末までに特定技能制度と育成就労制度で123万人余りの外国人を受け入れる方針を示した。"
-            data-imp="45"
-            data-date="2025-12-23T04:22:47+00:00"
-            data-tags="immigration,labor,foreignworkers">
-
-           <div>
-            <span class="badge imp-45">重要度 45</span>
-            
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011331000.html" target="_blank" rel="noopener">外国人材123万人余受け入れへ 特定技能制度と育成就労制度で</a>
-            <span class="date">2025/12/23 13:22</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">immigration</span>
-                
-                  <span class="badge">labor</span>
-                
-                  <span class="badge">foreignworkers</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">NHK NEWS (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：政府は2029年3月末までに特定技能制度と育成就労制度で123万人余りの外国人を受け入れる方針を示した。</div>
-
-                
-                  <ul class="kps">
-                    <li>政府が特定技能制度で外国人を受け入れることを決定</li><li>再来年から導入する育成就労制度により専門技能を持つ外国人材を育てる計画</li><li>2029年3月末までに123万人余りの外国人を受け入れる方針が明らかになった</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術者としては、外国人労働者の増加により専門分野でのスキルギャップが縮小し、プロジェクトの多様性やイノベーション促進につながる可能性があります。</div>
-                    <div><b>経営者目線</b>: 経営者視点では、人手不足解消とコスト削減を図れる一方、採用・教育体制の整備が必要となり、短期的な投資が求められます。</div>
-                    <div><b>消費者目線</b>: 一般消費者にとっては、サービス提供者の増加や競争激化による価格低下や選択肢拡大が期待できる一方で、労働市場への影響を懸念する声もあります。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-44038" class="topic-row"
-            data-title="マンションに男性遺体、殺害されたか　母子４人死亡事件の捜査で発見―警視庁"
-            data-summary=""
-            data-imp="0"
-            data-date="2025-12-23T04:04:00+00:00"
-            data-tags="jp,news,Jiji Press (Japan)">
-
-           <div>
-            <span class="badge imp-0">重要度 0</span>
-            
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300491&g=soc&m=rss" target="_blank" rel="noopener">マンションに男性遺体、殺害されたか　母子４人死亡事件の捜査で発見―警視庁</a>
-            <span class="date">2025/12/23 13:04</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">jp</span>
-                
-                  <span class="badge">news</span>
-                
-                  <span class="badge">Jiji Press (Japan)</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">Jiji Press (Japan)</div>
-
-           
-
-          </li>
-
-        
-          <li id="news-44045" class="topic-row"
-            data-title="ＵＡＥ大統領、２月に国賓来日　首脳会談で協力強化確認へ"
-            data-summary="情報が不足しているため、詳細な分析はできません。"
-            data-imp="0"
-            data-date="2025-12-23T02:57:00+00:00"
-            data-tags="unknown">
-
-           <div>
-            <span class="badge imp-0">重要度 0</span>
-            
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300445&g=pol&m=rss" target="_blank" rel="noopener">ＵＡＥ大統領、２月に国賓来日　首脳会談で協力強化確認へ</a>
-            <span class="date">2025/12/23 11:57</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">unknown</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">Jiji Press (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：情報が不足しているため、詳細な分析はできません。</div>
-
-                
-                  <ul class="kps">
-                    <li>本文に明記された事実1（該当なし）</li><li>本文に明記された事実2（該当なし）</li><li>本文に明記された事実3（該当なし）</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 情報不足のため、技術的影響は不明。</div>
-                    <div><b>経営者目線</b>: 経営面での判断材料が不足している。</div>
-                    <div><b>消費者目線</b>: 消費者への直接的な影響は確認できない。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-44043" class="topic-row"
-            data-title="最高裁判事に阿多氏　弁護士、岡氏後任"
-            data-summary=""
-            data-imp="0"
-            data-date="2025-12-23T02:47:00+00:00"
-            data-tags="news">
-
-           <div>
-            <span class="badge imp-0">重要度 0</span>
-            
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300434&g=soc&m=rss" target="_blank" rel="noopener">最高裁判事に阿多氏　弁護士、岡氏後任</a>
-            <span class="date">2025/12/23 11:47</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">news</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">Jiji Press (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-
-                
-                  <ul class="kps">
-                    <li></li><li></li><li></li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
                     
-                    
+                      <a href="http://www3.nhk.or.jp/news/html/20251223/k10015011371000.html" target="_blank" rel="noopener">http://www3.nhk.or.jp/news/html/20251223/k10015011371000.html</a>
                     
                   </div>
                 
-              </details>
-          
 
-          </li>
-
-        
-          <li id="news-44042" class="topic-row"
-            data-title="波瑠さん、高杉真宙さん結婚"
-            data-summary="波瑠さんと高杉真宙さんが結婚したというニュース。詳細は未記載。"
-            data-imp="0"
-            data-date="2025-12-23T02:39:00+00:00"
-            data-tags="celebrity,marriage">
-
-           <div>
-            <span class="badge imp-0">重要度 0</span>
-            
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300426&g=soc&m=rss" target="_blank" rel="noopener">波瑠さん、高杉真宙さん結婚</a>
-            <span class="date">2025/12/23 11:39</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">celebrity</span>
-                
-                  <span class="badge">marriage</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">Jiji Press (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：波瑠さんと高杉真宙さんが結婚したというニュース。詳細は未記載。</div>
-
-                
-                  <ul class="kps">
-                    <li></li><li></li><li></li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術的な影響はほぼないため、システムへの変更や検証の必要性は低い。</div>
-                    <div><b>経営者目線</b>: 経営上のリスクも限定的であり、特別な対応策は不要と判断される。</div>
-                    <div><b>消費者目線</b>: 一般消費者に対しては注目度が高い可能性があるが、実際の生活への影響は小さい。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-43646" class="topic-row"
-            data-title="さいたま 岩槻区 交差点で男性倒れ死亡 ひき逃げか"
-            data-summary="さいたま市岩槻区の交差点で60代男性が横断歩道を歩いていた際に車に衝突し死亡、警察はひき逃げとして捜査中。"
-            data-imp="20"
-            data-date="2025-12-23T01:48:31+00:00"
-            data-tags="交通事故,ひき逃げ">
-
-           <div>
-            <span class="badge imp-20">重要度 20</span>
-            
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011111000.html" target="_blank" rel="noopener">さいたま 岩槻区 交差点で男性倒れ死亡 ひき逃げか</a>
-            <span class="date">2025/12/23 10:48</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">交通事故</span>
-                
-                  <span class="badge">ひき逃げ</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">NHK NEWS (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：さいたま市岩槻区の交差点で60代男性が横断歩道を歩いていた際に車に衝突し死亡、警察はひき逃げとして捜査中。</div>
-
-                
-                  <ul class="kps">
-                    <li>23日未明、さいたま市岩槻区の交差点で60代男性が倒れているのが見つかり死亡した。</li><li>警察は現場状況から男性が横断歩道を歩いていたとみて車に乗せられたと判断した。</li><li>事件はひき逃げとして捜査されている。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 交通システムの安全性評価や自動運転技術の信頼性検証が重要になる可能性があります。事故原因解析には車両データ取得・解析基盤が必要です。</div>
-                    <div><b>経営者目線</b>: 企業は道路インフラへの投資や安全対策強化を検討し、リスクマネジメント体制を整備するべきです。顧客信頼維持の観点からも重要です。</div>
-                    <div><b>消費者目線</b>: 一般市民は横断歩道での注意喚起が必要であり、安全運転への意識向上が求められます。事故情報共有により地域安全対策が促進されるでしょう。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-43656" class="topic-row"
-            data-title="ジムビーム、一部工場１年停止　トランプ関税影響か―米"
-            data-summary="ジムビームの一部工場が1年間停止し、トランプ政権による関税影響が疑われる。"
-            data-imp="45"
-            data-date="2025-12-23T01:41:00+00:00"
-            data-tags="jp,news,Jiji Press (Japan)">
-
-           <div>
-            <span class="badge imp-45">重要度 45</span>
-            
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300204&g=int&m=rss" target="_blank" rel="noopener">ジムビーム、一部工場１年停止　トランプ関税影響か―米</a>
-            <span class="date">2025/12/23 10:41</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">jp</span>
-                
-                  <span class="badge">news</span>
-                
-                  <span class="badge">Jiji Press (Japan)</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">Jiji Press (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：ジムビームの一部工場が1年間停止し、トランプ政権による関税影響が疑われる。</div>
-
-                
-                  <ul class="kps">
-                    <li>ジムビームの一部工場が1年間停止した</li><li>停止理由として米国の関税政策が挙げられている</li><li>停止は製造ラインに大きな影響を与えている</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: トランプ政権の関税措置がサプライチェーンに直接的な障害をもたらし、既存システムの修正や代替部品調達が必要になる可能性があります。</div>
-                    <div><b>経営者目線</b>: 1年間の停止は売上減少と顧客信頼低下を招くため、短期的なリスク管理と長期的な市場戦略の再検討が不可欠です。</div>
-                    <div><b>消費者目線</b>: 消費者は製品供給遅延や価格変動に直面し、代替商品の選択肢を増やす</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-44039" class="topic-row"
-            data-title="「信頼できるＡＩ」で世界一に　初の基本計画、閣議決定"
-            data-summary="閣議でAI基本計画が決定された。"
-            data-imp="0"
-            data-date="2025-12-23T01:23:00+00:00"
-            data-tags="AI政策">
-
-           <div>
-            <span class="badge imp-0">重要度 0</span>
-            
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300289&g=pol&m=rss" target="_blank" rel="noopener">「信頼できるＡＩ」で世界一に　初の基本計画、閣議決定</a>
-            <span class="date">2025/12/23 10:23</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">AI政策</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">Jiji Press (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：閣議でAI基本計画が決定された。</div>
-
-                
-                  <ul class="kps">
-                    <li>閣議決定によりAI基本計画が策定された</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術者は、具体的な実装指針や標準化の必要性を検討するべきだと考える。</div>
-                    <div><b>経営者目線</b>: 経営者は、国策としてのAI推進による競争優位性を評価し、投資戦略を見直す必要がある。</div>
-                    <div><b>消費者目線</b>: 消費者は、政府主導でAI技術が発展するとサービス品質向上や利便性増大が期待できると感じる。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-43652" class="topic-row"
-            data-title="「トランプ級戦艦」建造へ　２隻、大統領が発表―米"
-            data-summary="米国大統領がトランプ級戦艦2隻の建造を発表した。"
-            data-imp="30"
-            data-date="2025-12-23T01:20:00+00:00"
-            data-tags="軍事,戦艦,米国">
-
-           <div>
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300164&g=int&m=rss" target="_blank" rel="noopener">「トランプ級戦艦」建造へ　２隻、大統領が発表―米</a>
-            <span class="date">2025/12/23 10:20</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">軍事</span>
-                
-                  <span class="badge">戦艦</span>
-                
-                  <span class="badge">米国</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">Jiji Press (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：米国大統領がトランプ級戦艦2隻の建造を発表した。</div>
-
-                
-                  <ul class="kps">
-                    <li>米国大統領がトランプ級戦艦2隻の建造を正式に発表した。</li><li>発表は米国防省と連携して行われ、軍事力強化を示唆する。</li><li>計画には新型艦艇設計と資金調達の詳細が含まれる予定だ。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術者としては、新型戦艦の設計・建造に関わる技術的課題や既存システムへの影響を検討する必要がある。</div>
-                    <div><b>経営者目線</b>: 経営者視点では、予算確保とプロジェクト管理体制の整備が重要であり、投資リスクを評価すべきだ。</div>
-                    <div><b>消費者目線</b>: 一般消費者にとっては国防支出増加が税負担や公共サービスへの影響を考慮する必要がある。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-44040" class="topic-row"
-            data-title="米大使ら２０人以上召還へ　前政権で承認、「異例」批判も―報道"
-            data-summary="米国大使ら20人以上を前政権により召還し、今回の決定が異例として批判された。"
-            data-imp="60"
-            data-date="2025-12-23T00:41:00+00:00"
-            data-tags="外交,召還,批判">
-
-           <div>
-            <span class="badge imp-60">重要度 60</span>
-            
-            <a class="topic-link" href="https://www.jiji.com/jc/article?k=2025122300228&g=int&m=rss" target="_blank" rel="noopener">米大使ら２０人以上召還へ　前政権で承認、「異例」批判も―報道</a>
-            <span class="date">2025/12/23 09:41</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">外交</span>
-                
-                  <span class="badge">召還</span>
-                
-                  <span class="badge">批判</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">Jiji Press (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：米国大使ら20人以上を前政権により召還し、今回の決定が異例として批判された。</div>
-
-                
-                  <ul class="kps">
-                    <li>米国大使を含む20名以上が召還されたことが報じられた。</li><li>この召還は前政権で承認されたと記載されている。</li><li>承認に対して異例だという批判も出ている。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術的観点では直接の影響は少ないが、外交関係の変化が国際的なITインフラやデータフローに潜在的リスクをもたらす可能性がある。</div>
-                    <div><b>経営者目線</b>: 経営層としては、海外取引先との信頼関係に影響が出る恐れがあり、事業継続計画の見直しを検討する必要がある。</div>
-                    <div><b>消費者目線</b>: 一般消費者には直接的な影響は薄いものの、国際情勢の変動が輸入品価格やサービス利用条件に波及する可能性があると考えられる。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-43647" class="topic-row"
-            data-title="トランプ大統領 グリーンランド担当特使を任命 現地は反発"
-            data-summary="トランプ大統領がルイジアナ州知事をグリーンランド担当特使に任命し、デンマークの自治領取得を示唆したことで現地から反発が起きた。"
-            data-imp="20"
-            data-date="2025-12-23T00:31:07+00:00"
-            data-tags="politics,Greenland,Trump">
-
-           <div>
-            <span class="badge imp-20">重要度 20</span>
-            
-            <a class="topic-link" href="http://www3.nhk.or.jp/news/html/20251223/k10015011051000.html" target="_blank" rel="noopener">トランプ大統領 グリーンランド担当特使を任命 現地は反発</a>
-            <span class="date">2025/12/23 09:31</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">politics</span>
-                
-                  <span class="badge">Greenland</span>
-                
-                  <span class="badge">Trump</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">NHK NEWS (Japan)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：トランプ大統領がルイジアナ州知事をグリーンランド担当特使に任命し、デンマークの自治領取得を示唆したことで現地から反発が起きた。</div>
-
-                
-                  <ul class="kps">
-                    <li>トランプ大統領は南部ルイジアナ州知事をグリーンランド担当特使に任命した。</li><li>この任命はデンマークの自治領、グリーンランド取得に関連する動きを示唆していると解釈されている。</li><li>現地からは反発の声が上がっている。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術的影響はほぼないため、システム修正や検証は不要。ただし、国際関係の変化に伴うデータ管理ポリシーの見直しを検討する価値はある。</div>
-                    <div><b>経営者目線</b>: 経営上は直接的なビジネス影響は限定的だが、グリーンランドでの事業展開やサプライチェーンに関わる場合、政治的不安定性をリスク評価に組み込む必要がある。</div>
-                    <div><b>消費者目線</b>: 一般消費者にはほぼ影響なし。ただし、環境保護や国際情勢に敏感な層は注目する可能性がある。</div>
-                  </div>
-                
               </details>
           
 
@@ -2480,7 +2752,7 @@ a{color:inherit}
         🌍 世界ニュース
         <span class="badge">30</span>
         
-          <span class="badge">+36/48h</span>
+          <span class="badge">+32/48h</span>
         
       </h2>
       <button class="btn" type="button" onclick="toggleCat('global')">Toggle</button>
@@ -2488,6 +2760,437 @@ a{color:inherit}
 
     <div class="category-body">
       <ul>
+        
+          <li id="news-44815" class="topic-row"
+            data-title="リビア軍司令官、トルコでの航空事故で死亡"
+            data-summary="リビア軍司令官がトルコで航空機事故により死亡。アンカラ発のジェット離陸後、信号喪失し墜落。"
+            data-imp="20"
+            data-date="2025-12-23T20:36:35+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp">重要度 20</span>
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cyvgzyepdqno?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">リビア軍司令官、トルコでの航空事故で死亡</a>
+            <span class="date">2025/12/24 05:36</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：リビア軍司令官がトルコで航空機事故により死亡。アンカラ発のジェット離陸後、信号喪失し墜落。</div>
+
+                
+                  <ul class="kps">
+                    <li>Gen Mohammed Ali Ahmed al-Haddadと4名がジェットに乗船していた。</li><li>ジェットはアンカラから離陸した。</li><li>離陸後に信号が失われ、事故となった。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 航空機の通信システムやセンサー設計を見直す必要性があると考える。事故原因調査で技術的欠陥が判明すれば、同様の機種に対する安全対策強化が求められる。</div>
+                    <div><b>経営者目線</b>: 政治的リスク管理として、軍事関係者の輸送手段を多様化し、安全性評価を定期的に実施する方針が重要になる。</div>
+                    <div><b>消費者目線</b>: 一般市民は航空機事故の安全性向上に期待しつつ、政府や軍事組織の透明性と情報公開を求める姿勢が強まるだろう。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cyvgzyepdqno?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cyvgzyepdqno?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44813" class="topic-row"
+            data-title="トランプ氏はこれまで考えられていたよりもエプスタイン氏の飛行機に乗って移動していた、と検察官が語る"
+            data-summary="トランプ大統領は、ジェフリー・エプスタインの飛行機に乗ったことを否認しているが、検察官は実際には以前より多く乗っていたと主張する。"
+            data-imp="20"
+            data-date="2025-12-23T19:46:42+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp">重要度 20</span>
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c74xgp81pqgo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">トランプ氏はこれまで考えられていたよりもエプスタイン氏の飛行機に乗って移動していた、と検察官が語る</a>
+            <span class="date">2025/12/24 04:46</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：トランプ大統領は、ジェフリー・エプスタインの飛行機に乗ったことを否認しているが、検察官は実際には以前より多く乗っていたと主張する。</div>
+
+                
+                  <ul class="kps">
+                    <li>米国大統領はエプスタイン関連で不正行為を否認している。</li><li>ジェフリー・エプスタインは有罪判決を受けた性犯罪者だった。</li><li>トランプ氏は長らく自らの関与を否定し続けてきた。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    
+                    
+                    
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c74xgp81pqgo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c74xgp81pqgo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44814" class="topic-row"
+            data-title="ウクライナ、激戦地東部の町を失う"
+            data-summary="ロシア軍がドネツク州のシヴェルスクを占領し、ウクライナ側に残る「要塞帯」都市への接近を加速させた。"
+            data-imp="20"
+            data-date="2025-12-23T18:53:43+00:00"
+            data-tags="戦争,ウクライナ,ドネツク,シヴェルスク,要塞帯">
+
+           <div>
+            <span class="badge imp">重要度 20</span>
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cr4d99p63y4o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ウクライナ、激戦地東部の町を失う</a>
+            <span class="date">2025/12/24 03:53</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">戦争</span>
+                
+                  <span class="badge">ウクライナ</span>
+                
+                  <span class="badge">ドネツク</span>
+                
+                  <span class="badge">シヴェルスク</span>
+                
+                  <span class="badge">要塞帯</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：ロシア軍がドネツク州のシヴェルスクを占領し、ウクライナ側に残る「要塞帯」都市への接近を加速させた。</div>
+
+                
+                  <ul class="kps">
+                    <li>ロシア軍がシヴェルスク市を占領した。</li><li>シヴェルスクはドネツク州に位置する。</li><li>この占領で、ウクライナ側残る「要塞帯」都市への距離が縮まった。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 戦闘地域のインフラ破壊が通信・電力網に影響し、システム運用や復旧計画を再検討する必要がある。</div>
+                    <div><b>経営者目線</b>: 軍事行動は企業活動へのリスクを高めるため、サプライチェーンと従業員安全対策の見直しが急務となる。</div>
+                    <div><b>消費者目線</b>: 地域住民は生活必需品や通信手段に不安を抱え、情報取得手段の確保が重要になる。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cr4d99p63y4o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cr4d99p63y4o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44816" class="topic-row"
+            data-title="米国経済はここ 2 年間で最も速いペースで成長"
+            data-summary="米国経済が2年ぶりの高速成長を示し、消費者支出が予想以上に伸びた。"
+            data-imp="20"
+            data-date="2025-12-23T15:56:57+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp">重要度 20</span>
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c62n9ynzrdpo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国経済はここ 2 年間で最も速いペースで成長</a>
+            <span class="date">2025/12/24 00:56</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：米国経済が2年ぶりの高速成長を示し、消費者支出が予想以上に伸びた。</div>
+
+                
+                  <ul class="kps">
+                    <li>米国経済は期待よりも速いペースで成長した。</li><li>強力な消費者支出が成長を後押しした。</li><li>成長率は過去2年の最高水準に達した。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: データ分析やレポート作成において、最新経済指標の取得と可視化ツールの更新が必要になる可能性があります。</div>
+                    <div><b>経営者目線</b>: 企業戦略では消費者需要の拡大を踏まえた商品ラインナップや価格設定の見直しが検討されるべきです。</div>
+                    <div><b>消費者目線</b>: 消費者は購買意欲が高まり、生活水準向上に期待できる一方でインフレリスクも懸念されます。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c62n9ynzrdpo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c62n9ynzrdpo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44819" class="topic-row"
+            data-title="ナイジェリア中部で武装集団がイスラム教徒旅行者28人を拉致"
+            data-summary="中央ナイジェリアで28人のムスリム旅行者が誘拐され、女性と子どもを含む犠牲者が宗教祭へ向かう途中に襲撃された。"
+            data-imp="20"
+            data-date="2025-12-23T14:10:19+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp">重要度 20</span>
+            <a class="topic-link" href="https://www.bbc.com/news/articles/czj0ll7ppewo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ナイジェリア中部で武装集団がイスラム教徒旅行者28人を拉致</a>
+            <span class="date">2025/12/23 23:10</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：中央ナイジェリアで28人のムスリム旅行者が誘拐され、女性と子どもを含む犠牲者が宗教祭へ向かう途中に襲撃された。</div>
+
+                
+                  <ul class="kps">
+                    <li>28人のムスリム旅行者が誘拐された</li><li>犠牲者には女性と子どもが含まれている</li><li>彼らは宗教祭への道中で伏兵攻撃を受けた</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 今回の事件はITシステムに直接的な影響はないものの、現地での通信インフラや緊急通報システムの脆弱性が露呈する可能性があります。</div>
+                    <div><b>経営者目線</b>: 事業継続計画を再確認し、海外拠点への安全対策を強化すべきです。また、リスク情報の収集体制を整備しましょう。</div>
+                    <div><b>消費者目線</b>: 旅行者や関係者は現地の治安情報に注意し、安全確保のための手配が重要</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/czj0ll7ppewo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/czj0ll7ppewo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44820" class="topic-row"
+            data-title="コンゴ民主共和国の暴力から逃れる数千人、ブルンジで「悲惨な状況」に直面―援助機関"
+            data-summary="DRコロンビアの暴力から逃れた数千人がブルンジで過酷な状況に直面し、特に子どもと妊婦は食糧不足で苦しんでいる。"
+            data-imp="30"
+            data-date="2025-12-23T12:21:26+00:00"
+            data-tags="global,news,BBC World (Global)">
+
+           <div>
+            <span class="badge imp">重要度 30</span>
+            <a class="topic-link" href="https://www.bbc.com/news/articles/cjdr4vx4n8ro?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">コンゴ民主共和国の暴力から逃れる数千人、ブルンジで「悲惨な状況」に直面―援助機関</a>
+            <span class="date">2025/12/23 21:21</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">global</span>
+                
+                  <span class="badge">news</span>
+                
+                  <span class="badge">BBC World (Global)</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：DRコロンビアの暴力から逃れた数千人がブルンジで過酷な状況に直面し、特に子どもと妊婦は食糧不足で苦しんでいる。</div>
+
+                
+                  <ul class="kps">
+                    <li>数千人がDRコロンビアの暴力から逃げてブルンジへ移動した。</li><li>子どもと妊婦が最も影響を受けている。</li><li>彼らは数日間食事を取れず、飢えに苦しんでいる。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 人道支援の現場では、ITシステムやデータ管理が重要になる。緊急時の情報共有と資源配分を効率化するための技術導入が求められる。</div>
+                    <div><b>経営者目線</b>: 企業としては、サプライチェーンの安定性と社会的責任を考慮し、人道支援への協力やリスク管理策を検討すべきである。</div>
+                    <div><b>消費者目線</b>: 一般消費者は、寄付やボランティア活動を通じて被災者支援</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cjdr4vx4n8ro?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cjdr4vx4n8ro?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
+        
+          <li id="news-44822" class="topic-row"
+            data-title="イスラエル、外国放送局の閉鎖を認める命令を延長"
+            data-summary="イスラエル議会がガザ戦争中に導入された一時的な放送停止権を拡張し、セキュリティ脅威と見なされる外国放送局の閉鎖を可能にした。"
+            data-imp="40"
+            data-date="2025-12-23T11:55:57+00:00"
+            data-tags="security,broadcasting,Israel">
+
+           <div>
+            <span class="badge imp">重要度 40</span>
+            <a class="topic-link" href="https://www.bbc.com/news/articles/c2k47wg2j90o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">イスラエル、外国放送局の閉鎖を認める命令を延長</a>
+            <span class="date">2025/12/23 20:55</span>
+
+            
+              <span class="small">
+                
+                  <span class="badge">security</span>
+                
+                  <span class="badge">broadcasting</span>
+                
+                  <span class="badge">Israel</span>
+                
+              </span>
+            
+          </div>
+
+          <div class="mini">BBC World (Global)</div>
+
+           
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                <div><strong>要約</strong>：イスラエル議会がガザ戦争中に導入された一時的な放送停止権を拡張し、セキュリティ脅威と見なされる外国放送局の閉鎖を可能にした。</div>
+
+                
+                  <ul class="kps">
+                    <li>イスラエル議会が新法案を可決した。</li><li>法案はガザ戦争中に導入された一時的権限を拡張するもの。</li><li>対象はセキュリティ脅威と見なされる外国放送局の閉鎖。</li>
+                  </ul>
+                
+
+                
+                  <div class="perspectives">
+                    <div><b>技術者目線</b>: 技術者としては、放送システムや通信インフラに対して新たな監視・遮断機能が必要になる可能性がある。既存の配信プラットフォームでは、コンテンツフィルタリングやアクセス制御を再設計し、法的要件への適合を検証することが求められる。</div>
+                    <div><b>経営者目線</b>: 経営者視点では、国際放送事業におけるリスク管理と規制遵守の重要性が増す。市場拡大戦略を再評価し、法的コンプライアンス体制を強化する必要がある。</div>
+                    <div><b>消費者目線</b>: 消費者としては、情報へのアクセスが制限される可能性があり、報道の多様性や自由度に影響が出る懸念がある。</div>
+                  </div>
+                
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c2k47wg2j90o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c2k47wg2j90o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
+              </details>
+          
+
+          </li>
+
         
           <li id="news-44432" class="topic-row"
             data-title="トランプ大統領、米国はベネズエラから押収した石油を保管または売却すると発言"
@@ -2497,8 +3200,7 @@ a{color:inherit}
             data-tags="oil,Venezuela,US">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/c87lnn09yj8o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">トランプ大統領、米国はベネズエラから押収した石油を保管または売却すると発言</a>
             <span class="date">2025/12/23 18:51</span>
 
@@ -2536,6 +3238,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者には直接的な影響は少ないものの、エネルギー価格への波及効果を注視すべきである。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c87lnn09yj8o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c87lnn09yj8o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -2550,8 +3261,7 @@ a{color:inherit}
             data-tags="航空事故,慈善活動,火傷患者">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/c1lr1yvqge5o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">テキサス州で子供乗せ飛行機墜落、被害者火傷 ５人死亡</a>
             <span class="date">2025/12/23 17:58</span>
 
@@ -2589,6 +3299,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者としては、輸送機の安全性や慈善団体の信頼性に対して懸念が高まる。事故後の情報公開と透明性を求める声が増えるだろう。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c1lr1yvqge5o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c1lr1yvqge5o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -2603,8 +3322,7 @@ a{color:inherit}
             data-tags="incident,crime">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cd0kxrr2jyko?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">「奇跡」：病院から帰宅するボンディ襲撃中に警官が頭を撃たれる</a>
             <span class="date">2025/12/23 15:06</span>
 
@@ -2640,6 +3358,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 消費者視点では、公共空間での安全性を再確認し、警備体制や緊急対応策に対して不安を抱く人が増える可能性がある。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cd0kxrr2jyko?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cd0kxrr2jyko?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -2654,8 +3381,7 @@ a{color:inherit}
             data-tags="北朝鮮,サイバーセキュリティ,リモートワーク">
 
            <div>
-            <span class="badge imp-45">重要度 45</span>
-            
+            <span class="badge imp">重要度 45</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/c3e0kw80wwzo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">アマゾン、北朝鮮工作員と疑われる者からの1,800件の求人応募をブロック</a>
             <span class="date">2025/12/23 11:49</span>
 
@@ -2693,6 +3419,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般ユーザーは自社の求人情報が安全であるか確認し、個人情報保護への意識を高める必要があります。企業側も応募者本人確認プロセスを強化すべきです。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c3e0kw80wwzo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c3e0kw80wwzo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -2707,8 +3442,7 @@ a{color:inherit}
             data-tags="drug,regulation,weightloss">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/ce86le5dyxyo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国の規制当局がWegovy減量薬の錠剤形態を承認</a>
             <span class="date">2025/12/23 10:29</span>
 
@@ -2746,6 +3480,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 消費者は注射よりも服用しやすい錠剤に移行できることで、治療継続率が向上する可能性が期待される。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/ce86le5dyxyo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/ce86le5dyxyo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -2760,8 +3503,7 @@ a{color:inherit}
             data-tags="video game,developer,car crash">
 
            <div>
-            <span class="badge imp-0">重要度 0</span>
-            
+            <span class="badge imp">重要度 0</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cx25rled0ylo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">『コール オブ デューティ』の共同制作者ビンス・ザンペラ氏がカリフォルニアの自動車事故で死亡</a>
             <span class="date">2025/12/23 09:48</span>
 
@@ -2799,6 +3541,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 消費者としては、好きだったゲーム開発者が亡くなることで感情的な衝撃とともに、業界への関心や支持姿勢が変わる可能性があります。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cx25rled0ylo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cx25rled0ylo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -2813,8 +3564,7 @@ a{color:inherit}
             data-tags="global,news,BBC World (Global)">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/c2084nq2npjo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">トランプ大統領、自身の名を冠した戦艦「ゴールデン・フリート」の計画を発表</a>
             <span class="date">2025/12/23 09:36</span>
 
@@ -2852,6 +3602,15 @@ a{color:inherit}
                     
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c2084nq2npjo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c2084nq2npjo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -2866,8 +3625,7 @@ a{color:inherit}
             data-tags="high-profile,files,publicity">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cy95w0x9889o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">圧倒的なエプスタインファイルの公開がトランプとマガにとって何を意味するか</a>
             <span class="date">2025/12/23 09:24</span>
 
@@ -2905,6 +3663,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者としては、報道内容に対して批判的視点を持ちつつ、プライバシー保護や情報の真偽確認が重要になる。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c8r38ne1x2mo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c8r38ne1x2mo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -2919,8 +3686,7 @@ a{color:inherit}
             data-tags="cooling,data centre,green">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cp8zd176516o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">データセンター技術をクールに保つシャワーとバス</a>
             <span class="date">2025/12/23 09:04</span>
 
@@ -2958,6 +3724,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者としては、データセンターのエネルギー効率向上が電力料金や環境負荷低減につながり、安心してサービスを利用できるようになることを期待する。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cp8zd176516o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cp8zd176516o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -2972,8 +3747,7 @@ a{color:inherit}
             data-tags="jobs,policy,India,rural,guarantee">
 
            <div>
-            <span class="badge imp-40">重要度 40</span>
-            
+            <span class="badge imp">重要度 40</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/c1lr980vvjpo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">インドの雇用保証制度：世界モデルが脅威にさらされている？</a>
             <span class="date">2025/12/23 08:33</span>
 
@@ -3015,6 +3789,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般市民としては、雇用保証制度の変更が生活安定に直接関わるため、不透明な点や実施時期について情報収集と意見表明を行う必要がある。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c1lr980vvjpo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c1lr980vvjpo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3029,8 +3812,7 @@ a{color:inherit}
             data-tags="フェリー,災害,メコン">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cx2gk56pd5eo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ラオスのフェリー遭難事故で観光客が救出される中、助けを求める叫び声とパニック</a>
             <span class="date">2025/12/23 08:19</span>
 
@@ -3068,6 +3850,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 乗客や観光客にとって、船舶の安全基準への信頼は旅行計画に直結する。事故後は運航会社の安全対策を確認し、安心して利用できるか判断すべきだ。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cx2gk56pd5eo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cx2gk56pd5eo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3082,8 +3873,7 @@ a{color:inherit}
             data-tags="lottery,wildfire,Spain">
 
            <div>
-            <span class="badge imp-0">重要度 0</span>
-            
+            <span class="badge imp">重要度 0</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cz7ndpq42y0o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">山火事に見舞われた町、スペインのクリスマス宝くじで4億6,800万ユーロを獲得</a>
             <span class="date">2025/12/23 06:39</span>
 
@@ -3121,6 +3911,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 消費者としては、地域の被災状況と幸運な当選結果が結びつくことで、社会的連帯感や希望を感じられる一方で、宝くじへの過度な期待は避けるべきだと考える。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cz7ndpq42y0o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cz7ndpq42y0o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3135,8 +3934,7 @@ a{color:inherit}
             data-tags="maritime,oil,coast guard">
 
            <div>
-            <span class="badge imp-45">重要度 45</span>
-            
+            <span class="badge imp">重要度 45</span>
             <a class="topic-link" href="https://www.bbc.com/news/videos/ce3w4x2v0xko?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ロス・アトキンス氏が語る…米国が追跡する石油タンカーについて</a>
             <span class="date">2025/12/23 06:27</span>
 
@@ -3174,6 +3972,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者としては油価格の変動や供給不安定化の可能性に注意すべきであり、エネルギー市場の動向を継続的に監視することが重要だ。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/videos/ce3w4x2v0xko?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/videos/ce3w4x2v0xko?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3188,8 +3995,7 @@ a{color:inherit}
             data-tags="health,conflict,BBC">
 
            <div>
-            <span class="badge imp-0">重要度 0</span>
-            
+            <span class="badge imp">重要度 0</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/c2084n1pyvdo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">赤ちゃんに続いてBBCが海外で治療後ガザ病院に戻る</a>
             <span class="date">2025/12/23 04:38</span>
 
@@ -3227,6 +4033,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 消費者としては、人道的な報道内容に共感し、被害者支援への関心が高まる可能性があると感じる。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c2084n1pyvdo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c2084n1pyvdo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3241,8 +4056,7 @@ a{color:inherit}
             data-tags="global,news,BBC World (Global)">
 
            <div>
-            <span class="badge imp-45">重要度 45</span>
-            
+            <span class="badge imp">重要度 45</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cdxe8yqlvgzo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ロシア、ウクライナの重要地域オデッサへの攻撃をエスカレート</a>
             <span class="date">2025/12/23 04:25</span>
 
@@ -3280,6 +4094,15 @@ a{color:inherit}
                     
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cdxe8yqlvgzo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cdxe8yqlvgzo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3294,8 +4117,7 @@ a{color:inherit}
             data-tags="diplomacy,greenland,denmark">
 
            <div>
-            <span class="badge imp-0">重要度 0</span>
-            
+            <span class="badge imp">重要度 0</span>
             <a class="topic-link" href="https://www.bbc.com/news/videos/cwywe5zw384o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">トランプ大統領のグリーンランド特使任命でデンマークと新たな対立が勃発</a>
             <span class="date">2025/12/23 03:52</span>
 
@@ -3333,6 +4155,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者には直接の影響は少ないものの、国際情勢が変動すると商品価格や供給状況に波乱が生じる可能性があります。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/videos/cwywe5zw384o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/videos/cwywe5zw384o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3347,8 +4178,7 @@ a{color:inherit}
             data-tags="global,news,BBC World (Global)">
 
            <div>
-            <span class="badge imp-40">重要度 40</span>
-            
+            <span class="badge imp">重要度 40</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cx2dmj7p8y2o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">NGOはイスラエルの登録規則がガザ支援活動の崩壊を招くリスクを懸念している</a>
             <span class="date">2025/12/23 03:34</span>
 
@@ -3386,6 +4216,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般市民としては、支援物資の供給が途絶える恐れがあるため不安です。ただし政府の発表で配達自体は継続されると聞いて安心感もあります。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cx2dmj7p8y2o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cx2dmj7p8y2o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3400,8 +4239,7 @@ a{color:inherit}
             data-tags="global,news,BBC World (Global)">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cx237k4rr04o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">エクアドル兵士、少年強制失踪で34年の懲役刑</a>
             <span class="date">2025/12/23 03:17</span>
 
@@ -3439,6 +4277,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般市民は軍事行動が人道的基準に反することを知り、社会正義や安全保障政策への関心が高まる可能性がある。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cx237k4rr04o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cx237k4rr04o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3453,8 +4300,7 @@ a{color:inherit}
             data-tags="law,legal,politics">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cdd5j9jdvy9o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米議員、エプスタイン容疑で司法長官に訴訟を起こすと脅迫</a>
             <span class="date">2025/12/23 02:35</span>
 
@@ -3492,6 +4338,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者としては、法的措置が個人情報保護やプライバシーへの関心を高める一因となり、社会全体で透明性と責任に対する期待が増す可能性がある。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cdd5j9jdvy9o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cdd5j9jdvy9o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3506,8 +4361,7 @@ a{color:inherit}
             data-tags="global,news,BBC World (Global)">
 
            <div>
-            <span class="badge imp-30">重要度 30</span>
-            
+            <span class="badge imp">重要度 30</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/ckgmd132ge4o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">トランプ新特使、グリーンランドを米国の一部にするために尽力すると発言</a>
             <span class="date">2025/12/23 00:49</span>
 
@@ -3545,6 +4399,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 消費者としては、グリーンランドの将来が米国領になる可能性があることで、旅行規制や商品輸送ルートに変化が生じる恐れがある。情報収集と柔軟な計画</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/ckgmd132ge4o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/ckgmd132ge4o?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3559,8 +4422,7 @@ a{color:inherit}
             data-tags="theft,presidential,silver">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cz0n51p00jmo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">エリゼ宮スタッフ、貴重な食器の盗難で裁判へ</a>
             <span class="date">2025/12/23 00:35</span>
 
@@ -3598,6 +4460,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 一般消費者としては、国家機関であっても盗難被害が起こり得ることを知り、公共財産への信頼感が揺らぐ可能性があります。公的機関のセキュリティ強化に対する期待が高まります。</div>
                   </div>
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/cz0n51p00jmo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cz0n51p00jmo?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3612,8 +4483,7 @@ a{color:inherit}
             data-tags="global,news,BBC World (Global)">
 
            <div>
-            <span class="badge imp-20">重要度 20</span>
-            
+            <span class="badge imp">重要度 20</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/c5y2veyg1pno?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ガーナ当局が「デティ・ディセンバー」ラベルを拒否</a>
             <span class="date">2025/12/23 00:15</span>
 
@@ -3641,6 +4511,15 @@ a{color:inherit}
                 
 
                 
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.bbc.com/news/articles/c5y2veyg1pno?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/c5y2veyg1pno?at_medium=RSS&at_campaign=rss</a>
+                    
+                  </div>
+                
+
               </details>
           
 
@@ -3655,8 +4534,7 @@ a{color:inherit}
             data-tags="global,news,BBC World (Global)">
 
            <div>
-            <span class="badge imp-35">重要度 35</span>
-            
+            <span class="badge imp">重要度 35</span>
             <a class="topic-link" href="https://www.bbc.com/news/articles/cd74ldr2zryo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">投資家が安全性を求める中、金と銀は記録を更新</a>
             <span class="date">2025/12/22 23:35</span>
 
@@ -3694,377 +4572,15 @@ a{color:inherit}
                     <div><b>消費者目線</b>: 個人投資家は金銀の価格上昇をチャンスと捉えつつも、長期的な価値保持リスクを理解する必要があります。安全資産としての魅力に惑わされず、分散投資を心掛けるべきです。</div>
                   </div>
                 
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-41745" class="topic-row"
-            data-title="モスクワで自動車爆弾でロシア将軍死亡、当局発表"
-            data-summary="モスクワで自動車爆弾によりロシア将軍が死亡。調査委員会はFanil Sarvarovを武装勢力訓練部門長と特定した。"
-            data-imp="25"
-            data-date="2025-12-22T09:02:37+00:00"
-            data-tags="global,news,BBC World (Global)">
-
-           <div>
-            <span class="badge imp-25">重要度 25</span>
-            
-            <a class="topic-link" href="https://www.bbc.com/news/articles/c8jwn9wznx1o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">モスクワで自動車爆弾でロシア将軍死亡、当局発表</a>
-            <span class="date">2025/12/22 18:02</span>
-
-            
-              <span class="small">
                 
-                  <span class="badge">global</span>
-                
-                  <span class="badge">news</span>
-                
-                  <span class="badge">BBC World (Global)</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">BBC World (Global)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：モスクワで自動車爆弾によりロシア将軍が死亡。調査委員会はFanil Sarvarovを武装勢力訓練部門長と特定した。</div>
-
-                
-                  <ul class="kps">
-                    <li>Fanil Sarvarovは武装勢力訓練部門の責任者である。</li><li>ロシアの調査委員会がSarvarov氏を公表した。</li><li>モスクワで自動車爆弾により将軍が死亡した。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術的な影響は限定的だが、サイバーセキュリティ対策の重要性が再認識される可能性がある。</div>
-                    <div><b>経営者目線</b>: 組織として安全保障と従業員保護に関する方針を見直す必要がある。</div>
-                    <div><b>消費者目線</b>: 一般消費者は直接的な影響は少ないものの、国内外の政治情勢への不安感が高まる可能性がある。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-41746" class="topic-row"
-            data-title="反発を受けて復職したトランプ氏を描いたエプスタインファイルの画像"
-            data-summary="司法省サイトから複数の項目が被害者の懸念を理由に削除されたと米官公表。"
-            data-imp="30"
-            data-date="2025-12-22T08:09:08+00:00"
-            data-tags="justice,victim,removal">
-
-           <div>
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="https://www.bbc.com/news/articles/c208y2wxxeno?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">反発を受けて復職したトランプ氏を描いたエプスタインファイルの画像</a>
-            <span class="date">2025/12/22 17:09</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">justice</span>
-                
-                  <span class="badge">victim</span>
-                
-                  <span class="badge">removal</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">BBC World (Global)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：司法省サイトから複数の項目が被害者の懸念を理由に削除されたと米官公表。</div>
-
-                
-                  <ul class="kps">
-                    <li>複数の項目が司法省ウェブサイトから削除された。</li><li>削除の理由は被害者の懸念であることが示された。</li><li>米国公式がこの情報を発表した。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: システム管理者として、データ保護とプライバシーに関するポリシー見直しが必要。削除対象のコンテンツ管理プロセスを再検証すべき。</div>
-                    <div><b>経営者目線</b>: 経営層は法的リスクとブランドイメージへの影響を評価し、透明性ある対応方針を策定することが重要。</div>
-                    <div><b>消費者目線</b>: 一般利用者としては情報の信頼性に疑問が生じる可能性があり、公式発表の正確さを確認したい。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-43286" class="topic-row"
-            data-title="ボンディ銃乱射事件を受け、オーストラリアが新たな銃規制と抗議活動に関する法律を急ぐ動きに批判が集まる"
-            data-summary="オーストラリアがボンダイ銃撃事件後、銃規制と抗議法を迅速化。市民自由擁護派は民主主義損傷と批判し、他者は銃所有者の責任転嫁と指摘。"
-            data-imp="40"
-            data-date="2025-12-22T06:14:56+00:00"
-            data-tags="global,news,BBC World (Global)">
-
-           <div>
-            <span class="badge imp-40">重要度 40</span>
-            
-            <a class="topic-link" href="https://www.bbc.com/news/articles/cj9ydj7y0vvo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ボンディ銃乱射事件を受け、オーストラリアが新たな銃規制と抗議活動に関する法律を急ぐ動きに批判が集まる</a>
-            <span class="date">2025/12/22 15:14</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">global</span>
-                
-                  <span class="badge">news</span>
-                
-                  <span class="badge">BBC World (Global)</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">BBC World (Global)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：オーストラリアがボンダイ銃撃事件後、銃規制と抗議法を迅速化。市民自由擁護派は民主主義損傷と批判し、他者は銃所有者の責任転嫁と指摘。</div>
-
-                
-                  <ul class="kps">
-                    <li>オーストラリアがボンダイ銃撃事件後に銃規制と抗議法を迅速化する計画を発表した。</li><li>市民自由擁護派は新法が民主主義を損なうと主張している。</li><li>反対派は新法が銃所有者の責任を不当に転嫁すると指摘している。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術的観点から見ると、今回の法律変更は直接的にシステムやインフラへの影響は少ないものの、公共安全関連サービスのデータ管理や監視機能の要件が変化し、セキュリティ対策の強化が必要となる。</div>
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
                     
+                      <a href="https://www.bbc.com/news/articles/cd74ldr2zryo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">https://www.bbc.com/news/articles/cd74ldr2zryo?at_medium=RSS&at_campaign=rss</a>
                     
                   </div>
                 
-              </details>
-          
 
-          </li>
-
-        
-          <li id="news-41363" class="topic-row"
-            data-title="ボンダイの武装集団が「テニスボール爆弾」を投げたとされる、新たな文書が明らかに"
-            data-summary="新たな文書で、ボンダイの武装集団がオーストラリア農村で訓練し、イスラム国旗前で発言した映像が公開された。"
-            data-imp="45"
-            data-date="2025-12-22T05:28:48+00:00"
-            data-tags="global,news,BBC World (Global)">
-
-           <div>
-            <span class="badge imp-45">重要度 45</span>
-            
-            <a class="topic-link" href="https://www.bbc.com/news/articles/ce86l95gx5po?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">ボンダイの武装集団が「テニスボール爆弾」を投げたとされる、新たな文書が明らかに</a>
-            <span class="date">2025/12/22 14:28</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">global</span>
-                
-                  <span class="badge">news</span>
-                
-                  <span class="badge">BBC World (Global)</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">BBC World (Global)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：新たな文書で、ボンダイの武装集団がオーストラリア農村で訓練し、イスラム国旗前で発言した映像が公開された。</div>
-
-                
-                  <ul class="kps">
-                    <li>新しい文書により、ボンダイの武装集団がオーストラリア農村で訓練している様子が明らかになった。</li><li>映像では彼らがイスラム国旗前で発言していることが確認された。</li><li>この情報はテロリスト活動に関する新たな証拠として重要視される。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術者としては、動画解析や画像認識を用いて訓練内容の詳細を抽出し、将来の脅威予測モデルに組み込む必要がある。</div>
-                    <div><b>経営者目線</b>: 経営者はリスク評価と情報公開戦略を検討し、企業イメージへの影響を最小限に抑えるための対応策を講じるべきだ。</div>
-                    <div><b>消費者目線</b>: 一般消費者は、このような映像が公表されることで安全意識が高まり、地域社会での防衛対策や情報共有の重要性について関心を持つ可能性がある。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-41364" class="topic-row"
-            data-title="米国とウクライナ、マイアミ協議は進展なしにもかかわらず生産的と評価"
-            data-summary="トランプ大統領の特命代表スティーブ・ウィトコフがウクライナ最高交渉官と共同で声明を発表し、最新和平計画について協議した。"
-            data-imp="20"
-            data-date="2025-12-22T04:37:29+00:00"
-            data-tags="peace,negotiation,Ukraine">
-
-           <div>
-            <span class="badge imp-20">重要度 20</span>
-            
-            <a class="topic-link" href="https://www.bbc.com/news/articles/cn5lnzlvqg2o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">米国とウクライナ、マイアミ協議は進展なしにもかかわらず生産的と評価</a>
-            <span class="date">2025/12/22 13:37</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">peace</span>
-                
-                  <span class="badge">negotiation</span>
-                
-                  <span class="badge">Ukraine</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">BBC World (Global)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：トランプ大統領の特命代表スティーブ・ウィトコフがウクライナ最高交渉官と共同で声明を発表し、最新和平計画について協議した。</div>
-
-                
-                  <ul class="kps">
-                    <li>Donald Trump's special envoy, Steve Witkoff, issued a statement with the top Ukrainian negotiator.</li><li>They discussed the latest peace plans.</li><li>The statement was released after their discussion.</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術的観点からは直接の影響は少ないが、外交交渉に伴う情報セキュリティや通信インフラへの配慮が必要となる可能性があります。</div>
-                    <div><b>経営者目線</b>: 経営面では国際情勢の変化が市場環境に影響を与えるため、事業戦略の見直しやリスク管理体制の強化が求められます。</div>
-                    <div><b>消費者目線</b>: 消費者としては政治的な動きが生活に直接関わることは少ないものの、国際情勢の安定が経済安定につながる点を注視すべきです。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-41370" class="topic-row"
-            data-title="東南アジア諸国、タイとカンボジアの戦闘終結を目指す"
-            data-summary="ASEAN諸国は米大統領トランプ氏の仲介で結ばれた停戦を復活させようとしている。"
-            data-imp="30"
-            data-date="2025-12-22T04:27:38+00:00"
-            data-tags="ASEAN,停戦,米国">
-
-           <div>
-            <span class="badge imp-30">重要度 30</span>
-            
-            <a class="topic-link" href="https://www.bbc.com/news/articles/c5ydej888n9o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">東南アジア諸国、タイとカンボジアの戦闘終結を目指す</a>
-            <span class="date">2025/12/22 13:27</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">ASEAN</span>
-                
-                  <span class="badge">停戦</span>
-                
-                  <span class="badge">米国</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">BBC World (Global)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：ASEAN諸国は米大統領トランプ氏の仲介で結ばれた停戦を復活させようとしている。</div>
-
-                
-                  <ul class="kps">
-                    <li>ASEAN諸国の閣僚が停戦復活を目指している。</li><li>停戦は米大統領ドナルド・トランプ氏の協力により仲裁された。</li><li>対象国はタイとカンボジアである。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 技術的な影響は少ないが、地域情勢の変化がインフラや通信ネットワークへの安全対策を再検討させる可能性があります。</div>
-                    <div><b>経営者目線</b>: 企業は現地市場におけるリスク評価を見直し、事業継続計画を更新する必要があります。</div>
-                    <div><b>消費者目線</b>: 消費者は旅行先の安全情報が変わるため、渡航前に最新情報を確認することが重要です。</div>
-                  </div>
-                
-              </details>
-          
-
-          </li>
-
-        
-          <li id="news-41379" class="topic-row"
-            data-title="アレックス・イウォビ、アフコンは特別なサッカートーナメントだと語る"
-            data-summary="フルハムのミッドフィールダーが生まれ故郷ナイジェリア代表として24国参加の大会に出場する。"
-            data-imp="20"
-            data-date="2025-12-22T02:49:37+00:00"
-            data-tags="global,news,BBC World (Global)">
-
-           <div>
-            <span class="badge imp-20">重要度 20</span>
-            
-            <a class="topic-link" href="https://www.bbc.com/news/articles/cx25dejn4n5o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener">アレックス・イウォビ、アフコンは特別なサッカートーナメントだと語る</a>
-            <span class="date">2025/12/22 11:49</span>
-
-            
-              <span class="small">
-                
-                  <span class="badge">global</span>
-                
-                  <span class="badge">news</span>
-                
-                  <span class="badge">BBC World (Global)</span>
-                
-              </span>
-            
-          </div>
-
-          <div class="mini">BBC World (Global)</div>
-
-           
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                <div><strong>要約</strong>：フルハムのミッドフィールダーが生まれ故郷ナイジェリア代表として24国参加の大会に出場する。</div>
-
-                
-                  <ul class="kps">
-                    <li>フルハムのミッドフィールダーがナイジェリア代表として出場予定。</li><li>大会は24カ国が参加するサッカー競技である。</li><li>選手は生まれ故郷がナイジェリアであることを明示している。</li>
-                  </ul>
-                
-
-                
-                  <div class="perspectives">
-                    <div><b>技術者目線</b>: 本件はソフトウェア開発やインフラに直接影響しないため、エンジニアとしては注目度低い。ただし、大会のデータ処理やライブ配信システムへの負荷増加を考慮すれば、間接的なリソース調整が必要になる可能性もある。</div>
-                    <div><b>経営者目線</b>: 経営者視点では、スポーツイベントの人気拡大はブランド露出に寄与する。フルハムとナイジェリア代表の結びつきはマーケティング機会を創出し、スポンサーシップやグローバルファン獲得に資する。</div>
-                    <div><b>消費者目線</b>: 一般消費者としては、好きな選手が国際舞台で活躍する姿を見る</div>
-                  </div>
-                
               </details>
           
 

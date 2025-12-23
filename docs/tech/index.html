@@ -7,63 +7,118 @@
   <title>技術動向ダイジェスト</title>
   <style>
     
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:24px;line-height:1.6}
+:root{
+  /* Base */
+  --bg: #fff;
+  --panel: #f9fafb;
+  --text-main: #1f2937;
+  --text-sub: #6b7280;
+  --border: #e5e7eb;
+
+  /* Accent */
+  --accent: #2563eb;
+  --accent-soft: #dbeafe;
+
+  /* Status */
+  --new: #dc2626;
+  --new-soft: #fee2e2;
+
+  --important: #f59e0b;
+  --important-soft: #fef3c7;
+}
+body{
+  background:var(--bg);
+  color:var(--text-main);
+}
 h1{margin:0 0 10px}
 h2{margin:22px 0 10px}
-.meta{color:#666;font-size:12px;margin:6px 0 14px}
+.meta{color:var(--text-sub);font-size:12px;margin:6px 0 14px}
 .nav{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
-.nav a{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:6px 10px;text-decoration:none;color:#111}
+.nav a{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:6px 10px;text-decoration:none;color:#111}
 .nav a.active{border-color:#333;font-weight:700}
-.card{background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px 14px;margin:10px 0}
-.small{color:#666;font-size:12px}
-.badge{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
-.btn{padding:6px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer;display:inline-block;text-decoration:none}
-.btn:hover{background:#f7f7f7}
+.meta,.small{
+  color:var(--text-sub);
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+}
+
+.badge{
+  border:1px solid var(--border);
+  color:var(--text-main);
+}
+.badge.recent{
+  background:var(--new-soft);
+  color:var(--new);
+  border-color:var(--new);
+  font-weight:700;
+}
+.btn{padding:6px 10px;border:1px solid var(--border);border-radius:10px;background:var(--bg);cursor:pointer;display:inline-block;text-decoration:none}
+.btn:hover{background:var(--panel)}
 ul{margin:0;padding-left:18px}
 li{margin:10px 0}
 a{color:inherit}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+a:hover{
+  color:var(--accent);
+}
+
+.nav a.active{
+  color:var(--accent);
+  border-color:var(--accent);
+  font-weight:700;
+}
+
 
     
 /* techの箱・構造を定義している部分をここへ集約 */
 .summary-card, .topbox, .top-col, .insight{
   background:#fafafa;
-  border:1px solid #eee;
+  border:1px solid var(--border);
   border-radius:12px;
   padding:12px 14px;
 }
-.top-col{ background:#fff; }
+.top-col{ background:var(--bg); }
 
 /* techの見出し間隔・小文字 */
 .small{color:#666;font-size:12px}
-.badge{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
+.badge{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
 
 /* もしtechにタグの見た目があるなら寄せる */
-.tag{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
+.tag{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px 8px;font-size:12px;color:#444;margin-left:6px}
 
 
      /* --- UX改善①: 上部サマリー + 横断TOP --- */
-    .summary-card{background:#fafafa;border:1px solid #eee;border-radius:12px;padding:12px 14px;margin:10px 0 14px}
+    .summary-card{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin:10px 0 14px}
     .summary-title{font-weight:800;font-size:16px;margin:0 0 6px}
     .summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:8px}
     .summary-item .k{color:#666;font-size:11px}
     .summary-item .v{font-size:13px;font-weight:650}
 
     .top-zone{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 18px}
-    .top-col{background:#fff;border:1px solid #eee;border-radius:12px;padding:10px 12px}
+    .top-col{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 12px}
     .top-col h3{margin:0 0 8px;font-size:14px}
     .top-list{margin:0;padding-left:18px}
     .mini{color:#666;font-size:12px;margin-top:2px}
 
     .quick-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
-    #q{padding:6px 10px;border:1px solid #ddd;border-radius:10px;min-width:260px}
-    .btn{padding:6px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer}
+    #q{padding:6px 10px;border:1px solid var(--border);border-radius:10px;min-width:260px}
+    .btn{padding:6px 10px;border:1px solid var(--border);border-radius:10px;background:var(--bg);cursor:pointer}
 
     .badge.hot{font-weight:800}
     .badge.new{border-style:dashed}
 
-    .imp-5{border-color:#f33}
-    .imp-4{border-color:#f80}
-    .imp-3{border-color:#cc0}
+   .badge.imp{
+      background:var(--important-soft);
+      color:var(--important);
+      border-color:var(--important);
+    }
     .imp-2{border-color:#6c6}
     .imp-1{border-color:#9ad}
     .imp-0{border-color:#ccc}
@@ -140,10 +195,10 @@ a{color:inherit}
     }
     /* details 展開時の視認性向上 */
     details.insight {
-      border: 1px solid #eee;
+      border: 1px solid var(--border);
       border-radius: 10px;
       padding: 6px 8px;
-      background: #fff;
+      background: var(--bg);
     }
 
     details.insight[open] {
@@ -208,7 +263,7 @@ a{color:inherit}
       position: sticky;
       top: 0;
       z-index: 10;
-      background: #fff; /* 背景必須 */
+      background: var(--bg); /* 背景必須 */
     }
 
     /* Tag bar: wrap + mobile collapse */
@@ -226,8 +281,8 @@ a{color:inherit}
     }
 
     .btn-more{
-      background:#fff;
-      border:1px dashed #ddd;
+      background:var(--bg);
+      border:1px dashed var(--border);
       font-weight:650;
     }
 
@@ -245,14 +300,6 @@ a{color:inherit}
       color: #666;
       white-space: nowrap;
     }
-    /* techの主要ボックスをnewsの.cardに寄せる */
-    .summary-card, .topbox, .top-col, .insight{
-      background:#fafafa;
-      border:1px solid #eee;
-      border-radius:12px;
-      padding:12px 14px;
-    }
-    .top-col{ background:#fff; } /* 白カードは残すなら */
 
   </style>
 </head>
@@ -269,15 +316,15 @@ a{color:inherit}
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2025-12-23 21:18:46 JST</div>
+        <div class="v">2025-12-24 06:34:28 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">1125 sec</div>
+        <div class="v">2065 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
-        <div class="v">855 <span class="small">(new48h 183)</span></div>
+        <div class="v">884 <span class="small">(new48h 202)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">RSS Sources</div>
@@ -296,7 +343,7 @@ a{color:inherit}
 
         
           <button class="btn" type="button" data-tag-btn="AI" onclick="toggleTag('AI')">
-            AI (15)
+            AI (14)
           </button>
         
           <button class="btn" type="button" data-tag-btn="AWS" onclick="toggleTag('AWS')">
@@ -315,6 +362,10 @@ a{color:inherit}
             vulnerability (5)
           </button>
         
+          <button class="btn" type="button" data-tag-btn="SageMaker" onclick="toggleTag('SageMaker')">
+            SageMaker (4)
+          </button>
+        
           <button class="btn" type="button" data-tag-btn="Copilot" onclick="toggleTag('Copilot')">
             Copilot (3)
           </button>
@@ -327,10 +378,6 @@ a{color:inherit}
             S3 (3)
           </button>
         
-          <button class="btn" type="button" data-tag-btn="SageMaker" onclick="toggleTag('SageMaker')">
-            SageMaker (3)
-          </button>
-        
           <button class="btn" type="button" data-tag-btn="climate" onclick="toggleTag('climate')">
             climate (3)
           </button>
@@ -341,10 +388,6 @@ a{color:inherit}
         
           <button class="btn" type="button" data-tag-btn="CO2" onclick="toggleTag('CO2')">
             CO2 (2)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="Gemini" onclick="toggleTag('Gemini')">
-            Gemini (2)
           </button>
         
           <button class="btn" type="button" data-tag-btn="HyperPod" onclick="toggleTag('HyperPod')">
@@ -383,6 +426,10 @@ a{color:inherit}
             security (2)
           </button>
         
+          <button class="btn" type="button" data-tag-btn="ADHD" onclick="toggleTag('ADHD')">
+            ADHD (1)
+          </button>
+        
           <button class="btn" type="button" data-tag-btn="AIWorkflow" onclick="toggleTag('AIWorkflow')">
             AIWorkflow (1)
           </button>
@@ -393,10 +440,6 @@ a{color:inherit}
         
           <button class="btn" type="button" data-tag-btn="AIモデル" onclick="toggleTag('AIモデル')">
             AIモデル (1)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="AI導入" onclick="toggleTag('AI導入')">
-            AI導入 (1)
           </button>
         
           <button class="btn" type="button" data-tag-btn="AI画像解析" onclick="toggleTag('AI画像解析')">
@@ -419,10 +462,6 @@ a{color:inherit}
             AgentCore (1)
           </button>
         
-          <button class="btn" type="button" data-tag-btn="AnalyticsAgent" onclick="toggleTag('AnalyticsAgent')">
-            AnalyticsAgent (1)
-          </button>
-        
           <button class="btn" type="button" data-tag-btn="Bedrock" onclick="toggleTag('Bedrock')">
             Bedrock (1)
           </button>
@@ -441,10 +480,6 @@ a{color:inherit}
         
           <button class="btn" type="button" data-tag-btn="Database" onclick="toggleTag('Database')">
             Database (1)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="DeepMind" onclick="toggleTag('DeepMind')">
-            DeepMind (1)
           </button>
         
           <button class="btn" type="button" data-tag-btn="DurableFunctions" onclick="toggleTag('DurableFunctions')">
@@ -471,16 +506,16 @@ a{color:inherit}
             Firefox (1)
           </button>
         
-          <button class="btn" type="button" data-tag-btn="Flash" onclick="toggleTag('Flash')">
-            Flash (1)
-          </button>
-        
           <button class="btn" type="button" data-tag-btn="GDA" onclick="toggleTag('GDA')">
             GDA (1)
           </button>
         
           <button class="btn" type="button" data-tag-btn="GXsteel" onclick="toggleTag('GXsteel')">
             GXsteel (1)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="Gemini" onclick="toggleTag('Gemini')">
+            Gemini (1)
           </button>
         
           <button class="btn" type="button" data-tag-btn="GitHubActions" onclick="toggleTag('GitHubActions')">
@@ -493,6 +528,18 @@ a{color:inherit}
         
           <button class="btn" type="button" data-tag-btn="Google" onclick="toggleTag('Google')">
             Google (1)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="Google AI" onclick="toggleTag('Google AI')">
+            Google AI (1)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="Grassroots" onclick="toggleTag('Grassroots')">
+            Grassroots (1)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="H3" onclick="toggleTag('H3')">
+            H3 (1)
           </button>
         
       </div>
@@ -537,7 +584,7 @@ a{color:inherit}
               data-recent="0"
               data-date="2025-12-17T00:11:00+00:00"
               data-tags="RCE,vulnerability,Gogs">
-            <span class="badge imp-90">重要度 90</span>
+            <span class="badge imp">重要度 90</span>
             
             <a href="#topic-385">ウィークリーレポート: Gogs にリモートコード実行可能な脆弱性</a>
             <span class="date">2025/12/17 09:11</span>
@@ -554,8 +601,12 @@ a{color:inherit}
               data-recent="1"
               data-date="2025-12-22T02:00:00+00:00"
               data-tags="">
-            <span class="badge imp-80">重要度 80</span>
-            <span class="badge ">48h +1</span>
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
             <a href="#topic-674">三菱重工とエクシオグループ、国内初の2相DLC搭載GPUサーバーを構築、商用利用を開始</a>
             <span class="date">2025/12/22 11:00</span>
             
@@ -571,7 +622,7 @@ a{color:inherit}
               data-recent="0"
               data-date="2025-11-17T15:09:23+00:00"
               data-tags="">
-            <span class="badge imp-80">重要度 80</span>
+            <span class="badge imp">重要度 80</span>
             
             <a href="#topic-148">WeatherNext 2: 最も先進的な天気予報モデル</a>
             <span class="date">2025/11/18 00:09</span>
@@ -588,7 +639,7 @@ a{color:inherit}
               data-recent="0"
               data-date="2025-12-18T08:56:22+00:00"
               data-tags="">
-            <span class="badge imp-75">重要度 75</span>
+            <span class="badge imp">重要度 75</span>
             
             <a href="#topic-463">AppleとGoogleがスマホ新法への対応を中止で発表 ～遂にApp Store以外のアプリを認める／両社共々のWebブラウザーと検索エンジンを選択する画面を追加</a>
             <span class="date">2025/12/18 17:56</span>
@@ -605,7 +656,7 @@ a{color:inherit}
               data-recent="0"
               data-date="2025-12-01T05:00:00+00:00"
               data-tags="MILES,CO2,alternativefuel">
-            <span class="badge imp-70">重要度 70</span>
+            <span class="badge imp">重要度 70</span>
             
             <a href="#topic-32">液化CO₂船および代替燃料船のMILESを活用した標準設計枠組みの構築に関する覚書を締結</a>
             <span class="date">2025/12/01 14:00</span>
@@ -622,7 +673,7 @@ a{color:inherit}
               data-recent="0"
               data-date="2025-10-01T00:00:00+00:00"
               data-tags="ai,evaluation,retrieval">
-            <span class="badge imp-70">重要度 70</span>
+            <span class="badge imp">重要度 70</span>
             
             <a href="#topic-45">RTEB の紹介: 検索評価の新しい標準</a>
             <span class="date">2025/10/01 09:00</span>
@@ -639,7 +690,7 @@ a{color:inherit}
               data-recent="0"
               data-date="2025-11-25T16:00:12+00:00"
               data-tags="AI,proteinfolding,deepmind,research">
-            <span class="badge imp-70">重要度 70</span>
+            <span class="badge imp">重要度 70</span>
             
             <a href="#topic-156">AlphaFold: 5 年間の影響</a>
             <span class="date">2025/11/26 01:00</span>
@@ -656,7 +707,7 @@ a{color:inherit}
               data-recent="0"
               data-date="2025-12-03T10:00:00+00:00"
               data-tags="ai,acquisition,openai,neptune">
-            <span class="badge imp-70">重要度 70</span>
+            <span class="badge imp">重要度 70</span>
             
             <a href="#topic-190">OpenAIがNeptuneを買収へ</a>
             <span class="date">2025/12/03 19:00</span>
@@ -673,7 +724,7 @@ a{color:inherit}
               data-recent="0"
               data-date="2025-12-12T06:00:00+00:00"
               data-tags="脆弱性,境界外書き込み,Grassroots">
-            <span class="badge imp-70">重要度 70</span>
+            <span class="badge imp">重要度 70</span>
             
             <a href="#topic-212">JVN: 複数のGrassroots製品における境界外書き込みの脆弱性</a>
             <span class="date">2025/12/12 15:00</span>
@@ -690,7 +741,7 @@ a{color:inherit}
               data-recent="0"
               data-date="2025-12-10T00:03:00+00:00"
               data-tags="">
-            <span class="badge imp-70">重要度 70</span>
+            <span class="badge imp">重要度 70</span>
             
             <a href="#topic-215">ウィークリー レポート: Array Networks Array AGシリーズにおけるコマンドインジェクションの脆弱性に関する注意喚起</a>
             <span class="date">2025/12/10 09:03</span>
@@ -714,8 +765,12 @@ a{color:inherit}
               data-recent="2"
               data-date="2025-12-23T02:00:00+00:00"
               data-tags="廃棄物,施設">
-            <span class="badge imp-20">重要度 20</span>
-            <span class="badge hot">48h +2</span>
+            <span class="badge imp">重要度 20</span>
+            
+              <span class="badge recent ">
+                48h +2
+              </span>
+            
             <a href="#topic-693">愛知県西尾市より一般廃棄物処理施設の整備運営事業を受注</a>
             <span class="date">2025/12/23 11:00</span>
             
@@ -732,8 +787,12 @@ a{color:inherit}
               data-recent="1"
               data-date="2025-12-22T02:00:00+00:00"
               data-tags="">
-            <span class="badge imp-80">重要度 80</span>
-            <span class="badge hot">48h +1</span>
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
             <a href="#topic-674">三菱重工とエクシオグループ、国内初の2相DLC搭載GPUサーバーを構築、商用利用を開始</a>
             <span class="date">2025/12/22 11:00</span>
             
@@ -750,8 +809,12 @@ a{color:inherit}
               data-recent="1"
               data-date="2025-12-22T05:22:00+00:00"
               data-tags="Windows11,AI,Insider">
-            <span class="badge imp-65">重要度 65</span>
-            <span class="badge hot">48h +1</span>
+            <span class="badge imp">重要度 65</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
             <a href="#topic-691">今年最後（？）のプレビュー版「Windows 11」公開、AIエージェント時代に備えた新機能多数／タスクバーにエージェントAI、エージェントランチャー、ナレーターの改良など</a>
             <span class="date">2025/12/22 14:22</span>
             
@@ -768,8 +831,12 @@ a{color:inherit}
               data-recent="1"
               data-date="2025-12-22T02:30:00+00:00"
               data-tags="">
-            <span class="badge imp-50">重要度 50</span>
-            <span class="badge hot">48h +1</span>
+            <span class="badge imp">重要度 50</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
             <a href="#topic-712">JVN: 複数のキーエンス製品における複数の脆弱性</a>
             <span class="date">2025/12/22 11:30</span>
             
@@ -780,15 +847,19 @@ a{color:inherit}
           </li>
         
           <li class="topic-row"
-              data-title="注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起  (公開)"
+              data-title="注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起 (公開)"
               data-summary="WatchGuard製Fireboxのikedサービスに境界外書き込み脆弱性（CVE-2025-14733）が報告され、JPCERTが注意喚起を発表した。"
               data-imp="50"
               data-recent="1"
               data-date="2025-12-22T06:37:00+00:00"
               data-tags="">
-            <span class="badge imp-50">重要度 50</span>
-            <span class="badge hot">48h +1</span>
-            <a href="#topic-713">注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起  (公開)</a>
+            <span class="badge imp">重要度 50</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-713">注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起 (公開)</a>
             <span class="date">2025/12/22 15:37</span>
             
               <span class="badge"><a href="#cat-security">セキュリティ</a></span>
@@ -798,15 +869,19 @@ a{color:inherit}
           </li>
         
           <li class="topic-row"
-              data-title="JVN: メディアプレーヤ MP-01における重要な機能に対する認証の欠如の脆弱性"
+              data-title="JVN: メディアプレーヤ MP-01 における重要な機能に対する認証の欠如の脆弱性"
               data-summary="シャープのMP-01メディアプレーヤに重要機能への認証が欠如した脆弱性が存在し、外部から不正操作が可能となる。"
               data-imp="50"
               data-recent="1"
               data-date="2025-12-23T01:00:00+00:00"
               data-tags="脆弱性,認証欠如,メディアプレーヤ">
-            <span class="badge imp-50">重要度 50</span>
-            <span class="badge hot">48h +1</span>
-            <a href="#topic-802">JVN: メディアプレーヤ MP-01における重要な機能に対する認証の欠如の脆弱性</a>
+            <span class="badge imp">重要度 50</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-802">JVN: メディアプレーヤ MP-01 における重要な機能に対する認証の欠如の脆弱性</a>
             <span class="date">2025/12/23 10:00</span>
             
               <span class="badge"><a href="#cat-security">セキュリティ</a></span>
@@ -822,8 +897,12 @@ a{color:inherit}
               data-recent="1"
               data-date="2025-12-23T03:15:00+00:00"
               data-tags="脆弱性,認証回避,空調管理システム">
-            <span class="badge imp-50">重要度 50</span>
-            <span class="badge hot">48h +1</span>
+            <span class="badge imp">重要度 50</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
             <a href="#topic-803">JVN: 三菱電機製空調管理システムにおける認証回避の脆弱性</a>
             <span class="date">2025/12/23 12:15</span>
             
@@ -840,8 +919,12 @@ a{color:inherit}
               data-recent="1"
               data-date="2025-12-21T21:45:00+00:00"
               data-tags="pricing,GitHubActions,self-hosted">
-            <span class="badge imp-45">重要度 45</span>
-            <span class="badge hot">48h +1</span>
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
             <a href="#topic-667">GitHub、セルフホスト型「GitHub Actions」の有償補償を延期／価格は1分あたり0.002ドル、一部の開発者からの猛回復を受け</a>
             <span class="date">2025/12/22 06:45</span>
             
@@ -858,8 +941,12 @@ a{color:inherit}
               data-recent="1"
               data-date="2025-12-22T01:02:36+00:00"
               data-tags="AI,SyntheticMedia,Gemini">
-            <span class="badge imp-45">重要度 45</span>
-            <span class="badge hot">48h +1</span>
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
             <a href="#topic-671">生成AIが作った・編集した動画を見破れる ～「Gemini」アプリに「SynthID」の検出機能／アップロードしてたずねだけ</a>
             <span class="date">2025/12/22 10:02</span>
             
@@ -870,15 +957,19 @@ a{color:inherit}
           </li>
         
           <li class="topic-row"
-              data-title="なぜか［フォロー中］欄の情報が古い……X/Twitterモバイルの仕様変更はいずれWebにも？／人気のカスタマイズ拡張機能「Control Panel for Twitter」を入れておけば防げる"
+              data-title="若干［フォロー中］欄の情報が古い……X/Twitterモバイルの仕様変更はWebにも？／人気のカスタマイズ拡張機能「コントロールパネル for Twitter」を入れれば防げる"
               data-summary="Xモバイルアプリで［フォロー中］タイムラインが人気順に変更され、ヘッダーに新しい順・人気のプルダウンが追加された。既定は人気順で、新着投稿が上部に表示されなくなる。"
               data-imp="45"
               data-recent="1"
               data-date="2025-12-22T07:25:00+00:00"
               data-tags="">
-            <span class="badge imp-45">重要度 45</span>
-            <span class="badge hot">48h +1</span>
-            <a href="#topic-708">なぜか［フォロー中］欄の情報が古い……X/Twitterモバイルの仕様変更はいずれWebにも？／人気のカスタマイズ拡張機能「Control Panel for Twitter」を入れておけば防げる</a>
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-708">若干［フォロー中］欄の情報が古い……X/Twitterモバイルの仕様変更はWebにも？／人気のカスタマイズ拡張機能「コントロールパネル for Twitter」を入れれば防げる</a>
             <span class="date">2025/12/22 16:25</span>
             
               <span class="badge"><a href="#cat-dev">開発</a></span>
@@ -908,47 +999,67 @@ a{color:inherit}
         <ul>
           
             <li>
-              <a href="#topic-749">Enhance document analytics with Strands AI Agents for the GenAI IDP Accelerator</a>
+              <a href="#topic-849">Advancing ADHD diagnosis: How Qbtech built a mobile AI assessment Model Using Amazon SageMaker AI</a>
               <span class="date">
-                2025/12/22 18:26
+                2025/12/23 17:11
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
             <li>
-              <a href="#topic-750">Deploy Mistral AI’s Voxtral on Amazon SageMaker AI</a>
+              <a href="#topic-850">How dLocal automated compliance reviews using Amazon Quick Automate</a>
               <span class="date">
-                2025/12/22 18:32
+                2025/12/23 17:24
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
             <li>
-              <a href="#topic-751">Move Beyond Chain-of-Thought with Chain-of-Draft on Amazon Bedrock</a>
+              <a href="#topic-851">Accelerate Enterprise AI Development using Weights & Biases and Amazon Bedrock AgentCore</a>
               <span class="date">
-                2025/12/22 18:37
+                2025/12/23 17:32
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
             <li>
-              <a href="#topic-752">One in a million: celebrating the customers shaping AI’s future</a>
+              <a href="#topic-852">AWS AI League: Model customization and agentic showdown</a>
               <span class="date">
-                2025/12/22 00:00
+                2025/12/23 17:36
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
             <li>
-              <a href="#topic-753">Continuously hardening ChatGPT Atlas against prompt injection</a>
+              <a href="#topic-853">Google's year in review: 8 areas with research breakthroughs in 2025</a>
               <span class="date">
-                2025/12/22 00:00
+                2025/12/23 17:01
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
@@ -1844,7 +1955,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-750" class="topic-row"
-              data-title="Deploy Mistral AI’s Voxtral on Amazon SageMaker AI"
+              data-title="Mistral AI の Voxtral を Amazon SageMaker AI にデプロイする"
               data-summary="Mistral AIのVoxtralモデルがAmazon SageMaker AIにデプロイ可能となり、音声とテキストを統合したマルチモーダル処理が実現される。"
               data-imp="45"
               data-recent="1"
@@ -1855,14 +1966,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://aws.amazon.com/blogs/machine-learning/deploy-mistral-ais-voxtral-on-amazon-sagemaker-ai/" target="_blank" rel="noopener">Deploy Mistral AI’s Voxtral on Amazon SageMaker AI</a>
+                <a href="https://aws.amazon.com/blogs/machine-learning/deploy-mistral-ais-voxtral-on-amazon-sagemaker-ai/" target="_blank" rel="noopener">Mistral AI の Voxtral を Amazon SageMaker AI にデプロイする</a>
               
               
                 <span class="small">（2025/12/23 03:32）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -1911,7 +2024,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-751" class="topic-row"
-              data-title="Move Beyond Chain-of-Thought with Chain-of-Draft on Amazon Bedrock"
+              data-title="Amazon Bedrock の Chain-of-Draft で思考の連鎖を超えてください"
               data-summary="Amazon BedrockでChain-of-Draft（CoD）を導入し、従来のChain-of-Thoughtよりもトークン使用量を最大75％削減し、レイテンシとコスト効率を大幅に向上させる。"
               data-imp="45"
               data-recent="1"
@@ -1922,14 +2035,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://aws.amazon.com/blogs/machine-learning/move-beyond-chain-of-thought-with-chain-of-draft-on-amazon-bedrock/" target="_blank" rel="noopener">Move Beyond Chain-of-Thought with Chain-of-Draft on Amazon Bedrock</a>
+                <a href="https://aws.amazon.com/blogs/machine-learning/move-beyond-chain-of-thought-with-chain-of-draft-on-amazon-bedrock/" target="_blank" rel="noopener">Amazon Bedrock の Chain-of-Draft で思考の連鎖を超えてください</a>
               
               
                 <span class="small">（2025/12/23 03:37）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -1990,7 +2105,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-753" class="topic-row"
-              data-title="Continuously hardening ChatGPT Atlas against prompt injection"
+              data-title="ChatGPT Atlas をプロンプト インジェクションに対して継続的に強化する"
               data-summary="OpenAIはChatGPT Atlasのプロンプトインジェクション対策を強化し、RLで訓練された自動レッドチーミングにより新規脆弱性を早期発見・修正する。"
               data-imp="45"
               data-recent="1"
@@ -2001,14 +2116,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://openai.com/index/hardening-atlas-against-prompt-injection" target="_blank" rel="noopener">Continuously hardening ChatGPT Atlas against prompt injection</a>
+                <a href="https://openai.com/index/hardening-atlas-against-prompt-injection" target="_blank" rel="noopener">ChatGPT Atlas をプロンプト インジェクションに対して継続的に強化する</a>
               
               
                 <span class="small">（2025/12/22 09:00）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -2056,35 +2173,37 @@ a{color:inherit}
 
           </li>
         
-           <li id="topic-446" class="topic-row"
-              data-title="Gemini 3 Flash: スピードを追求したフロンティア インテリジェンス"
-              data-summary="Gemini 3 Flashは高速を追求したフロンティアインテリジェンスで、従来より低コストで提供される。"
+           <li id="topic-849" class="topic-row"
+              data-title="Advancing ADHD diagnosis: How Qbtech built a mobile AI assessment Model Using Amazon SageMaker AI"
+              data-summary="QbtechはAmazon SageMakerとAWS Glueを活用し、スマートフォン向けの臨床品質ADHD診断アプリQbMobileを開発。"
               data-imp="45"
-              data-recent="0"
-              data-date="2025-12-17T11:58:17+00:00"
-              data-tags="AI,Gemini,DeepMind,Flash">
+              data-recent="1"
+              data-date="2025-12-23T17:11:30+00:00"
+              data-tags="AI,ADHD,SageMaker">
             <div>
               
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://deepmind.google/blog/gemini-3-flash-frontier-intelligence-built-for-speed/" target="_blank" rel="noopener">Gemini 3 Flash: スピードを追求したフロンティア インテリジェンス</a>
+                <a href="https://aws.amazon.com/blogs/machine-learning/advancing-adhd-diagnosis-how-qbtech-built-a-mobile-ai-assessment-model-using-amazon-sagemaker-ai/" target="_blank" rel="noopener">Advancing ADHD diagnosis: How Qbtech built a mobile AI assessment Model Using Amazon SageMaker AI</a>
               
               
-                <span class="small">（2025/12/17 20:58）</span>
+                <span class="small">（2025/12/24 02:11）</span>
               
 
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
                   
                     <span class="badge">AI</span>
                   
-                    <span class="badge">Gemini</span>
+                    <span class="badge">ADHD</span>
                   
-                    <span class="badge">DeepMind</span>
-                  
-                    <span class="badge">Flash</span>
+                    <span class="badge">SageMaker</span>
                   
                 </span>
               
@@ -2095,26 +2214,26 @@ a{color:inherit}
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：Gemini 3 Flashは高速を追求したフロンティアインテリジェンスで、従来より低コストで提供される。</div>
+                  <div><strong>要約</strong>：QbtechはAmazon SageMakerとAWS Glueを活用し、スマートフォン向けの臨床品質ADHD診断アプリQbMobileを開発。</div>
                 
 
                 
                   <ul class="kps">
                     
-                      <li>Gemini 3 Flashは高速性能を重視して設計されたAIモデルです。</li>
+                      <li>QbTechはFDAクリア済み・CEマーク取得済みのQbTestとQbCheckで1百万件以上のテスト実績がある</li>
                     
-                      <li>フロンティアインテリジェンスとして先進的な機能が搭載されています。</li>
+                      <li>QbMobileはスマートフォンネイティブで臨床品質のADHD診断を患者デバイスに提供する</li>
                     
-                      <li>従来の同等モデルに比べて費用が大幅に削減されます。</li>
+                      <li>AWS SageMakerとGlueを用いてMLワークフローを効率化し、モデル構築・訓練・展開を実現した</li>
                     
                   </ul>
                 
 
                 
                 <div class="perspectives">
-                  <div><b>目線者技術</b>: Gemini 3 Flashは高速化に重点を置いているため、リアルタイム処理や低レイテンシーアプリケーションへの導入が容易になる可能性があります。ただし、最適化の詳細が公開されていない点で実装上の課題も残ります。</div>
-                  <div><b>経営者目線</b>: コスト削減と高速性能は市場競争力を高める重要要素です。投資判断としては、既存プロダクトへの統合や新規サービス開発に向けた検討が必要です。</div>
-                  <div><b>消費者目線</b>: 一般ユーザーにとっては、よりスムーズなAI体験が期待できる一方で、価格面のメリットも享受できます。ただし、利用可能なプラットフォームが限定される場合があります。</div>
+                  <div><b>目線者技術</b>: SageMakerとGlueの組み合わせは既存MLパイプラインの自動化に有効で、データ統合からモデルデプロイまで一貫して管理できる。</div>
+                  <div><b>経営者目線</b>: QbTechがクラウドベースで診断サービスを拡張することで市場シェアを拡大し、医療IT投資のROI向上が期待できる。</div>
+                  <div><b>消費者目線</b>: 患者はスマートフォンだけで臨床レベルのADHD評価を受けられ、診断までの時間とコストが削減される可能性がある。</div>
                 </div>
                 
 
@@ -2124,7 +2243,7 @@ a{color:inherit}
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://deepmind.google/blog/gemini-3-flash-frontier-intelligence-built-for-speed/" target="_blank" rel="noopener">https://deepmind.google/blog/gemini-3-flash-frontier-intelligence-built-for-speed/</a>
+                      <a href="https://aws.amazon.com/blogs/machine-learning/advancing-adhd-diagnosis-how-qbtech-built-a-mobile-ai-assessment-model-using-amazon-sagemaker-ai/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/machine-learning/advancing-adhd-diagnosis-how-qbtech-built-a-mobile-ai-assessment-model-using-amazon-sagemaker-ai/</a>
                     
                   </div>
                 
@@ -2133,24 +2252,28 @@ a{color:inherit}
 
           </li>
         
-           <li id="topic-473" class="topic-row"
-              data-title="リアルタイムエージェントインタラクションのための双方向ストリーミングが Amazon Bedrock AgentCore ランタイムで利用可能になりました"
-              data-summary="Amazon Bedrock AgentCore Runtimeが双方向ストリーミングをサポートし、リアルタイムで音声・ビジョンエージェントの対話を可能にした。"
+           <li id="topic-850" class="topic-row"
+              data-title="How dLocal automated compliance reviews using Amazon Quick Automate"
+              data-summary="dLocalが生成AIを活用し、Amazon Quick Automateで月々数千のeコマースサイトを自動コンプライアンスレビューする仕組みを構築した。"
               data-imp="45"
-              data-recent="0"
-              data-date="2025-12-18T17:00:21+00:00"
+              data-recent="1"
+              data-date="2025-12-23T17:24:20+00:00"
               data-tags="">
             <div>
               
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://aws.amazon.com/blogs/machine-learning/bi-directional-streaming-for-real-time-agent-interactions-now-available-in-amazon-bedrock-agentcore-runtime/" target="_blank" rel="noopener">リアルタイムエージェントインタラクションのための双方向ストリーミングが Amazon Bedrock AgentCore ランタイムで利用可能になりました</a>
+                <a href="https://aws.amazon.com/blogs/machine-learning/how-dlocal-automated-compliance-reviews-using-amazon-quick-automate/" target="_blank" rel="noopener">How dLocal automated compliance reviews using Amazon Quick Automate</a>
               
               
-                <span class="small">（2025/12/19 02:00）</span>
+                <span class="small">（2025/12/24 02:24）</span>
               
 
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -2160,26 +2283,26 @@ a{color:inherit}
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：Amazon Bedrock AgentCore Runtimeが双方向ストリーミングをサポートし、リアルタイムで音声・ビジョンエージェントの対話を可能にした。</div>
+                  <div><strong>要約</strong>：dLocalが生成AIを活用し、Amazon Quick Automateで月々数千のeコマースサイトを自動コンプライアンスレビューする仕組みを構築した。</div>
                 
 
                 
                   <ul class="kps">
                     
-                      <li>Bedrock AgentCore Runtimeが双方向ストリーミング機能を追加した。</li>
+                      <li>dLocalは2016年設立、40カ国以上で事業展開している。</li>
                     
-                      <li>ユーザー入力と応答が同時に行われることで自然な会話フローが実現できる。</li>
+                      <li>毎月数千の商人ECサイトをレビューし、ポリシー違反を検出している。</li>
                     
-                      <li>マルチモーダル（音声・ビジョン）対話で中断やリアルタイムフィードバックに対応可能となった。</li>
+                      <li>2023年に独自生成AIソリューションを開発し、Amazon Quick Automateと連携した。</li>
                     
                   </ul>
                 
 
                 
                 <div class="perspectives">
-                  <div><b>目線者技術</b>: 双方向ストリーミングを導入することで、既存の順序制御型API設計から非同期ストリームベースへ移行が必要になる。実装では接続管理やデータフロー制御を追加し、音声入力のリアルタイム処理に対応するためのバッファリングとエラーハンドリングを検討すべきだ。</div>
-                  <div><b>経営者目線</b>: 本機能は顧客体験を大幅に向上させる可能性がある。競合との差別化要因として活用し、マルチモーダルサービスの拡張戦略を加速できる。導入コストとリソース配分を評価し、短期的なROIを見込むべきだ。</div>
-                  <div><b>消費者目線</b>: ユーザーは音声で自然に会話でき、途中で話題を変えたり質問したりできるようになる。リアルタイム応答があることで、人間と対話している感覚が高まり、サービス利用の満足度が向上するだろう。</div>
+                  <div><b>目線者技術</b>: 生成AIとQuick Automateを組み合わせることで、サイト変更のリアルタイム監視が可能になり、検証プロセスの自動化率が大幅に向上する。</div>
+                  <div><b>経営者目線</b>: 新規市場拡大時のコンプライアンスリスクを低減し、オンボーディングコストを削減できるため、事業成長戦略に貢献する。</div>
+                  <div><b>消費者目線</b>: 消費者は安全な取引環境が提供され、違法商品</div>
                 </div>
                 
 
@@ -2189,7 +2312,7 @@ a{color:inherit}
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://aws.amazon.com/blogs/machine-learning/bi-directional-streaming-for-real-time-agent-interactions-now-available-in-amazon-bedrock-agentcore-runtime/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/machine-learning/bi-directional-streaming-for-real-time-agent-interactions-now-available-in-amazon-bedrock-agentcore-runtime/</a>
+                      <a href="https://aws.amazon.com/blogs/machine-learning/how-dlocal-automated-compliance-reviews-using-amazon-quick-automate/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/machine-learning/how-dlocal-automated-compliance-reviews-using-amazon-quick-automate/</a>
                     
                   </div>
                 
@@ -2198,24 +2321,28 @@ a{color:inherit}
 
           </li>
         
-           <li id="topic-474" class="topic-row"
-              data-title="NVIDIA NeMo、Amazon Bedrock AgentCore、Strands Agents を使用してスケーラブルな AI エージェントを構築およびデプロイする"
-              data-summary="企業向けにスケーラブルなAIエージェントを構築・デプロイするため、Strands Agents、Amazon Bedrock AgentCore、NVIDIA NeMo Agent Toolkit を組み合わせる方法が紹介されている。"
+           <li id="topic-852" class="topic-row"
+              data-title="AWS AI League: Model customization and agentic showdown"
+              data-summary="AWS AI Leagueは企業が小規模モデルを微調整し、エージェント型AIで競争するプログラムを提供し、2025年に大規模なコンペティションと賞金を実施した。"
               data-imp="45"
-              data-recent="0"
-              data-date="2025-12-18T17:26:39+00:00"
+              data-recent="1"
+              data-date="2025-12-23T17:36:07+00:00"
               data-tags="">
             <div>
               
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://aws.amazon.com/blogs/machine-learning/build-and-deploy-scalable-ai-agents-with-nvidia-nemo-amazon-bedrock-agentcore-and-strands-agents/" target="_blank" rel="noopener">NVIDIA NeMo、Amazon Bedrock AgentCore、Strands Agents を使用してスケーラブルな AI エージェントを構築およびデプロイする</a>
+                <a href="https://aws.amazon.com/blogs/machine-learning/aws-ai-league-model-customization-and-agentic-showdown/" target="_blank" rel="noopener">AWS AI League: Model customization and agentic showdown</a>
               
               
-                <span class="small">（2025/12/19 02:26）</span>
+                <span class="small">（2025/12/24 02:36）</span>
               
 
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -2225,26 +2352,26 @@ a{color:inherit}
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：企業向けにスケーラブルなAIエージェントを構築・デプロイするため、Strands Agents、Amazon Bedrock AgentCore、NVIDIA NeMo Agent Toolkit を組み合わせる方法が紹介されている。</div>
+                  <div><strong>要約</strong>：AWS AI Leagueは企業が小規模モデルを微調整し、エージェント型AIで競争するプログラムを提供し、2025年に大規模なコンペティションと賞金を実施した。</div>
                 
 
                 
                   <ul class="kps">
                     
-                      <li>複数の専門化されたエージェントが協調して高度なタスクを実行できるアーキテクチャが必要とされている。</li>
+                      <li>AWS AI Leagueは企業向けのAIカスタマイズ・エージェント開発を促進する競技会を開催した。</li>
                     
-                      <li>開発段階と本番展開ではパフォーマンス最適化・リソーススケール・セキュリティ実装・運用監視のギャップが存在する。</li>
+                      <li>2025年に初回大会が開催され、開発者やビジネスリーダーが参加し、最先端ツールで課題解決に挑んだ。</li>
                     
-                      <li>Strands Agents、Amazon Bedrock AgentCore、NVIDIA NeMo Agent Toolkit を併用すると、一貫した性能と拡張性を持つマルチエージェントシステムを設計できる。</li>
+                      <li>AWS re:Invent 2025のグランドフィナーレではチームがプロンプト設計・モデル微調整を競い、賞金25,000ドルを獲得した。</li>
                     
                   </ul>
                 
 
                 
                 <div class="perspectives">
-                  <div><b>目線者技術</b>: 開発者はプロトタイプから本番へ移行する際に、ツール間の連携やパフォーマンス最適化が課題になる。本記事で紹介される統合フレームワークは、エージェント設計とデプロイを一元管理できるため、開発サイクルを短縮し、スケーラビリティとセキュリティの確保に役立つ。</div>
-                  <div><b>経営者目線</b>: 経営層はAIエージェント導入による業務効率化や競争優位性を期待できるが、システム統合と運用監視のコストも増大する。本記事で示されるツールセットは、投資対効果を高めつつリスクを低減させるためのロードマップを提供する。</div>
-                  
+                  <div><b>目線者技術</b>: エンジニアとしては、小規模モデルのファインチューニングとエージェント構築に関する実践的なノウハウが共有される点が魅力です。競技形式でスキルを磨けるため、開発プロセスの改善や新しいアルゴリズム検証にも活用できそうです。</div>
+                  <div><b>経営者目線</b>: 経営者視点では、社内外のイノベーションを促進し、AI戦略に即した人材育成が期待できます。また、競技で得られた成果を製品化へとつなげることで市場優位性を高められる可能性があります。</div>
+                  <div><b>消費者目線</b>: 消費者としては、企業がより高度なAIサービスを提供できるようになるため、日常生活における便利さや精度の向上が期待できます。ただし、競技で培われた技</div>
                 </div>
                 
 
@@ -2254,7 +2381,7 @@ a{color:inherit}
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://aws.amazon.com/blogs/machine-learning/build-and-deploy-scalable-ai-agents-with-nvidia-nemo-amazon-bedrock-agentcore-and-strands-agents/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/machine-learning/build-and-deploy-scalable-ai-agents-with-nvidia-nemo-amazon-bedrock-agentcore-and-strands-agents/</a>
+                      <a href="https://aws.amazon.com/blogs/machine-learning/aws-ai-league-model-customization-and-agentic-showdown/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/machine-learning/aws-ai-league-model-customization-and-agentic-showdown/</a>
                     
                   </div>
                 
@@ -2275,7 +2402,7 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://openai.com/index/gpt-5-2-codex" target="_blank" rel="noopener">GPT-5.2 システム カードへの付録: GPT-5.2-Codex</a>
+                <a href="https://openai.com/index/introducing-gpt-5-2-codex" target="_blank" rel="noopener">GPT-5.2 システム カードへの付録: GPT-5.2-Codex</a>
               
               
                 <span class="small">（2025/12/18 09:00）</span>
@@ -2413,37 +2540,29 @@ a{color:inherit}
 
           </li>
         
-           <li id="topic-749" class="topic-row"
-              data-title="Enhance document analytics with Strands AI Agents for the GenAI IDP Accelerator"
-              data-summary="GenAI IDP Acceleratorに統合されたAnalytics Agentが、非技術者でも自然言語で高度検索・分析を可能にし、ドキュメントから迅速な洞察を得られるようにした。"
+           <li id="topic-851" class="topic-row"
+              data-title="Accelerate Enterprise AI Development using Weights &amp; Biases and Amazon Bedrock AgentCore"
+              data-summary="Amazon Bedrock AgentCoreとW&amp;B Weaveを組み合わせることで、企業向けAI開発の設計・評価・監視が高速化される。"
               data-imp="40"
               data-recent="1"
-              data-date="2025-12-22T18:26:17+00:00"
-              data-tags="AI,IDP,AnalyticsAgent">
+              data-date="2025-12-23T17:32:23+00:00"
+              data-tags="">
             <div>
               
                 <span class="badge imp">重要度 40</span>
               
               
-                <a href="https://aws.amazon.com/blogs/machine-learning/enhance-document-analytics-with-strands-ai-agents-for-the-genai-idp-accelerator/" target="_blank" rel="noopener">Enhance document analytics with Strands AI Agents for the GenAI IDP Accelerator</a>
+                <a href="https://aws.amazon.com/blogs/machine-learning/accelerate-enterprise-ai-development-using-weights-biases-weave-and-amazon-bedrock-agentcore/" target="_blank" rel="noopener">Accelerate Enterprise AI Development using Weights & Biases and Amazon Bedrock AgentCore</a>
               
               
-                <span class="small">（2025/12/23 03:26）</span>
+                <span class="small">（2025/12/24 02:32）</span>
               
 
               
-                <span class="badge">48h +1</span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">AI</span>
-                  
-                    <span class="badge">IDP</span>
-                  
-                    <span class="badge">AnalyticsAgent</span>
-                  
+                <span class="badge recent ">
+                  48h +1
                 </span>
+              
               
             </div>
 
@@ -2452,26 +2571,26 @@ a{color:inherit}
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：GenAI IDP Acceleratorに統合されたAnalytics Agentが、非技術者でも自然言語で高度検索・分析を可能にし、ドキュメントから迅速な洞察を得られるようにした。</div>
+                  <div><strong>要約</strong>：Amazon Bedrock AgentCoreとW&B Weaveを組み合わせることで、企業向けAI開発の設計・評価・監視が高速化される。</div>
                 
 
                 
                   <ul class="kps">
                     
-                      <li>GenAI IDP Acceleratorは数千万件の文書を処理している。</li>
+                      <li>Amazon Bedrock AgentCoreとW&B Weaveを使ってエンタープライズAI開発を加速できることが示された。</li>
                     
-                      <li>Analytics AgentはSQLやデータ分析スキル不要で自然言語クエリが使用できる。</li>
+                      <li>Foundation Models（FM）を利用し、個別呼び出しから複雑なエージェントワークフローまで追跡・監視できる仕組みが紹介された。</li>
                     
-                      <li>新機能はIDP後の構造化データ解析課題に対処するために追加された。</li>
+                      <li>W&B WeaveはエージェントAIワークフローのすべての段階で統一ツールセットを提供することが説明された。</li>
                     
                   </ul>
                 
 
                 
                 <div class="perspectives">
-                  <div><b>目線者技術</b>: この機能は既存のIDPパイプラインに簡単に組み込め、開発者は自然言語インターフェースを活用して複雑な分析ロジックを書かずに済むため、実装コストが低減される。</div>
-                  <div><b>経営者目線</b>: ビジネス側では専門知識不要でデータ洞察が得られることで意思決定速度が向上し、顧客満足度とリピート率の増加が期待できる。</div>
-                  <div><b>消費者目線</b>: 一般ユーザーはSQLや統計学を知らなくても、自然言語で質問すれば文書情報を簡単に検索・分析でき、業務効率が大幅に向上する。</div>
+                  <div><b>目線者技術</b>: 開発者としては、BedrockとWeaveの統合によりモデル呼び出しのトレーシングやメトリクス収集が簡素化される点が魅力的です。また、エージェントワークフロー全体を可視化できるため、デバッグやパフォーマンスチューニングが容易になります。</div>
+                  
+                  
                 </div>
                 
 
@@ -2481,7 +2600,7 @@ a{color:inherit}
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://aws.amazon.com/blogs/machine-learning/enhance-document-analytics-with-strands-ai-agents-for-the-genai-idp-accelerator/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/machine-learning/enhance-document-analytics-with-strands-ai-agents-for-the-genai-idp-accelerator/</a>
+                      <a href="https://aws.amazon.com/blogs/machine-learning/accelerate-enterprise-ai-development-using-weights-biases-weave-and-amazon-bedrock-agentcore/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/machine-learning/accelerate-enterprise-ai-development-using-weights-biases-weave-and-amazon-bedrock-agentcore/</a>
                     
                   </div>
                 
@@ -2490,37 +2609,29 @@ a{color:inherit}
 
           </li>
         
-           <li id="topic-752" class="topic-row"
-              data-title="One in a million: celebrating the customers shaping AI’s future"
-              data-summary="OpenAIが100万人以上の顧客を抱え、PayPalやVirgin Atlanticなど多様な企業がAIで業務革新を進めている。"
+           <li id="topic-853" class="topic-row"
+              data-title="Google&#39;s year in review: 8 areas with research breakthroughs in 2025"
+              data-summary="Googleは2025年を8つの研究突破領域で総括し、AI分野における主要な進展を報告した。"
               data-imp="30"
               data-recent="1"
-              data-date="2025-12-22T00:00:00+00:00"
-              data-tags="AI導入,業務革新,顧客拡大">
+              data-date="2025-12-23T17:01:02+00:00"
+              data-tags="">
             <div>
               
                 <span class="badge imp">重要度 30</span>
               
               
-                <a href="https://openai.com/index/one-in-a-million-customers" target="_blank" rel="noopener">One in a million: celebrating the customers shaping AI’s future</a>
+                <a href="https://deepmind.google/blog/googles-year-in-review-8-areas-with-research-breakthroughs-in-2025/" target="_blank" rel="noopener">Google's year in review: 8 areas with research breakthroughs in 2025</a>
               
               
-                <span class="small">（2025/12/22 09:00）</span>
+                <span class="small">（2025/12/24 02:01）</span>
               
 
               
-                <span class="badge">48h +1</span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">AI導入</span>
-                  
-                    <span class="badge">業務革新</span>
-                  
-                    <span class="badge">顧客拡大</span>
-                  
+                <span class="badge recent ">
+                  48h +1
                 </span>
+              
               
             </div>
 
@@ -2529,26 +2640,26 @@ a{color:inherit}
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：OpenAIが100万人以上の顧客を抱え、PayPalやVirgin Atlanticなど多様な企業がAIで業務革新を進めている。</div>
+                  <div><strong>要約</strong>：Googleは2025年を8つの研究突破領域で総括し、AI分野における主要な進展を報告した。</div>
                 
 
                 
                   <ul class="kps">
                     
-                      <li>OpenAIは世界中で100万人以上の顧客にサービスを提供している。</li>
+                      <li>Googleが2025年を年次レビューとしてまとめた。</li>
                     
-                      <li>PayPal、Virgin Atlantic、BBVA、Cisco、Moderna、CanvaなどがAI導入で業務変革を実施している。</li>
+                      <li>同年の研究突破は主にAI分野であった。</li>
                     
-                      <li>企業はAIを活用しチーム力向上と新たな機会創出を図っている。</li>
+                      <li>8つの領域で重要な成果が報告された。</li>
                     
                   </ul>
                 
 
                 
                 <div class="perspectives">
-                  <div><b>目線者技術</b>: エンジニアとしては、既存システムにAI統合する際のAPI設計やデータフローの最適化が重要になる。</div>
-                  <div><b>経営者目線</b>: 経営者視点では、AI導入による業務効率化と競争優位性確保を戦略的に推進すべきである。</div>
-                  <div><b>消費者目線</b>: 消費者としては、企業がAIで提供するサービスの利便性向上や新機能への期待が高まっている。</div>
+                  <div><b>目線者技術</b>: 技術者として、Googleの8領域突破は機械学習アルゴリズムやハードウェア最適化に新たなパラダイムを提示し、既存システムへの統合検証が必要になる可能性がある。</div>
+                  <div><b>経営者目線</b>: 経営視点では、AI分野での継続的突破は競争優位を強化し、投資判断や市場戦略に影響を与えるため、6ヶ月以内の対応策検討が重要となる。</div>
+                  <div><b>消費者目線</b>: 一般消費者としては、Googleの研究進展が日常生活に直接影響するかは不明であるが、将来的には便利なサービスへの応用が期待できる。</div>
                 </div>
                 
 
@@ -2558,7 +2669,7 @@ a{color:inherit}
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://openai.com/index/one-in-a-million-customers" target="_blank" rel="noopener">https://openai.com/index/one-in-a-million-customers</a>
+                      <a href="https://deepmind.google/blog/googles-year-in-review-8-areas-with-research-breakthroughs-in-2025/" target="_blank" rel="noopener">https://deepmind.google/blog/googles-year-in-review-8-areas-with-research-breakthroughs-in-2025/</a>
                     
                   </div>
                 
@@ -2588,11 +2699,15 @@ a{color:inherit}
         <ul>
           
             <li>
-              <a href="#topic-798">技術書の読み放題サービス「TechLib」に注目が集まる ～窓の杜アクセスランキング［2025/12/15～2025/12/21]【記事アクセスランキング】</a>
+              <a href="#topic-798">ブック技術読み放題サービス「TechLib」に注目が集まる ～窓の杜アクセスランキング［2025/12/15～2025/12/21］【アクセス記事ランキング】</a>
               <span class="date">
                 2025/12/23 02:45
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
@@ -2601,16 +2716,24 @@ a{color:inherit}
               <span class="date">
                 2025/12/23 03:05
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
             <li>
-              <a href="#topic-800">デバイスやOSの情報を収集して分類・整理する「SCS Windows System Viewer」／ほとんどの機能は管理者権限不要、ポータブルアプリで気軽【レビュー】</a>
+              <a href="#topic-800">デバイスやOSの情報を収集して分類・整理する「SCS Windows System Viewer」／ほとんどの機能は管理者権限不要、ポータブルアプリで気軽に【レビュー】</a>
               <span class="date">
                 2025/12/23 04:30
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
@@ -2619,16 +2742,24 @@ a{color:inherit}
               <span class="date">
                 2025/12/23 07:05
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
             <li>
-              <a href="#topic-823">100作品以上の応募！ RPG風2Dマップメタバース「ツクセカ」、コンテスト受賞作品発表／猫をなでたり、生肉になったり、チャットで漫画のセリフを言ったり</a>
+              <a href="#topic-823">100作品以上の応募！ RPG風2Dマップメタバース「ツクセカ」、コンテスト受賞作品発表／猫をなでたり、生肉になったり、チャットで漫画の特徴を言ったり</a>
               <span class="date">
                 2025/12/23 09:05
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
@@ -2875,7 +3006,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -3102,7 +3235,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -3179,7 +3314,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -3238,7 +3375,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-708" class="topic-row"
-              data-title="なぜか［フォロー中］欄の情報が古い……X/Twitterモバイルの仕様変更はいずれWebにも？／人気のカスタマイズ拡張機能「Control Panel for Twitter」を入れておけば防げる"
+              data-title="若干［フォロー中］欄の情報が古い……X/Twitterモバイルの仕様変更はWebにも？／人気のカスタマイズ拡張機能「コントロールパネル for Twitter」を入れれば防げる"
               data-summary="Xモバイルアプリで［フォロー中］タイムラインが人気順に変更され、ヘッダーに新しい順・人気のプルダウンが追加された。既定は人気順で、新着投稿が上部に表示されなくなる。"
               data-imp="45"
               data-recent="1"
@@ -3249,14 +3386,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://forest.watch.impress.co.jp/docs/news/2073116.html" target="_blank" rel="noopener">なぜか［フォロー中］欄の情報が古い……X/Twitterモバイルの仕様変更はいずれWebにも？／人気のカスタマイズ拡張機能「Control Panel for Twitter」を入れておけば防げる</a>
+                <a href="https://forest.watch.impress.co.jp/docs/news/2073116.html" target="_blank" rel="noopener">若干［フォロー中］欄の情報が古い……X/Twitterモバイルの仕様変更はWebにも？／人気のカスタマイズ拡張機能「コントロールパネル for Twitter」を入れれば防げる</a>
               
               
                 <span class="small">（2025/12/22 16:25）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -3305,7 +3444,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-747" class="topic-row"
-              data-title="1台のPCに接続したマウスとキーボードで複数のPCを操作できる「Synergy」v3.5.0　ほか【ダイジェストニュース】"
+              data-title="1台のPCに接続したマウスとキーボードで複数のPCを操作できる「Synergy」v3.5.0のほか【ダイジェストニュース】"
               data-summary="Synergy v3.5.0がリリースされ、1台のPCに接続したマウスとキーボードで複数PCを操作できる機能が提供された。"
               data-imp="45"
               data-recent="1"
@@ -3316,14 +3455,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://forest.watch.impress.co.jp/docs/digest/2073456.html" target="_blank" rel="noopener">1台のPCに接続したマウスとキーボードで複数のPCを操作できる「Synergy」v3.5.0　ほか【ダイジェストニュース】</a>
+                <a href="https://forest.watch.impress.co.jp/docs/digest/2073456.html" target="_blank" rel="noopener">1台のPCに接続したマウスとキーボードで複数のPCを操作できる「Synergy」v3.5.0のほか【ダイジェストニュース】</a>
               
               
                 <span class="small">（2025/12/22 23:32）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -3382,7 +3523,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-777" class="topic-row"
-              data-title="新たなAI解説ツール「Explainer」が「PowerPoint」に追加／専門的・複雑で難解なスライドを嚙み砕いて簡潔に解説、略語や複雑な図表にも強い"
+              data-title="新たなAI解説ツール「Explainer」が「PowerPoint」に追加／専門的・複雑で難解なスライドをじっくり砕いてわかりやすく解説、略語や複雑な図表にも強い"
               data-summary="MicrosoftがPowerPointに新AI解説ツール『Explainer』を追加し、難解スライドの要約・解説機能を提供。"
               data-imp="45"
               data-recent="1"
@@ -3393,14 +3534,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://forest.watch.impress.co.jp/docs/news/2073331.html" target="_blank" rel="noopener">新たなAI解説ツール「Explainer」が「PowerPoint」に追加／専門的・複雑で難解なスライドを嚙み砕いて簡潔に解説、略語や複雑な図表にも強い</a>
+                <a href="https://forest.watch.impress.co.jp/docs/news/2073331.html" target="_blank" rel="noopener">新たなAI解説ツール「Explainer」が「PowerPoint」に追加／専門的・複雑で難解なスライドをじっくり砕いてわかりやすく解説、略語や複雑な図表にも強い</a>
               
               
                 <span class="small">（2025/12/23 06:45）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -3459,7 +3602,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-781" class="topic-row"
-              data-title="AIノートブック「NotebookLM」にデータテーブルが追加、資料をもとに表を生成／Googleスプレッドシートにもエクスポート可能"
+              data-title="AIノートブック「NotebookLM」にデータテーブルが追加、資料のもとに表を生成／GoogleSpredシートにもエクスポート可能"
               data-summary="米GoogleがNotebookLMにデータテーブル機能を追加し、資料から自動で表を生成・スプレッドシートへエクスポートできるようになった。"
               data-imp="45"
               data-recent="1"
@@ -3470,14 +3613,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://forest.watch.impress.co.jp/docs/news/2073476.html" target="_blank" rel="noopener">AIノートブック「NotebookLM」にデータテーブルが追加、資料をもとに表を生成／Googleスプレッドシートにもエクスポート可能</a>
+                <a href="https://forest.watch.impress.co.jp/docs/news/2073476.html" target="_blank" rel="noopener">AIノートブック「NotebookLM」にデータテーブルが追加、資料のもとに表を生成／GoogleSpredシートにもエクスポート可能</a>
               
               
                 <span class="small">（2025/12/23 09:46）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -3554,7 +3699,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -4140,7 +4287,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-798" class="topic-row"
-              data-title="技術書の読み放題サービス「TechLib」に注目が集まる ～窓の杜アクセスランキング［2025/12/15～2025/12/21]【記事アクセスランキング】"
+              data-title="ブック技術読み放題サービス「TechLib」に注目が集まる ～窓の杜アクセスランキング［2025/12/15～2025/12/21］【アクセス記事ランキング】"
               data-summary="TechLibに注目が集まる記事アクセスランキングを前週の閲覧数上位10位まで報告。期間は2025/12/15～21。"
               data-imp="30"
               data-recent="1"
@@ -4151,14 +4298,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 30</span>
               
               
-                <a href="https://forest.watch.impress.co.jp/docs/serial/accessranking/2073167.html" target="_blank" rel="noopener">技術書の読み放題サービス「TechLib」に注目が集まる ～窓の杜アクセスランキング［2025/12/15～2025/12/21]【記事アクセスランキング】</a>
+                <a href="https://forest.watch.impress.co.jp/docs/serial/accessranking/2073167.html" target="_blank" rel="noopener">ブック技術読み放題サービス「TechLib」に注目が集まる ～窓の杜アクセスランキング［2025/12/15～2025/12/21］【アクセス記事ランキング】</a>
               
               
                 <span class="small">（2025/12/23 11:45）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -4207,7 +4356,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-800" class="topic-row"
-              data-title="デバイスやOSの情報を収集して分類・整理する「SCS Windows System Viewer」／ほとんどの機能は管理者権限不要、ポータブルアプリで気軽【レビュー】"
+              data-title="デバイスやOSの情報を収集して分類・整理する「SCS Windows System Viewer」／ほとんどの機能は管理者権限不要、ポータブルアプリで気軽に【レビュー】"
               data-summary="SCS Windows System Viewerは、デバイスやOS情報を収集する無料ツールで、Windows 11上で動作確認済み。管理者権限不要のポータブルアプリとして利用可能。"
               data-imp="30"
               data-recent="1"
@@ -4218,14 +4367,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 30</span>
               
               
-                <a href="https://forest.watch.impress.co.jp/docs/review/2073120.html" target="_blank" rel="noopener">デバイスやOSの情報を収集して分類・整理する「SCS Windows System Viewer」／ほとんどの機能は管理者権限不要、ポータブルアプリで気軽【レビュー】</a>
+                <a href="https://forest.watch.impress.co.jp/docs/review/2073120.html" target="_blank" rel="noopener">デバイスやOSの情報を収集して分類・整理する「SCS Windows System Viewer」／ほとんどの機能は管理者権限不要、ポータブルアプリで気軽に【レビュー】</a>
               
               
                 <span class="small">（2025/12/23 13:30）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -4284,7 +4435,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-823" class="topic-row"
-              data-title="100作品以上の応募！ RPG風2Dマップメタバース「ツクセカ」、コンテスト受賞作品発表／猫をなでたり、生肉になったり、チャットで漫画のセリフを言ったり"
+              data-title="100作品以上の応募！ RPG風2Dマップメタバース「ツクセカ」、コンテスト受賞作品発表／猫をなでたり、生肉になったり、チャットで漫画の特徴を言ったり"
               data-summary="無料の2Dマップ作成サービス『ツクセカ』で開催されたわたしのセカイコンテストに100作品以上が応募され、12月23日に受賞作品が発表された。"
               data-imp="30"
               data-recent="1"
@@ -4295,14 +4446,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 30</span>
               
               
-                <a href="https://forest.watch.impress.co.jp/docs/news/2073651.html" target="_blank" rel="noopener">100作品以上の応募！ RPG風2Dマップメタバース「ツクセカ」、コンテスト受賞作品発表／猫をなでたり、生肉になったり、チャットで漫画のセリフを言ったり</a>
+                <a href="https://forest.watch.impress.co.jp/docs/news/2073651.html" target="_blank" rel="noopener">100作品以上の応募！ RPG風2Dマップメタバース「ツクセカ」、コンテスト受賞作品発表／猫をなでたり、生肉になったり、チャットで漫画の特徴を言ったり</a>
               
               
                 <span class="small">（2025/12/23 18:05）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -4379,7 +4532,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -5885,7 +6040,11 @@ a{color:inherit}
               <span class="date">
                 2025/12/23 02:00
               </span>
-              <span class="badge">48h +2</span>
+              
+                <span class="badge recent ">
+                  48h +2
+                </span>
+              
               <span class="small">（累計 2）</span>
             </li>
           
@@ -5894,7 +6053,11 @@ a{color:inherit}
               <span class="date">
                 2025/12/23 06:57
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 3）</span>
             </li>
           
@@ -5903,7 +6066,11 @@ a{color:inherit}
               <span class="date">
                 2025/12/22 02:00
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
@@ -5912,7 +6079,11 @@ a{color:inherit}
               <span class="date">
                 2025/12/22 02:30
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
@@ -5942,7 +6113,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -7307,7 +7480,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -7384,7 +7559,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +2</span>
+                <span class="badge recent ">
+                  48h +2
+                </span>
               
               
                 <span class="small">
@@ -7457,7 +7634,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -7526,38 +7705,54 @@ a{color:inherit}
         <ul>
           
             <li>
-              <a href="#topic-713">注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起  (公開)</a>
+              <a href="#topic-713">注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起 (公開)</a>
               <span class="date">
                 2025/12/22 06:37
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
             <li>
-              <a href="#topic-754">NIST and CISA Release Draft Interagency Report on Protecting Tokens and Assertions from Tampering Theft and Misuse for Public Comment</a>
+              <a href="#topic-754">NISTとCISA、トークンとアサーションの改ざん盗難や悪用からの保護に関する省庁間報告書の草案をパブリックコメントに向けて公開</a>
               <span class="date">
                 2025/12/22 12:00
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
             <li>
-              <a href="#topic-801">JVN: セイコーエプソン製プロジェクターのEPSON WebConfig / Epson Web Controlにおける過度な認証試行を制限する機能の欠如</a>
+              <a href="#topic-801">JVN: セイコーエプソン製アスリートのEPSON WebConfig / Epson Web Controlにおける待ち時間な認証試行を制限する機能の欠如</a>
               <span class="date">
                 2025/12/23 00:30
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
             <li>
-              <a href="#topic-802">JVN: メディアプレーヤ MP-01における重要な機能に対する認証の欠如の脆弱性</a>
+              <a href="#topic-802">JVN: メディアプレーヤ MP-01 における重要な機能に対する認証の欠如の脆弱性</a>
               <span class="date">
                 2025/12/23 01:00
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
@@ -7566,7 +7761,11 @@ a{color:inherit}
               <span class="date">
                 2025/12/23 03:15
               </span>
-              <span class="badge">48h +1</span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
               <span class="small">（累計 1）</span>
             </li>
           
@@ -8424,17 +8623,17 @@ a{color:inherit}
               data-summary="マイクロソフトが2025年10月にリリースするセキュリティ更新プログラムについて注意喚起が行われ、ユーザーは既存システムの修正・検証を速やかに実施すべきである。"
               data-imp="60"
               data-recent="0"
-              data-date="2025-10-15T02:15:00+00:00"
+              data-date="2025-11-12T02:11:00+00:00"
               data-tags="">
             <div>
               
                 <span class="badge imp">重要度 60</span>
               
               
-                <a href="https://www.jpcert.or.jp/at/2025/at250022.html" target="_blank" rel="noopener">注意喚起: 2025年10月マイクロソフトセキュリティ更新プログラムに関する注意喚起  (公開)</a>
+                <a href="https://www.jpcert.or.jp/at/2025/at250023.html" target="_blank" rel="noopener">注意喚起: 2025年10月マイクロソフトセキュリティ更新プログラムに関する注意喚起  (公開)</a>
               
               
-                <span class="small">（2025/10/15 11:15）</span>
+                <span class="small">（2025/11/12 11:11）</span>
               
 
               
@@ -8568,7 +8767,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -8617,7 +8818,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-713" class="topic-row"
-              data-title="注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起  (公開)"
+              data-title="注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起 (公開)"
               data-summary="WatchGuard製Fireboxのikedサービスに境界外書き込み脆弱性（CVE-2025-14733）が報告され、JPCERTが注意喚起を発表した。"
               data-imp="50"
               data-recent="1"
@@ -8628,14 +8829,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 50</span>
               
               
-                <a href="https://www.jpcert.or.jp/at/2025/at250027.html" target="_blank" rel="noopener">注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起  (公開)</a>
+                <a href="https://www.jpcert.or.jp/at/2025/at250027.html" target="_blank" rel="noopener">注意喚起: WatchGuard製Fireboxのikedにおける境界外書き込みの脆弱性（CVE-2025-14733）に関する注意喚起 (公開)</a>
               
               
                 <span class="small">（2025/12/22 15:37）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -8684,7 +8887,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-802" class="topic-row"
-              data-title="JVN: メディアプレーヤ MP-01における重要な機能に対する認証の欠如の脆弱性"
+              data-title="JVN: メディアプレーヤ MP-01 における重要な機能に対する認証の欠如の脆弱性"
               data-summary="シャープのMP-01メディアプレーヤに重要機能への認証が欠如した脆弱性が存在し、外部から不正操作が可能となる。"
               data-imp="50"
               data-recent="1"
@@ -8695,14 +8898,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 50</span>
               
               
-                <a href="https://jvn.jp/vu/JVNVU96231218/" target="_blank" rel="noopener">JVN: メディアプレーヤ MP-01における重要な機能に対する認証の欠如の脆弱性</a>
+                <a href="https://jvn.jp/vu/JVNVU96231218/" target="_blank" rel="noopener">JVN: メディアプレーヤ MP-01 における重要な機能に対する認証の欠如の脆弱性</a>
               
               
                 <span class="small">（2025/12/23 10:00）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -8779,7 +8984,9 @@ a{color:inherit}
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
@@ -8978,7 +9185,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-754" class="topic-row"
-              data-title="NIST and CISA Release Draft Interagency Report on Protecting Tokens and Assertions from Tampering Theft and Misuse for Public Comment"
+              data-title="NISTとCISA、トークンとアサーションの改ざん盗難や悪用からの保護に関する省庁間報告書の草案をパブリックコメントに向けて公開"
               data-summary="CISAとNISTが公開コメントを求めるIR 8597で、クラウドサービスプロバイダーと連邦機関向けにトークン・アサーションの改ざん防止指針を提示。"
               data-imp="45"
               data-recent="1"
@@ -8989,14 +9196,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://www.cisa.gov/news-events/alerts/2025/12/22/nist-and-cisa-release-draft-interagency-report-protecting-tokens-and-assertions-tampering-theft-and" target="_blank" rel="noopener">NIST and CISA Release Draft Interagency Report on Protecting Tokens and Assertions from Tampering Theft and Misuse for Public Comment</a>
+                <a href="https://www.cisa.gov/news-events/alerts/2025/12/22/nist-and-cisa-release-draft-interagency-report-protecting-tokens-and-assertions-tampering-theft-and" target="_blank" rel="noopener">NISTとCISA、トークンとアサーションの改ざん盗難や悪用からの保護に関する省庁間報告書の草案をパブリックコメントに向けて公開</a>
               
               
                 <span class="small">（2025/12/22 21:00）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -9045,7 +9254,7 @@ a{color:inherit}
           </li>
         
            <li id="topic-801" class="topic-row"
-              data-title="JVN: セイコーエプソン製プロジェクターのEPSON WebConfig / Epson Web Controlにおける過度な認証試行を制限する機能の欠如"
+              data-title="JVN: セイコーエプソン製アスリートのEPSON WebConfig / Epson Web Controlにおける待ち時間な認証試行を制限する機能の欠如"
               data-summary="EPSON WebConfigに過度な認証試行制限機能がなく、セイコーエプソン製プロジェクターで不正アクセスリスクが高まる。対策は速やかに実装すべき。"
               data-imp="45"
               data-recent="1"
@@ -9056,14 +9265,16 @@ a{color:inherit}
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://jvn.jp/vu/JVNVU95021911/" target="_blank" rel="noopener">JVN: セイコーエプソン製プロジェクターのEPSON WebConfig / Epson Web Controlにおける過度な認証試行を制限する機能の欠如</a>
+                <a href="https://jvn.jp/vu/JVNVU95021911/" target="_blank" rel="noopener">JVN: セイコーエプソン製アスリートのEPSON WebConfig / Epson Web Controlにおける待ち時間な認証試行を制限する機能の欠如</a>
               
               
                 <span class="small">（2025/12/23 09:30）</span>
               
 
               
-                <span class="badge">48h +1</span>
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
             </div>
@@ -10665,7 +10876,7 @@ function applyFilter() {
         : sel.some(t => itemTags.includes(t));
     }
 
-    const show = hitQ && hitImp && hitRecent && hitTag;
+    const show = hitQ && hitTag;
     el.style.display = show ? '' : 'none';
     if (show) hit++;
   });
