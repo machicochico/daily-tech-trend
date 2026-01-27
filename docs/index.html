@@ -316,15 +316,15 @@ a:hover{
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2026-01-27 12:12:10 JST</div>
+        <div class="v">2026-01-27 15:09:58 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">730 sec</div>
+        <div class="v">597 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
-        <div class="v">3187 <span class="small">(new48h 204)</span></div>
+        <div class="v">3211 <span class="small">(new48h 227)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">RSS Sources</div>
@@ -394,6 +394,10 @@ a:hover{
             SageMaker (3)
           </button>
         
+          <button class="btn" type="button" data-tag-btn="Windows" onclick="toggleTag('Windows')">
+            Windows (3)
+          </button>
+        
           <button class="btn" type="button" data-tag-btn="アップデート" onclick="toggleTag('アップデート')">
             アップデート (3)
           </button>
@@ -410,12 +414,12 @@ a:hover{
             CLI (2)
           </button>
         
-          <button class="btn" type="button" data-tag-btn="CloudWatch" onclick="toggleTag('CloudWatch')">
-            CloudWatch (2)
+          <button class="btn" type="button" data-tag-btn="CVE" onclick="toggleTag('CVE')">
+            CVE (2)
           </button>
         
-          <button class="btn" type="button" data-tag-btn="DoS" onclick="toggleTag('DoS')">
-            DoS (2)
+          <button class="btn" type="button" data-tag-btn="CloudWatch" onclick="toggleTag('CloudWatch')">
+            CloudWatch (2)
           </button>
         
           <button class="btn" type="button" data-tag-btn="ETS" onclick="toggleTag('ETS')">
@@ -440,10 +444,6 @@ a:hover{
         
           <button class="btn" type="button" data-tag-btn="SDK" onclick="toggleTag('SDK')">
             SDK (2)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="Windows" onclick="toggleTag('Windows')">
-            Windows (2)
           </button>
         
           <button class="btn" type="button" data-tag-btn="automation" onclick="toggleTag('automation')">
@@ -663,6 +663,27 @@ a:hover{
           </li>
         
           <li class="topic-row"
+              data-title="CISA、悪用された既知の脆弱性 1 つをカタログに追加"
+              data-summary="CISAが3つの既知脆弱性をKEVカタログに追加し、連邦機関への対策期限を設定した。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-01-26T12:00:00+00:00"
+              data-tags="KEV,CVE,連邦機関">
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-231">CISA、悪用された既知の脆弱性 1 つをカタログに追加</a>
+            <span class="date">2026/01/26 21:00</span>
+            
+              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
+            
+            
+          </li>
+        
+          <li class="topic-row"
               data-title="AutomationDirect CLICK プログラマブル ロジック コントローラー"
               data-summary="AutomationDirect CLICK PLCに脆弱性があり、認証情報漏洩で権限昇格・データ解読が可能。"
               data-imp="45"
@@ -746,33 +767,34 @@ a:hover{
             
           </li>
         
-          <li class="topic-row"
-              data-title="JVN: Schneider Electric製EcoStruxure Process Expertにおけるインストール時のファイルアクセス権の設定がしっかりな脆弱性"
-              data-summary="Schneider ElectricのEcoStruxure Process Expertにインストール時ファイルアクセス権脆弱性が報告され、修正が必要。"
-              data-imp="45"
-              data-recent="1"
-              data-date="2026-01-26T00:30:40+00:00"
-              data-tags="脆弱性,ファイルアクセス権,EcoStruxure">
-            <span class="badge imp">重要度 45</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-3469">JVN: Schneider Electric製EcoStruxure Process Expertにおけるインストール時のファイルアクセス権の設定がしっかりな脆弱性</a>
-            <span class="date">2026/01/26 09:30</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
-            
-            
-          </li>
-        
       </ol>
     </div>
 
     <div class="top-col">
       <h3>🔥Trending（48h増分）</h3>
       <ol class="top-list">
+        
+          <li class="topic-row"
+              data-title="CISA、悪用された既知の脆弱性 1 つをカタログに追加"
+              data-summary="CISAが3つの既知脆弱性をKEVカタログに追加し、連邦機関への対策期限を設定した。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-01-26T12:00:00+00:00"
+              data-tags="KEV,CVE,連邦機関">
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-231">CISA、悪用された既知の脆弱性 1 つをカタログに追加</a>
+            <span class="date">2026/01/26 21:00</span>
+            
+              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
+            
+            
+
+          </li>
         
           <li class="topic-row"
               data-title="AutomationDirect CLICK プログラマブル ロジック コントローラー"
@@ -967,28 +989,6 @@ a:hover{
             <span class="date">2026/01/26 09:00</span>
             
               <span class="badge"><a href="#cat-ai">AI</a></span>
-            
-            
-
-          </li>
-        
-          <li class="topic-row"
-              data-title="あけましておめでとう！ AWS ウィークリーまとめ: 10,000 AIdeas コンペティション、Amazon EC2、Amazon ECS マネージド インスタンスなど (2026 年 1 月 5 日)"
-              data-summary="BeSAの新コホートと10,000 AIdeasコンペが開始され、参加者はAI開発経験を得られる。"
-              data-imp="35"
-              data-recent="1"
-              data-date="2026-01-26T16:25:46+00:00"
-              data-tags="AI,competition,training">
-            <span class="badge imp">重要度 35</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-1857">あけましておめでとう！ AWS ウィークリーまとめ: 10,000 AIdeas コンペティション、Amazon EC2、Amazon ECS マネージド インスタンスなど (2026 年 1 月 5 日)</a>
-            <span class="date">2026/01/27 01:25</span>
-            
-              <span class="badge"><a href="#cat-system">システム</a></span>
             
             
 
@@ -9783,6 +9783,19 @@ a:hover{
         <ul>
           
             <li>
+              <a href="#topic-231">CISA、悪用された既知の脆弱性 1 つをカタログに追加</a>
+              <span class="date">
+                2026/01/26 12:00
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 2）</span>
+            </li>
+          
+            <li>
               <a href="#topic-3226">AutomationDirect CLICK プログラマブル ロジック コントローラー</a>
               <span class="date">
                 2026/01/26 00:30
@@ -9796,48 +9809,35 @@ a:hover{
             </li>
           
             <li>
-              <a href="#topic-3467">JVN: Johnson Controls製iSTAR Configuration Utility (ICU)ツールにおけるスタックベースのバッファオーバーフローの脆弱性</a>
-              <span class="date">
-                2026/01/26 00:30
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-3468">JVN: Rockwell Automation製CompactLogix 5370における数値の入力のための検証の脆弱性</a>
-              <span class="date">
-                2026/01/26 00:30
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-3469">JVN: Schneider Electric製EcoStruxure Process Expertにおけるインストール時のファイルアクセス権の設定がしっかりな脆弱性</a>
-              <span class="date">
-                2026/01/26 00:30
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
               <a href="#topic-3470">JVN: dr_flacにおける整数オーバーフローの脆弱性</a>
               <span class="date">
                 2026/01/26 03:00
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-3601">JVN: Archer MR600におけるOSコマンドインジェクションの脆弱性</a>
+              <span class="date">
+                2026/01/27 01:00
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-3602">JVN: Beat-access Windows版におけるDLL読み込みに関する脆弱性</a>
+              <span class="date">
+                2026/01/27 03:00
               </span>
               
                 <span class="badge recent ">
@@ -10244,6 +10244,112 @@ a:hover{
                     根拠：
                     
                       <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-022-05" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-022-05</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-231" class="topic-row"
+              data-title="CISA、悪用された既知の脆弱性 1 つをカタログに追加"
+              data-summary="CISAが3つの既知脆弱性をKEVカタログに追加し、連邦機関への対策期限を設定した。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-01-26T12:00:00+00:00"
+              data-tags="KEV,CVE,連邦機関">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://www.cisa.gov/news-events/alerts/2026/01/26/cisa-adds-five-known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">CISA、悪用された既知の脆弱性 1 つをカタログに追加</a>
+              
+              
+                <span class="small">（2026/01/26 21:00）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">KEV</span>
+                  
+                    <span class="badge">CVE</span>
+                  
+                    <span class="badge">連邦機関</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：CISAが3つの既知脆弱性をKEVカタログに追加し、連邦機関への対策期限を設定した。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CISAはCVE-2025-20393をKEVに追加した。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CVE-2025-40602とCVE-59374も同様にリストアップされた。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>BOD 22-01は連邦機関に対し期限内の修復を義務付けている。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 即時パッチ適用が必要。</div>
+                  <div><b>経営者目線</b>: 法令遵守とリスク低減が求められる。</div>
+                  <div><b>消費者目線</b>: セキュリティ強化で安心できる。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.cisa.gov/news-events/alerts/2025/12/17/cisa-adds-three-known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">https://www.cisa.gov/news-events/alerts/2025/12/17/cisa-adds-three-known-exploited-vulnerabilities-catalog</a>
                     
                   </div>
                 
@@ -10780,136 +10886,38 @@ a:hover{
 
           </li>
         
-           <li id="topic-3159" class="topic-row"
-              data-title="JVN: ISC BINDにサービス運用妨害（DoS）につながる脆弱性（CVE-2025-13878）"
-              data-summary="ISC BINDにDoS脆弱性が報告され、運用停止リスクがある。"
+           <li id="topic-3602" class="topic-row"
+              data-title="JVN: Beat-access Windows版におけるDLL読み込みに関する脆弱性"
+              data-summary="富士フイルムビジネスイノベーションのbeat-access Windows版にDLL読み込み脆弱性が報告され、即時対応が必要。"
               data-imp="45"
-              data-recent="0"
-              data-date="2026-01-23T03:15:00+00:00"
-              data-tags="脆弱性,DoS,ISC BIND">
+              data-recent="1"
+              data-date="2026-01-27T03:00:00+00:00"
+              data-tags="脆弱性,DLL,Windows">
             <div>
               
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://jvn.jp/vu/JVNVU94755059/" target="_blank" rel="noopener">JVN: ISC BINDにサービス運用妨害（DoS）につながる脆弱性（CVE-2025-13878）</a>
+                <a href="https://jvn.jp/jp/JVN03776126/" target="_blank" rel="noopener">JVN: Beat-access Windows版におけるDLL読み込みに関する脆弱性</a>
               
               
-                <span class="small">（2026/01/23 12:15）</span>
+                <span class="small">（2026/01/27 12:00）</span>
               
 
               
-              
-                <span class="small">
-                  
-                    <span class="badge">脆弱性</span>
-                  
-                    <span class="badge">DoS</span>
-                  
-                    <span class="badge">ISC BIND</span>
-                  
+                <span class="badge recent ">
+                  48h +1
                 </span>
               
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：ISC BINDにDoS脆弱性が報告され、運用停止リスクがある。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>ISC BINDにサービス運用妨害（DoS）につながる脆弱性が存在する。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>ISC（Internet Systems Consortium）が提供している。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>脆弱性はCVE-2025-13878である。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: パッチ適用を優先し、テスト環境で検証すべき。</div>
-                  <div><b>経営者目線</b>: 運用停止リスクに備え、対応計画を策定する。</div>
-                  <div><b>消費者目線</b>: サービス利用者は安定性への影響を警戒。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://jvn.jp/vu/JVNVU94755059/" target="_blank" rel="noopener">https://jvn.jp/vu/JVNVU94755059/</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-3179" class="topic-row"
-              data-title="JVN: 複数のPioneer製品のインストーラーにおけるDLL読み込みに関する脆弱性"
-              data-summary="パイオニア製品のインストーラーにDLL読み込み脆弱性が報告され、修正が必要と判断される。"
-              data-imp="45"
-              data-recent="0"
-              data-date="2026-01-23T02:30:00+00:00"
-              data-tags="脆弱性,Pioneer,DLL">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://jvn.jp/vu/JVNVU93474119/" target="_blank" rel="noopener">JVN: 複数のPioneer製品のインストーラーにおけるDLL読み込みに関する脆弱性</a>
-              
-              
-                <span class="small">（2026/01/23 11:30）</span>
-              
-
-              
               
                 <span class="small">
                   
                     <span class="badge">脆弱性</span>
-                  
-                    <span class="badge">Pioneer</span>
                   
                     <span class="badge">DLL</span>
                   
+                    <span class="badge">Windows</span>
+                  
                 </span>
               
             </div>
@@ -10919,7 +10927,7 @@ a:hover{
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：パイオニア製品のインストーラーにDLL読み込み脆弱性が報告され、修正が必要と判断される。</div>
+                  <div><strong>要約</strong>：富士フイルムビジネスイノベーションのbeat-access Windows版にDLL読み込み脆弱性が報告され、即時対応が必要。</div>
                 
 
                 
@@ -10932,7 +10940,7 @@ a:hover{
                       
                         
                         
-                          <li>複数のPioneer製品のインストーラーにDLL読み込み脆弱性が存在すること</li>
+                          <li>富士フイルムビジネスイノベーション株式会社が提供するbeat-access Windows版にDLL読み込みに関する脆弱性が存在します。</li>
                           
                         
                       
@@ -10942,7 +10950,7 @@ a:hover{
                       
                         
                         
-                          <li>脆弱性はパイオニア株式会社が提供する製品で発見されたこと</li>
+                          <li>脆弱性はWindows版のDLLロード処理に起因しています。</li>
                           
                         
                       
@@ -10952,7 +10960,7 @@ a:hover{
                       
                         
                         
-                          <li>対策としてインストーラの修正が必要とされること</li>
+                          <li>報告元はJVNで詳細情報が公開されています。</li>
                           
                         
                       
@@ -10963,9 +10971,9 @@ a:hover{
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 既存インストーラーに影響あり、即時検証が必須。</div>
-                  <div><b>経営者目線</b>: 顧客信頼維持のため迅速なパッチ配布を要する。</div>
-                  <div><b>消費者目線</b>: 安全性向上のためアップデートを推奨される。</div>
+                  <div><b>技術者目線</b>: 既存システムでbeat-accessを使用している場合、DLL検証ロジックを追加する必要があります。</div>
+                  <div><b>経営者目線</b>: 顧客への影響リスクを評価し、パッチ適用計画を策定すべきです。</div>
+                  <div><b>消費者目線</b>: Windowsユーザーはソフトウェアの更新を待つか、暫定的に使用を中止してください。</div>
                 </div>
                 
 
@@ -10975,7 +10983,7 @@ a:hover{
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://jvn.jp/jp/JVN17956874/" target="_blank" rel="noopener">https://jvn.jp/jp/JVN17956874/</a>
+                      <a href="https://jvn.jp/jp/JVN03776126/" target="_blank" rel="noopener">https://jvn.jp/jp/JVN03776126/</a>
                     
                   </div>
                 
@@ -12002,6 +12010,112 @@ a:hover{
                     根拠：
                     
                       <a href="https://jvn.jp/vu/JVNVU90741268/" target="_blank" rel="noopener">https://jvn.jp/vu/JVNVU90741268/</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-3601" class="topic-row"
+              data-title="JVN: Archer MR600におけるOSコマンドインジェクションの脆弱性"
+              data-summary="TP-Link Archer MR600にOSコマンドインジェクション脆弱性が報告され、既存機器の修正が必要となる。"
+              data-imp="35"
+              data-recent="1"
+              data-date="2026-01-27T01:00:00+00:00"
+              data-tags="脆弱性,OSコマンドインジェクション,TP-Link">
+            <div>
+              
+                <span class="badge imp">重要度 35</span>
+              
+              
+                <a href="https://jvn.jp/vu/JVNVU94651499/" target="_blank" rel="noopener">JVN: Archer MR600におけるOSコマンドインジェクションの脆弱性</a>
+              
+              
+                <span class="small">（2026/01/27 10:00）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">脆弱性</span>
+                  
+                    <span class="badge">OSコマンドインジェクション</span>
+                  
+                    <span class="badge">TP-Link</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：TP-Link Archer MR600にOSコマンドインジェクション脆弱性が報告され、既存機器の修正が必要となる。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>Archer MR600にOSコマンドインジェクション脆弱性が存在すること</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>TP-Linkが提供しているルーターであること</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>脆弱性は外部からの入力を利用して任意コマンド実行できること</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 既存ファームウェアにパッチ適用が必要。</div>
+                  <div><b>経営者目線</b>: 顧客への通知と対応計画策定が急務。</div>
+                  <div><b>消費者目線</b>: 機器使用者はアップデートを確認すべき。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://jvn.jp/vu/JVNVU94651499/" target="_blank" rel="noopener">https://jvn.jp/vu/JVNVU94651499/</a>
                     
                   </div>
                 
