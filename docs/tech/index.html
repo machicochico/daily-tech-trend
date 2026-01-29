@@ -316,15 +316,15 @@ a:hover{
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2026-01-29 18:08:53 JST</div>
+        <div class="v">2026-01-29 21:06:21 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">533 sec</div>
+        <div class="v">379 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
-        <div class="v">3529 <span class="small">(new48h 305)</span></div>
+        <div class="v">3543 <span class="small">(new48h 295)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">RSS Sources</div>
@@ -386,6 +386,10 @@ a:hover{
             vulnerability (4)
           </button>
         
+          <button class="btn" type="button" data-tag-btn="気候変動" onclick="toggleTag('気候変動')">
+            気候変動 (4)
+          </button>
+        
           <button class="btn" type="button" data-tag-btn="CLI" onclick="toggleTag('CLI')">
             CLI (3)
           </button>
@@ -408,14 +412,6 @@ a:hover{
         
           <button class="btn" type="button" data-tag-btn="アップデート" onclick="toggleTag('アップデート')">
             アップデート (3)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="気候変動" onclick="toggleTag('気候変動')">
-            気候変動 (3)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="環境" onclick="toggleTag('環境')">
-            環境 (3)
           </button>
         
           <button class="btn" type="button" data-tag-btn="AgentCore" onclick="toggleTag('AgentCore')">
@@ -448,10 +444,6 @@ a:hover{
         
           <button class="btn" type="button" data-tag-btn="XAMPP" onclick="toggleTag('XAMPP')">
             XAMPP (2)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="energy" onclick="toggleTag('energy')">
-            energy (2)
           </button>
         
           <button class="btn" type="button" data-tag-btn="manufacturing" onclick="toggleTag('manufacturing')">
@@ -542,6 +534,14 @@ a:hover{
             Akita (1)
           </button>
         
+          <button class="btn" type="button" data-tag-btn="Android" onclick="toggleTag('Android')">
+            Android (1)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="Automation" onclick="toggleTag('Automation')">
+            Automation (1)
+          </button>
+        
       </div>
 
       <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ more</button>
@@ -578,48 +578,6 @@ a:hover{
       <ol class="top-list">
         
           <li class="topic-row"
-              data-title="iba システム ibaPDA"
-              data-summary="CVE-2025-14988によりibaPDAでファイルシステムへの不正操作が可能となり、更新が急務。"
-              data-imp="70"
-              data-recent="1"
-              data-date="2026-01-27T12:00:00+00:00"
-              data-tags="脆弱性,Critical Manufacturing,CVE-2025-14988,ファイルシステム,更新">
-            <span class="badge imp">重要度 70</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-3666">iba システム ibaPDA</a>
-            <span class="date">2026/01/27 21:00</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
-            
-            
-          </li>
-        
-          <li class="topic-row"
-              data-title="ジョンソンコントロールズ製品"
-              data-summary="ジョンソンコントロールズ製品のCVE-2025-26385により、リモートSQL実行が可能となりデータ改ざん・損失の恐れがある。"
-              data-imp="70"
-              data-recent="1"
-              data-date="2026-01-27T12:00:00+00:00"
-              data-tags="vulnerability,SQLi,critical-infrastructure">
-            <span class="badge imp">重要度 70</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-3668">ジョンソンコントロールズ製品</a>
-            <span class="date">2026/01/27 21:00</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
-            
-            
-          </li>
-        
-          <li class="topic-row"
               data-title="フォーティネット、認証バイパスの脆弱性 CVE-2026-24858 の進行中の悪用に対処するためのガイダンスをリリース"
               data-summary="CVE-2026-24858によりFortiCloud SSOが有効なデバイスで認証を迂回でき、既存修正後も脆弱性が残る。"
               data-imp="70"
@@ -651,6 +609,40 @@ a:hover{
             
             <a href="#topic-1411">WHILL C2型電動車椅子およびF型電動車椅子</a>
             <span class="date">2025/12/30 21:00</span>
+            
+              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
+            
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="iba システム ibaPDA"
+              data-summary="CVE-2025-14988によりibaPDAでファイルシステムへの不正操作が可能となり、更新が急務。"
+              data-imp="70"
+              data-recent="0"
+              data-date="2026-01-27T12:00:00+00:00"
+              data-tags="脆弱性,Critical Manufacturing,CVE-2025-14988,ファイルシステム,更新">
+            <span class="badge imp">重要度 70</span>
+            
+            <a href="#topic-3666">iba システム ibaPDA</a>
+            <span class="date">2026/01/27 21:00</span>
+            
+              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
+            
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="ジョンソンコントロールズ製品"
+              data-summary="ジョンソンコントロールズ製品のCVE-2025-26385により、リモートSQL実行が可能となりデータ改ざん・損失の恐れがある。"
+              data-imp="70"
+              data-recent="0"
+              data-date="2026-01-27T12:00:00+00:00"
+              data-tags="vulnerability,SQLi,critical-infrastructure">
+            <span class="badge imp">重要度 70</span>
+            
+            <a href="#topic-3668">ジョンソンコントロールズ製品</a>
+            <span class="date">2026/01/27 21:00</span>
             
               <span class="badge"><a href="#cat-security">セキュリティ</a></span>
             
@@ -797,50 +789,6 @@ a:hover{
           </li>
         
           <li class="topic-row"
-              data-title="iba システム ibaPDA"
-              data-summary="CVE-2025-14988によりibaPDAでファイルシステムへの不正操作が可能となり、更新が急務。"
-              data-imp="70"
-              data-recent="1"
-              data-date="2026-01-27T12:00:00+00:00"
-              data-tags="脆弱性,Critical Manufacturing,CVE-2025-14988,ファイルシステム,更新">
-            <span class="badge imp">重要度 70</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-3666">iba システム ibaPDA</a>
-            <span class="date">2026/01/27 21:00</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
-            
-            
-
-          </li>
-        
-          <li class="topic-row"
-              data-title="ジョンソンコントロールズ製品"
-              data-summary="ジョンソンコントロールズ製品のCVE-2025-26385により、リモートSQL実行が可能となりデータ改ざん・損失の恐れがある。"
-              data-imp="70"
-              data-recent="1"
-              data-date="2026-01-27T12:00:00+00:00"
-              data-tags="vulnerability,SQLi,critical-infrastructure">
-            <span class="badge imp">重要度 70</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-3668">ジョンソンコントロールズ製品</a>
-            <span class="date">2026/01/27 21:00</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
-            
-            
-
-          </li>
-        
-          <li class="topic-row"
               data-title="フォーティネット、認証バイパスの脆弱性 CVE-2026-24858 の進行中の悪用に対処するためのガイダンスをリリース"
               data-summary="CVE-2026-24858によりFortiCloud SSOが有効なデバイスで認証を迂回でき、既存修正後も脆弱性が残る。"
               data-imp="70"
@@ -951,44 +899,88 @@ a:hover{
           </li>
         
           <li class="topic-row"
-              data-title="多分野のレンズを通して見るコンピューティングとデジタル化: エネルギー、資源、環境への将来の影響"
-              data-summary="AI・IoTの拡大でデータセンターやエネルギーシステム等のインフラが増加し、エネルギー消費と環境負荷に影響を与える。"
+              data-title="ヨーロッパにおけるオープンソースの未来の形成を支援する"
+              data-summary="欧州委員会がオープンソース戦略を策定し、AI・クラウド・サイバーセキュリティで技術主権強化を図る。"
               data-imp="45"
               data-recent="1"
-              data-date="2026-01-27T10:33:16+00:00"
-              data-tags="AI,IoT,インフラ">
+              data-date="2026-01-27T14:16:04+00:00"
+              data-tags="EU,オープンソース,技術主権">
             <span class="badge imp">重要度 45</span>
             
               <span class="badge recent ">
                 48h +1
               </span>
             
-            <a href="#topic-3633">多分野のレンズを通して見るコンピューティングとデジタル化: エネルギー、資源、環境への将来の影響</a>
-            <span class="date">2026/01/27 19:33</span>
+            <a href="#topic-3657">ヨーロッパにおけるオープンソースの未来の形成を支援する</a>
+            <span class="date">2026/01/27 23:16</span>
             
-              <span class="badge"><a href="#cat-environment">環境（CO2・規制）</a></span>
+              <span class="badge"><a href="#cat-dev">開発</a></span>
             
             
 
           </li>
         
           <li class="topic-row"
-              data-title="母国以外の関連業界イベントに参加するための資金が不足していませんか?"
-              data-summary="RE-CONNECTが資金支援を提供し、対象国の専門家が気候モデリング関連イベントに参加できるようになった。"
+              data-title="Amazon Bedrock を使用して信頼性の高い Agentic AI ソリューションを構築する: GenAI 評価に関する Pushpay の取り組みから学ぶ"
+              data-summary="PushpayがAmazon Bedrockを活用し、自然言語で即時洞察を得られるエージェント型AI検索機能を開発した。"
               data-imp="45"
               data-recent="1"
-              data-date="2026-01-27T10:43:39+00:00"
-              data-tags="気候変動,資金調達,国際イベント">
+              data-date="2026-01-27T17:39:57+00:00"
+              data-tags="">
             <span class="badge imp">重要度 45</span>
             
               <span class="badge recent ">
                 48h +1
               </span>
             
-            <a href="#topic-3639">母国以外の関連業界イベントに参加するための資金が不足していませんか?</a>
-            <span class="date">2026/01/27 19:43</span>
+            <a href="#topic-3662">Amazon Bedrock を使用して信頼性の高い Agentic AI ソリューションを構築する: GenAI 評価に関する Pushpay の取り組みから学ぶ</a>
+            <span class="date">2026/01/28 02:39</span>
             
-              <span class="badge"><a href="#cat-environment">環境（CO2・規制）</a></span>
+              <span class="badge"><a href="#cat-ai">AI</a></span>
+            
+            
+
+          </li>
+        
+          <li class="topic-row"
+              data-title="ウィークリーレポート：JPCERT/CCが2025年10月-12月分の「JPCERT/CC予告レポート」を公開"
+              data-summary="JPCERT/CCが2025年10-12月の四半期レポートを公開し、国内外のインシデント統計と事例をまとめた。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-01-28T00:04:00+00:00"
+              data-tags="報告,インシデント統計">
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-3713">ウィークリーレポート：JPCERT/CCが2025年10月-12月分の「JPCERT/CC予告レポート」を公開</a>
+            <span class="date">2026/01/28 09:04</span>
+            
+              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
+            
+            
+
+          </li>
+        
+          <li class="topic-row"
+              data-title="JVN: libhifにおける境界外読み取りの脆弱性"
+              data-summary="libheifに境界外読み取り脆弱性が報告され、対応が必要となる。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-01-28T04:45:00+00:00"
+              data-tags="libheif,脆弱性,境界外読み取り">
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-3781">JVN: libhifにおける境界外読み取りの脆弱性</a>
+            <span class="date">2026/01/28 13:45</span>
+            
+              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
             
             
 
@@ -5937,9 +5929,9 @@ a:hover{
             </li>
           
             <li>
-              <a href="#topic-3820">DRYAD、地中海アグロフォレストリー向けの自然ベースのソリューションを推進</a>
+              <a href="#topic-3927">3月12日 |オンラインウェビナー: EU 気候政策の詳細な ABC: 政策立案の内部</a>
               <span class="date">
-                2026/01/28 17:18
+                2026/01/28 15:34
               </span>
               
                 <span class="badge recent ">
@@ -5950,9 +5942,9 @@ a:hover{
             </li>
           
             <li>
-              <a href="#topic-3914">炭素農業を認証するための方法論について意見を述べてください。</a>
+              <a href="#topic-3928">なぜ出席するのでしょうか？</a>
               <span class="date">
-                2026/01/29 08:23
+                2026/01/29 10:58
               </span>
               
                 <span class="badge recent ">
@@ -6157,218 +6149,6 @@ a:hover{
                     根拠：
                     
                       <a href="https://ec.europa.eu/info/law/better-regulation/have-your-say/initiatives/14770-European-climate-resilience-and-risk-management-integrated-framework_en" target="_blank" rel="noopener">https://ec.europa.eu/info/law/better-regulation/have-your-say/initiatives/14770-European-climate-resilience-and-risk-management-integrated-framework_en</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-3633" class="topic-row"
-              data-title="多分野のレンズを通して見るコンピューティングとデジタル化: エネルギー、資源、環境への将来の影響"
-              data-summary="AI・IoTの拡大でデータセンターやエネルギーシステム等のインフラが増加し、エネルギー消費と環境負荷に影響を与える。"
-              data-imp="45"
-              data-recent="1"
-              data-date="2026-01-27T10:33:16+00:00"
-              data-tags="AI,IoT,インフラ">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://ec.europa.eu/newsroom/clima/redirection/item/919651/en" target="_blank" rel="noopener">多分野のレンズを通して見るコンピューティングとデジタル化: エネルギー、資源、環境への将来の影響</a>
-              
-              
-                <span class="small">（2026/01/27 19:33）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">AI</span>
-                  
-                    <span class="badge">IoT</span>
-                  
-                    <span class="badge">インフラ</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：AI・IoTの拡大でデータセンターやエネルギーシステム等のインフラが増加し、エネルギー消費と環境負荷に影響を与える。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>AI・自動化・IoTが急速に社会経済を変革している</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>データセンターやエネルギーシステム、水網、半導体製造などのインフラ拡大が進行中</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>増加したインフラはエネルギー使用量と環境への影響を高める</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 既存インフラ設計にAI・IoT対応を検討すべき。</div>
-                  <div><b>経営者目線</b>: 投資先のインフラ選定で環境コストを考慮する必要がある。</div>
-                  <div><b>消費者目線</b>: 日常生活でエネルギー消費増加に注意が必要。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://ec.europa.eu/newsroom/clima/redirection/item/919651/en" target="_blank" rel="noopener">https://ec.europa.eu/newsroom/clima/redirection/item/919651/en</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-3639" class="topic-row"
-              data-title="母国以外の関連業界イベントに参加するための資金が不足していませんか?"
-              data-summary="RE-CONNECTが資金支援を提供し、対象国の専門家が気候モデリング関連イベントに参加できるようになった。"
-              data-imp="45"
-              data-recent="1"
-              data-date="2026-01-27T10:43:39+00:00"
-              data-tags="気候変動,資金調達,国際イベント">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://ec.europa.eu/newsroom/clima/redirection/item/919660/en" target="_blank" rel="noopener">母国以外の関連業界イベントに参加するための資金が不足していませんか?</a>
-              
-              
-                <span class="small">（2026/01/27 19:43）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">気候変動</span>
-                  
-                    <span class="badge">資金調達</span>
-                  
-                    <span class="badge">国際イベント</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：RE-CONNECTが資金支援を提供し、対象国の専門家が気候モデリング関連イベントに参加できるようになった。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>RE-CONNECTプロジェクトは対象国のモデリング専門家への資金支援を行う。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>支援によりDr. Kopal DhandhaniaがPRISMAサマー・スクールへ出席した。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>テストモニアルで受給者が経験を共有している。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 資金調達の手段として有効だが、申請プロセスは複雑。</div>
-                  <div><b>経営者目線</b>: 国際的な知見獲得に投資する価値がある。</div>
-                  <div><b>消費者目線</b>: 専門家の活躍が地域社会へ還元される期待が高い。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://ec.europa.eu/newsroom/clima/redirection/item/919660/en" target="_blank" rel="noopener">https://ec.europa.eu/newsroom/clima/redirection/item/919660/en</a>
                     
                   </div>
                 
@@ -7679,6 +7459,210 @@ a:hover{
 
           </li>
         
+           <li id="topic-3633" class="topic-row"
+              data-title="多分野のレンズを通して見るコンピューティングとデジタル化: エネルギー、資源、環境への将来の影響"
+              data-summary="AI・IoTの拡大でデータセンターやエネルギーシステム等のインフラが増加し、エネルギー消費と環境負荷に影響を与える。"
+              data-imp="45"
+              data-recent="0"
+              data-date="2026-01-27T10:33:16+00:00"
+              data-tags="AI,IoT,インフラ">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://ec.europa.eu/newsroom/clima/redirection/item/919651/en" target="_blank" rel="noopener">多分野のレンズを通して見るコンピューティングとデジタル化: エネルギー、資源、環境への将来の影響</a>
+              
+              
+                <span class="small">（2026/01/27 19:33）</span>
+              
+
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">AI</span>
+                  
+                    <span class="badge">IoT</span>
+                  
+                    <span class="badge">インフラ</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：AI・IoTの拡大でデータセンターやエネルギーシステム等のインフラが増加し、エネルギー消費と環境負荷に影響を与える。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>AI・自動化・IoTが急速に社会経済を変革している</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>データセンターやエネルギーシステム、水網、半導体製造などのインフラ拡大が進行中</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>増加したインフラはエネルギー使用量と環境への影響を高める</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 既存インフラ設計にAI・IoT対応を検討すべき。</div>
+                  <div><b>経営者目線</b>: 投資先のインフラ選定で環境コストを考慮する必要がある。</div>
+                  <div><b>消費者目線</b>: 日常生活でエネルギー消費増加に注意が必要。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://ec.europa.eu/newsroom/clima/redirection/item/919651/en" target="_blank" rel="noopener">https://ec.europa.eu/newsroom/clima/redirection/item/919651/en</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-3639" class="topic-row"
+              data-title="母国以外の関連業界イベントに参加するための資金が不足していませんか?"
+              data-summary="RE-CONNECTが資金支援を提供し、対象国の専門家が気候モデリング関連イベントに参加できるようになった。"
+              data-imp="45"
+              data-recent="0"
+              data-date="2026-01-27T10:43:39+00:00"
+              data-tags="気候変動,資金調達,国際イベント">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://ec.europa.eu/newsroom/clima/redirection/item/919660/en" target="_blank" rel="noopener">母国以外の関連業界イベントに参加するための資金が不足していませんか?</a>
+              
+              
+                <span class="small">（2026/01/27 19:43）</span>
+              
+
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">気候変動</span>
+                  
+                    <span class="badge">資金調達</span>
+                  
+                    <span class="badge">国際イベント</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：RE-CONNECTが資金支援を提供し、対象国の専門家が気候モデリング関連イベントに参加できるようになった。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>RE-CONNECTプロジェクトは対象国のモデリング専門家への資金支援を行う。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>支援によりDr. Kopal DhandhaniaがPRISMAサマー・スクールへ出席した。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>テストモニアルで受給者が経験を共有している。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 資金調達の手段として有効だが、申請プロセスは複雑。</div>
+                  <div><b>経営者目線</b>: 国際的な知見獲得に投資する価値がある。</div>
+                  <div><b>消費者目線</b>: 専門家の活躍が地域社会へ還元される期待が高い。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://ec.europa.eu/newsroom/clima/redirection/item/919660/en" target="_blank" rel="noopener">https://ec.europa.eu/newsroom/clima/redirection/item/919660/en</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
            <li id="topic-326" class="topic-row"
               data-title="クリーン・インダストリアル・ディール：EUの脱炭素化を支援するための新たなHorizo​​n Europe資金募集"
               data-summary="EUが新たに Horizon Europe 資金募集を開始し、Clean Industrial Deal による脱炭素化支援を図る。"
@@ -7895,22 +7879,22 @@ a:hover{
 
           </li>
         
-           <li id="topic-3816" class="topic-row"
-              data-title="エネルギーコミュニティにおける再生可能エネルギー技術 (RET) ソリューション"
-              data-summary="EUのHORIZONプログラムがエネルギーコミュニティ向け賞を発表し、再生可能技術導入を促進する。"
+           <li id="topic-3818" class="topic-row"
+              data-title="ビデオ: 気候に関する偽情報に注意し、準備し、情報を入手してください!"
+              data-summary="気候情報の誤解を防ぐため、共有前に検証が必要と警告。"
               data-imp="35"
               data-recent="1"
-              data-date="2026-01-28T16:37:34+00:00"
-              data-tags="energy,community,funding">
+              data-date="2026-01-28T16:51:35+00:00"
+              data-tags="misinformation,climate">
             <div>
               
                 <span class="badge imp">重要度 35</span>
               
               
-                <a href="https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL5-2026-2-PRIZE?isExactMatch=true&status=31094501%2C31094502%2C31094503&callIdentifier=HORIZON-CL5-2026-2-PRIZE&order=DESC&pageNumber=1&pageSize=50&sortBy=startDate" target="_blank" rel="noopener">エネルギーコミュニティにおける再生可能エネルギー技術 (RET) ソリューション</a>
+                <a href="https://bsky.app/profile/euclimateaction.bsky.social/post/3mcytoy5xns2m" target="_blank" rel="noopener">ビデオ: 気候に関する偽情報に注意し、準備し、情報を入手してください!</a>
               
               
-                <span class="small">（2026/01/29 01:37）</span>
+                <span class="small">（2026/01/29 01:51）</span>
               
 
               
@@ -7921,11 +7905,9 @@ a:hover{
               
                 <span class="small">
                   
-                    <span class="badge">energy</span>
+                    <span class="badge">misinformation</span>
                   
-                    <span class="badge">community</span>
-                  
-                    <span class="badge">funding</span>
+                    <span class="badge">climate</span>
                   
                 </span>
               
@@ -7936,7 +7918,7 @@ a:hover{
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：EUのHORIZONプログラムがエネルギーコミュニティ向け賞を発表し、再生可能技術導入を促進する。</div>
+                  <div><strong>要約</strong>：気候情報の誤解を防ぐため、共有前に検証が必要と警告。</div>
                 
 
                 
@@ -7949,7 +7931,7 @@ a:hover{
                       
                         
                         
-                          <li>この賞はエネルギーコミュニティの運営改善と実装活動を奨励することを目的としている。</li>
+                          <li>気候変動は複雑で、その複雑さが悪用されることがある。</li>
                           
                         
                       
@@ -7959,7 +7941,7 @@ a:hover{
                       
                         
                         
-                          <li>コンプライアンスにおいて気候目標への革新性を高めることが期待されている。</li>
+                          <li>選択的データや半真実・過度な単純化が誤情報を生む。</li>
                           
                         
                       
@@ -7969,7 +7951,7 @@ a:hover{
                       
                         
                         
-                          <li>他タイプのコミュニティにも模範となり、エネルギーコミュニティ化を促す役割を果たす。</li>
+                          <li>新しい情報を共有する前に一旦止まり、疑問点を確認し検証すべき。</li>
                           
                         
                       
@@ -7980,9 +7962,9 @@ a:hover{
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 資金調達機会として設計・実装検討が必要になる可能性あり。</div>
-                  <div><b>経営者目線</b>: 投資先としての価値評価とリスク管理が重要。</div>
-                  <div><b>消費者目線</b>: エネルギー自給率向上に期待できるが、導入コストを考慮する必要がある。</div>
+                  <div><b>技術者目線</b>: 技術者はデータの正確性と検証プロセスを重視すべき。</div>
+                  <div><b>経営者目線</b>: 経営者は社内外で情報の信頼性を保証する方針が必要。</div>
+                  <div><b>消費者目線</b>: 消費者は情報源を確認し、共有前に裏付けを取る習慣を持つべき。</div>
                 </div>
                 
 
@@ -7992,7 +7974,113 @@ a:hover{
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL5-2026-2-PRIZE?isExactMatch=true&status=31094501%2C31094502%2C31094503&callIdentifier=HORIZON-CL5-2026-2-PRIZE&order=DESC&pageNumber=1&pageSize=50&sortBy=startDate" target="_blank" rel="noopener">https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL5-2026-2-PRIZE?isExactMatch=true&status=31094501%2C31094502%2C31094503&callIdentifier=HORIZON-CL5-2026-2-PRIZE&order=DESC&pageNumber=1&pageSize=50&sortBy=startDate</a>
+                      <a href="https://bsky.app/profile/euclimateaction.bsky.social/post/3mcytoy5xns2m" target="_blank" rel="noopener">https://bsky.app/profile/euclimateaction.bsky.social/post/3mcytoy5xns2m</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-3927" class="topic-row"
+              data-title="3月12日 |オンラインウェビナー: EU 気候政策の詳細な ABC: 政策立案の内部"
+              data-summary="EU気候政策に関するオンラインウェビナーが開催され、実際のケーススタディを通じて政策立案プロセスを解説した。"
+              data-imp="35"
+              data-recent="1"
+              data-date="2026-01-28T15:34:42+00:00"
+              data-tags="ウェビナー,EU政策,気候変動">
+            <div>
+              
+                <span class="badge imp">重要度 35</span>
+              
+              
+                <a href="https://climate-pact.europa.eu/articles-and-events/events/deep-dive-abc-eu-climate-policy-inside-policymaking-2026-03-12_en" target="_blank" rel="noopener">3月12日 |オンラインウェビナー: EU 気候政策の詳細な ABC: 政策立案の内部</a>
+              
+              
+                <span class="small">（2026/01/29 00:34）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">ウェビナー</span>
+                  
+                    <span class="badge">EU政策</span>
+                  
+                    <span class="badge">気候変動</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：EU気候政策に関するオンラインウェビナーが開催され、実際のケーススタディを通じて政策立案プロセスを解説した。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>EU Climate Action Academyの第2回ウェビナーとして開催されたこと</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>実際のEU事例を用いて政策策定過程を詳細に説明すること</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>参加者は異なるステークホルダーの視点と利益を学ぶ機会があること</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 技術的な影響は少ないが、環境規制への理解が必要。</div>
+                  <div><b>経営者目線</b>: 市場や投資判断における気候政策の把握が重要。</div>
+                  <div><b>消費者目線</b>: 消費者としては政策動向を知り、行動変容のヒントになる。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://climate-pact.europa.eu/articles-and-events/events/deep-dive-abc-eu-climate-policy-inside-policymaking-2026-03-12_en" target="_blank" rel="noopener">https://climate-pact.europa.eu/articles-and-events/events/deep-dive-abc-eu-climate-policy-inside-policymaking-2026-03-12_en</a>
                     
                   </div>
                 
@@ -8105,128 +8193,22 @@ a:hover{
 
           </li>
         
-           <li id="topic-3820" class="topic-row"
-              data-title="DRYAD、地中海アグロフォレストリー向けの自然ベースのソリューションを推進"
-              data-summary="DRYADプロジェクトが地中海の農林業地域で自然ベースソリューションを推進し、気候適応を強化する。"
-              data-imp="25"
-              data-recent="1"
-              data-date="2026-01-28T17:18:17+00:00"
-              data-tags="環境,NbS,アグロフォレストリー">
-            <div>
-              
-                <span class="badge imp">重要度 25</span>
-              
-              
-                <a href="https://ec.europa.eu/newsroom/clima/redirection/item/920119/en" target="_blank" rel="noopener">DRYAD、地中海アグロフォレストリー向けの自然ベースのソリューションを推進</a>
-              
-              
-                <span class="small">（2026/01/29 02:18）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">環境</span>
-                  
-                    <span class="badge">NbS</span>
-                  
-                    <span class="badge">アグロフォレストリー</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：DRYADプロジェクトが地中海の農林業地域で自然ベースソリューションを推進し、気候適応を強化する。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>DRYADは地中海諸国のアグロフォレストリーに焦点を当てる</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>自然ベースソリューション(NbS)を地域計画に組み込む</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>プロジェクトは土地管理と気候レジリエンスを強化することを目的とする</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 技術的実装は既存インフラへの影響が少ない。</div>
-                  <div><b>経営者目線</b>: 投資リスクは低く、環境価値向上に寄与する。</div>
-                  <div><b>消費者目線</b>: 地域住民の生活質改善が期待できる。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://ec.europa.eu/newsroom/clima/redirection/item/920119/en" target="_blank" rel="noopener">https://ec.europa.eu/newsroom/clima/redirection/item/920119/en</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-3914" class="topic-row"
-              data-title="炭素農業を認証するための方法論について意見を述べてください。"
-              data-summary="欧州委員会が炭素農業の認証方法論に関する意見を求めている。"
+           <li id="topic-3928" class="topic-row"
+              data-title="なぜ出席するのでしょうか？"
+              data-summary="質問のみで具体的な事実は提示されていない。"
               data-imp="20"
               data-recent="1"
-              data-date="2026-01-29T08:23:42+00:00"
-              data-tags="環境,カーボンファーマー,認証">
+              data-date="2026-01-29T10:58:07+00:00"
+              data-tags="質問">
             <div>
               
                 <span class="badge imp">重要度 20</span>
               
               
-                <a href="https://ec.europa.eu/info/law/better-regulation/have-your-say/initiatives/14574-Carbon-removals-and-carbon-farming-methodologies-for-certifying-carbon-farming_en" target="_blank" rel="noopener">炭素農業を認証するための方法論について意見を述べてください。</a>
+                <a href="https://ec.europa.eu/newsroom/clima/redirection/item/920251/en" target="_blank" rel="noopener">なぜ出席するのでしょうか？</a>
               
               
-                <span class="small">（2026/01/29 17:23）</span>
+                <span class="small">（2026/01/29 19:58）</span>
               
 
               
@@ -8237,11 +8219,7 @@ a:hover{
               
                 <span class="small">
                   
-                    <span class="badge">環境</span>
-                  
-                    <span class="badge">カーボンファーマー</span>
-                  
-                    <span class="badge">認証</span>
+                    <span class="badge">質問</span>
                   
                 </span>
               
@@ -8252,7 +8230,7 @@ a:hover{
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：欧州委員会が炭素農業の認証方法論に関する意見を求めている。</div>
+                  <div><strong>要約</strong>：質問のみで具体的な事実は提示されていない。</div>
                 
 
                 
@@ -8265,7 +8243,7 @@ a:hover{
                       
                         
                         
-                          <li>欧州委員会は炭素除去と土壌排出削減の認証手法について意見を募集している。</li>
+                          <li>情報が記載されていない</li>
                           
                         
                       
@@ -8275,7 +8253,7 @@ a:hover{
                       
                         
                         
-                          <li>対象はカーボンファーマーによる土壌排出削減活動である。</li>
+                          <li>質問形式の文のみ</li>
                           
                         
                       
@@ -8285,7 +8263,7 @@ a:hover{
                       
                         
                         
-                          <li>提出される方法論は将来の規制や標準化に影響する可能性がある。</li>
+                          <li>詳細不明</li>
                           
                         
                       
@@ -8296,9 +8274,9 @@ a:hover{
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 技術的検証とデータ収集手法を整備すべき。</div>
-                  <div><b>経営者目線</b>: 市場機会とリスク管理を評価する必要がある。</div>
-                  <div><b>消費者目線</b>: 環境負荷低減への信頼性向上に期待できる。</div>
+                  <div><b>技術者目線</b>: 追加情報が必要。</div>
+                  <div><b>経営者目線</b>: 現状では判断不可。</div>
+                  <div><b>消費者目線</b>: 内容が不足している。</div>
                 </div>
                 
 
@@ -8308,7 +8286,7 @@ a:hover{
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://ec.europa.eu/info/law/better-regulation/have-your-say/initiatives/14574-Carbon-removals-and-carbon-farming-methodologies-for-certifying-carbon-farming_en" target="_blank" rel="noopener">https://ec.europa.eu/info/law/better-regulation/have-your-say/initiatives/14574-Carbon-removals-and-carbon-farming-methodologies-for-certifying-carbon-farming_en</a>
+                      <a href="https://ec.europa.eu/newsroom/clima/redirection/item/920251/en" target="_blank" rel="noopener">https://ec.europa.eu/newsroom/clima/redirection/item/920251/en</a>
                     
                   </div>
                 
@@ -10680,222 +10658,6 @@ a:hover{
     
       <ul>
         
-           <li id="topic-3666" class="topic-row"
-              data-title="iba システム ibaPDA"
-              data-summary="CVE-2025-14988によりibaPDAでファイルシステムへの不正操作が可能となり、更新が急務。"
-              data-imp="70"
-              data-recent="1"
-              data-date="2026-01-27T12:00:00+00:00"
-              data-tags="脆弱性,Critical Manufacturing,CVE-2025-14988,ファイルシステム,更新">
-            <div>
-              
-                <span class="badge imp">重要度 70</span>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-01" target="_blank" rel="noopener">iba システム ibaPDA</a>
-              
-              
-                <span class="small">（2026/01/27 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">脆弱性</span>
-                  
-                    <span class="badge">Critical Manufacturing</span>
-                  
-                    <span class="badge">CVE-2025-14988</span>
-                  
-                    <span class="badge">ファイルシステム</span>
-                  
-                    <span class="badge">更新</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：CVE-2025-14988によりibaPDAでファイルシステムへの不正操作が可能となり、更新が急務。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>CVE-2025-14988はibaPDA v8.12.0で未承認のファイルシステム操作を許可する脆弱性。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>この脆弱性は世界中のCritical Manufacturingセクターに影響し、機密・整合性・可用性を損なう可能性がある。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>iba Systemsはv8.12.1以降への更新を推奨しており、更新不可の場合はユーザー管理機能の有効化で緩和できる。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 即時パッチ適用とアクセス権見直しが必要。</div>
-                  <div><b>経営者目線</b>: 顧客信頼維持のため迅速な対応を要する。</div>
-                  <div><b>消費者目線</b>: システム停止やデータ漏えいリスクに注意。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-01" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-01</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-3668" class="topic-row"
-              data-title="ジョンソンコントロールズ製品"
-              data-summary="ジョンソンコントロールズ製品のCVE-2025-26385により、リモートSQL実行が可能となりデータ改ざん・損失の恐れがある。"
-              data-imp="70"
-              data-recent="1"
-              data-date="2026-01-27T12:00:00+00:00"
-              data-tags="vulnerability,SQLi,critical-infrastructure">
-            <div>
-              
-                <span class="badge imp">重要度 70</span>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-04" target="_blank" rel="noopener">ジョンソンコントロールズ製品</a>
-              
-              
-                <span class="small">（2026/01/27 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">vulnerability</span>
-                  
-                    <span class="badge">SQLi</span>
-                  
-                    <span class="badge">critical-infrastructure</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：ジョンソンコントロールズ製品のCVE-2025-26385により、リモートSQL実行が可能となりデータ改ざん・損失の恐れがある。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>CVE-2025-26385はリモートSQL実行を許容するコマンドインジェクション脆弱性である。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>ADS、ADX、LCS8500、NAE8500、SCT、CCTなど複数製品が影響対象となっている。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>CVSS v3スコアは10と最高レベルの深刻度を示している。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: パッチ適用や入力検証強化が直ちに必要。</div>
-                  <div><b>経営者目線</b>: 業務継続計画への影響評価と資源確保が重要。</div>
-                  <div><b>消費者目線</b>: データ損失リスクが高く、利用停止を検討すべき。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-04" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-04</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
            <li id="topic-3823" class="topic-row"
               data-title="フォーティネット、認証バイパスの脆弱性 CVE-2026-24858 の進行中の悪用に対処するためのガイダンスをリリース"
               data-summary="CVE-2026-24858によりFortiCloud SSOが有効なデバイスで認証を迂回でき、既存修正後も脆弱性が残る。"
@@ -11098,6 +10860,214 @@ a:hover{
                     根拠：
                     
                       <a href="https://www.cisa.gov/news-events/ics-medical-advisories/icsma-25-364-01" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-medical-advisories/icsma-25-364-01</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-3666" class="topic-row"
+              data-title="iba システム ibaPDA"
+              data-summary="CVE-2025-14988によりibaPDAでファイルシステムへの不正操作が可能となり、更新が急務。"
+              data-imp="70"
+              data-recent="0"
+              data-date="2026-01-27T12:00:00+00:00"
+              data-tags="脆弱性,Critical Manufacturing,CVE-2025-14988,ファイルシステム,更新">
+            <div>
+              
+                <span class="badge imp">重要度 70</span>
+              
+              
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-01" target="_blank" rel="noopener">iba システム ibaPDA</a>
+              
+              
+                <span class="small">（2026/01/27 21:00）</span>
+              
+
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">脆弱性</span>
+                  
+                    <span class="badge">Critical Manufacturing</span>
+                  
+                    <span class="badge">CVE-2025-14988</span>
+                  
+                    <span class="badge">ファイルシステム</span>
+                  
+                    <span class="badge">更新</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：CVE-2025-14988によりibaPDAでファイルシステムへの不正操作が可能となり、更新が急務。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CVE-2025-14988はibaPDA v8.12.0で未承認のファイルシステム操作を許可する脆弱性。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>この脆弱性は世界中のCritical Manufacturingセクターに影響し、機密・整合性・可用性を損なう可能性がある。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>iba Systemsはv8.12.1以降への更新を推奨しており、更新不可の場合はユーザー管理機能の有効化で緩和できる。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 即時パッチ適用とアクセス権見直しが必要。</div>
+                  <div><b>経営者目線</b>: 顧客信頼維持のため迅速な対応を要する。</div>
+                  <div><b>消費者目線</b>: システム停止やデータ漏えいリスクに注意。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-01" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-01</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-3668" class="topic-row"
+              data-title="ジョンソンコントロールズ製品"
+              data-summary="ジョンソンコントロールズ製品のCVE-2025-26385により、リモートSQL実行が可能となりデータ改ざん・損失の恐れがある。"
+              data-imp="70"
+              data-recent="0"
+              data-date="2026-01-27T12:00:00+00:00"
+              data-tags="vulnerability,SQLi,critical-infrastructure">
+            <div>
+              
+                <span class="badge imp">重要度 70</span>
+              
+              
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-04" target="_blank" rel="noopener">ジョンソンコントロールズ製品</a>
+              
+              
+                <span class="small">（2026/01/27 21:00）</span>
+              
+
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">vulnerability</span>
+                  
+                    <span class="badge">SQLi</span>
+                  
+                    <span class="badge">critical-infrastructure</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：ジョンソンコントロールズ製品のCVE-2025-26385により、リモートSQL実行が可能となりデータ改ざん・損失の恐れがある。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CVE-2025-26385はリモートSQL実行を許容するコマンドインジェクション脆弱性である。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>ADS、ADX、LCS8500、NAE8500、SCT、CCTなど複数製品が影響対象となっている。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CVSS v3スコアは10と最高レベルの深刻度を示している。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: パッチ適用や入力検証強化が直ちに必要。</div>
+                  <div><b>経営者目線</b>: 業務継続計画への影響評価と資源確保が重要。</div>
+                  <div><b>消費者目線</b>: データ損失リスクが高く、利用停止を検討すべき。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-04" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-04</a>
                     
                   </div>
                 
@@ -11604,220 +11574,6 @@ a:hover{
                     根拠：
                     
                       <a href="https://jvn.jp/vu/JVNVU95263466/" target="_blank" rel="noopener">https://jvn.jp/vu/JVNVU95263466/</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-3665" class="topic-row"
-              data-title="シュナイダーエレクトリック Zigbee 製品"
-              data-summary="Schneider Electric製品に複数のDoS脆弱性が報告され、対策未適用でサービス停止リスクがある。"
-              data-imp="45"
-              data-recent="1"
-              data-date="2026-01-27T12:00:00+00:00"
-              data-tags="Zigbee,脆弱性,DoS">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-03" target="_blank" rel="noopener">シュナイダーエレクトリック Zigbee 製品</a>
-              
-              
-                <span class="small">（2026/01/27 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">Zigbee</span>
-                  
-                    <span class="badge">脆弱性</span>
-                  
-                    <span class="badge">DoS</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：Schneider Electric製品に複数のDoS脆弱性が報告され、対策未適用でサービス停止リスクがある。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>Silicon LabsのEmberZNet脆弱性がSchneider Electric製品に影響</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>Wiser iTRV2/3・RTR2・UFHなど複数モデルがCVE-2024-6350〜CVE-2024-10106を含む</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>対策未適用でデバイスのサービス停止リスクがある</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 即時パッチ適用とネットワーク監視を推奨。</div>
-                  <div><b>経営者目線</b>: 顧客への影響を最小化するため、迅速な対応計画が必要。</div>
-                  <div><b>消費者目線</b>: 機器が使えなくなる恐れがあるので、メーカー指示に従うことが重要。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-03" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-03</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-3667" class="topic-row"
-              data-title="Festo Didactic SE MES PC"
-              data-summary="MES PCにプリインストールされたXAMPPの140件脆弱性が報告され、Festo DidacticのFactory Control Panelへ置き換えで対策可。"
-              data-imp="45"
-              data-recent="1"
-              data-date="2026-01-27T12:00:00+00:00"
-              data-tags="MES,XAMPP,脆弱性,FactoryControlPanel">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-02" target="_blank" rel="noopener">Festo Didactic SE MES PC</a>
-              
-              
-                <span class="small">（2026/01/27 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">MES</span>
-                  
-                    <span class="badge">XAMPP</span>
-                  
-                    <span class="badge">脆弱性</span>
-                  
-                    <span class="badge">FactoryControlPanel</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：MES PCにプリインストールされたXAMPPの140件脆弱性が報告され、Festo DidacticのFactory Control Panelへ置き換えで対策可。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>MES PCs shipped with Windows 10 include XAMPP bundle.</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>XAMPP contains around 140 vulnerabilities listed in this advisory.</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>They can be fixed by replacing XAMPP with Festo Didactic's Factory Control Panel application.</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 既存システムにXAMPPが含まれている場合、迅速な置換が必要。</div>
-                  <div><b>経営者目線</b>: 脆弱性対策を遅延するとリスク増大。</div>
-                  <div><b>消費者目線</b>: 安全性向上のためアップデート推奨。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-02" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-02</a>
                     
                   </div>
                 
@@ -12748,6 +12504,212 @@ a:hover{
                     根拠：
                     
                       <a href="https://jvn.jp/jp/JVN03776126/" target="_blank" rel="noopener">https://jvn.jp/jp/JVN03776126/</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-3665" class="topic-row"
+              data-title="シュナイダーエレクトリック Zigbee 製品"
+              data-summary="Schneider Electric製品に複数のDoS脆弱性が報告され、対策未適用でサービス停止リスクがある。"
+              data-imp="45"
+              data-recent="0"
+              data-date="2026-01-27T12:00:00+00:00"
+              data-tags="Zigbee,脆弱性,DoS">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-03" target="_blank" rel="noopener">シュナイダーエレクトリック Zigbee 製品</a>
+              
+              
+                <span class="small">（2026/01/27 21:00）</span>
+              
+
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">Zigbee</span>
+                  
+                    <span class="badge">脆弱性</span>
+                  
+                    <span class="badge">DoS</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：Schneider Electric製品に複数のDoS脆弱性が報告され、対策未適用でサービス停止リスクがある。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>Silicon LabsのEmberZNet脆弱性がSchneider Electric製品に影響</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>Wiser iTRV2/3・RTR2・UFHなど複数モデルがCVE-2024-6350〜CVE-2024-10106を含む</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>対策未適用でデバイスのサービス停止リスクがある</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 即時パッチ適用とネットワーク監視を推奨。</div>
+                  <div><b>経営者目線</b>: 顧客への影響を最小化するため、迅速な対応計画が必要。</div>
+                  <div><b>消費者目線</b>: 機器が使えなくなる恐れがあるので、メーカー指示に従うことが重要。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-03" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-03</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-3667" class="topic-row"
+              data-title="Festo Didactic SE MES PC"
+              data-summary="MES PCにプリインストールされたXAMPPの140件脆弱性が報告され、Festo DidacticのFactory Control Panelへ置き換えで対策可。"
+              data-imp="45"
+              data-recent="0"
+              data-date="2026-01-27T12:00:00+00:00"
+              data-tags="MES,XAMPP,脆弱性,FactoryControlPanel">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-02" target="_blank" rel="noopener">Festo Didactic SE MES PC</a>
+              
+              
+                <span class="small">（2026/01/27 21:00）</span>
+              
+
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">MES</span>
+                  
+                    <span class="badge">XAMPP</span>
+                  
+                    <span class="badge">脆弱性</span>
+                  
+                    <span class="badge">FactoryControlPanel</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：MES PCにプリインストールされたXAMPPの140件脆弱性が報告され、Festo DidacticのFactory Control Panelへ置き換えで対策可。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>MES PCs shipped with Windows 10 include XAMPP bundle.</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>XAMPP contains around 140 vulnerabilities listed in this advisory.</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>They can be fixed by replacing XAMPP with Festo Didactic's Factory Control Panel application.</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 既存システムにXAMPPが含まれている場合、迅速な置換が必要。</div>
+                  <div><b>経営者目線</b>: 脆弱性対策を遅延するとリスク増大。</div>
+                  <div><b>消費者目線</b>: 安全性向上のためアップデート推奨。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-02" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-027-02</a>
                     
                   </div>
                 
