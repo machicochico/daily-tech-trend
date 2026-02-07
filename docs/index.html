@@ -316,15 +316,15 @@ a:hover{
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2026-02-07 08:15:53 JST</div>
+        <div class="v">2026-02-07 09:01:35 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">191 sec</div>
+        <div class="v">93 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
-        <div class="v">4446 <span class="small">(new48h 246)</span></div>
+        <div class="v">4450 <span class="small">(new48h 240)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">RSS Sources</div>
@@ -470,6 +470,10 @@ a:hover{
             パッチ (2)
           </button>
         
+          <button class="btn" type="button" data-tag-btn="安全性" onclick="toggleTag('安全性')">
+            安全性 (2)
+          </button>
+        
           <button class="btn" type="button" data-tag-btn="気候変動" onclick="toggleTag('気候変動')">
             気候変動 (2)
           </button>
@@ -536,10 +540,6 @@ a:hover{
         
           <button class="btn" type="button" data-tag-btn="CVE" onclick="toggleTag('CVE')">
             CVE (1)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="CVE-2025-14988" onclick="toggleTag('CVE-2025-14988')">
-            CVE-2025-14988 (1)
           </button>
         
       </div>
@@ -759,28 +759,6 @@ a:hover{
       <ol class="top-list">
         
           <li class="topic-row"
-              data-title="GPT-5.3-Codex の紹介"
-              data-summary="GPT-5.3-Codexが発表され、長期的な実務作業を支援する新機能が追加された。"
-              data-imp="45"
-              data-recent="2"
-              data-date="2026-02-05T00:00:00+00:00"
-              data-tags="AI,Codex,release">
-            <span class="badge imp">重要度 45</span>
-            
-              <span class="badge recent ">
-                48h +2
-              </span>
-            
-            <a href="#topic-4674">GPT-5.3-Codex の紹介</a>
-            <span class="date">2026/02/05 09:00</span>
-            
-              <span class="badge"><a href="#cat-ai">AI</a></span>
-            
-            
-
-          </li>
-        
-          <li class="topic-row"
               data-title="Amazon Bedrock の構造化された出力: スキーマに準拠した AI 応答"
               data-summary="Amazon Bedrockが構造化JSON出力を発表し、AIアプリ開発のパラダイムシフトをもたらす。"
               data-imp="90"
@@ -978,6 +956,28 @@ a:hover{
 
           </li>
         
+          <li class="topic-row"
+              data-title="TP-Link Systems Inc. VIGIシリーズ IPカメラ"
+              data-summary="TP-Link VIGIシリーズIPカメラにCVE-2026-0629脆弱性が報告され、管理者権限取得の危険がある。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-02-05T12:00:00+00:00"
+              data-tags="">
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-4681">TP-Link Systems Inc. VIGIシリーズ IPカメラ</a>
+            <span class="date">2026/02/05 21:00</span>
+            
+              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
+            
+            
+
+          </li>
+        
       </ol>
     </div>
   </section>
@@ -997,32 +997,6 @@ a:hover{
       <h3>⭐注目TOP5（48h増分）</h3>
       
         <ul>
-          
-            <li>
-              <a href="#topic-4674">GPT-5.3-Codex の紹介</a>
-              <span class="date">
-                2026/02/05 00:00
-              </span>
-              
-                <span class="badge recent ">
-                  48h +2
-                </span>
-              
-              <span class="small">（累計 2）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-1981">ChatGPT Health の紹介</a>
-              <span class="date">
-                2026/02/05 00:00
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 2）</span>
-            </li>
           
             <li>
               <a href="#topic-4087">Amazon SageMaker AI 上の Amazon Nova LLM-as-a-Judge を使用した生成 AI モデルの評価</a>
@@ -1048,6 +1022,32 @@ a:hover{
                 </span>
               
               <span class="small">（累計 2）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-4803">Amazon Bedrock の構造化された出力: スキーマに準拠した AI 応答</a>
+              <span class="date">
+                2026/02/06 20:12
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-4804">AI をどこでも誰でも使えるようにする: ローカリゼーションへのアプローチ</a>
+              <span class="date">
+                2026/02/06 10:00
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
             </li>
           
             <li>
@@ -1254,112 +1254,6 @@ a:hover{
                     根拠：
                     
                       <a href="https://deepmind.google/blog/start-building-with-gemini-3/" target="_blank" rel="noopener">https://deepmind.google/blog/start-building-with-gemini-3/</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-4674" class="topic-row"
-              data-title="GPT-5.3-Codex の紹介"
-              data-summary="GPT-5.3-Codexが発表され、長期的な実務作業を支援する新機能が追加された。"
-              data-imp="45"
-              data-recent="2"
-              data-date="2026-02-05T00:00:00+00:00"
-              data-tags="AI,Codex,release">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://openai.com/index/gpt-5-3-codex-system-card" target="_blank" rel="noopener">GPT-5.3-Codex の紹介</a>
-              
-              
-                <span class="small">（2026/02/05 09:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +2
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">AI</span>
-                  
-                    <span class="badge">Codex</span>
-                  
-                    <span class="badge">release</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：GPT-5.3-Codexが発表され、長期的な実務作業を支援する新機能が追加された。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>GPT-5.3-CodexはCodexネイティブエージェントである。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>フロンティアレベルのコーディング性能と一般推論能力を組み合わせている。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>長期的かつ実世界の技術作業をサポートする設計となっている。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 開発効率が向上し、複雑なタスクに対応できるようになる。</div>
-                  <div><b>経営者目線</b>: 新機能でプロジェクトのスピードアップと品質向上が期待できる。</div>
-                  <div><b>消費者目線</b>: ユーザーはより高度な自動化ツールを利用できるようになる。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://openai.com/index/introducing-gpt-5-3-codex" target="_blank" rel="noopener">https://openai.com/index/introducing-gpt-5-3-codex</a>
                     
                   </div>
                 
@@ -3132,35 +3026,33 @@ a:hover{
 
           </li>
         
-           <li id="topic-1981" class="topic-row"
-              data-title="ChatGPT Health の紹介"
-              data-summary="ChatGPT Healthが発表され、健康データ連携とプライバシー保護を実現する新サービスが登場した。"
-              data-imp="35"
-              data-recent="1"
+           <li id="topic-4674" class="topic-row"
+              data-title="GPT-5.3-Codex の紹介"
+              data-summary="GPT-5.3-Codexが発表され、長期的な実務作業を支援する新機能が追加された。"
+              data-imp="45"
+              data-recent="0"
               data-date="2026-02-05T00:00:00+00:00"
-              data-tags="AI,HealthTech">
+              data-tags="AI,Codex,release">
             <div>
               
-                <span class="badge imp">重要度 35</span>
+                <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://openai.com/index/navigating-health-questions" target="_blank" rel="noopener">ChatGPT Health の紹介</a>
+                <a href="https://openai.com/index/gpt-5-3-codex-system-card" target="_blank" rel="noopener">GPT-5.3-Codex の紹介</a>
               
               
                 <span class="small">（2026/02/05 09:00）</span>
               
 
               
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
               
                 <span class="small">
                   
                     <span class="badge">AI</span>
                   
-                    <span class="badge">HealthTech</span>
+                    <span class="badge">Codex</span>
+                  
+                    <span class="badge">release</span>
                   
                 </span>
               
@@ -3171,7 +3063,7 @@ a:hover{
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：ChatGPT Healthが発表され、健康データ連携とプライバシー保護を実現する新サービスが登場した。</div>
+                  <div><strong>要約</strong>：GPT-5.3-Codexが発表され、長期的な実務作業を支援する新機能が追加された。</div>
                 
 
                 
@@ -3184,7 +3076,7 @@ a:hover{
                       
                         
                         
-                          <li>ChatGPT Healthは専用体験として提供される</li>
+                          <li>GPT-5.3-CodexはCodexネイティブエージェントである。</li>
                           
                         
                       
@@ -3194,7 +3086,7 @@ a:hover{
                       
                         
                         
-                          <li>ユーザーの健康データとアプリを安全に接続できる</li>
+                          <li>フロンティアレベルのコーディング性能と一般推論能力を組み合わせている。</li>
                           
                         
                       
@@ -3204,7 +3096,7 @@ a:hover{
                       
                         
                         
-                          <li>設計は医師の知見を取り入れたプライバシー保護機能を備えている</li>
+                          <li>長期的かつ実世界の技術作業をサポートする設計となっている。</li>
                           
                         
                       
@@ -3215,9 +3107,9 @@ a:hover{
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: API連携で既存ヘルスケアアプリとの統合が容易になる。</div>
-                  <div><b>経営者目線</b>: 新規市場参入により収益拡大の可能性がある。</div>
-                  <div><b>消費者目線</b>: 個人データの安全性が高く、医療情報を一元管理できる点が魅力的。</div>
+                  <div><b>技術者目線</b>: 開発効率が向上し、複雑なタスクに対応できるようになる。</div>
+                  <div><b>経営者目線</b>: 新機能でプロジェクトのスピードアップと品質向上が期待できる。</div>
+                  <div><b>消費者目線</b>: ユーザーはより高度な自動化ツールを利用できるようになる。</div>
                 </div>
                 
 
@@ -3227,7 +3119,113 @@ a:hover{
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://openai.com/index/introducing-chatgpt-health" target="_blank" rel="noopener">https://openai.com/index/introducing-chatgpt-health</a>
+                      <a href="https://openai.com/index/introducing-gpt-5-3-codex" target="_blank" rel="noopener">https://openai.com/index/introducing-gpt-5-3-codex</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-4804" class="topic-row"
+              data-title="AI をどこでも誰でも使えるようにする: ローカリゼーションへのアプローチ"
+              data-summary="OpenAIがAIのローカリゼーション手法を公開し、言語・法律・文化に適応させつつ安全性を維持する方針を示した。"
+              data-imp="35"
+              data-recent="1"
+              data-date="2026-02-06T10:00:00+00:00"
+              data-tags="AI,ローカリゼーション,安全性">
+            <div>
+              
+                <span class="badge imp">重要度 35</span>
+              
+              
+                <a href="https://openai.com/index/our-approach-to-localization" target="_blank" rel="noopener">AI をどこでも誰でも使えるようにする: ローカリゼーションへのアプローチ</a>
+              
+              
+                <span class="small">（2026/02/06 19:00）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">AI</span>
+                  
+                    <span class="badge">ローカリゼーション</span>
+                  
+                    <span class="badge">安全性</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：OpenAIがAIのローカリゼーション手法を公開し、言語・法律・文化に適応させつつ安全性を維持する方針を示した。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>OpenAIはAIローカリゼーションへのアプローチを共有した。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>モデルはグローバルに共有されるフロンティアモデルを、各国の言語・法規制・文化に合わせて適応できる。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>安全性は損なわれないことが保証されている。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: ローカリゼーション実装で設計変更が必要になる可能性あり。</div>
+                  <div><b>経営者目線</b>: 市場拡大の機会を提供するが、法規制対応コストが増加する恐れ。</div>
+                  <div><b>消費者目線</b>: 多言語対応により利用しやすくなるが、安全性への懸念は残る。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://openai.com/index/our-approach-to-localization" target="_blank" rel="noopener">https://openai.com/index/our-approach-to-localization</a>
                     
                   </div>
                 
@@ -7709,17 +7707,17 @@ a:hover{
               data-summary="H3 F9の打上げが延期され、後続ロケットへの影響評価が必要とされた。"
               data-imp="45"
               data-recent="0"
-              data-date="2026-01-07T02:00:00+00:00"
+              data-date="2026-02-03T07:30:00+00:00"
               data-tags="launch,schedule,investigation">
             <div>
               
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://www.mhi.com/news/260107.html" target="_blank" rel="noopener">みちびき7号機を搭載したH3ロケット9号機（H3 F9）の打上げスケジュールについて</a>
+                <a href="https://www.mhi.com/news/260203.html" target="_blank" rel="noopener">みちびき7号機を搭載したH3ロケット9号機（H3 F9）の打上げスケジュールについて</a>
               
               
-                <span class="small">（2026/01/07 11:00）</span>
+                <span class="small">（2026/02/03 16:30）</span>
               
 
               
