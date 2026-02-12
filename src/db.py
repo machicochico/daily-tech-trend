@@ -52,13 +52,31 @@ def init_db():
     cur.execute("""
     CREATE TABLE IF NOT EXISTS topics (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      topic_key TEXT,
       title TEXT,
       title_ja TEXT,
       category TEXT,
+      kind TEXT,
+      region TEXT,
       score_48h INTEGER DEFAULT 0,
       created_at TEXT
     )
     """)
+
+    # ---- topics: 後方互換（既存DBに列が無い場合の追加）----
+    ensure_column(cur, "topics", "topic_key", "TEXT")
+    ensure_column(cur, "topics", "kind", "TEXT")
+    ensure_column(cur, "topics", "region", "TEXT")
+
+    cur.execute("""
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_topics_topic_key
+    ON topics(topic_key)
+    WHERE topic_key IS NOT NULL AND topic_key != ''
+    """)
+
+    # 既存データ移行: NULL/空のみデフォルト補完
+    cur.execute("UPDATE topics SET kind='tech' WHERE kind IS NULL OR kind=''")
+    cur.execute("UPDATE topics SET region='global' WHERE region IS NULL OR region=''")
 
     # ---- topic_articles ----
     cur.execute("""
@@ -67,6 +85,20 @@ def init_db():
       article_id INTEGER,
       PRIMARY KEY (topic_id, article_id)
     )
+    """)
+
+    # ---- edges (topic内の親子リンク) ----
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS edges (
+      topic_id INTEGER,
+      parent_article_id INTEGER,
+      child_article_id INTEGER
+    )
+    """)
+
+    cur.execute("""
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_edges_topic_parent_child
+    ON edges(topic_id, parent_article_id, child_article_id)
     """)
 
     # ---- topic_insights (LLM結果) ----
