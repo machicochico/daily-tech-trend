@@ -43,7 +43,7 @@ def main(limit: int = 500):
             cur.execute(
                 "INSERT INTO topics(title, title_ja, category, score_48h, created_at, topic_key, kind, region) "
                 "VALUES(?,?,?,?,?,?,?,?)",
-                (title or title_ja or "", title_ja or "", cat or "other", 0, now, topic_key, kind, "")
+                (title or title_ja or "", title_ja or "", cat or "other", 0, now, topic_key, kind, "global")
             )
             topic_id = cur.lastrowid
             created_topics += 1
