@@ -48,6 +48,14 @@ def _strip_html_soft(s: str) -> str:
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
+def should_fetch_fulltext(source: str, content: str, fetch_count: int, fetch_limit: int) -> bool:
+    """本文補完を試みる条件を判定する。"""
+    if source not in FULLTEXT_SOURCES:
+        return False
+    if fetch_count >= fetch_limit:
+        return False
+    return len((content or "").strip()) < MIN_CONTENT_CHARS
+
 def fetch_fulltext(url: str, source: str = "") -> str:
     """記事ページを取得して本文っぽいテキストを抽出（簡易）。失敗時は空文字。"""
     host = urlsplit(url).netloc.lower()
@@ -248,7 +256,7 @@ def main():
 
             # ★本文が薄い/空なら、記事本文の補完を試みる（成功時のみ置き換え）
             src = feed.get("source", "")
-            if (src in FULLTEXT_SOURCES) and (fetch_count < fetch_limit) and (len(content.strip()) == 0):
+            if should_fetch_fulltext(src, content, fetch_count, fetch_limit):
                 full = fetch_fulltext(link, source=src)
                 if full:
                     content = full
