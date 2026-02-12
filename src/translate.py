@@ -25,6 +25,44 @@ def ensure_column(cur, table: str, col: str, coltype: str = "TEXT"):
     if col not in cols:
         cur.execute(f"ALTER TABLE {table} ADD COLUMN {col} {coltype}")
 
+def translate_news_titles(conn, limit: int = 400):
+    """
+    articles.kind='news' かつ title_ja が空のものを翻訳して埋める。
+    """
+    cur = conn.cursor()
+    rows = cur.execute(
+        """
+        SELECT id, title
+        FROM articles
+        WHERE kind IN ('news','tech')
+          AND title IS NOT NULL AND title != ''
+          AND (title_ja IS NULL OR title_ja = '')
+        ORDER BY published_at DESC, id DESC
+        LIMIT ?
+        """,
+        (limit,),
+    ).fetchall()
+
+    print(f"[translate] news titles (to translate): {len(rows)}")
+
+    n_ok = 0
+    for article_id, title in rows:
+        try:
+            ja = translate(title)
+            ja = (ja or "").strip()
+            if not ja:
+                continue
+            cur.execute(
+                "UPDATE articles SET title_ja=? WHERE id=?",
+                (ja, article_id),
+            )
+            n_ok += 1
+        except Exception as e:
+            print(f"[WARN] translate failed id={article_id} err={e}")
+
+    conn.commit()
+    print(f"[translate] news titles updated: {n_ok}")
+
 def main():
     t0 = _now_sec()
     print("[TIME] step=translate start")
@@ -32,10 +70,11 @@ def main():
     cur = conn.cursor()
 
     ensure_column(cur, "articles", "title_ja", "TEXT")
+    translate_news_titles(conn, limit=600)
 
     # topics を日本語化（トップ表示に直結）
     # cur.execute("SELECT id, title FROM topics WHERE title_ja IS NULL LIMIT 100")
-    cur.execute("SELECT id, title FROM topics WHERE title_ja IS NULL")
+    cur.execute("SELECT id, title FROM topics WHERE title_ja IS NULL OR title_ja = ''")
     rows = cur.fetchall()
 
     for tid, title in rows:
@@ -45,43 +84,11 @@ def main():
             ja = translate(title)
             if ja:
                 cur.execute("UPDATE topics SET title_ja=? WHERE id=?", (ja, tid))
-        except Exception:
-            continue
-
-    # --- news title translation ---
-    cur.execute(
-        """
-        SELECT id, title
-        FROM articles
-        WHERE kind='news'
-        AND title IS NOT NULL AND title != ''
-        AND (title_ja IS NULL OR title_ja = '')
-        ORDER BY id DESC
-        LIMIT 200
-        """
-    )
-
-    rows = cur.fetchall()
-    print(f"[translate] news titles: {len(rows)}")
-
-    for aid, title in rows:
-        # 英語っぽいものだけ翻訳（既存の関数を使う想定）
-        if not looks_english(title):
-            continue
-
-        try:
-            ja = translate(title)
         except Exception as e:
-            print(f"[translate][news] failed id={aid}: {e}")
+            print(f"[WARN] translate topic failed id={tid} err={e}")
             continue
-
-        if ja and ja.strip():
-            cur.execute(
-                "UPDATE articles SET title_ja=? WHERE id=?",
-                (ja.strip(), aid)
-            )
-
-    conn.commit()
+    
+    conn.commit()   
     conn.close()
 
     print(f"[TIME] step=translate end sec={_now_sec() - t0:.1f}")

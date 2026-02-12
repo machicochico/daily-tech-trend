@@ -140,12 +140,31 @@ sources:
 
 
       # --- ニュース（全国 / 世界） ---
-  - id: nhk-news
-    name: NHK NEWS (Japan)
-    category: news
+
+  - name: ITmedia NEWS
     kind: news
     region: jp
-    url: https://www3.nhk.or.jp/rss/news/cat0.xml
+    rss:
+      - https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml
+
+  
+  - name: Impress Watch (INTERNET Watch)
+    kind: news
+    region: jp
+    rss:
+      - https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf
+
+  - name: INTERNET Watch
+    kind: news
+    region: jp
+    rss:
+      - https://internet.watch.impress.co.jp/data/rss/1.0/iw/feed.rdf
+
+  - name: Forest Watch
+    kind: news
+    region: jp
+    rss:
+      - https://forest.watch.impress.co.jp/data/rss/1.0/wf/feed.rdf
 
   - id: jiji-top
     name: Jiji Press (Japan)

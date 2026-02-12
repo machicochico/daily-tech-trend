@@ -19,8 +19,11 @@ def init_db():
     cur.execute("""
     CREATE TABLE IF NOT EXISTS articles (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      kind TEXT,                -- 'tech' / 'news'
+      region TEXT,              -- 'jp' / 'global' など
       source TEXT,
       title TEXT,
+      title_ja TEXT,
       url TEXT,
       url_norm TEXT,
       content TEXT,
@@ -34,6 +37,16 @@ def init_db():
     CREATE UNIQUE INDEX IF NOT EXISTS idx_articles_url
     ON articles(url)
     """)
+
+    # ---- articles: 後方互換（既存DBに列が無い場合の追加）----
+    ensure_column(cur, "articles", "kind", "TEXT")
+    ensure_column(cur, "articles", "region", "TEXT")
+    ensure_column(cur, "articles", "title_ja", "TEXT")
+
+    # 既存データの最低限のデフォルト補完（NULL/空のみ対象）
+    cur.execute("UPDATE articles SET kind='tech' WHERE kind IS NULL OR kind=''")
+    cur.execute("UPDATE articles SET region='global' WHERE region IS NULL OR region=''")
+
 
     # ---- topics ----
     cur.execute("""

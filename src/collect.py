@@ -1,6 +1,3 @@
-# src/collect.py
-from __future__ import annotations
-
 import feedparser
 import yaml
 from datetime import datetime, timezone
@@ -12,12 +9,80 @@ from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 import re
 import time
 
+# ★本文フェッチ用
+import urllib.request
+import urllib.error
+import html as _html
+
 def _now_sec():
     return time.perf_counter()
 
 def strip_html(s: str) -> str:
     return re.sub(r"<[^>]+>", "", s)
-    
+
+FULLTEXT_SOURCES = {
+    "Forest Watch",  # RSS本文が短いことがある
+    # 必要なら追加
+    # "毎日新聞（速報）",
+}
+MIN_CONTENT_CHARS = 200          # RSS本文がこれ未満なら「薄い」と判定して補完を試みる
+MAX_FETCH_BYTES = 2_000_000      # 取得上限 2MB（暴走防止）
+FETCH_TIMEOUT_SEC = 15
+
+# 同意画面/JS依存など、取得しても本文抽出できない・リスク高いドメインは除外
+SKIP_FETCH_DOMAINS = {
+    "www3.nhk.or.jp",
+    "www.nhk.or.jp",
+}
+
+def _strip_html_soft(s: str) -> str:
+    """script/style除去→タグ除去→空白圧縮（簡易）"""
+    if not s:
+        return ""
+    s = re.sub(r"(?is)<script.*?>.*?</script>", " ", s)
+    s = re.sub(r"(?is)<style.*?>.*?</style>", " ", s)
+    s = re.sub(r"(?is)<noscript.*?>.*?</noscript>", " ", s)
+    s = re.sub(r"<[^>]+>", " ", s)
+    s = _html.unescape(s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s
+
+def fetch_fulltext(url: str) -> str:
+    """記事ページを取得して本文っぽいテキストを抽出（簡易）。失敗時は空文字。"""
+    try:
+        host = urlsplit(url).netloc.lower()
+        if host in SKIP_FETCH_DOMAINS:
+            return ""
+
+        req = urllib.request.Request(url, headers=HEADERS, method="GET")
+        with urllib.request.urlopen(req, timeout=FETCH_TIMEOUT_SEC) as resp:
+            ctype = (resp.headers.get("Content-Type") or "").lower()
+            if "text/html" not in ctype:
+                return ""
+
+            data = resp.read(MAX_FETCH_BYTES + 1)
+            if len(data) > MAX_FETCH_BYTES:
+                # 大きすぎるページは無視（事故防止）
+                return ""
+
+            # charset 推定
+            charset = "utf-8"
+            m = re.search(r"charset=([a-zA-Z0-9_\-]+)", ctype)
+            if m:
+                charset = m.group(1).strip()
+
+            html_text = data.decode(charset, errors="ignore")
+            text = _strip_html_soft(html_text)
+
+            # 短すぎる場合は失敗扱い
+            if len(text) < MIN_CONTENT_CHARS:
+                return ""
+
+            return text
+    except Exception:
+        return ""
+
+
 DROP_QS = {"utm_source","utm_medium","utm_campaign","utm_term","utm_content","ref","fbclid","gclid"}
 HEADERS = {
     "User-Agent": "DailyTechTrend/1.0 (+https://github.com/yourname/daily-tech-trend)"
@@ -30,36 +95,74 @@ def normalize_url(u: str) -> str:
 
 
 def load_feed_list(cfg: dict):
-    # 旧形式: feeds: [{url, category, source}, ...]
+    """
+    対応形式:
+      A) 旧: feeds:   [{url, category, source, kind, region, limit}, ...]
+      B) 新: sources: [{name, category, kind, region, limit, rss:[...]} , ...]
+         rss は文字列URLの配列、または {url, category, limit} の配列も許可
+    """
+    out = []
+
+    # A) 旧形式
     if isinstance(cfg.get("feeds"), list):
-        return [
-            {
-                "url": x["url"],
-                "category": x.get("category"),
-                "source": x.get("source", ""),
-                "kind": x.get("kind", "tech"),
-                "region": x.get("region", ""),
-                "limit": x.get("limit", 30),
-            }
-            for x in cfg["feeds"]
-        ]
+        for x in cfg["feeds"]:
+            if not isinstance(x, dict):
+                continue
+            url = x.get("url")
+            if not url:
+                continue
+            out.append(
+                {
+                    "url": url,
+                    "category": x.get("category"),
+                    "source": x.get("source", ""),
+                    "kind": x.get("kind", "tech"),
+                    "region": x.get("region", "") or "",
+                    "limit": x.get("limit", 30),
+                }
+            )
+        return out
 
-    # 新形式: sources: [{url, category, name, kind, region}, ...]
+    # B) 新形式（sources + rss配列）
     if isinstance(cfg.get("sources"), list):
-        return [
-            {
-                "url": x["url"],
-                "category": x.get("category"),
-                "source": x.get("name", x.get("source", "")),
-                "kind": x.get("kind", "tech"),
-                "region": x.get("region", ""),
-                "limit": x.get("limit", 30),
+        for s in cfg["sources"]:
+            if not isinstance(s, dict):
+                continue
+
+            base = {
+                "category": s.get("category"),
+                "source": s.get("name", s.get("source", "")),
+                "kind": s.get("kind", "tech"),
+                "region": s.get("region", "") or "",
+                "limit": s.get("limit", 30),
             }
-            for x in cfg["sources"]
-        ]
 
-    raise KeyError("sources.yaml must contain 'feeds' or 'sources' list.")
+            rss_list = s.get("rss") or []
+            if not rss_list and s.get("url"):
+                rss_list = [s["url"]]
+                
+            # rss: [ "https://...", ... ]
+            for r in rss_list:
+                if isinstance(r, str):
+                    out.append({**base, "url": r})
+                # rss: [ {url: "...", category: "...", limit: 30}, ... ] も許可
+                elif isinstance(r, dict):
+                    url = r.get("url")
+                    if not url:
+                        continue
+                    out.append(
+                        {
+                            **base,
+                            "url": url,
+                            "category": r.get("category", base["category"]),
+                            "limit": r.get("limit", base["limit"]),
+                        }
+                    )
 
+        if out:
+            return out
+
+    raise KeyError("sources.yaml must contain 'feeds' or 'sources' list (with rss).")
 
 
 def normalize_published_at(entry) -> str:
@@ -105,6 +208,8 @@ def main():
 
     for feed in feed_list:
         try:
+            fetch_count = 0
+            fetch_limit = 30  # Forest Watchは30件全部補完してもよい
             #d = feedparser.parse(feed["url"])
             d = feedparser.parse(feed["url"], request_headers=HEADERS)
             if getattr(d, "bozo", 0):
@@ -131,14 +236,33 @@ def main():
 
                 content = strip_html(content)
 
+                # ★本文が薄い/空なら、記事本文の補完を試みる（成功時のみ置き換え）
+                src = feed.get("source", "")
+                if (src in FULLTEXT_SOURCES) and (fetch_count < fetch_limit) and (len(content.strip()) == 0):
+                    full = fetch_fulltext(link)
+                    if full:
+                        content = full
+                        fetch_count += 1
+                        # print(f"[INFO] fetched fulltext source={src} url={link}")
+
+
                 published_at = normalize_published_at(e)
                 fetched_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
                 cur.execute(
                     """
-                    INSERT OR IGNORE INTO articles
+                    INSERT INTO articles
                     (url, title, content, source, category, published_at, fetched_at, kind, region)
                     VALUES (?,?,?,?,?,?,?,?,?)
+                    ON CONFLICT(url) DO UPDATE SET
+                        title=excluded.title,
+                        content=excluded.content,
+                        source=excluded.source,
+                        category=excluded.category,
+                        published_at=excluded.published_at,
+                        fetched_at=excluded.fetched_at,
+                        kind=excluded.kind,
+                        region=excluded.region
                     """,
                     (
                         link,
@@ -157,6 +281,10 @@ def main():
         except Exception as e:
             print(f"[WARN] feed parse failed url={feed['url']} err={e}")
             continue
+    cur.execute(
+        "UPDATE articles SET category='news' "
+        "WHERE kind='news' AND (category IS NULL OR TRIM(category)='')"
+    )
     conn.commit()
     conn.close()
 

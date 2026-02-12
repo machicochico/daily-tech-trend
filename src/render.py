@@ -584,9 +584,34 @@ HTML = r"""
 
                 {% if t.key_points and t.key_points|length>0 %}
                   <ul class="kps">
+                    {% set shown = namespace(n=0, limited=0) %}
+                    {% set seen = namespace(items=[]) %}
                     {% for kp in t.key_points %}
-                      <li>{{ kp }}</li>
+                      {% set k = (kp or "") %}
+                      {# 既存の「短文テンプレ」は1回に畳む #}
+                      {% if "本文中の明確な事実は限定的" in k or "本文が短く" in k %}
+                        {% if shown.limited == 0 %}
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          {% set shown.limited = 1 %}
+                          {% set shown.n = shown.n + 1 %}
+                        {% endif %}
+                      {% else %}
+                        {# 「推測: ...」が重複する場合は1回だけ出す #}
+                        {% if k.startswith("推測") %}
+                          {% if k not in seen.items %}
+                            <li>{{ k }}</li>
+                            {% set seen.items = seen.items + [k] %}
+                            {% set shown.n = shown.n + 1 %}
+                          {% endif %}
+                        {% else %}
+                          <li>{{ k }}</li>
+                          {% set shown.n = shown.n + 1 %}
+                        {% endif %}
+                      {% endif %}
                     {% endfor %}
+                    {% if shown.n == 0 %}
+                      <li>推測：リンク先の本文確認が必要</li>
+                    {% endif %}
                   </ul>
                 {% endif %}
 
@@ -639,6 +664,22 @@ HTML = r"""
   </section>
   {% endfor %}
 <script>
+// Safari対策：スクロール復元を抑止
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+function forceTopIfNoHash(){
+  if (!location.hash) window.scrollTo(0, 0);
+}
+
+// bfcache/戻る対策（Safariで重要）
+window.addEventListener('pageshow', () => {
+  forceTopIfNoHash();
+});
+
+// 通常ロード対策
+window.addEventListener('load', () => {
+  setTimeout(forceTopIfNoHash, 0);
+});
 const selectedTags = new Set(); // 複数タグ
 let tagMode = "AND";            // "AND" or "OR"
 const btn = document.getElementById('closeFloating');
@@ -685,7 +726,7 @@ function clearTagFilter(){
 function applyFilter() {
   const q = (document.getElementById('q')?.value || '').toLowerCase();
 
-  const rows = document.querySelectorAll('.category-body .topic-row');
+  const rows = document.querySelectorAll('.category-body .topic-row, .top-zone .topic-row');
   let hit = 0;
 
   rows.forEach(el => {
@@ -715,7 +756,7 @@ function applyFilter() {
   const box = document.getElementById('filter-count');
   if (!box) return;
 
-  const isFiltering = q ;
+  const isFiltering = q || selectedTags.size > 0;
   if (isFiltering) {
     box.textContent = `該当: ${hit}件 / 全${rows.length}件`;
     box.style.display = '';
@@ -874,8 +915,13 @@ function applySort(){
   }catch(e){}
   applySort();
 })();
-// 初期状態：カテゴリを折りたたむ（スマホ向け）
-toggleAllCats();
+window.addEventListener('load', () => {
+  // 先にトップ固定→その後に折りたたみ（ズレを減らす）
+  setTimeout(() => {
+    if (!location.hash) window.scrollTo(0, 0);
+    toggleAllCats();
+  }, 0);
+});
 
 </script>
 
@@ -1079,7 +1125,22 @@ NEWS_HTML = r"""
 
                 {% if it.key_points and it.key_points|length>0 %}
                   <ul class="kps">
-                    {% for kp in it.key_points %}<li>{{ kp }}</li>{% endfor %}
+                    {% set shown = namespace(has_real=0, has_guess=0) %}
+                    {% for kp in it.key_points %}
+                      {% if "推測" in kp or "本文確認" in kp %}
+                        {% if shown.has_guess == 0 %}
+                          <li>{{ kp }}</li>
+                          {% set shown.has_guess = 1 %}
+                        {% endif %}
+                      {% else %}
+                        <li>{{ kp }}</li>
+                        {% set shown.has_real = 1 %}
+                      {% endif %}
+                    {% endfor %}
+
+                    {% if shown.has_real == 0 and shown.has_guess == 0 %}
+                      <li>推測：記事情報が限定的なため、リンク先の本文確認が必要</li>
+                    {% endif %}
                   </ul>
                 {% endif %}
 
@@ -1307,7 +1368,13 @@ window.addEventListener('load', () => {
 });
 
 
-toggleAllCats();
+window.addEventListener('load', () => {
+  // 先にトップ固定→その後に折りたたみ（ズレを減らす）
+  setTimeout(() => {
+    if (!location.hash) window.scrollTo(0, 0);
+    toggleAllCats();
+  }, 0);
+});
 
 </script>
 
@@ -1401,8 +1468,9 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     news_dir = out_dir / "news"
     news_dir.mkdir(exist_ok=True)
     
-    now = datetime.now()
+    now = datetime.now(timezone.utc)
     cutoff_48h_str = (now - timedelta(hours=48)).strftime("%Y-%m-%d %H:%M:%S")
+
 
     # 1) Japan / Global はカテゴリ見出しで分割
     sections_jp = render_news_region_page(cur, "jp", limit_each=30, cutoff_dt=cutoff_48h_str)
@@ -1851,7 +1919,8 @@ def main():
 
     topics_by_cat: Dict[str, List[Dict[str, Any]]] = {}
     hot_by_cat: Dict[str, List[Dict[str, Any]]] = {}
-    cutoff_48h = (datetime.now(timezone.utc) - timedelta(hours=48)).isoformat(timespec="seconds")
+    # 48h cutoff（UTCでSQLite互換の "YYYY-MM-DD HH:MM:SS"）
+    cutoff_48h = (datetime.now(timezone.utc) - timedelta(hours=48)).strftime("%Y-%m-%d %H:%M:%S")
 
     LIMIT_PER_CAT = 20
     HOT_TOP_N = 5
