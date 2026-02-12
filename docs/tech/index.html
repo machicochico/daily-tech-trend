@@ -316,15 +316,15 @@ a:hover{
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2026-02-12 18:17:39 JST</div>
+        <div class="v">2026-02-12 21:03:01 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">1057 sec</div>
+        <div class="v">178 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
-        <div class="v">4952 <span class="small">(new48h 183)</span></div>
+        <div class="v">4973 <span class="small">(new48h 184)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">RSS Sources</div>
@@ -347,7 +347,7 @@ a:hover{
           </button>
         
           <button class="btn" type="button" data-tag-btn="脆弱性" onclick="toggleTag('脆弱性')">
-            脆弱性 (10)
+            脆弱性 (13)
           </button>
         
           <button class="btn" type="button" data-tag-btn="vulnerability" onclick="toggleTag('vulnerability')">
@@ -394,8 +394,20 @@ a:hover{
             SageMaker (3)
           </button>
         
+          <button class="btn" type="button" data-tag-btn="アップデート" onclick="toggleTag('アップデート')">
+            アップデート (3)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="セキュリティ" onclick="toggleTag('セキュリティ')">
+            セキュリティ (3)
+          </button>
+        
           <button class="btn" type="button" data-tag-btn="AI開発" onclick="toggleTag('AI開発')">
             AI開発 (2)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="AVEVA" onclick="toggleTag('AVEVA')">
+            AVEVA (2)
           </button>
         
           <button class="btn" type="button" data-tag-btn="CLI" onclick="toggleTag('CLI')">
@@ -446,10 +458,6 @@ a:hover{
             bedrock (2)
           </button>
         
-          <button class="btn" type="button" data-tag-btn="security" onclick="toggleTag('security')">
-            security (2)
-          </button>
-        
           <button class="btn" type="button" data-tag-btn="steel" onclick="toggleTag('steel')">
             steel (2)
           </button>
@@ -458,20 +466,8 @@ a:hover{
             trade (2)
           </button>
         
-          <button class="btn" type="button" data-tag-btn="training" onclick="toggleTag('training')">
-            training (2)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="アップデート" onclick="toggleTag('アップデート')">
-            アップデート (2)
-          </button>
-        
           <button class="btn" type="button" data-tag-btn="クラウド" onclick="toggleTag('クラウド')">
             クラウド (2)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="セキュリティ" onclick="toggleTag('セキュリティ')">
-            セキュリティ (2)
           </button>
         
           <button class="btn" type="button" data-tag-btn="制御システム" onclick="toggleTag('制御システム')">
@@ -500,10 +496,6 @@ a:hover{
         
           <button class="btn" type="button" data-tag-btn="AMD" onclick="toggleTag('AMD')">
             AMD (1)
-          </button>
-        
-          <button class="btn" type="button" data-tag-btn="AVEVA" onclick="toggleTag('AVEVA')">
-            AVEVA (1)
           </button>
         
           <button class="btn" type="button" data-tag-btn="AWS Bedrock" onclick="toggleTag('AWS Bedrock')">
@@ -540,6 +532,14 @@ a:hover{
         
           <button class="btn" type="button" data-tag-btn="CCS" onclick="toggleTag('CCS')">
             CCS (1)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="CO2船" onclick="toggleTag('CO2船')">
+            CO2船 (1)
+          </button>
+        
+          <button class="btn" type="button" data-tag-btn="CSRF" onclick="toggleTag('CSRF')">
+            CSRF (1)
           </button>
         
       </div>
@@ -701,48 +701,6 @@ a:hover{
           </li>
         
           <li class="topic-row"
-              data-title="AVEVA PI から CONNECT エージェントへ"
-              data-summary="AVEVA PI to CONNECT Agent v2.4.2520以下でCVE-2026-1495が発見され、イベントログからプロキシ情報を取得できるため不正アクセスの危険がある。"
-              data-imp="50"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="脆弱性,プロキシ,AVEVA,CVE-2026-1495,Critical Manufacturing">
-            <span class="badge imp">重要度 50</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-5165">AVEVA PI から CONNECT エージェントへ</a>
-            <span class="date">2026/02/10 21:00</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
-            
-            
-          </li>
-        
-          <li class="topic-row"
-              data-title="AVEVA PI データ アーカイブ"
-              data-summary="CVE-2026-1507によりAVEVA PI Data ArchiveがDoS攻撃の対象となり、パッチ適用が必要。"
-              data-imp="50"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="vulnerability,DoS,PIDataArchive">
-            <span class="badge imp">重要度 50</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-5166">AVEVA PI データ アーカイブ</a>
-            <span class="date">2026/02/10 21:00</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
-            
-            
-          </li>
-        
-          <li class="topic-row"
               data-title="Siemens SIMATIC および SIPLUS 製品"
               data-summary="Siemens ET 200SPにDoS脆弱性が報告され、最新版への更新が推奨された。"
               data-imp="50"
@@ -753,6 +711,40 @@ a:hover{
             
             <a href="#topic-2335">Siemens SIMATIC および SIPLUS 製品</a>
             <span class="date">2026/01/14 21:00</span>
+            
+              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
+            
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="フビタット標高ハブ"
+              data-summary="Hubitat Elevation Hubsの認証バイパス脆弱性により、権限外でデバイス制御が可能になる。"
+              data-imp="50"
+              data-recent="0"
+              data-date="2026-01-22T12:00:00+00:00"
+              data-tags="vulnerability,hubitat,auth-bypass">
+            <span class="badge imp">重要度 50</span>
+            
+            <a href="#topic-3225">フビタット標高ハブ</a>
+            <span class="date">2026/01/22 21:00</span>
+            
+              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
+            
+            
+          </li>
+        
+          <li class="topic-row"
+              data-title="Weintek cMT X シリーズ HMI EasyWeb サービス"
+              data-summary="低権限ユーザーがWeintek cMT XシリーズHMI EasyWeb Serviceの特定バージョンで権限昇格し、デバイスを完全制御できる脆弱性が報告された。"
+              data-imp="50"
+              data-recent="0"
+              data-date="2026-01-22T12:00:00+00:00"
+              data-tags="">
+            <span class="badge imp">重要度 50</span>
+            
+            <a href="#topic-3228">Weintek cMT X シリーズ HMI EasyWeb サービス</a>
+            <span class="date">2026/01/22 21:00</span>
             
               <span class="badge"><a href="#cat-security">セキュリティ</a></span>
             
@@ -783,50 +775,6 @@ a:hover{
             <span class="date">2026/02/11 03:29</span>
             
               <span class="badge"><a href="#cat-ai">AI</a></span>
-            
-            
-
-          </li>
-        
-          <li class="topic-row"
-              data-title="AVEVA PI から CONNECT エージェントへ"
-              data-summary="AVEVA PI to CONNECT Agent v2.4.2520以下でCVE-2026-1495が発見され、イベントログからプロキシ情報を取得できるため不正アクセスの危険がある。"
-              data-imp="50"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="脆弱性,プロキシ,AVEVA,CVE-2026-1495,Critical Manufacturing">
-            <span class="badge imp">重要度 50</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-5165">AVEVA PI から CONNECT エージェントへ</a>
-            <span class="date">2026/02/10 21:00</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
-            
-            
-
-          </li>
-        
-          <li class="topic-row"
-              data-title="AVEVA PI データ アーカイブ"
-              data-summary="CVE-2026-1507によりAVEVA PI Data ArchiveがDoS攻撃の対象となり、パッチ適用が必要。"
-              data-imp="50"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="vulnerability,DoS,PIDataArchive">
-            <span class="badge imp">重要度 50</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-5166">AVEVA PI データ アーカイブ</a>
-            <span class="date">2026/02/10 21:00</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
             
             
 
@@ -877,20 +825,86 @@ a:hover{
           </li>
         
           <li class="topic-row"
-              data-title="ZLAN Information Technology Co. ZLAN5143D"
-              data-summary="ZLAN5143D v1.600に認証回避脆弱性が報告され、攻撃者はパスワードリセットや内部URLアクセスで制御を取得できる。"
+              data-title="Swann は、Amazon Bedrock を使用して数百万の IoT デバイスに Generative AI を提供します"
+              data-summary="SwannがAmazon Bedrockで数百万のIoTデバイスに生成AIを提供し、通知フィルタリングとコスト最適化を実現した。"
               data-imp="45"
               data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="脆弱性,認証回避,産業機器">
+              data-date="2026-02-11T15:48:15+00:00"
+              data-tags="IoT,GenerativeAI,AmazonBedrock">
             <span class="badge imp">重要度 45</span>
             
               <span class="badge recent ">
                 48h +1
               </span>
             
-            <a href="#topic-5161">ZLAN Information Technology Co. ZLAN5143D</a>
-            <span class="date">2026/02/10 21:00</span>
+            <a href="#topic-5224">Swann は、Amazon Bedrock を使用して数百万の IoT デバイスに Generative AI を提供します</a>
+            <span class="date">2026/02/12 00:48</span>
+            
+              <span class="badge"><a href="#cat-ai">AI</a></span>
+            
+            
+
+          </li>
+        
+          <li class="topic-row"
+              data-title="Amazon Bedrock スロットリングとサービスの可用性をマスターする: 包括的なガイド"
+              data-summary="Amazon Bedrockで発生する429・503エラー対策が実務に影響を与える。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-02-11T15:52:54+00:00"
+              data-tags="bedrock,throttling,serviceunavailable,ai">
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-5225">Amazon Bedrock スロットリングとサービスの可用性をマスターする: 包括的なガイド</a>
+            <span class="date">2026/02/12 00:52</span>
+            
+              <span class="badge"><a href="#cat-ai">AI</a></span>
+            
+            
+
+          </li>
+        
+          <li class="topic-row"
+              data-title="NVIDIA Nemotron 3 Nano 30B MoE モデルが Amazon SageMaker JumpStart で利用可能になりました"
+              data-summary="NVIDIA Nemotron 3 Nano 30B MoEモデルがAmazon SageMaker JumpStartで利用可能になり、開発者は管理不要で生成AIアプリを構築できる。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-02-11T19:38:47+00:00"
+              data-tags="ai,model,sagemaker,nvidia">
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-5226">NVIDIA Nemotron 3 Nano 30B MoE モデルが Amazon SageMaker JumpStart で利用可能になりました</a>
+            <span class="date">2026/02/12 04:38</span>
+            
+              <span class="badge"><a href="#cat-ai">AI</a></span>
+            
+            
+
+          </li>
+        
+          <li class="topic-row"
+              data-title="JVN: M-Audio製M-Track Duo HDインストーラにおける任意のDLL読み込みの脆弱性"
+              data-summary="M-AudioのM-Track Duo HDインストーラにDLL読み込み脆弱性があり、修正が必要。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-02-12T03:00:00+00:00"
+              data-tags="脆弱性,M-Audio,インストーラ">
+            <span class="badge imp">重要度 45</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-5295">JVN: M-Audio製M-Track Duo HDインストーラにおける任意のDLL読み込みの脆弱性</a>
+            <span class="date">2026/02/12 12:00</span>
             
               <span class="badge"><a href="#cat-security">セキュリティ</a></span>
             
@@ -899,20 +913,20 @@ a:hover{
           </li>
         
           <li class="topic-row"
-              data-title="OT 通信を保護するための障壁: Johnny が認証できない理由"
-              data-summary="CISAが旧型OTプロトコルの認証障壁を指摘し、対策推奨。"
+              data-title="JVN: ZOLL ePCR IOS Mobile Applicationにおける外部からアクセス可能なファイルやディレクトリへの機微な情報の保存の脆弱性"
+              data-summary="ZOLL ePCR IOS Mobile Applicationに外部アクセス可能なファイル・ディレクトリへの機微情報保存脆弱性が報告され、即時修正が必要。"
               data-imp="45"
               data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="OT,legacy,security">
+              data-date="2026-02-12T06:40:00+00:00"
+              data-tags="脆弱性,モバイルアプリ,データ漏洩">
             <span class="badge imp">重要度 45</span>
             
               <span class="badge recent ">
                 48h +1
               </span>
             
-            <a href="#topic-5162">OT 通信を保護するための障壁: Johnny が認証できない理由</a>
-            <span class="date">2026/02/10 21:00</span>
+            <a href="#topic-5331">JVN: ZOLL ePCR IOS Mobile Applicationにおける外部からアクセス可能なファイルやディレクトリへの機微な情報の保存の脆弱性</a>
+            <span class="date">2026/02/12 15:40</span>
             
               <span class="badge"><a href="#cat-security">セキュリティ</a></span>
             
@@ -921,20 +935,20 @@ a:hover{
           </li>
         
           <li class="topic-row"
-              data-title="ポーランドのエネルギー部門のサイバーインシデントでOTとICSのセキュリティギャップが浮き彫りに"
-              data-summary="ポーランドのエネルギー部門でOT・ICSがサイバー攻撃を受け、制御損失とデータ破壊が発生した。"
+              data-title="JVN: 複数のAVEVA製品における複数の脆弱性"
+              data-summary="AVEVA製品に複数脆弱性が報告され、即時対策が必要。"
               data-imp="45"
               data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="">
+              data-date="2026-02-12T06:40:10+00:00"
+              data-tags="AVEVA,脆弱性,セキュリティ">
             <span class="badge imp">重要度 45</span>
             
               <span class="badge recent ">
                 48h +1
               </span>
             
-            <a href="#topic-5163">ポーランドのエネルギー部門のサイバーインシデントでOTとICSのセキュリティギャップが浮き彫りに</a>
-            <span class="date">2026/02/10 21:00</span>
+            <a href="#topic-5332">JVN: 複数のAVEVA製品における複数の脆弱性</a>
+            <span class="date">2026/02/12 15:40</span>
             
               <span class="badge"><a href="#cat-security">セキュリティ</a></span>
             
@@ -943,42 +957,20 @@ a:hover{
           </li>
         
           <li class="topic-row"
-              data-title="ZOLL ePCR IOS モバイル アプリケーション"
-              data-summary="ZOLL ePCR IOS Mobile Applicationの脆弱性により、攻撃者がPHIを不正取得できる可能性がある。"
+              data-title="JVN: ZLAN製ZLAN5143Dにおける複数の重要な機能に対する認証の欠如の脆弱性"
+              data-summary="ZLAN5143Dに複数重要機能の認証欠如脆弱性が報告され、即時対策が必要。"
               data-imp="45"
               data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="vulnerability,PHI,mobile">
+              data-date="2026-02-12T06:40:20+00:00"
+              data-tags="脆弱性,認証欠如">
             <span class="badge imp">重要度 45</span>
             
               <span class="badge recent ">
                 48h +1
               </span>
             
-            <a href="#topic-5164">ZOLL ePCR IOS モバイル アプリケーション</a>
-            <span class="date">2026/02/10 21:00</span>
-            
-              <span class="badge"><a href="#cat-security">セキュリティ</a></span>
-            
-            
-
-          </li>
-        
-          <li class="topic-row"
-              data-title="横河ファスト/ツール"
-              data-summary="横河FAST/TOOLSの複数バージョンに重大な脆弱性が報告され、攻撃者はMITMや情報漏えいを実行できる。"
-              data-imp="45"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="脆弱性,Yokogawa,CSRF">
-            <span class="badge imp">重要度 45</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-5167">横河ファスト/ツール</a>
-            <span class="date">2026/02/10 21:00</span>
+            <a href="#topic-5333">JVN: ZLAN製ZLAN5143Dにおける複数の重要な機能に対する認証の欠如の脆弱性</a>
+            <span class="date">2026/02/12 15:40</span>
             
               <span class="badge"><a href="#cat-security">セキュリティ</a></span>
             
@@ -7221,33 +7213,33 @@ a:hover{
 
           </li>
         
-           <li id="topic-4039" class="topic-row"
-              data-title="最新の RE-CONNECT 気候変動モデリング 4 か月ごとのレポート"
-              data-summary="EUのRE-CONNECTプロジェクトで気候変動モデリング報告が発表され、主要テーマにおける最新開発がまとめられた。"
-              data-imp="35"
+           <li id="topic-5329" class="topic-row"
+              data-title="経済産業省、カタールエナジー、JERA、日本向けLNG緊急追加供給に係る協力覚書を締結"
+              data-summary="経済産業省とQatarEnergy、JERAが日本向けLNG緊急追加供給協力覚書を締結した。"
+              data-imp="45"
               data-recent="0"
-              data-date="2026-01-29T14:01:20+00:00"
-              data-tags="環境,モデリング,RE-CONNECT">
+              data-date="2026-02-03T15:00:00+00:00"
+              data-tags="LNG,MOU,エネルギー">
             <div>
               
-                <span class="badge imp">重要度 35</span>
+                <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://ec.europa.eu/newsroom/clima/redirection/item/920317/en" target="_blank" rel="noopener">最新の RE-CONNECT 気候変動モデリング 4 か月ごとのレポート</a>
+                <a href="https://www.meti.go.jp/english/press/2026/0204_001.html" target="_blank" rel="noopener">経済産業省、カタールエナジー、JERA、日本向けLNG緊急追加供給に係る協力覚書を締結</a>
               
               
-                <span class="small">（2026/01/29 23:01）</span>
+                <span class="small">（2026/02/04 00:00）</span>
               
 
               
               
                 <span class="small">
                   
-                    <span class="badge">環境</span>
+                    <span class="badge">LNG</span>
                   
-                    <span class="badge">モデリング</span>
+                    <span class="badge">MOU</span>
                   
-                    <span class="badge">RE-CONNECT</span>
+                    <span class="badge">エネルギー</span>
                   
                 </span>
               
@@ -7258,7 +7250,7 @@ a:hover{
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：EUのRE-CONNECTプロジェクトで気候変動モデリング報告が発表され、主要テーマにおける最新開発がまとめられた。</div>
+                  <div><strong>要約</strong>：経済産業省とQatarEnergy、JERAが日本向けLNG緊急追加供給協力覚書を締結した。</div>
                 
 
                 
@@ -7271,7 +7263,7 @@ a:hover{
                       
                         
                         
-                          <li>EU委員会主導のRE-CONNECTプロジェクトで4か月ごとのレポートが作成された。</li>
+                          <li>METI、QatarEnergy、JERAがMOUに署名した</li>
                           
                         
                       
@@ -7281,7 +7273,7 @@ a:hover{
                       
                         
                         
-                          <li>リカルド氏がシリーズを率い、E3M・PBL・IIASA・CMCCが協力している。</li>
+                          <li>目的は日本へのLNG緊急追加供給の協力体制構築</li>
                           
                         
                       
@@ -7291,7 +7283,7 @@ a:hover{
                       
                         
                         
-                          <li>各報告は主要テーマ内の最新モデリング開発をまとめている。</li>
+                          <li>2026年2月3日に締結された</li>
                           
                         
                       
@@ -7302,9 +7294,9 @@ a:hover{
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 技術的詳細は限定的だが、将来のモデル更新に備える必要あり。</div>
-                  <div><b>経営者目線</b>: 環境戦略への影響は小さいが、長期的なリスク評価には注目すべき。</div>
-                  <div><b>消費者目線</b>: 一般消費者への直接影響は少ないが、気候情報の透明性向上に寄与する。</div>
+                  <div><b>技術者目線</b>: 既存インフラでの調整が必要になる可能性あり。</div>
+                  <div><b>経営者目線</b>: 市場安定化に寄与し、リスクヘッジ策として評価できる。</div>
+                  <div><b>消費者目線</b>: 供給安定化により価格変動抑制が期待される。</div>
                 </div>
                 
 
@@ -7314,7 +7306,7 @@ a:hover{
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://ec.europa.eu/newsroom/clima/redirection/item/920317/en" target="_blank" rel="noopener">https://ec.europa.eu/newsroom/clima/redirection/item/920317/en</a>
+                      <a href="https://www.meti.go.jp/english/press/2026/0204_001.html" target="_blank" rel="noopener">https://www.meti.go.jp/english/press/2026/0204_001.html</a>
                     
                   </div>
                 
@@ -7751,17 +7743,17 @@ a:hover{
               data-summary="H3 F9の打上げが延期され、後続ロケットへの影響評価が必要とされた。"
               data-imp="45"
               data-recent="0"
-              data-date="2026-01-07T02:00:00+00:00"
+              data-date="2026-02-03T07:30:00+00:00"
               data-tags="launch,schedule,investigation">
             <div>
               
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://www.mhi.com/news/260107.html" target="_blank" rel="noopener">みちびき7号機を搭載したH3ロケット9号機（H3 F9）の打上げスケジュールについて</a>
+                <a href="https://www.mhi.com/news/260203.html" target="_blank" rel="noopener">みちびき7号機を搭載したH3ロケット9号機（H3 F9）の打上げスケジュールについて</a>
               
               
-                <span class="small">（2026/01/07 11:00）</span>
+                <span class="small">（2026/02/03 16:30）</span>
               
 
               
@@ -9625,61 +9617,61 @@ a:hover{
         <ul>
           
             <li>
-              <a href="#topic-5165">AVEVA PI から CONNECT エージェントへ</a>
-              <span class="date">
-                2026/02/10 12:00
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-5166">AVEVA PI データ アーカイブ</a>
-              <span class="date">
-                2026/02/10 12:00
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-5167">横河ファスト/ツール</a>
-              <span class="date">
-                2026/02/10 12:00
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-5275">週報：NICTが「NICTER観測レポート2025」を公開</a>
-              <span class="date">
-                2026/02/12 00:03
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
               <a href="#topic-5295">JVN: M-Audio製M-Track Duo HDインストーラにおける任意のDLL読み込みの脆弱性</a>
               <span class="date">
                 2026/02/12 03:00
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-5330">JVN: インテル製品に複数の脆弱性（2026年2月）</a>
+              <span class="date">
+                2026/02/12 05:30
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-5331">JVN: ZOLL ePCR IOS Mobile Applicationにおける外部からアクセス可能なファイルやディレクトリへの機微な情報の保存の脆弱性</a>
+              <span class="date">
+                2026/02/12 06:40
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-5332">JVN: 複数のAVEVA製品における複数の脆弱性</a>
+              <span class="date">
+                2026/02/12 06:40
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-5333">JVN: ZLAN製ZLAN5143Dにおける複数の重要な機能に対する認証の欠如の脆弱性</a>
+              <span class="date">
+                2026/02/12 06:40
               </span>
               
                 <span class="badge recent ">
@@ -10102,222 +10094,6 @@ a:hover{
                     根拠：
                     
                       <a href="https://www.cisa.gov/news-events/alerts/2026/01/28/fortinet-releases-guidance-address-ongoing-exploitation-authentication-bypass-vulnerability-cve-2026" target="_blank" rel="noopener">https://www.cisa.gov/news-events/alerts/2026/01/28/fortinet-releases-guidance-address-ongoing-exploitation-authentication-bypass-vulnerability-cve-2026</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-5165" class="topic-row"
-              data-title="AVEVA PI から CONNECT エージェントへ"
-              data-summary="AVEVA PI to CONNECT Agent v2.4.2520以下でCVE-2026-1495が発見され、イベントログからプロキシ情報を取得できるため不正アクセスの危険がある。"
-              data-imp="50"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="脆弱性,プロキシ,AVEVA,CVE-2026-1495,Critical Manufacturing">
-            <div>
-              
-                <span class="badge imp">重要度 50</span>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-04" target="_blank" rel="noopener">AVEVA PI から CONNECT エージェントへ</a>
-              
-              
-                <span class="small">（2026/02/10 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">脆弱性</span>
-                  
-                    <span class="badge">プロキシ</span>
-                  
-                    <span class="badge">AVEVA</span>
-                  
-                    <span class="badge">CVE-2026-1495</span>
-                  
-                    <span class="badge">Critical Manufacturing</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：AVEVA PI to CONNECT Agent v2.4.2520以下でCVE-2026-1495が発見され、イベントログからプロキシ情報を取得できるため不正アクセスの危険がある。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>AVEVA PI to CONNECT Agent <=v2.4.2520 が CVE-2026-1495 に脆弱である。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>Event Log Reader 権限を持つ攻撃者はログからプロキシ URL と認証情報を取得できる。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>取得した情報によりプロキシサーバーへの不正アクセスが可能になる。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 既存環境のログ設定と権限管理を見直す必要あり。</div>
-                  <div><b>経営者目線</b>: セキュリティ対策費用と運用負荷を検討するべき。</div>
-                  <div><b>消費者目線</b>: システム利用者は安全性に不安を抱く可能性がある。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-04" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-04</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-5166" class="topic-row"
-              data-title="AVEVA PI データ アーカイブ"
-              data-summary="CVE-2026-1507によりAVEVA PI Data ArchiveがDoS攻撃の対象となり、パッチ適用が必要。"
-              data-imp="50"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="vulnerability,DoS,PIDataArchive">
-            <div>
-              
-                <span class="badge imp">重要度 50</span>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-03" target="_blank" rel="noopener">AVEVA PI データ アーカイブ</a>
-              
-              
-                <span class="small">（2026/02/10 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">vulnerability</span>
-                  
-                    <span class="badge">DoS</span>
-                  
-                    <span class="badge">PIDataArchive</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：CVE-2026-1507によりAVEVA PI Data ArchiveがDoS攻撃の対象となり、パッチ適用が必要。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>CVE-2026-1507は未認証リモート攻撃でPIサービスをクラッシュさせる。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>影響バージョン：PI Server <=2018_SP3_Patch_7, 2023, 2023_Patch_1, 2024。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>DoS条件が発生し、システム停止のリスクがある。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: パッチ適用と監視を直ちに実施すべき。</div>
-                  <div><b>経営者目線</b>: 業務継続計画に影響が出るため対策優先。</div>
-                  <div><b>消費者目線</b>: サービス利用者は停止リスクを認識し、アップデート待機。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-03" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-03</a>
                     
                   </div>
                 
@@ -11026,37 +10802,37 @@ a:hover{
 
           </li>
         
-           <li id="topic-5161" class="topic-row"
-              data-title="ZLAN Information Technology Co. ZLAN5143D"
-              data-summary="ZLAN5143D v1.600に認証回避脆弱性が報告され、攻撃者はパスワードリセットや内部URLアクセスで制御を取得できる。"
-              data-imp="45"
-              data-recent="1"
+           <li id="topic-5165" class="topic-row"
+              data-title="AVEVA PI から CONNECT エージェントへ"
+              data-summary="AVEVA PI to CONNECT Agent v2.4.2520以下でCVE-2026-1495が発見され、イベントログからプロキシ情報を取得できるため不正アクセスの危険がある。"
+              data-imp="50"
+              data-recent="0"
               data-date="2026-02-10T12:00:00+00:00"
-              data-tags="脆弱性,認証回避,産業機器">
+              data-tags="脆弱性,プロキシ,AVEVA,CVE-2026-1495,Critical Manufacturing">
             <div>
               
-                <span class="badge imp">重要度 45</span>
+                <span class="badge imp">重要度 50</span>
               
               
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-02" target="_blank" rel="noopener">ZLAN Information Technology Co. ZLAN5143D</a>
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-04" target="_blank" rel="noopener">AVEVA PI から CONNECT エージェントへ</a>
               
               
                 <span class="small">（2026/02/10 21:00）</span>
               
 
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
               
               
                 <span class="small">
                   
                     <span class="badge">脆弱性</span>
                   
-                    <span class="badge">認証回避</span>
+                    <span class="badge">プロキシ</span>
                   
-                    <span class="badge">産業機器</span>
+                    <span class="badge">AVEVA</span>
+                  
+                    <span class="badge">CVE-2026-1495</span>
+                  
+                    <span class="badge">Critical Manufacturing</span>
                   
                 </span>
               
@@ -11067,7 +10843,7 @@ a:hover{
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：ZLAN5143D v1.600に認証回避脆弱性が報告され、攻撃者はパスワードリセットや内部URLアクセスで制御を取得できる。</div>
+                  <div><strong>要約</strong>：AVEVA PI to CONNECT Agent v2.4.2520以下でCVE-2026-1495が発見され、イベントログからプロキシ情報を取得できるため不正アクセスの危険がある。</div>
                 
 
                 
@@ -11080,7 +10856,7 @@ a:hover{
                       
                         
                         
-                          <li>ZLAN5143D v1.600がCVE-2026-25084とCVE-2026-24789に影響を受けている。</li>
+                          <li>AVEVA PI to CONNECT Agent <=v2.4.2520 が CVE-2026-1495 に脆弱である。</li>
                           
                         
                       
@@ -11090,7 +10866,7 @@ a:hover{
                       
                         
                         
-                          <li>認証回避によりデバイスのパスワードリセットや内部URLへの直接アクセスが可能になる。</li>
+                          <li>Event Log Reader 権限を持つ攻撃者はログからプロキシ URL と認証情報を取得できる。</li>
                           
                         
                       
@@ -11100,113 +10876,7 @@ a:hover{
                       
                         
                         
-                          <li>ベンダーは対応策を提示せず、ユーザーはZLANへ連絡しシステム更新を推奨される。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 認証機構の欠如により即時パッチ適用が必要。</div>
-                  <div><b>経営者目線</b>: 顧客へのリスク通知とサポート体制強化が求められる。</div>
-                  <div><b>消費者目線</b>: デバイス管理者はメーカー連絡を優先し、更新待ちであることを認識すべき。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-02" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-02</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-5162" class="topic-row"
-              data-title="OT 通信を保護するための障壁: Johnny が認証できない理由"
-              data-summary="CISAが旧型OTプロトコルの認証障壁を指摘し、対策推奨。"
-              data-imp="45"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="OT,legacy,security">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://www.cisa.gov/resources-tools/resources/barriers-secure-ot-communication-why-johnny-cant-authenticate" target="_blank" rel="noopener">OT 通信を保護するための障壁: Johnny が認証できない理由</a>
-              
-              
-                <span class="small">（2026/02/10 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">OT</span>
-                  
-                    <span class="badge">legacy</span>
-                  
-                    <span class="badge">security</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：CISAが旧型OTプロトコルの認証障壁を指摘し、対策推奨。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>Legacy OT protocols lack strong protections against data alteration, device impersonation, and unauthorized access.</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>CISA developed guidance in partnership with OT equipment manufacturers and standard development organizations.</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>The guidance recommends practical solutions for current operators and cyber experts to secure these protocols.</li>
+                          <li>取得した情報によりプロキシサーバーへの不正アクセスが可能になる。</li>
                           
                         
                       
@@ -11217,9 +10887,9 @@ a:hover{
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 実装には既存システムの修正が必要で、設計段階から検証を要する。</div>
-                  <div><b>経営者目線</b>: インフラ保護強化に投資し、リスク低減と信頼性向上を図るべき。</div>
-                  <div><b>消費者目線</b>: 安全なOT通信はサービス停止リスクを減らすため重要。</div>
+                  <div><b>技術者目線</b>: 既存環境のログ設定と権限管理を見直す必要あり。</div>
+                  <div><b>経営者目線</b>: セキュリティ対策費用と運用負荷を検討するべき。</div>
+                  <div><b>消費者目線</b>: システム利用者は安全性に不安を抱く可能性がある。</div>
                 </div>
                 
 
@@ -11229,7 +10899,7 @@ a:hover{
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://www.cisa.gov/resources-tools/resources/barriers-secure-ot-communication-why-johnny-cant-authenticate" target="_blank" rel="noopener">https://www.cisa.gov/resources-tools/resources/barriers-secure-ot-communication-why-johnny-cant-authenticate</a>
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-04" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-04</a>
                     
                   </div>
                 
@@ -11238,133 +10908,33 @@ a:hover{
 
           </li>
         
-           <li id="topic-5163" class="topic-row"
-              data-title="ポーランドのエネルギー部門のサイバーインシデントでOTとICSのセキュリティギャップが浮き彫りに"
-              data-summary="ポーランドのエネルギー部門でOT・ICSがサイバー攻撃を受け、制御損失とデータ破壊が発生した。"
-              data-imp="45"
-              data-recent="1"
+           <li id="topic-5166" class="topic-row"
+              data-title="AVEVA PI データ アーカイブ"
+              data-summary="CVE-2026-1507によりAVEVA PI Data ArchiveがDoS攻撃の対象となり、パッチ適用が必要。"
+              data-imp="50"
+              data-recent="0"
               data-date="2026-02-10T12:00:00+00:00"
-              data-tags="">
+              data-tags="vulnerability,DoS,PIDataArchive">
             <div>
               
-                <span class="badge imp">重要度 45</span>
+                <span class="badge imp">重要度 50</span>
               
               
-                <a href="https://www.cisa.gov/news-events/alerts/2026/02/10/poland-energy-sector-cyber-incident-highlights-ot-and-ics-security-gaps" target="_blank" rel="noopener">ポーランドのエネルギー部門のサイバーインシデントでOTとICSのセキュリティギャップが浮き彫りに</a>
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-03" target="_blank" rel="noopener">AVEVA PI データ アーカイブ</a>
               
               
                 <span class="small">（2026/02/10 21:00）</span>
               
 
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：ポーランドのエネルギー部門でOT・ICSがサイバー攻撃を受け、制御損失とデータ破壊が発生した。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>December 2025に悪意あるアクターがポーランドのエネルギー部門のOTとICSを標的にし、再生可能エネルギー施設や熱電併給プラント、製造会社を侵害した。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>初期アクセスは脆弱なインターネット向けエッジデバイス経由で行われ、ワイパーマルウェアがRTUに展開され破壊した。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
-                          
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: （技術観点のコメントを生成できませんでした）</div>
-                  <div><b>経営者目線</b>: （経営観点のコメントを生成できませんでした）</div>
-                  <div><b>消費者目線</b>: （利用者観点のコメントを生成できませんでした）</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://www.cisa.gov/news-events/alerts/2026/02/10/poland-energy-sector-cyber-incident-highlights-ot-and-ics-security-gaps" target="_blank" rel="noopener">https://www.cisa.gov/news-events/alerts/2026/02/10/poland-energy-sector-cyber-incident-highlights-ot-and-ics-security-gaps</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-5164" class="topic-row"
-              data-title="ZOLL ePCR IOS モバイル アプリケーション"
-              data-summary="ZOLL ePCR IOS Mobile Applicationの脆弱性により、攻撃者がPHIを不正取得できる可能性がある。"
-              data-imp="45"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="vulnerability,PHI,mobile">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-041-01" target="_blank" rel="noopener">ZOLL ePCR IOS モバイル アプリケーション</a>
-              
-              
-                <span class="small">（2026/02/10 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
               
               
                 <span class="small">
                   
                     <span class="badge">vulnerability</span>
                   
-                    <span class="badge">PHI</span>
+                    <span class="badge">DoS</span>
                   
-                    <span class="badge">mobile</span>
+                    <span class="badge">PIDataArchive</span>
                   
                 </span>
               
@@ -11375,7 +10945,7 @@ a:hover{
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：ZOLL ePCR IOS Mobile Applicationの脆弱性により、攻撃者がPHIを不正取得できる可能性がある。</div>
+                  <div><strong>要約</strong>：CVE-2026-1507によりAVEVA PI Data ArchiveがDoS攻撃の対象となり、パッチ適用が必要。</div>
                 
 
                 
@@ -11388,7 +10958,7 @@ a:hover{
                       
                         
                         
-                          <li>ePCR IOS Mobile Application 2.6.7 が CVE-2025-12699 に該当する。</li>
+                          <li>CVE-2026-1507は未認証リモート攻撃でPIサービスをクラッシュさせる。</li>
                           
                         
                       
@@ -11398,7 +10968,7 @@ a:hover{
                       
                         
                         
-                          <li>アプリはユーザー入力を WebView に反映し、HTML/JS として解釈される。</li>
+                          <li>影響バージョン：PI Server <=2018_SP3_Patch_7, 2023, 2023_Patch_1, 2024。</li>
                           
                         
                       
@@ -11408,113 +10978,7 @@ a:hover{
                       
                         
                         
-                          <li>インジェクションによりローカルファイル読み取りが可能になる。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: パッチ適用と入力検証の強化が必要。</div>
-                  <div><b>経営者目線</b>: 患者情報漏洩リスクを評価し、対応計画を策定すべき。</div>
-                  <div><b>消費者目線</b>: 医療機関はアプリ更新を優先的に実施することが望ましい。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-041-01" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-041-01</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-5167" class="topic-row"
-              data-title="横河ファスト/ツール"
-              data-summary="横河FAST/TOOLSの複数バージョンに重大な脆弱性が報告され、攻撃者はMITMや情報漏えいを実行できる。"
-              data-imp="45"
-              data-recent="1"
-              data-date="2026-02-10T12:00:00+00:00"
-              data-tags="脆弱性,Yokogawa,CSRF">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-01" target="_blank" rel="noopener">横河ファスト/ツール</a>
-              
-              
-                <span class="small">（2026/02/10 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">脆弱性</span>
-                  
-                    <span class="badge">Yokogawa</span>
-                  
-                    <span class="badge">CSRF</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：横河FAST/TOOLSの複数バージョンに重大な脆弱性が報告され、攻撃者はMITMや情報漏えいを実行できる。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>FAST/TOOLS >=R9.01<=R10.04 が CVE-2025-66594〜CVE-2025-66608 に影響</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>脆弱性によりユーザーが悪意あるサイトへ誘導される可能性あり</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>攻撃者は暗号化通信を解読し、スクリプト実行やファイル取得ができる</li>
+                          <li>DoS条件が発生し、システム停止のリスクがある。</li>
                           
                         
                       
@@ -11525,9 +10989,9 @@ a:hover{
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 既存システムのパッチ適用と認証強化が急務。</div>
-                  <div><b>経営者目線</b>: 顧客信頼維持のため迅速な対応計画策定が必要。</div>
-                  <div><b>消費者目線</b>: 安全性を確保するため、最新バージョンへの更新を推奨します。</div>
+                  <div><b>技術者目線</b>: パッチ適用と監視を直ちに実施すべき。</div>
+                  <div><b>経営者目線</b>: 業務継続計画に影響が出るため対策優先。</div>
+                  <div><b>消費者目線</b>: サービス利用者は停止リスクを認識し、アップデート待機。</div>
                 </div>
                 
 
@@ -11537,7 +11001,7 @@ a:hover{
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-01" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-01</a>
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-03" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-03</a>
                     
                   </div>
                 
@@ -11652,122 +11116,22 @@ a:hover{
 
           </li>
         
-           <li id="topic-5078" class="topic-row"
-              data-title="お知らせ：JPCERT/CC Eyes「Windowsのイベントログ分析トレーニング用コンテンツの公開」"
-              data-summary="JPCERT/CC EyesがWindowsイベントログ分析トレーニング用コンテンツを公開したため、セキュリティ運用者の学習資源に影響が見込まれる。"
+           <li id="topic-5331" class="topic-row"
+              data-title="JVN: ZOLL ePCR IOS Mobile Applicationにおける外部からアクセス可能なファイルやディレクトリへの機微な情報の保存の脆弱性"
+              data-summary="ZOLL ePCR IOS Mobile Applicationに外部アクセス可能なファイル・ディレクトリへの機微情報保存脆弱性が報告され、即時修正が必要。"
               data-imp="45"
-              data-recent="0"
-              data-date="2026-02-10T02:06:00+00:00"
-              data-tags="security,training">
+              data-recent="1"
+              data-date="2026-02-12T06:40:00+00:00"
+              data-tags="脆弱性,モバイルアプリ,データ漏洩">
             <div>
               
                 <span class="badge imp">重要度 45</span>
               
               
-                <a href="https://blogs.jpcert.or.jp/ja/2026/02/windows-1.html" target="_blank" rel="noopener">お知らせ：JPCERT/CC Eyes「Windowsのイベントログ分析トレーニング用コンテンツの公開」</a>
+                <a href="https://jvn.jp/vu/JVNVU96276088/" target="_blank" rel="noopener">JVN: ZOLL ePCR IOS Mobile Applicationにおける外部からアクセス可能なファイルやディレクトリへの機微な情報の保存の脆弱性</a>
               
               
-                <span class="small">（2026/02/10 11:06）</span>
-              
-
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">security</span>
-                  
-                    <span class="badge">training</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <details class="insight">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：JPCERT/CC EyesがWindowsイベントログ分析トレーニング用コンテンツを公開したため、セキュリティ運用者の学習資源に影響が見込まれる。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>JPCERT/CC Eyesが新しいトレーニングコンテンツを発表した</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>コンテンツはWindowsイベントログ分析向けである</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>公開情報は公式ブログに掲載されている</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 学習リソースとして活用し、運用改善へ繋げる。</div>
-                  <div><b>経営者目線</b>: 従業員教育の一環として導入を検討すべき。</div>
-                  <div><b>消費者目線</b>: セキュリティ知識向上に役立つ情報が得られる。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
-                    
-                      <a href="https://blogs.jpcert.or.jp/ja/2026/02/windows-1.html" target="_blank" rel="noopener">https://blogs.jpcert.or.jp/ja/2026/02/windows-1.html</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-5275" class="topic-row"
-              data-title="週報：NICTが「NICTER観測レポート2025」を公開"
-              data-summary="国立研究開発法人情報通信研究機構が2025年の大規模サイバー攻撃観測結果をまとめたレポートを公開した。"
-              data-imp="35"
-              data-recent="1"
-              data-date="2026-02-12T00:03:00+00:00"
-              data-tags="報告,サイバー攻撃,NICT">
-            <div>
-              
-                <span class="badge imp">重要度 35</span>
-              
-              
-                <a href="https://www.jpcert.or.jp/wr/2026/wr260212.html" target="_blank" rel="noopener">週報：NICTが「NICTER観測レポート2025」を公開</a>
-              
-              
-                <span class="small">（2026/02/12 09:03）</span>
+                <span class="small">（2026/02/12 15:40）</span>
               
 
               
@@ -11778,11 +11142,11 @@ a:hover{
               
                 <span class="small">
                   
-                    <span class="badge">報告</span>
+                    <span class="badge">脆弱性</span>
                   
-                    <span class="badge">サイバー攻撃</span>
+                    <span class="badge">モバイルアプリ</span>
                   
-                    <span class="badge">NICT</span>
+                    <span class="badge">データ漏洩</span>
                   
                 </span>
               
@@ -11793,7 +11157,7 @@ a:hover{
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：国立研究開発法人情報通信研究機構が2025年の大規模サイバー攻撃観測結果をまとめたレポートを公開した。</div>
+                  <div><strong>要約</strong>：ZOLL ePCR IOS Mobile Applicationに外部アクセス可能なファイル・ディレクトリへの機微情報保存脆弱性が報告され、即時修正が必要。</div>
                 
 
                 
@@ -11806,7 +11170,7 @@ a:hover{
                       
                         
                         
-                          <li>NICTが「NICTER観測レポート2025」を公開した。</li>
+                          <li>ZOLL ePCR IOS Mobile Applicationで外部からアクセスできるファイルやディレクトリに機微情報を保存する脆弱性が存在する。</li>
                           
                         
                       
@@ -11816,7 +11180,7 @@ a:hover{
                       
                         
                         
-                          <li>レポートはNICTERプロジェクトの大規模サイバー攻撃観測網に基づくもの。</li>
+                          <li>この脆弱性は外部からのアクセスによって機密データが漏洩する可能性がある。</li>
                           
                         
                       
@@ -11826,7 +11190,7 @@ a:hover{
                       
                         
                         
-                          <li>2025年の観測結果をまとめている。</li>
+                          <li>ZOLLが提供しているアプリケーションで報告された問題点である。</li>
                           
                         
                       
@@ -11837,9 +11201,9 @@ a:hover{
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 既存システムへの直接的影響は少ないが、監視体制の参考になる。</div>
-                  <div><b>経営者目線</b>: 業界全体の脅威認識向上に寄与し、リスク管理戦略の見直しを促す。</div>
-                  <div><b>消費者目線</b>: 一般ユーザーには直接関係しないが、セキュリティ意識向上につながる情報源となる。</div>
+                  <div><b>技術者目線</b>: 即時パッチ適用とファイル権限見直しを推奨。</div>
+                  <div><b>経営者目線</b>: 顧客への影響リスク評価と対応計画策定が必要。</div>
+                  <div><b>消費者目線</b>: 機密情報漏洩の恐れがあり、利用停止を検討すべき。</div>
                 </div>
                 
 
@@ -11849,7 +11213,619 @@ a:hover{
                   <div class="small" style="margin-top:6px;">
                     根拠：
                     
-                      <a href="https://www.jpcert.or.jp/wr/2026/wr260212.html" target="_blank" rel="noopener">https://www.jpcert.or.jp/wr/2026/wr260212.html</a>
+                      <a href="https://jvn.jp/vu/JVNVU96276088/" target="_blank" rel="noopener">https://jvn.jp/vu/JVNVU96276088/</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-5332" class="topic-row"
+              data-title="JVN: 複数のAVEVA製品における複数の脆弱性"
+              data-summary="AVEVA製品に複数脆弱性が報告され、即時対策が必要。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-02-12T06:40:10+00:00"
+              data-tags="AVEVA,脆弱性,セキュリティ">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://jvn.jp/vu/JVNVU91544598/" target="_blank" rel="noopener">JVN: 複数のAVEVA製品における複数の脆弱性</a>
+              
+              
+                <span class="small">（2026/02/12 15:40）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">AVEVA</span>
+                  
+                    <span class="badge">脆弱性</span>
+                  
+                    <span class="badge">セキュリティ</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：AVEVA製品に複数脆弱性が報告され、即時対策が必要。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>AVEVAは複数の製品を提供している。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>それらの製品に複数の脆弱性が存在する。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>JVNで報告された事実が確認できる。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: パッチ適用と影響範囲調査が急務です。</div>
+                  <div><b>経営者目線</b>: リスク管理体制を強化し、顧客への通知を検討すべき。</div>
+                  <div><b>消費者目線</b>: 製品利用者はセキュリティ更新を優先的に実施してください。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://jvn.jp/vu/JVNVU91544598/" target="_blank" rel="noopener">https://jvn.jp/vu/JVNVU91544598/</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-5333" class="topic-row"
+              data-title="JVN: ZLAN製ZLAN5143Dにおける複数の重要な機能に対する認証の欠如の脆弱性"
+              data-summary="ZLAN5143Dに複数重要機能の認証欠如脆弱性が報告され、即時対策が必要。"
+              data-imp="45"
+              data-recent="1"
+              data-date="2026-02-12T06:40:20+00:00"
+              data-tags="脆弱性,認証欠如">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://jvn.jp/vu/JVNVU90055423/" target="_blank" rel="noopener">JVN: ZLAN製ZLAN5143Dにおける複数の重要な機能に対する認証の欠如の脆弱性</a>
+              
+              
+                <span class="small">（2026/02/12 15:40）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">脆弱性</span>
+                  
+                    <span class="badge">認証欠如</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：ZLAN5143Dに複数重要機能の認証欠如脆弱性が報告され、即時対策が必要。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>ZLAN5143Dに複数重要機能への認証欠如脆弱性が存在する。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>この脆弱性は認証を経ずに機能利用できる点で重大。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>ZLAN社が提供している製品であることが確認されている。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 即時パッチ適用とアクセス制御見直しが必要。</div>
+                  <div><b>経営者目線</b>: 顧客信頼回復のため迅速な対応を要する。</div>
+                  <div><b>消費者目線</b>: 機器使用者はメーカー指示に従い更新を実施すべき。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://jvn.jp/vu/JVNVU90055423/" target="_blank" rel="noopener">https://jvn.jp/vu/JVNVU90055423/</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-5163" class="topic-row"
+              data-title="ポーランドのエネルギー部門のサイバーインシデントでOTとICSのセキュリティギャップが浮き彫りに"
+              data-summary="ポーランドのエネルギー部門でOT・ICSがサイバー攻撃を受け、制御損失とデータ破壊が発生した。"
+              data-imp="45"
+              data-recent="0"
+              data-date="2026-02-10T12:00:00+00:00"
+              data-tags="">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://www.cisa.gov/news-events/alerts/2026/02/10/poland-energy-sector-cyber-incident-highlights-ot-and-ics-security-gaps" target="_blank" rel="noopener">ポーランドのエネルギー部門のサイバーインシデントでOTとICSのセキュリティギャップが浮き彫りに</a>
+              
+              
+                <span class="small">（2026/02/10 21:00）</span>
+              
+
+              
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：ポーランドのエネルギー部門でOT・ICSがサイバー攻撃を受け、制御損失とデータ破壊が発生した。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>December 2025に悪意あるアクターがポーランドのエネルギー部門のOTとICSを標的にし、再生可能エネルギー施設や熱電併給プラント、製造会社を侵害した。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>初期アクセスは脆弱なインターネット向けエッジデバイス経由で行われ、ワイパーマルウェアがRTUに展開され破壊した。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: （技術観点のコメントを生成できませんでした）</div>
+                  <div><b>経営者目線</b>: （経営観点のコメントを生成できませんでした）</div>
+                  <div><b>消費者目線</b>: （利用者観点のコメントを生成できませんでした）</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.cisa.gov/news-events/alerts/2026/02/10/poland-energy-sector-cyber-incident-highlights-ot-and-ics-security-gaps" target="_blank" rel="noopener">https://www.cisa.gov/news-events/alerts/2026/02/10/poland-energy-sector-cyber-incident-highlights-ot-and-ics-security-gaps</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-5164" class="topic-row"
+              data-title="ZOLL ePCR IOS モバイル アプリケーション"
+              data-summary="ZOLL ePCR IOS Mobile Applicationの脆弱性により、攻撃者がPHIを不正取得できる可能性がある。"
+              data-imp="45"
+              data-recent="0"
+              data-date="2026-02-10T12:00:00+00:00"
+              data-tags="vulnerability,PHI,mobile">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-041-01" target="_blank" rel="noopener">ZOLL ePCR IOS モバイル アプリケーション</a>
+              
+              
+                <span class="small">（2026/02/10 21:00）</span>
+              
+
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">vulnerability</span>
+                  
+                    <span class="badge">PHI</span>
+                  
+                    <span class="badge">mobile</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：ZOLL ePCR IOS Mobile Applicationの脆弱性により、攻撃者がPHIを不正取得できる可能性がある。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>ePCR IOS Mobile Application 2.6.7 が CVE-2025-12699 に該当する。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>アプリはユーザー入力を WebView に反映し、HTML/JS として解釈される。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>インジェクションによりローカルファイル読み取りが可能になる。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: パッチ適用と入力検証の強化が必要。</div>
+                  <div><b>経営者目線</b>: 患者情報漏洩リスクを評価し、対応計画を策定すべき。</div>
+                  <div><b>消費者目線</b>: 医療機関はアプリ更新を優先的に実施することが望ましい。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-041-01" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-041-01</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-5167" class="topic-row"
+              data-title="横河ファスト/ツール"
+              data-summary="横河FAST/TOOLSの複数バージョンに重大な脆弱性が報告され、攻撃者はMITMや情報漏えいを実行できる。"
+              data-imp="45"
+              data-recent="0"
+              data-date="2026-02-10T12:00:00+00:00"
+              data-tags="脆弱性,Yokogawa,CSRF">
+            <div>
+              
+                <span class="badge imp">重要度 45</span>
+              
+              
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-01" target="_blank" rel="noopener">横河ファスト/ツール</a>
+              
+              
+                <span class="small">（2026/02/10 21:00）</span>
+              
+
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">脆弱性</span>
+                  
+                    <span class="badge">Yokogawa</span>
+                  
+                    <span class="badge">CSRF</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：横河FAST/TOOLSの複数バージョンに重大な脆弱性が報告され、攻撃者はMITMや情報漏えいを実行できる。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>FAST/TOOLS >=R9.01<=R10.04 が CVE-2025-66594〜CVE-2025-66608 に影響</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>脆弱性によりユーザーが悪意あるサイトへ誘導される可能性あり</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>攻撃者は暗号化通信を解読し、スクリプト実行やファイル取得ができる</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 既存システムのパッチ適用と認証強化が急務。</div>
+                  <div><b>経営者目線</b>: 顧客信頼維持のため迅速な対応計画策定が必要。</div>
+                  <div><b>消費者目線</b>: 安全性を確保するため、最新バージョンへの更新を推奨します。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-01" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-041-01</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-5330" class="topic-row"
+              data-title="JVN: インテル製品に複数の脆弱性（2026年2月）"
+              data-summary="インテル製品に複数の脆弱性が報告され、各製品向けアップデートが公開された。"
+              data-imp="35"
+              data-recent="1"
+              data-date="2026-02-12T05:30:00+00:00"
+              data-tags="Intel,脆弱性,アップデート">
+            <div>
+              
+                <span class="badge imp">重要度 35</span>
+              
+              
+                <a href="https://jvn.jp/vu/JVNVU93387839/" target="_blank" rel="noopener">JVN: インテル製品に複数の脆弱性（2026年2月）</a>
+              
+              
+                <span class="small">（2026/02/12 14:30）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">Intel</span>
+                  
+                    <span class="badge">脆弱性</span>
+                  
+                    <span class="badge">アップデート</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <details class="insight">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：インテル製品に複数の脆弱性が報告され、各製品向けアップデートが公開された。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>Intelから各製品向けのアップデートが公開された。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>インテル製品に複数の脆弱性が存在することが確認された。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>アップデートは脆弱性を修正する目的で提供されている。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 既存システムへの適用検証が必要。</div>
+                  <div><b>経営者目線</b>: 短期的なリスク管理と顧客対応策の準備が重要。</div>
+                  <div><b>消費者目線</b>: 製品使用者は最新パッチを適用するべき。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="small" style="margin-top:6px;">
+                    根拠：
+                    
+                      <a href="https://jvn.jp/vu/JVNVU93387839/" target="_blank" rel="noopener">https://jvn.jp/vu/JVNVU93387839/</a>
                     
                   </div>
                 
