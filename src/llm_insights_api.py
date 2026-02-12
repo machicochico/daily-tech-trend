@@ -7,10 +7,11 @@ import time
 import requests
 
 LMSTUDIO_URL = "http://127.0.0.1:1234/v1/chat/completions"
-MODEL = "openai/gpt-oss-20b"
+DEFAULT_MODEL = "openai/gpt-oss-20b"
 _SESSION = requests.Session()
 _LMSTUDIO_READY = False
 _AUTOSTART_ATTEMPTED = False
+_SELECTED_MODEL = None
 
 
 def _is_lmstudio_ready(timeout: float = 2.0) -> bool:
@@ -20,6 +21,54 @@ def _is_lmstudio_ready(timeout: float = 2.0) -> bool:
         return r.status_code < 500
     except Exception:
         return False
+
+
+def _models_url() -> str:
+    return LMSTUDIO_URL.rsplit("/chat/completions", 1)[0] + "/models"
+
+
+def _extract_model_ids(data: dict) -> list[str]:
+    models = data.get("data") or []
+    ids = []
+    for item in models:
+        if isinstance(item, dict):
+            mid = (item.get("id") or "").strip()
+            if mid:
+                ids.append(mid)
+    return ids
+
+
+def _pick_usable_model(timeout: float = 4.0) -> str:
+    global _SELECTED_MODEL
+    if _SELECTED_MODEL:
+        return _SELECTED_MODEL
+
+    requested = (os.getenv("LMSTUDIO_MODEL") or DEFAULT_MODEL).strip() or DEFAULT_MODEL
+    fallback = (os.getenv("LMSTUDIO_FALLBACK_MODEL") or "").strip()
+
+    try:
+        r = _SESSION.get(_models_url(), timeout=timeout)
+        if r.status_code >= 400:
+            raise RuntimeError(f"HTTP {r.status_code}")
+        model_ids = _extract_model_ids(r.json())
+    except Exception:
+        _SELECTED_MODEL = requested
+        return _SELECTED_MODEL
+
+    if requested in model_ids:
+        _SELECTED_MODEL = requested
+        return _SELECTED_MODEL
+    if fallback and fallback in model_ids:
+        _SELECTED_MODEL = fallback
+        print(f"[WARN] requested LMSTUDIO_MODEL '{requested}' is unavailable; using fallback '{fallback}'")
+        return _SELECTED_MODEL
+    if model_ids:
+        _SELECTED_MODEL = model_ids[0]
+        print(f"[WARN] requested LMSTUDIO_MODEL '{requested}' is unavailable; using loaded model '{_SELECTED_MODEL}'")
+        return _SELECTED_MODEL
+
+    _SELECTED_MODEL = requested
+    return _SELECTED_MODEL
 
 
 def _ensure_lmstudio_ready() -> None:
@@ -70,10 +119,12 @@ def _get_lm_content(resp: requests.Response) -> str:
 
 def post_lmstudio(payload: dict, timeout: int, retries: int = 2, backoff_sec: float = 0.8):
     _ensure_lmstudio_ready()
+    body = dict(payload)
+    body["model"] = _pick_usable_model()
     last_err = None
     for i in range(retries + 1):
         try:
-            r = _SESSION.post(LMSTUDIO_URL, json=payload, timeout=timeout)
+            r = _SESSION.post(LMSTUDIO_URL, json=body, timeout=timeout)
             if r.status_code >= 400:
                 try:
                     detail = r.json()
@@ -102,7 +153,7 @@ def _extract_json_object(text: str) -> str | None:
 
 def _repair_json_with_llm(bad_text: str) -> dict:
     payload = {
-        "model": MODEL,
+        "model": _pick_usable_model(),
         "messages": [
             {"role": "system", "content": "次のテキストを、有効なJSONだけに修復して返せ。JSON以外は禁止。"},
             {"role": "user", "content": bad_text},
@@ -146,7 +197,7 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
         "inferred は、key_points または perspectives に '推測:' が1つでも含まれる場合 1、それ以外は0。"
     )
 
-    payload = {"model": MODEL, "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}], "temperature": 0.3, "max_tokens": 700}
+    payload = {"model": _pick_usable_model(), "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}], "temperature": 0.3, "max_tokens": 700}
     r = post_lmstudio(payload, timeout=60)
     s = _get_lm_content(r)
 
@@ -239,7 +290,7 @@ def call_llm(topic_title, category, url, body, kind: str | None = None):
     }
 
     payload = {
-        "model": MODEL,
+        "model": _pick_usable_model(),
         "messages": [
             {"role": "system", "content": system},
             {"role": "user", "content": "次の入力を分析し、スキーマに厳密準拠したJSONのみを返してください。前後に説明文・コードブロックは禁止。"},
