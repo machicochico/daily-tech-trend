@@ -78,6 +78,15 @@ def pick_topic_inputs(conn, limit=300, rescue=False):
     return cur.fetchall()
 
 
+
+
+def _row_get(row, key, default=""):
+    try:
+        value = row[key]
+    except (KeyError, IndexError, TypeError):
+        return default
+    return default if value is None else value
+
 def compute_src_hash(title: str, url: str, body: str) -> str:
     seed = (title or "") + "\n" + (url or "") + "\n" + (body or "")[:2000]
     return hashlib.sha256(seed.encode("utf-8", errors="ignore")).hexdigest()
@@ -85,7 +94,7 @@ def compute_src_hash(title: str, url: str, body: str) -> str:
 
 def postprocess_insight(ins: dict, row: dict) -> dict:
     ins = dict(ins or {})
-    is_news = ((row.get("category") or "").lower() == "news") or ((row.get("kind") or "").lower() == "news")
+    is_news = ((_row_get(row, "category", "") or "").lower() == "news") or ((_row_get(row, "kind", "") or "").lower() == "news")
 
     try:
         ins["importance"] = int(ins.get("importance") or 0)
@@ -103,7 +112,7 @@ def postprocess_insight(ins: dict, row: dict) -> dict:
         ins["summary"] = "（要約を生成できませんでした）"
 
     if "evidence_urls" not in ins or not ins["evidence_urls"]:
-        ins["evidence_urls"] = [row.get("url")]
+        ins["evidence_urls"] = [_row_get(row, "url", "")]
 
     kps = [x for x in (ins.get("key_points") or []) if isinstance(x, str) and x.strip()]
     if is_news:
