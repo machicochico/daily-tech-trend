@@ -39,6 +39,14 @@ def _parse_args(argv: list[str]):
     return parser.parse_args(argv)
 
 
+def _row_get(row, key, default=""):
+    try:
+        value = row[key]
+    except (KeyError, IndexError, TypeError):
+        return default
+    return default if value is None else value
+
+
 def main():
     t0 = _now_sec()
     args = _parse_args(sys.argv[1:])
@@ -63,7 +71,9 @@ def main():
                 continue
 
             t1 = _now_sec()
-            raw = call_llm(title, r.get("category") or "other", url, body, kind=r.get("kind"))
+            category = _row_get(r, "category", "other") or "other"
+            kind = _row_get(r, "kind", "")
+            raw = call_llm(title, category, url, body, kind=kind)
             ins = postprocess_insight(raw, r)
             print(f"[TIME] llm_one topic={topic_id} sec={_now_sec() - t1:.1f}")
 
@@ -76,8 +86,8 @@ def main():
         except (RuntimeError, ValueError, TypeError) as e:
             print(
                 "[WARN] insight skipped "
-                f"topic_id={topic_id} cat={r.get('category')} source={r.get('source')} "
-                f"url={r.get('url')} err={e}"
+                f"topic_id={topic_id} cat={_row_get(r, 'category', '')} source={_row_get(r, 'source', '')} "
+                f"url={_row_get(r, 'url', '')} err={e}"
             )
             continue
 
