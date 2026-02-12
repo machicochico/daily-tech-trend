@@ -64,8 +64,12 @@ def main():
                 conn.commit()
                 pending = 0
             print(f"[OK] insight saved topic_id={topic_id} imp={ins['importance']} cat={r['category']}")
-        except Exception as e:
-            print(f"[WARN] insight failed topic_id={topic_id} cat={r['category']} err={e}")
+        except (RuntimeError, ValueError, TypeError) as e:
+            print(
+                "[WARN] insight skipped "
+                f"topic_id={topic_id} cat={r.get('category')} source={r.get('source')} "
+                f"url={r.get('url')} err={e}"
+            )
             continue
 
     if pending:
