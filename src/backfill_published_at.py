@@ -25,7 +25,7 @@ def norm(s: str) -> str:
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
             return dt.astimezone(timezone.utc).isoformat(timespec="seconds")
-        except Exception:
+        except (TypeError, ValueError):
             pass
 
     # 次に RFC2822 等を試す
@@ -34,7 +34,7 @@ def norm(s: str) -> str:
         if dt.tzinfo is None:
             dt = dt.replace(tzinfo=timezone.utc)
         return dt.astimezone(timezone.utc).isoformat(timespec="seconds")
-    except Exception:
+    except (TypeError, ValueError):
         return ""
 
 

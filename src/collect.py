@@ -13,6 +13,7 @@ import time
 import urllib.request
 import urllib.error
 import html as _html
+import socket
 
 def _now_sec():
     return time.perf_counter()
@@ -47,13 +48,13 @@ def _strip_html_soft(s: str) -> str:
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
-def fetch_fulltext(url: str) -> str:
+def fetch_fulltext(url: str, source: str = "") -> str:
     """記事ページを取得して本文っぽいテキストを抽出（簡易）。失敗時は空文字。"""
-    try:
-        host = urlsplit(url).netloc.lower()
-        if host in SKIP_FETCH_DOMAINS:
-            return ""
+    host = urlsplit(url).netloc.lower()
+    if host in SKIP_FETCH_DOMAINS:
+        return ""
 
+    try:
         req = urllib.request.Request(url, headers=HEADERS, method="GET")
         with urllib.request.urlopen(req, timeout=FETCH_TIMEOUT_SEC) as resp:
             ctype = (resp.headers.get("Content-Type") or "").lower()
@@ -79,7 +80,11 @@ def fetch_fulltext(url: str) -> str:
                 return ""
 
             return text
-    except Exception:
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, socket.timeout) as e:
+        print(f"[WARN] fulltext fetch failed source={source} url={url} host={host} err={e}")
+        return ""
+    except ValueError as e:
+        print(f"[WARN] fulltext response invalid source={source} url={url} host={host} err={e}")
         return ""
 
 
@@ -189,7 +194,7 @@ def normalize_published_at(entry) -> str:
             dt = dt.replace(tzinfo=timezone.utc)
 
         return dt.astimezone(timezone.utc).isoformat(timespec="seconds")
-    except Exception:
+    except (TypeError, ValueError, OverflowError):
         return ""
 
 
@@ -207,80 +212,79 @@ def main():
     cur = conn.cursor()
 
     for feed in feed_list:
+        fetch_count = 0
+        fetch_limit = 30  # Forest Watchは30件全部補完してもよい
+        #d = feedparser.parse(feed["url"])
         try:
-            fetch_count = 0
-            fetch_limit = 30  # Forest Watchは30件全部補完してもよい
-            #d = feedparser.parse(feed["url"])
             d = feedparser.parse(feed["url"], request_headers=HEADERS)
-            if getattr(d, "bozo", 0):
-                # 壊れたXMLでも entries が取れることがあるので続行はする
-                print(f"[WARN] malformed feed url={feed['url']}")
-                pass
-                
-            limit = feed.get("limit", 30)
-            for e in getattr(d, "entries", [])[:limit]:
-                raw_link = getattr(e, "link", None)
-                if not raw_link:
-                    continue
-                link = normalize_url(raw_link)
-                title = getattr(e, "title", None)
-                if not link or not title:
-                    continue
-                content = ""
-
-                if getattr(e, "content", None):
-                    if isinstance(e.content, list) and e.content:
-                        content = e.content[0].get("value", "")
-                elif getattr(e, "summary", None):
-                    content = e.summary
-
-                content = strip_html(content)
-
-                # ★本文が薄い/空なら、記事本文の補完を試みる（成功時のみ置き換え）
-                src = feed.get("source", "")
-                if (src in FULLTEXT_SOURCES) and (fetch_count < fetch_limit) and (len(content.strip()) == 0):
-                    full = fetch_fulltext(link)
-                    if full:
-                        content = full
-                        fetch_count += 1
-                        # print(f"[INFO] fetched fulltext source={src} url={link}")
-
-
-                published_at = normalize_published_at(e)
-                fetched_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
-
-                cur.execute(
-                    """
-                    INSERT INTO articles
-                    (url, title, content, source, category, published_at, fetched_at, kind, region)
-                    VALUES (?,?,?,?,?,?,?,?,?)
-                    ON CONFLICT(url) DO UPDATE SET
-                        title=excluded.title,
-                        content=excluded.content,
-                        source=excluded.source,
-                        category=excluded.category,
-                        published_at=excluded.published_at,
-                        fetched_at=excluded.fetched_at,
-                        kind=excluded.kind,
-                        region=excluded.region
-                    """,
-                    (
-                        link,
-                        title,
-                        content,
-                        feed.get("source", ""),
-                        feed.get("category", "") or "",
-                        published_at,
-                        fetched_at,
-                        feed.get("kind", "tech"),
-                        feed.get("region", "") or "",
-                    ),
-                )
-
-
-        except Exception as e:
-            print(f"[WARN] feed parse failed url={feed['url']} err={e}")
+        except (urllib.error.URLError, ValueError, OSError) as e:
+            print(f"[WARN] feed fetch failed source={feed.get('source','')} url={feed['url']} err={e}")
             continue
+
+        if getattr(d, "bozo", 0):
+            # 壊れたXMLでも entries が取れることがあるので続行はする
+            print(f"[WARN] malformed feed source={feed.get('source','')} url={feed['url']} err={getattr(d, 'bozo_exception', '')}")
+
+        limit = feed.get("limit", 30)
+        for e in getattr(d, "entries", [])[:limit]:
+            raw_link = getattr(e, "link", None)
+            if not raw_link:
+                print(f"[WARN] skip entry without link source={feed.get('source','')} feed_url={feed['url']}")
+                continue
+            link = normalize_url(raw_link)
+            title = getattr(e, "title", None)
+            if not link or not title:
+                print(f"[WARN] skip invalid entry source={feed.get('source','')} feed_url={feed['url']} url={raw_link}")
+                continue
+            content = ""
+
+            if getattr(e, "content", None):
+                if isinstance(e.content, list) and e.content:
+                    content = e.content[0].get("value", "")
+            elif getattr(e, "summary", None):
+                content = e.summary
+
+            content = strip_html(content)
+
+            # ★本文が薄い/空なら、記事本文の補完を試みる（成功時のみ置き換え）
+            src = feed.get("source", "")
+            if (src in FULLTEXT_SOURCES) and (fetch_count < fetch_limit) and (len(content.strip()) == 0):
+                full = fetch_fulltext(link, source=src)
+                if full:
+                    content = full
+                    fetch_count += 1
+                    # print(f"[INFO] fetched fulltext source={src} url={link}")
+
+            published_at = normalize_published_at(e)
+            fetched_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+            cur.execute(
+                """
+                INSERT INTO articles
+                (url, title, content, source, category, published_at, fetched_at, kind, region)
+                VALUES (?,?,?,?,?,?,?,?,?)
+                ON CONFLICT(url) DO UPDATE SET
+                    title=excluded.title,
+                    content=excluded.content,
+                    source=excluded.source,
+                    category=excluded.category,
+                    published_at=excluded.published_at,
+                    fetched_at=excluded.fetched_at,
+                    kind=excluded.kind,
+                    region=excluded.region
+                """,
+                (
+                    link,
+                    title,
+                    content,
+                    feed.get("source", ""),
+                    feed.get("category", "") or "",
+                    published_at,
+                    fetched_at,
+                    feed.get("kind", "tech"),
+                    feed.get("region", "") or "",
+                ),
+            )
     cur.execute(
         "UPDATE articles SET category='news' "
         "WHERE kind='news' AND (category IS NULL OR TRIM(category)='')"

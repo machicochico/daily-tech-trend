@@ -1,5 +1,6 @@
 import re
 import requests
+from requests import RequestException
 from db import connect
 
 import time
@@ -50,15 +51,19 @@ def translate_news_titles(conn, limit: int = 400):
         try:
             ja = translate(title)
             ja = (ja or "").strip()
-            if not ja:
-                continue
-            cur.execute(
-                "UPDATE articles SET title_ja=? WHERE id=?",
-                (ja, article_id),
-            )
-            n_ok += 1
-        except Exception as e:
-            print(f"[WARN] translate failed id={article_id} err={e}")
+        except (RequestException, ValueError) as e:
+            print(f"[WARN] translate failed id={article_id} title={title[:80]!r} err={e}")
+            continue
+
+        if not ja:
+            print(f"[WARN] translate returned empty id={article_id} title={title[:80]!r}")
+            continue
+
+        cur.execute(
+            "UPDATE articles SET title_ja=? WHERE id=?",
+            (ja, article_id),
+        )
+        n_ok += 1
 
     conn.commit()
     print(f"[translate] news titles updated: {n_ok}")
@@ -82,11 +87,14 @@ def main():
             continue
         try:
             ja = translate(title)
-            if ja:
-                cur.execute("UPDATE topics SET title_ja=? WHERE id=?", (ja, tid))
-        except Exception as e:
-            print(f"[WARN] translate topic failed id={tid} err={e}")
+        except (RequestException, ValueError) as e:
+            print(f"[WARN] translate topic failed topic_id={tid} title={title[:80]!r} err={e}")
             continue
+
+        if not ja:
+            print(f"[WARN] translate topic empty topic_id={tid} title={title[:80]!r}")
+            continue
+        cur.execute("UPDATE topics SET title_ja=? WHERE id=?", (ja, tid))
     
     conn.commit()   
     conn.close()
