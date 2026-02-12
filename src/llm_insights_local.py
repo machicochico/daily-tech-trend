@@ -1,3 +1,4 @@
+import argparse
 import re
 import sys
 import time
@@ -31,10 +32,18 @@ def _now_sec():
     return time.perf_counter()
 
 
+def _parse_args(argv: list[str]):
+    parser = argparse.ArgumentParser(description="Generate LLM insights for topics")
+    parser.add_argument("limit", nargs="?", type=int, default=300, help="Maximum topics to process")
+    parser.add_argument("--rescue", action="store_true", help="Reprocess rows even when source hash is unchanged")
+    return parser.parse_args(argv)
+
+
 def main():
     t0 = _now_sec()
-    limit = int(sys.argv[1]) if len(sys.argv) > 1 else 300
-    rescue = ("--rescue" in sys.argv)
+    args = _parse_args(sys.argv[1:])
+    limit = args.limit
+    rescue = args.rescue
 
     conn = connect()
     rows = pick_topic_inputs(conn, limit=limit, rescue=rescue)
