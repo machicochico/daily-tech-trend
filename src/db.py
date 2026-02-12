@@ -68,6 +68,9 @@ def init_db():
     ensure_column(cur, "topics", "kind", "TEXT")
     ensure_column(cur, "topics", "region", "TEXT")
 
+    # UNIQUE INDEX 作成前に、旧データの topic_key 重複を整理する
+    dedupe_topics_by_key(cur)
+
     cur.execute("""
     CREATE UNIQUE INDEX IF NOT EXISTS idx_topics_topic_key
     ON topics(topic_key)
@@ -133,6 +136,75 @@ def ensure_column(cur, table: str, col: str, coltype: str):
     cols = {r[1] for r in cur.fetchall()}
     if col not in cols:
         cur.execute(f"ALTER TABLE {table} ADD COLUMN {col} {coltype}")
+
+
+def dedupe_topics_by_key(cur):
+    """
+    旧DBで topic_key の重複があると UNIQUE INDEX 作成で失敗するため、
+    同一キーの topic を1件に寄せる。
+    """
+    cur.execute("""
+        SELECT topic_key, MIN(id) AS keep_id
+        FROM topics
+        WHERE topic_key IS NOT NULL AND topic_key != ''
+        GROUP BY topic_key
+        HAVING COUNT(*) > 1
+    """)
+    duplicates = cur.fetchall()
+    has_topic_articles = table_exists(cur, "topic_articles")
+    has_edges = table_exists(cur, "edges")
+    has_topic_insights = table_exists(cur, "topic_insights")
+
+    for topic_key, keep_id in duplicates:
+        cur.execute(
+            "SELECT id FROM topics WHERE topic_key=? AND id<>? ORDER BY id",
+            (topic_key, keep_id),
+        )
+        dup_ids = [row[0] for row in cur.fetchall()]
+
+        for dup_id in dup_ids:
+            if has_topic_articles:
+                cur.execute(
+                    """
+                    INSERT OR IGNORE INTO topic_articles(topic_id, article_id)
+                    SELECT ?, article_id FROM topic_articles WHERE topic_id=?
+                    """,
+                    (keep_id, dup_id),
+                )
+                cur.execute("DELETE FROM topic_articles WHERE topic_id=?", (dup_id,))
+
+            if has_edges:
+                cur.execute(
+                    """
+                    INSERT OR IGNORE INTO edges(topic_id, parent_article_id, child_article_id)
+                    SELECT ?, parent_article_id, child_article_id
+                    FROM edges
+                    WHERE topic_id=?
+                    """,
+                    (keep_id, dup_id),
+                )
+                cur.execute("DELETE FROM edges WHERE topic_id=?", (dup_id,))
+
+            if has_topic_insights:
+                cur.execute("SELECT 1 FROM topic_insights WHERE topic_id=?", (keep_id,))
+                keep_insight = cur.fetchone()
+                if not keep_insight:
+                    cur.execute(
+                        "UPDATE topic_insights SET topic_id=? WHERE topic_id=?",
+                        (keep_id, dup_id),
+                    )
+                else:
+                    cur.execute("DELETE FROM topic_insights WHERE topic_id=?", (dup_id,))
+
+            cur.execute("DELETE FROM topics WHERE id=?", (dup_id,))
+
+
+def table_exists(cur, table: str) -> bool:
+    cur.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name=? LIMIT 1",
+        (table,),
+    )
+    return cur.fetchone() is not None
 
 
 def recompute_score_48h():
