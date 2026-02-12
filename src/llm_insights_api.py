@@ -1,5 +1,7 @@
 import json
+import os
 import re
+import subprocess
 import time
 
 import requests
@@ -7,6 +9,51 @@ import requests
 LMSTUDIO_URL = "http://127.0.0.1:1234/v1/chat/completions"
 MODEL = "openai/gpt-oss-20b"
 _SESSION = requests.Session()
+_LMSTUDIO_READY = False
+_AUTOSTART_ATTEMPTED = False
+
+
+def _is_lmstudio_ready(timeout: float = 2.0) -> bool:
+    health_url = LMSTUDIO_URL.rsplit("/chat/completions", 1)[0] + "/models"
+    try:
+        r = _SESSION.get(health_url, timeout=timeout)
+        return r.status_code < 500
+    except Exception:
+        return False
+
+
+def _ensure_lmstudio_ready() -> None:
+    global _LMSTUDIO_READY, _AUTOSTART_ATTEMPTED
+    if _LMSTUDIO_READY:
+        return
+    if _is_lmstudio_ready():
+        _LMSTUDIO_READY = True
+        return
+
+    autostart_cmd = (os.getenv("LMSTUDIO_AUTOSTART_CMD") or "").strip()
+    if not autostart_cmd:
+        raise RuntimeError(
+            "LMStudio is not reachable at 127.0.0.1:1234. "
+            "Start LMStudio manually or set LMSTUDIO_AUTOSTART_CMD to auto-launch it."
+        )
+    if _AUTOSTART_ATTEMPTED:
+        raise RuntimeError("LMStudio auto-start was attempted but the API is still unavailable.")
+
+    _AUTOSTART_ATTEMPTED = True
+    subprocess.Popen(
+        autostart_cmd,
+        shell=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+    wait_sec = int(os.getenv("LMSTUDIO_AUTOSTART_WAIT_SEC", "45"))
+    for _ in range(max(wait_sec, 1)):
+        if _is_lmstudio_ready():
+            _LMSTUDIO_READY = True
+            return
+        time.sleep(1)
+    raise RuntimeError("LMStudio auto-start command was launched, but API did not become ready in time.")
 
 
 def _get_lm_content(resp: requests.Response) -> str:
@@ -22,6 +69,7 @@ def _get_lm_content(resp: requests.Response) -> str:
 
 
 def post_lmstudio(payload: dict, timeout: int, retries: int = 2, backoff_sec: float = 0.8):
+    _ensure_lmstudio_ready()
     last_err = None
     for i in range(retries + 1):
         try:
