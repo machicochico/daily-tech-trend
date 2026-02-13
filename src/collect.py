@@ -3,12 +3,14 @@ import yaml
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from collections import defaultdict
+from pathlib import Path
 
 from db import init_db, connect
 
 from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 import re
 import time
+from functools import lru_cache
 
 # ★本文フェッチ用
 import urllib.request
@@ -33,6 +35,7 @@ FULLTEXT_SOURCES = {
 MIN_CONTENT_CHARS = 200          # RSS本文がこれ未満なら「薄い」と判定して補完を試みる
 MAX_FETCH_BYTES = 2_000_000      # 取得上限 2MB（暴走防止）
 FETCH_TIMEOUT_SEC = 15
+MANUFACTURING_KEYWORDS_PATH = Path(__file__).with_name("keywords_manufacturing.yaml")
 
 # 同意画面/JS依存など、取得しても本文抽出できない・リスク高いドメインは除外
 SKIP_FETCH_DOMAINS = {
@@ -249,6 +252,49 @@ def should_route_to_low_priority(*, is_new: bool, current_new_count: int, weekly
     return current_new_count >= weekly_limit
 
 
+@lru_cache(maxsize=1)
+def load_manufacturing_keywords(path: str = str(MANUFACTURING_KEYWORDS_PATH)) -> tuple[str, ...]:
+    with open(path, encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    raw_keywords = data.get("keywords", [])
+    if not isinstance(raw_keywords, list):
+        return tuple()
+
+    keywords = []
+    for k in raw_keywords:
+        if not isinstance(k, str):
+            continue
+        k = k.strip()
+        if k:
+            keywords.append(k)
+    return tuple(keywords)
+
+
+@lru_cache(maxsize=1)
+def build_manufacturing_keyword_pattern(path: str = str(MANUFACTURING_KEYWORDS_PATH)):
+    keywords = load_manufacturing_keywords(path)
+    if not keywords:
+        return None
+    escaped = [re.escape(k) for k in keywords]
+    return re.compile("|".join(escaped), re.IGNORECASE)
+
+
+def is_arxiv_feed(feed: dict) -> bool:
+    source = (feed.get("source") or "").lower()
+    vendor = (feed.get("vendor") or "").lower()
+    url = (feed.get("url") or "").lower()
+    return "arxiv" in source or "arxiv" in vendor or "arxiv.org" in url
+
+
+def matches_manufacturing_keywords(title: str, content: str) -> bool:
+    pattern = build_manufacturing_keyword_pattern()
+    if pattern is None:
+        # 辞書未設定時はフィルタしない
+        return True
+    haystack = f"{title or ''}\n{content or ''}"
+    return bool(pattern.search(haystack))
+
+
 def main():
     t0 = _now_sec()
     print("[TIME] step=collect start")
@@ -297,6 +343,12 @@ def main():
                 content = e.summary
 
             content = strip_html(content)
+
+            if is_arxiv_feed(feed) and not matches_manufacturing_keywords(title, content):
+                print(
+                    f"[INFO] skip arxiv entry by manufacturing filter source={feed.get('source', '')} title={title[:80]}"
+                )
+                continue
 
             # ★本文が薄い/空なら、記事本文の補完を試みる（成功時のみ置き換え）
             src = feed.get("source", "")
