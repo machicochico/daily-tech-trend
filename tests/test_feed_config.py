@@ -27,10 +27,12 @@ def test_load_feed_list_accepts_legacy_feeds_format():
             "url": "https://example.com/feed.xml",
             "category": "ai",
             "source": "Example",
+            "vendor": "Example",
             "source_tier": "secondary",
             "kind": "tech",
             "region": "global",
             "limit": 10,
+            "weekly_new_limit": None,
         }
     ]
 
@@ -45,9 +47,17 @@ def test_load_feed_list_accepts_sources_with_rss_string_and_object():
                 "region": "jp",
                 "source_tier": "primary",
                 "limit": 20,
+                "weekly_new_limit": 8,
                 "rss": [
                     "https://example.com/a.xml",
-                    {"url": "https://example.com/b.xml", "category": "security", "limit": 5, "source_tier": "secondary"},
+                    {
+                        "url": "https://example.com/b.xml",
+                        "category": "security",
+                        "limit": 5,
+                        "source_tier": "secondary",
+                        "vendor": "VendorB",
+                        "weekly_new_limit": 3,
+                    },
                 ],
             }
         ]
@@ -60,18 +70,22 @@ def test_load_feed_list_accepts_sources_with_rss_string_and_object():
             "url": "https://example.com/a.xml",
             "category": "cloud",
             "source": "SourceA",
+            "vendor": "SourceA",
             "source_tier": "primary",
             "kind": "tech",
             "region": "jp",
             "limit": 20,
+            "weekly_new_limit": 8,
         },
         {
             "url": "https://example.com/b.xml",
             "category": "security",
             "source": "SourceA",
+            "vendor": "VendorB",
             "source_tier": "secondary",
             "kind": "tech",
             "region": "jp",
             "limit": 5,
+            "weekly_new_limit": 3,
         },
     ]

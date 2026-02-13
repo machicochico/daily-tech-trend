@@ -132,51 +132,71 @@ sources:
   - id: openai-news
     name: OpenAI News
     category: ai
+    vendor: OpenAI
+    weekly_new_limit: 5
     url: https://openai.com/news/rss.xml
 
   - id: google-ai-blog
     name: Google AI Blog
     category: ai
+    vendor: Google
+    weekly_new_limit: 8
     url: https://ai.googleblog.com/feeds/posts/default
 
   - id: deepmind-blog
     name: Google DeepMind Blog
     category: ai
+    vendor: Google
+    weekly_new_limit: 8
     url: https://deepmind.google/blog/rss.xml
 
   - id: meta-ai
     name: Meta AI Blog
     category: ai
+    vendor: Meta
+    weekly_new_limit: 5
     url: https://ai.facebook.com/blog/rss/
 
   - id: microsoft-ai
     name: Microsoft AI Blog
     category: ai
+    vendor: Microsoft
+    weekly_new_limit: 5
     url: https://blogs.microsoft.com/ai/feed/
 
   - id: aws-ml
     name: AWS Machine Learning Blog
     category: ai
+    vendor: AWS
+    weekly_new_limit: 6
     url: https://aws.amazon.com/blogs/machine-learning/feed/
 
   - id: huggingface-blog
     name: Hugging Face Blog
     category: ai
+    vendor: Hugging Face
+    weekly_new_limit: 5
     url: https://huggingface.co/blog/feed.xml
 
   - id: arxiv-ai
     name: arXiv AI (cs.AI)
     category: ai
+    vendor: arXiv
+    weekly_new_limit: 20
     url: http://export.arxiv.org/rss/cs.AI
 
   - id: arxiv-ml
     name: arXiv Machine Learning (cs.LG)
     category: ai
+    vendor: arXiv
+    weekly_new_limit: 20
     url: http://export.arxiv.org/rss/cs.LG
 
   - id: github-ml
     name: GitHub Machine Learning
     category: ai
+    vendor: GitHub
+    weekly_new_limit: 6
     url: https://github.blog/category/machine-learning/feed/
 
   # --- 製造（鉄鋼） ---
