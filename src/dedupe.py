@@ -1,4 +1,5 @@
 import re
+import time
 import unicodedata
 from datetime import datetime
 from typing import Dict
@@ -31,6 +32,13 @@ TRACKING_QUERY_KEYS = {
     "mc_cid",
     "mc_eid",
 }
+
+# 速度劣化を防ぐため、カテゴリ内で比較する候補数を制限する。
+CANDIDATE_WINDOW_PER_CATEGORY = 600
+
+
+def _now_sec() -> float:
+    return time.perf_counter()
 
 
 def normalize_title(title: str) -> str:
@@ -161,6 +169,9 @@ def log_decision(
 
 
 def main():
+    t0 = _now_sec()
+    print("[TIME] step=dedupe start")
+
     conn = connect()
     cur = conn.cursor()
     ensure_dedupe_log_table(cur)
@@ -168,13 +179,42 @@ def main():
     cur.execute("SELECT id, source, category, title, url, url_norm FROM articles ORDER BY id DESC")
     rows = cur.fetchall()
 
-    seen = {}
-    for i, source, category, title, url, url_norm in rows:
+    seen_by_category: Dict[str, list[dict]] = {}
+    seen_by_norm_url: Dict[str, dict] = {}
+    deleted = 0
+
+    for idx, (i, source, category, title, url, url_norm) in enumerate(rows, start=1):
+        cat_key = (category or "").strip().lower() or "default"
         norm_title = normalize_title(title)
         norm_url = normalize_url(url_norm or url)
         threshold = category_threshold(category)
 
-        for si, kept in seen.items():
+        exact_url_kept = seen_by_norm_url.get(norm_url) if norm_url else None
+        if exact_url_kept is not None:
+            cur.execute("DELETE FROM articles WHERE id=?", (i,))
+            log_decision(
+                cur,
+                article_id=i,
+                kept_article_id=exact_url_kept["id"],
+                article_source=source,
+                kept_source=exact_url_kept["source"],
+                article_category=category,
+                title_score=0.0,
+                url_score=100.0,
+                composite_score=100.0,
+                threshold=threshold,
+                title_match=False,
+                url_exact_match=True,
+                decision="delete",
+                reason="url_exact",
+            )
+            deleted += 1
+            continue
+
+        category_seen = seen_by_category.get(cat_key, [])
+        candidate_slice = category_seen[-CANDIDATE_WINDOW_PER_CATEGORY:]
+
+        for kept in reversed(candidate_slice):
             kept_title = kept["norm_title"]
             kept_url = kept["norm_url"]
 
@@ -192,7 +232,7 @@ def main():
                 log_decision(
                     cur,
                     article_id=i,
-                    kept_article_id=si,
+                    kept_article_id=kept["id"],
                     article_source=source,
                     kept_source=kept["source"],
                     article_category=category,
@@ -205,16 +245,29 @@ def main():
                     decision="delete",
                     reason=reason,
                 )
+                deleted += 1
                 break
         else:
-            seen[i] = {
+            kept_entry = {
+                "id": i,
                 "norm_title": norm_title,
                 "norm_url": norm_url,
                 "source": source,
             }
+            category_seen.append(kept_entry)
+            seen_by_category[cat_key] = category_seen
+            if norm_url:
+                seen_by_norm_url[norm_url] = kept_entry
+
+        if idx % 500 == 0:
+            print(
+                f"[TIME] dedupe progress processed={idx}/{len(rows)} "
+                f"deleted={deleted} sec={_now_sec() - t0:.1f}"
+            )
 
     conn.commit()
     conn.close()
+    print(f"[TIME] step=dedupe end sec={_now_sec() - t0:.1f} deleted={deleted} total={len(rows)}")
 
 
 if __name__ == "__main__":
