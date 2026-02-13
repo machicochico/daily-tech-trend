@@ -28,6 +28,7 @@ def init_db():
       url_norm TEXT,
       content TEXT,
       category TEXT,
+      source_tier TEXT,         -- 'primary' / 'secondary'
       published_at TEXT,
       fetched_at TEXT
     )
@@ -42,10 +43,14 @@ def init_db():
     ensure_column(cur, "articles", "kind", "TEXT")
     ensure_column(cur, "articles", "region", "TEXT")
     ensure_column(cur, "articles", "title_ja", "TEXT")
+    ensure_column(cur, "articles", "source_tier", "TEXT")
 
     # 既存データの最低限のデフォルト補完（NULL/空のみ対象）
     cur.execute("UPDATE articles SET kind='tech' WHERE kind IS NULL OR kind=''")
     cur.execute("UPDATE articles SET region='global' WHERE region IS NULL OR region=''")
+    cur.execute(
+        "UPDATE articles SET source_tier='secondary' WHERE source_tier IS NULL OR source_tier=''"
+    )
 
 
     # ---- topics ----

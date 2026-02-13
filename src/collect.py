@@ -129,6 +129,7 @@ def load_feed_list(cfg: dict):
                     "url": url,
                     "category": x.get("category"),
                     "source": x.get("source", ""),
+                    "source_tier": x.get("source_tier", "secondary"),
                     "kind": x.get("kind", "tech"),
                     "region": x.get("region", "") or "",
                     "limit": x.get("limit", 30),
@@ -145,6 +146,7 @@ def load_feed_list(cfg: dict):
             base = {
                 "category": s.get("category"),
                 "source": s.get("name", s.get("source", "")),
+                "source_tier": s.get("source_tier", "secondary"),
                 "kind": s.get("kind", "tech"),
                 "region": s.get("region", "") or "",
                 "limit": s.get("limit", 30),
@@ -169,6 +171,7 @@ def load_feed_list(cfg: dict):
                             "url": url,
                             "category": r.get("category", base["category"]),
                             "limit": r.get("limit", base["limit"]),
+                            "source_tier": r.get("source_tier", base["source_tier"]),
                         }
                     )
 
@@ -269,13 +272,14 @@ def main():
             cur.execute(
                 """
                 INSERT INTO articles
-                (url, title, content, source, category, published_at, fetched_at, kind, region)
-                VALUES (?,?,?,?,?,?,?,?,?)
+                (url, title, content, source, category, source_tier, published_at, fetched_at, kind, region)
+                VALUES (?,?,?,?,?,?,?,?,?,?)
                 ON CONFLICT(url) DO UPDATE SET
                     title=excluded.title,
                     content=excluded.content,
                     source=excluded.source,
                     category=excluded.category,
+                    source_tier=excluded.source_tier,
                     published_at=excluded.published_at,
                     fetched_at=excluded.fetched_at,
                     kind=excluded.kind,
@@ -287,6 +291,7 @@ def main():
                     content,
                     feed.get("source", ""),
                     feed.get("category", "") or "",
+                    feed.get("source_tier", "secondary"),
                     published_at,
                     fetched_at,
                     feed.get("kind", "tech"),

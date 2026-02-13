@@ -27,6 +27,7 @@ def test_load_feed_list_accepts_legacy_feeds_format():
             "url": "https://example.com/feed.xml",
             "category": "ai",
             "source": "Example",
+            "source_tier": "secondary",
             "kind": "tech",
             "region": "global",
             "limit": 10,
@@ -42,10 +43,11 @@ def test_load_feed_list_accepts_sources_with_rss_string_and_object():
                 "category": "cloud",
                 "kind": "tech",
                 "region": "jp",
+                "source_tier": "primary",
                 "limit": 20,
                 "rss": [
                     "https://example.com/a.xml",
-                    {"url": "https://example.com/b.xml", "category": "security", "limit": 5},
+                    {"url": "https://example.com/b.xml", "category": "security", "limit": 5, "source_tier": "secondary"},
                 ],
             }
         ]
@@ -58,6 +60,7 @@ def test_load_feed_list_accepts_sources_with_rss_string_and_object():
             "url": "https://example.com/a.xml",
             "category": "cloud",
             "source": "SourceA",
+            "source_tier": "primary",
             "kind": "tech",
             "region": "jp",
             "limit": 20,
@@ -66,6 +69,7 @@ def test_load_feed_list_accepts_sources_with_rss_string_and_object():
             "url": "https://example.com/b.xml",
             "category": "security",
             "source": "SourceA",
+            "source_tier": "secondary",
             "kind": "tech",
             "region": "jp",
             "limit": 5,

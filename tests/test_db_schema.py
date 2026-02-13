@@ -25,4 +25,8 @@ def test_init_db_creates_required_tables_and_columns(tmp_path):
     topic_columns = {row[1] for row in cur.fetchall()}
     assert {"topic_key", "kind", "region"}.issubset(topic_columns)
 
+    cur.execute("PRAGMA table_info(articles)")
+    article_columns = {row[1] for row in cur.fetchall()}
+    assert "source_tier" in article_columns
+
     conn.close()
