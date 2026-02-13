@@ -120,6 +120,58 @@ sources:
     category: manufacturing
     url: https://www.siemens.com/cert/rss/advisories.xml
 
+  # MES / SCADA / IIoT 専門媒体・主要ベンダ技術アラート
+  # kind は tech のまま、category は manufacturing に統一し
+  # 運用上は name の接頭辞でサブカテゴリを識別する
+  - id: automation-world-mes
+    name: "[MES] Automation World"
+    category: manufacturing
+    kind: tech
+    region: global
+    url: https://www.automationworld.com/rss.xml
+
+  - id: control-global-scada
+    name: "[SCADA] Control Global"
+    category: manufacturing
+    kind: tech
+    region: global
+    url: https://www.controlglobal.com/rss.xml
+
+  - id: iiot-world
+    name: "[IIoT] IIoT World"
+    category: manufacturing
+    kind: tech
+    region: global
+    url: https://www.iiot-world.com/feed/
+
+  - id: inductive-automation-blog
+    name: "[SCADA Vendor] Inductive Automation Blog"
+    category: manufacturing
+    kind: tech
+    region: global
+    url: https://inductiveautomation.com/blog/rss.xml
+
+  - id: aveva-insight
+    name: "[SCADA Vendor] AVEVA Insights"
+    category: manufacturing
+    kind: tech
+    region: global
+    url: https://www.aveva.com/en/perspectives/blog/rss/
+
+  - id: rockwell-blog
+    name: "[MES Vendor] Rockwell Automation Blog"
+    category: manufacturing
+    kind: tech
+    region: global
+    url: https://www.rockwellautomation.com/en-us/company/news/blogs.feed.xml
+
+  - id: siemens-industry-blog
+    name: "[MES/SCADA Vendor] Siemens Industry Blog"
+    category: manufacturing
+    kind: tech
+    region: global
+    url: https://blogs.sw.siemens.com/feed/
+
   # --- 高炉 ---
   - id: worldsteel-ironmaking
     name: worldsteel (Ironmaking related)
