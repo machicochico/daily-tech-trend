@@ -40,6 +40,8 @@ def _reset_flags():
     llm_insights_api._LMSTUDIO_READY = False
     llm_insights_api._AUTOSTART_ATTEMPTED = False
     llm_insights_api._SELECTED_MODEL = None
+    llm_insights_api._FAILED_MODELS = set()
+    llm_insights_api._LOAD_ATTEMPTED_MODELS = set()
 
 
 def test_post_lmstudio_uses_existing_running_server(monkeypatch):
@@ -136,3 +138,67 @@ def test_post_lmstudio_overrides_unavailable_requested_model(monkeypatch):
     llm_insights_api.post_lmstudio({"model": "openai/gpt-oss-20b"}, timeout=1, retries=0)
 
     assert session.post_model == "local/model-a"
+
+
+def test_post_lmstudio_retries_with_another_model_on_oom(monkeypatch):
+    _reset_flags()
+
+    class OOMThenSuccessSession:
+        def __init__(self):
+            self.calls = []
+
+        def get(self, *_args, **_kwargs):
+            return DummyResponse(status_code=200, payload={"data": [{"id": "openai/gpt-oss-20b"}, {"id": "local/small-model"}]})
+
+        def post(self, *_args, **kwargs):
+            model = kwargs["json"]["model"]
+            self.calls.append(model)
+            if model == "openai/gpt-oss-20b":
+                return DummyResponse(status_code=400, payload={"error": "Failed to load model: vk::Queue::submit: ErrorOutOfDeviceMemory"})
+            return DummyResponse()
+
+    session = OOMThenSuccessSession()
+    monkeypatch.setattr(llm_insights_api, "_SESSION", session)
+    monkeypatch.setenv("LMSTUDIO_MODEL", "openai/gpt-oss-20b")
+
+    res = llm_insights_api.post_lmstudio({"model": "openai/gpt-oss-20b"}, timeout=1, retries=0)
+
+    assert res.status_code == 200
+    assert session.calls == ["openai/gpt-oss-20b", "local/small-model"]
+
+
+def test_post_lmstudio_tries_explicit_model_load_when_primary_not_loaded(monkeypatch):
+    _reset_flags()
+
+    class LoadThenPostSession:
+        def __init__(self):
+            self.models = ["local/small-model"]
+            self.calls = []
+
+        def get(self, *_args, **_kwargs):
+            return DummyResponse(status_code=200, payload={"data": [{"id": m} for m in self.models]})
+
+        def post(self, *_args, **kwargs):
+            model = kwargs["json"]["model"]
+            self.calls.append(model)
+            return DummyResponse()
+
+    session = LoadThenPostSession()
+    monkeypatch.setattr(llm_insights_api, "_SESSION", session)
+    monkeypatch.setenv("LMSTUDIO_MODEL", "openai/gpt-oss-20b")
+    monkeypatch.setenv("LMSTUDIO_MODEL_LOAD_CMD", "echo load {model}")
+    monkeypatch.setenv("LMSTUDIO_MODEL_LOAD_WAIT_SEC", "1")
+
+    launched = {"cmd": ""}
+
+    def fake_popen(cmd, **_kwargs):
+        launched["cmd"] = cmd
+        session.models.append("openai/gpt-oss-20b")
+
+    monkeypatch.setattr(llm_insights_api.subprocess, "Popen", fake_popen)
+    monkeypatch.setattr(llm_insights_api.time, "sleep", lambda *_args, **_kwargs: None)
+
+    llm_insights_api.post_lmstudio({"model": "openai/gpt-oss-20b"}, timeout=1, retries=0)
+
+    assert "openai/gpt-oss-20b" in launched["cmd"]
+    assert session.calls[0] == "openai/gpt-oss-20b"
