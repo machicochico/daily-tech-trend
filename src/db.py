@@ -132,6 +132,31 @@ def init_db():
     ensure_column(cur, "topic_insights", "src_article_id", "INTEGER")
     ensure_column(cur, "topic_insights", "src_hash", "TEXT")
 
+    # ---- low_priority_articles (source上限超過分の退避キュー) ----
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS low_priority_articles (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      url TEXT,
+      title TEXT,
+      content TEXT,
+      source TEXT,
+      vendor TEXT,
+      category TEXT,
+      source_tier TEXT,
+      published_at TEXT,
+      fetched_at TEXT,
+      kind TEXT,
+      region TEXT,
+      reason TEXT,
+      queued_at TEXT
+    )
+    """)
+
+    cur.execute("""
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_low_priority_articles_url
+    ON low_priority_articles(url)
+    """)
+
 
     conn.commit()
     conn.close()

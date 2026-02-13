@@ -3,7 +3,13 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from collect import MIN_CONTENT_CHARS, normalize_url, should_fetch_fulltext
+from collect import (
+    MIN_CONTENT_CHARS,
+    normalize_url,
+    should_fetch_fulltext,
+    should_route_to_low_priority,
+    resolve_week_key,
+)
 
 
 def test_normalize_url_removes_tracking_query_and_fragment():
@@ -42,3 +48,13 @@ def test_should_not_fetch_fulltext_when_limit_reached():
 def test_should_not_fetch_fulltext_when_content_is_sufficient():
     rich_content = "a" * MIN_CONTENT_CHARS
     assert not should_fetch_fulltext("Forest Watch", rich_content, fetch_count=0, fetch_limit=30)
+
+
+def test_resolve_week_key_prefers_published_at():
+    assert resolve_week_key("2026-01-05T01:02:03+00:00", "2026-02-01T01:00:00+00:00") == "2026-02"
+
+
+def test_should_route_to_low_priority_only_when_new_and_limit_exceeded():
+    assert should_route_to_low_priority(is_new=True, current_new_count=5, weekly_limit=5)
+    assert not should_route_to_low_priority(is_new=False, current_new_count=99, weekly_limit=1)
+    assert not should_route_to_low_priority(is_new=True, current_new_count=1, weekly_limit=None)
