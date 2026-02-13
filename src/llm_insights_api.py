@@ -373,10 +373,12 @@ def call_llm(topic_title, category, url, body, kind: str | None = None):
         "tagsは1〜5個の配列。短い名詞。重複禁止。本文/要約から抽出。足りない場合は推測で補ってよい。"
         "OT/セキュリティ関連では tags に sbom / patch_window / safety_impact を含めることを優先する。"
         "算定・規制関連トピックでは、算定対象範囲(scope)と報告義務(reporting_obligation)を必ず抽出する。"
-        "必須キー: importance(int), type(string), summary(string), key_points(array[3]), perspectives(object), tags(array[1..5]), evidence_urls(array[>=1]), compliance(object)。"
+        "再現条件(repro_conditions)と導入前提(deployment_prerequisites)の抽出は必須。本文に明記が無ければ '不明'。"
+        "必須キー: importance(int), type(string), summary(string), key_points(array[3]), perspectives(object), tags(array[1..5]), evidence_urls(array[>=1]), compliance(object), implementation_requirements(object)。"
         "perspectivesの各コメントは推論可。"
         "perspectivesは engineer/management/consumer の3キー固定。"
         "complianceは scope/reporting_obligation の2キー固定。本文に明記が無ければ '不明'。"
+        "implementation_requirementsは repro_conditions/deployment_prerequisites の2キー固定。本文に明記が無ければ '不明'。"
     )
     user = {"topic_title": topic_title, "category": category, "evidence_url": url, "text": body}
     schema = {
@@ -388,6 +390,7 @@ def call_llm(topic_title, category, url, body, kind: str | None = None):
         "tags": ["1〜5個。OT/セキュリティ関連では sbom, patch_window, safety_impact を含める"],
         "evidence_urls": ["根拠URL（最低1つ）"],
         "compliance": {"scope": "算定対象範囲（例: Scope1/2/3、対象製品、対象拠点）。不明なら'不明'", "reporting_obligation": "報告義務（対象事業者、期限、制度名など）。不明なら'不明'"},
+        "implementation_requirements": {"repro_conditions": "再現条件（データ条件、設備条件、運転条件、評価条件など）。不明なら'不明'", "deployment_prerequisites": "導入前提（必要機器、接続要件、人員体制、既存システム前提など）。不明なら'不明'"},
     }
 
     payload = {
