@@ -4,6 +4,16 @@ categories:
     name: システム
   - id: manufacturing
     name: 製造（鉄鋼）
+  - id: blast_furnace
+    name: 高炉
+  - id: eaf
+    name: 電炉
+  - id: rolling
+    name: 圧延
+  - id: quality
+    name: 品質
+  - id: maintenance
+    name: 保全
   - id: environment
     name: 環境（CO2・規制）
   - id: security
@@ -109,6 +119,61 @@ sources:
     name: Siemens ProductCERT Advisories
     category: manufacturing
     url: https://www.siemens.com/cert/rss/advisories.xml
+
+  # --- 高炉 ---
+  - id: worldsteel-ironmaking
+    name: worldsteel (Ironmaking related)
+    category: blast_furnace
+    url: https://worldsteel.org/feed/
+
+  - id: primetals-ironmaking
+    name: Primetals Technologies News (Ironmaking)
+    category: blast_furnace
+    url: https://www.primetals.com/news-media/news/rss/
+
+  # --- 電炉 ---
+  - id: steel-times-eaf
+    name: Steel Times International (EAF)
+    category: eaf
+    url: https://www.steeltimesint.com/feed/
+
+  - id: tenova-eaf
+    name: Tenova News (EAF)
+    category: eaf
+    url: https://www.tenova.com/news/feed/
+
+  # --- 圧延 ---
+  - id: sms-rolling
+    name: SMS group Newsroom (Rolling)
+    category: rolling
+    url: https://www.sms-group.com/company/newsroom/rss.xml
+
+  - id: danieli-rolling
+    name: Danieli News (Rolling)
+    category: rolling
+    url: https://www.danieli.com/en/news/rss.xml
+
+  # --- 品質 ---
+  - id: iso-quality
+    name: ISO News (Quality standards)
+    category: quality
+    url: https://www.iso.org/contents/news/all.rss
+
+  - id: zeiss-quality
+    name: ZEISS Metrology Newsroom
+    category: quality
+    url: https://www.zeiss.com/metrology/en/news-events/newsroom/rss.xml
+
+  # --- 保全 ---
+  - id: skf-maintenance
+    name: SKF Blog (Reliability/Maintenance)
+    category: maintenance
+    url: https://blog.skf.com/feed/
+
+  - id: fiix-maintenance
+    name: Fiix CMMS Blog (Maintenance)
+    category: maintenance
+    url: https://fiixsoftware.com/blog/feed/
 
   # --- 環境（CO2・規制） ---
   - id: eu-clima

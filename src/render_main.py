@@ -1387,6 +1387,11 @@ window.addEventListener('load', () => {
 NAME_MAP = {
     "system": "システム",
     "manufacturing": "製造",
+    "blast_furnace": "高炉",
+    "eaf": "電炉",
+    "rolling": "圧延",
+    "quality": "品質",
+    "maintenance": "保全",
     "security": "セキュリティ",
     "ai": "AI",
     "dev": "開発",
@@ -1908,8 +1913,25 @@ def main():
         categories = build_categories_fallback(cur)
     categories = ensure_category_coverage(cur, categories)
 
-    # ★ ここを追加（完全決定順）
-    categories = sorted(categories, key=lambda c: c["id"])
+    category_order = [
+        "system",
+        "manufacturing",
+        "blast_furnace",
+        "eaf",
+        "rolling",
+        "quality",
+        "maintenance",
+        "environment",
+        "security",
+        "ai",
+        "dev",
+        "other",
+    ]
+    order_index = {cat_id: idx for idx, cat_id in enumerate(category_order)}
+    categories = sorted(
+        categories,
+        key=lambda c: (order_index.get(c["id"], len(category_order)), c["id"]),
+    )
 
     TECH_EXCLUDE = {"news"}
     tech_categories = [c for c in categories if c["id"] not in TECH_EXCLUDE]
