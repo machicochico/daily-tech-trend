@@ -18,6 +18,8 @@ categories:
     name: 環境（CO2・規制）
   - id: security
     name: セキュリティ
+  - id: market
+    name: 市況（コモディティ・海運・スクラップ）
   - id: ai
     name: AI
   - id: dev
@@ -45,6 +47,22 @@ sources:
     name: JPCERT/CC
     category: security
     url: https://www.jpcert.or.jp/rss/jpcert-all.rdf
+
+  # --- 市況（コモディティ・港湾/海運・スクラップ指数） ---
+  - id: oilprice-commodities
+    name: OilPrice.com (Commodities)
+    category: market
+    url: https://oilprice.com/rss/main
+
+  - id: hellenic-shipping
+    name: Hellenic Shipping News
+    category: market
+    url: https://www.hellenicshippingnews.com/feed/
+
+  - id: recycling-today-ferrous
+    name: Recycling Today (Ferrous)
+    category: market
+    url: https://www.recyclingtoday.com/rss/topic/ferrous.aspx
 
   # --- AI ---
   - id: openai-news
