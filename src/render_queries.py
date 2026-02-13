@@ -106,7 +106,14 @@ def fetch_news_articles_by_category(cur, region: str, category: str, limit: int 
             FROM topic_articles ta JOIN topic_insights i ON i.topic_id = ta.topic_id
             WHERE ta.article_id = a.id
             ORDER BY i.importance DESC, ta.topic_id DESC LIMIT 1
-          ) AS evidence_urls
+          ) AS evidence_urls,
+          (
+            SELECT ta.is_representative
+            FROM topic_articles ta
+            JOIN topics t ON t.id = ta.topic_id
+            WHERE ta.article_id = a.id AND COALESCE(t.kind,'')='news'
+            ORDER BY ta.is_representative DESC, ta.topic_id DESC LIMIT 1
+          ) AS is_representative
         FROM articles a
         WHERE a.kind='news' AND COALESCE(a.region,'')=? AND COALESCE(a.category,'')=?
         ORDER BY datetime(substr(replace(replace(COALESCE(NULLIF(a.published_at,''), a.fetched_at),'T',' '),'+00:00',''),1,19)) DESC, a.id DESC

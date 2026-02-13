@@ -91,9 +91,11 @@ def init_db():
     CREATE TABLE IF NOT EXISTS topic_articles (
       topic_id INTEGER,
       article_id INTEGER,
+      is_representative INTEGER DEFAULT 0,
       PRIMARY KEY (topic_id, article_id)
     )
     """)
+    ensure_column(cur, "topic_articles", "is_representative", "INTEGER DEFAULT 0")
 
     # ---- edges (topic内の親子リンク) ----
     cur.execute("""
