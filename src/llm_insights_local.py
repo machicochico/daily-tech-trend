@@ -1,4 +1,5 @@
 import argparse
+import os
 import re
 import sys
 import time
@@ -34,8 +35,14 @@ def _now_sec():
 
 def _parse_args(argv: list[str]):
     parser = argparse.ArgumentParser(description="Generate LLM insights for topics")
-    parser.add_argument("limit", nargs="?", type=int, default=300, help="Maximum topics to process")
+    parser.add_argument("limit", nargs="?", type=int, default=120, help="Maximum topics to process")
     parser.add_argument("--rescue", action="store_true", help="Reprocess rows even when source hash is unchanged")
+    parser.add_argument(
+        "--max-sec",
+        type=int,
+        default=int(os.environ.get("LLM_MAX_SEC", "300") or "300"),
+        help="Maximum processing time in seconds (default: env LLM_MAX_SEC or 300)",
+    )
     return parser.parse_args(argv)
 
 
@@ -52,12 +59,16 @@ def main():
     args = _parse_args(sys.argv[1:])
     limit = args.limit
     rescue = args.rescue
+    max_sec = max(0, int(args.max_sec or 0))
 
     conn = connect()
     rows = pick_topic_inputs(conn, limit=limit, rescue=rescue)
     pending = 0
 
     for r in rows:
+        if max_sec and (_now_sec() - t0) >= max_sec:
+            print(f"[TIME] llm budget reached sec={_now_sec() - t0:.1f} max_sec={max_sec}")
+            break
         topic_id = r["topic_id"]
         try:
             title = (r["topic_title"] or "").strip()

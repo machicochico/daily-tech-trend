@@ -1,6 +1,7 @@
 import re
 import time
 import unicodedata
+from collections import defaultdict
 from datetime import datetime
 from typing import Dict
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
@@ -35,6 +36,7 @@ TRACKING_QUERY_KEYS = {
 
 # 速度劣化を防ぐため、カテゴリ内で比較する候補数を制限する。
 CANDIDATE_WINDOW_PER_CATEGORY = 600
+CANDIDATE_WINDOW_PER_BLOCK = 120
 
 
 def _now_sec() -> float:
@@ -78,6 +80,22 @@ def _ratio(a: str, b: str) -> float:
     return SequenceMatcher(None, a or "", b or "").ratio() * 100
 
 
+
+
+def _title_tokens(title: str) -> list[str]:
+    return [t for t in (title or "").split() if t]
+
+
+def _blocking_keys(norm_title: str) -> tuple[str, ...]:
+    tokens = _title_tokens(norm_title)
+    if not tokens:
+        return ("",)
+    first = tokens[0]
+    pair = " ".join(tokens[:2])
+    triple = " ".join(tokens[:3])
+    return tuple(k for k in (first, pair, triple) if k)
+
+
 def _token_set_ratio(a: str, b: str) -> float:
     ta = set((a or "").split())
     tb = set((b or "").split())
@@ -86,9 +104,7 @@ def _token_set_ratio(a: str, b: str) -> float:
     return _ratio(sa, sb)
 
 
-def _composite_score(title_a: str, title_b: str, url_a: str, url_b: str) -> float:
-    title_score = _token_set_ratio(title_a, title_b)
-    url_score = _ratio(url_a, url_b)
+def _composite_score(title_score: float, url_score: float) -> float:
     # タイトル寄りだがURL一致も加点する複合スコア
     return title_score * 0.75 + url_score * 0.25
 
@@ -180,6 +196,7 @@ def main():
     rows = cur.fetchall()
 
     seen_by_category: Dict[str, list[dict]] = {}
+    seen_by_category_block: Dict[str, dict[str, list[dict]]] = defaultdict(dict)
     seen_by_norm_url: Dict[str, dict] = {}
     deleted = 0
 
@@ -212,20 +229,38 @@ def main():
             continue
 
         category_seen = seen_by_category.get(cat_key, [])
-        candidate_slice = category_seen[-CANDIDATE_WINDOW_PER_CATEGORY:]
+        category_block = seen_by_category_block[cat_key]
 
-        for kept in reversed(candidate_slice):
+        blocking_keys = _blocking_keys(norm_title)
+        blocked_candidates: list[dict] = []
+        seen_ids: set[int] = set()
+        for bk in blocking_keys:
+            for kept in reversed(category_block.get(bk, [])[-CANDIDATE_WINDOW_PER_BLOCK:]):
+                kept_id = kept["id"]
+                if kept_id in seen_ids:
+                    continue
+                seen_ids.add(kept_id)
+                blocked_candidates.append(kept)
+
+        if blocked_candidates:
+            candidate_slice = blocked_candidates
+        else:
+            candidate_slice = list(reversed(category_seen[-CANDIDATE_WINDOW_PER_CATEGORY:]))
+
+        for kept in candidate_slice:
             kept_title = kept["norm_title"]
             kept_url = kept["norm_url"]
 
             title_score = _token_set_ratio(norm_title, kept_title)
-            url_score = _ratio(norm_url, kept_url)
-            composite = _composite_score(norm_title, kept_title, norm_url, kept_url)
-
             title_match = title_score >= (threshold - 5)
+            if not title_match:
+                continue
+
+            url_score = _ratio(norm_url, kept_url)
+            composite = _composite_score(title_score, url_score)
             url_exact_match = bool(norm_url and norm_url == kept_url)
 
-            is_duplicate = url_exact_match or (title_match and composite >= threshold)
+            is_duplicate = url_exact_match or composite >= threshold
             if is_duplicate:
                 reason = "url_exact" if url_exact_match else "composite_threshold"
                 cur.execute("DELETE FROM articles WHERE id=?", (i,))
@@ -256,6 +291,13 @@ def main():
             }
             category_seen.append(kept_entry)
             seen_by_category[cat_key] = category_seen
+
+            for bk in blocking_keys:
+                key_items = category_block.setdefault(bk, [])
+                key_items.append(kept_entry)
+                if len(key_items) > CANDIDATE_WINDOW_PER_BLOCK * 2:
+                    del key_items[:-CANDIDATE_WINDOW_PER_BLOCK]
+
             if norm_url:
                 seen_by_norm_url[norm_url] = kept_entry
 

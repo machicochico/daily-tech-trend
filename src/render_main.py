@@ -2070,7 +2070,16 @@ def fetch_news_articles_by_category(cur, region: str, category: str, limit: int 
             WHERE ta.article_id = a.id
             ORDER BY i.importance DESC, ta.topic_id DESC
             LIMIT 1
-          ) AS evidence_urls
+          ) AS evidence_urls,
+          CASE
+            WHEN EXISTS (
+              SELECT 1
+              FROM topic_articles ta
+              WHERE ta.article_id = a.id
+                AND COALESCE(ta.is_representative, 0) = 1
+            ) THEN 1
+            ELSE 0
+          END AS is_representative
 
         FROM articles a
         WHERE a.kind='news'
