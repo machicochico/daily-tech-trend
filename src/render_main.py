@@ -449,6 +449,65 @@ HTML = r"""
 
   <section class="top-zone">
     <div class="top-col">
+      <h3>🇯🇵JP Priority Top 10（importance × recent）</h3>
+      <ol class="top-list">
+        {% for t in jp_priority_top %}
+          <li class="topic-row"
+              data-title="{{ t.title|e }}"
+              data-summary="{{ (t.summary or '')|e }}"
+              data-imp="{{ t.importance or 0 }}"
+              data-recent="{{ t.recent or 0 }}"
+              data-date="{{ t.date }}"
+              data-tags="{{ t.tags|default([])|join(',') }}">
+            <span class="badge imp">重要度 {{ t.importance or 0 }}</span>
+            {% if t.recent > 0 %}
+              <span class="badge recent {% if t.recent >= 5 %}hot{% endif %}">
+                48h +{{ t.recent }}
+              </span>
+            {% endif %}
+            <a href="#topic-{{ t.id }}">{{ t.title }}</a>
+            <span class="date">{{ fmt_date(t.date) }}</span>
+            {% if t.category %}
+              <span class="badge"><a href="#cat-{{ t.category }}">{{ cat_name.get(t.category, t.category) }}</a></span>
+            {% endif %}
+            {% if t.one_liner %}<div class="mini">{{ t.one_liner }}</div>{% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <div class="top-col">
+      <h3>🇯🇵JP Priority Trending（48h増分）</h3>
+      <ol class="top-list">
+        {% for t in jp_priority_trending_top %}
+          <li class="topic-row"
+              data-title="{{ t.title|e }}"
+              data-summary="{{ (t.summary or '')|e }}"
+              data-imp="{{ t.importance or 0 }}"
+              data-recent="{{ t.recent or 0 }}"
+              data-date="{{ t.date }}"
+              data-tags="{{ t.tags|default([])|join(',') }}">
+            <span class="badge imp">重要度 {{ t.importance or 0 }}</span>
+            {% if t.recent > 0 %}
+              <span class="badge recent {% if t.recent >= 5 %}hot{% endif %}">
+                48h +{{ t.recent }}
+              </span>
+            {% endif %}
+            <a href="#topic-{{ t.id }}">{{ t.title }}</a>
+            <span class="date">{{ fmt_date(t.date) }}</span>
+            {% if t.category %}
+              <span class="badge"><a href="#cat-{{ t.category }}">{{ cat_name.get(t.category, t.category) }}</a></span>
+            {% endif %}
+            {% if t.one_liner %}<div class="mini">{{ t.one_liner }}</div>{% endif %}
+
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+
+  <section class="top-zone">
+    <div class="top-col">
       <h3>🌍Global Top 10（importance × recent）</h3>
       <ol class="top-list">
         {% for t in global_top %}
@@ -2652,6 +2711,184 @@ def main():
         "rss_sources": rss_sources,
     }
 
+    cur.execute(
+        """
+        SELECT
+          t.id,
+          COALESCE(t.title_ja, t.title) AS title,
+          COALESCE(NULLIF(t.category,''), 'other') AS category,
+          (
+            SELECT a2.url
+            FROM topic_articles ta2
+            JOIN articles a2 ON a2.id = ta2.article_id
+            WHERE ta2.topic_id = t.id
+            ORDER BY a2.id DESC
+            LIMIT 1
+          ) AS url,
+          (
+            SELECT COALESCE(
+              NULLIF(a2.published_at,''),
+              a2.fetched_at
+            )
+            FROM topic_articles ta2
+            JOIN articles a2 ON a2.id = ta2.article_id
+            WHERE ta2.topic_id = t.id
+            ORDER BY
+              CASE
+                WHEN COALESCE(NULLIF(a2.content,''), '') != '' THEN 0
+                ELSE 1
+              END,
+              datetime(a2.fetched_at) DESC,
+              datetime(COALESCE(NULLIF(a2.published_at,''), a2.fetched_at)) DESC,
+              a2.url ASC
+            LIMIT 1
+          ) AS article_date,
+          (
+            SELECT COALESCE(SUM(
+              CASE
+                WHEN datetime(
+                  substr(
+                    replace(replace(COALESCE(NULLIF(a3.published_at,''), a3.fetched_at),'T',' '),'+00:00',''),
+                    1, 19
+                  )
+                ) >= datetime(?) THEN 1
+                ELSE 0
+              END
+            ), 0)
+            FROM topic_articles ta3
+            JOIN articles a3 ON a3.id = ta3.article_id
+            WHERE ta3.topic_id = t.id
+              AND COALESCE(NULLIF(a3.region, ''), 'global') = 'jp'
+          ) AS recent,
+          i.importance,
+          i.summary,
+          i.tags,
+          i.perspectives
+        FROM topics t
+        LEFT JOIN topic_insights i ON i.topic_id = t.id
+        WHERE COALESCE(NULLIF(t.category,''), 'other') NOT IN ('news', 'market')
+          AND EXISTS (
+            SELECT 1
+            FROM topic_articles ta
+            JOIN articles a ON a.id = ta.article_id
+            WHERE ta.topic_id = t.id
+              AND COALESCE(NULLIF(a.region, ''), 'global') = 'jp'
+          )
+        ORDER BY COALESCE(i.importance,0) DESC, COALESCE(recent,0) DESC, t.id ASC
+        LIMIT 10
+        """,
+        (cutoff_48h,),
+    )
+    jp_priority_top = []
+    for tid, title, category, url, article_date, recent, importance, summary, tags, perspectives in cur.fetchall():
+        jp_priority_top.append({
+            "id": tid,
+            "title": title,
+            "category": category,
+            "url": url or "#",
+            "recent": int(recent or 0),
+            "importance": int(importance) if importance is not None else 0,
+            "summary": summary or "",
+            "tags": _safe_json_list(tags),
+            "perspectives": _safe_json_obj(perspectives),
+            "one_liner": "",
+            "date": article_date,
+        })
+
+    cur.execute(
+        """
+        SELECT
+          t.id,
+          COALESCE(t.title_ja, t.title) AS title,
+          COALESCE(NULLIF(t.category,''), 'other') AS category,
+          (
+            SELECT a2.url
+            FROM topic_articles ta2
+            JOIN articles a2 ON a2.id = ta2.article_id
+            WHERE ta2.topic_id = t.id
+            ORDER BY a2.id DESC
+            LIMIT 1
+          ) AS url,
+          (
+            SELECT COALESCE(
+              NULLIF(a2.published_at,''),
+              a2.fetched_at
+            )
+            FROM topic_articles ta2
+            JOIN articles a2 ON a2.id = ta2.article_id
+            WHERE ta2.topic_id = t.id
+            ORDER BY
+              CASE
+                WHEN COALESCE(NULLIF(a2.content,''), '') != '' THEN 0
+                ELSE 1
+              END,
+              datetime(a2.fetched_at) DESC,
+              datetime(COALESCE(NULLIF(a2.published_at,''), a2.fetched_at)) DESC,
+              a2.url ASC
+            LIMIT 1
+          ) AS article_date,
+          (
+            SELECT COALESCE(SUM(
+              CASE
+                WHEN datetime(
+                  substr(
+                    replace(replace(COALESCE(NULLIF(a3.published_at,''), a3.fetched_at),'T',' '),'+00:00',''),
+                    1, 19
+                  )
+                ) >= datetime(?) THEN 1
+                ELSE 0
+              END
+            ), 0)
+            FROM topic_articles ta3
+            JOIN articles a3 ON a3.id = ta3.article_id
+            WHERE ta3.topic_id = t.id
+              AND COALESCE(NULLIF(a3.region, ''), 'global') = 'jp'
+          ) AS recent,
+          i.importance,
+          i.summary,
+          i.tags,
+          i.perspectives
+        FROM topics t
+        LEFT JOIN topic_insights i ON i.topic_id = t.id
+        WHERE COALESCE(NULLIF(t.category,''), 'other') NOT IN ('news', 'market')
+          AND (
+            SELECT COALESCE(SUM(
+              CASE
+                WHEN datetime(
+                  substr(
+                    replace(replace(COALESCE(NULLIF(a3.published_at,''), a3.fetched_at),'T',' '),'+00:00',''),
+                    1, 19
+                  )
+                ) >= datetime(?) THEN 1
+                ELSE 0
+              END
+            ), 0)
+            FROM topic_articles ta3
+            JOIN articles a3 ON a3.id = ta3.article_id
+            WHERE ta3.topic_id = t.id
+              AND COALESCE(NULLIF(a3.region, ''), 'global') = 'jp'
+          ) > 0
+        ORDER BY COALESCE(recent,0) DESC, COALESCE(i.importance,0) DESC, t.id ASC
+        LIMIT 10
+        """,
+        (cutoff_48h, cutoff_48h),
+    )
+    jp_priority_trending_top = []
+    for tid, title, category, url, article_date, recent, importance, summary, tags, perspectives in cur.fetchall():
+        jp_priority_trending_top.append({
+            "id": tid,
+            "title": title,
+            "category": category,
+            "url": url or "#",
+            "recent": int(recent or 0),
+            "importance": int(importance) if importance is not None else 0,
+            "summary": summary or "",
+            "tags": _safe_json_list(tags),
+            "perspectives": _safe_json_obj(perspectives),
+            "one_liner": "",
+            "date": article_date,
+        })
+
     # --- UX改善①: カテゴリ横断TOP ---
     # Global Top 10: importance desc, recent desc, id asc（完全決定）
     TECH_CATS = {"ai", "dev", "security", "system", "manufacturing", "cloud", "data"}  # 必要に応じて調整
@@ -3003,6 +3240,8 @@ def main():
         hot_by_cat=hot_by_cat,
         generated_at=generated_at,
         meta=meta,
+        jp_priority_top=jp_priority_top,
+        jp_priority_trending_top=jp_priority_trending_top,
         global_top=global_top,
         trending_top=trending_top,
         market_top=market_top,
@@ -3025,6 +3264,8 @@ def main():
         hot_by_cat=hot_by_cat,
         generated_at=generated_at,
         meta=meta,
+        jp_priority_top=jp_priority_top,
+        jp_priority_trending_top=jp_priority_trending_top,
         global_top=global_top,
         trending_top=trending_top,
         market_top=market_top,

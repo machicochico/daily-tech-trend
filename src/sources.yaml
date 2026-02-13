@@ -394,7 +394,37 @@ sources:
   - id: meti-en
     name: METI (Japan) - English RSS
     category: policy
+    kind: tech
+    region: jp
     url: https://www.meti.go.jp/ml_index_en_atom.xml
+
+  - id: digital-agency-news
+    name: デジタル庁 お知らせ
+    category: policy
+    kind: news
+    region: jp
+    url: https://www.digital.go.jp/assets/contents/news/feed.xml
+
+  - id: soumu-press
+    name: 総務省 報道資料
+    category: policy
+    kind: news
+    region: jp
+    url: https://www.soumu.go.jp/menu_news/s-news/rss.xml
+
+  - id: nedo-news
+    name: NEDO ニュースリリース
+    category: industry
+    kind: news
+    region: jp
+    url: https://www.nedo.go.jp/rss/news.xml
+
+  - id: tokyo-smart-city
+    name: 東京都 デジタル・スマートシティ関連情報
+    category: policy
+    kind: news
+    region: jp
+    url: https://www.metro.tokyo.lg.jp/tosei/hodohappyo/rss.xml
 
   - id: eu-cbam
     name: European Commission - CBAM (Taxation and Customs Union)
@@ -410,6 +440,8 @@ sources:
   - id: env-japan
     name: Ministry of the Environment, Japan - Press Releases
     category: decarbonization_ops
+    kind: tech
+    region: jp
     url: https://www.env.go.jp/press/rss.xml
 
   - id: iso-lca
