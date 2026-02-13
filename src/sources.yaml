@@ -14,8 +14,10 @@ categories:
     name: 品質
   - id: maintenance
     name: 保全
-  - id: environment
-    name: 環境（CO2・規制）
+  - id: policy
+    name: 政策・規制（脱炭素）
+  - id: decarbonization_ops
+    name: 脱炭素オペレーション（算定・LCA）
   - id: security
     name: セキュリティ
   - id: market
@@ -245,16 +247,37 @@ sources:
     category: maintenance
     url: https://fiixsoftware.com/blog/feed/
 
-  # --- 環境（CO2・規制） ---
+  # --- 政策・規制（脱炭素） ---
   - id: eu-clima
     name: European Commission - DG CLIMA
-    category: environment
+    category: policy
     url: https://ec.europa.eu/newsroom/clima/feed?item_type_id=1536&lang=en&orderby=item_date
 
   - id: meti-en
     name: METI (Japan) - English RSS
-    category: environment
+    category: policy
     url: https://www.meti.go.jp/ml_index_en_atom.xml
+
+  - id: eu-cbam
+    name: European Commission - CBAM (Taxation and Customs Union)
+    category: policy
+    url: https://ec.europa.eu/newsroom/taxation_customs/feed?item_type_id=1536&lang=en&orderby=item_date
+
+  # --- 脱炭素オペレーション（算定・LCA） ---
+  - id: ghg-protocol
+    name: GHG Protocol Updates
+    category: decarbonization_ops
+    url: https://ghgprotocol.org/blog/feed
+
+  - id: env-japan
+    name: Ministry of the Environment, Japan - Press Releases
+    category: decarbonization_ops
+    url: https://www.env.go.jp/press/rss.xml
+
+  - id: iso-lca
+    name: ISO News (LCA/Standards primary source)
+    category: decarbonization_ops
+    url: https://www.iso.org/contents/news/all.rss
 
   # --- 開発 ---
   - id: github-blog
