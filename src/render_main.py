@@ -1858,11 +1858,19 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None):
         items = []
         for r in rows:
             # fetch_news_articles_by_category() のSELECT順に合わせる
-            (
-                article_id, title, url, source, category, dt,
-                importance, typ, summary, key_points, perspectives, tags, evidence_urls,
-                is_representative,
-            ) = r
+            # （旧実装: 14列, 現実装: 13列）
+            if len(r) == 14:
+                (
+                    article_id, title, url, source, category, dt,
+                    importance, typ, summary, key_points, perspectives, tags, evidence_urls,
+                    is_representative,
+                ) = r
+            else:
+                (
+                    article_id, title, url, source, category, dt,
+                    importance, typ, summary, key_points, perspectives, tags, evidence_urls,
+                ) = r
+                is_representative = 0
 
             # フィルタ/検索向けのタグは LLM tags を優先し、無い場合はフォールバック
             llm_tags = _safe_json_list(tags)
