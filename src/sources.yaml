@@ -14,6 +14,8 @@ categories:
     name: 品質
   - id: maintenance
     name: 保全
+  - id: smart_factory
+    name: スマートファクトリー（導入事例）
   - id: policy
     name: 政策・規制（脱炭素）
   - id: decarbonization_ops
@@ -291,6 +293,42 @@ sources:
     kind: tech
     region: global
     url: https://blogs.sw.siemens.com/feed/
+
+  # --- スマートファクトリー（設備OEM / 産業SIer / クラウド導入事例） ---
+  - id: siemens-case-studies
+    name: "[設備OEM] Siemens Customer Services"
+    category: smart_factory
+    kind: tech
+    region: global
+    url: https://blogs.sw.siemens.com/feed/
+
+  - id: schneider-smart-factory
+    name: "[設備OEM] Schneider Electric"
+    category: smart_factory
+    kind: tech
+    region: global
+    url: https://blog.se.com/feed/
+
+  - id: nttdata-manufacturing
+    name: "[産業SIer] NTT DATA Manufacturing"
+    category: smart_factory
+    kind: tech
+    region: jp
+    url: https://www.nttdata.com/global/en/-/media/nttdataglobal/feed.xml
+
+  - id: aws-manufacturing-blog
+    name: "[クラウド] AWS Industries - Manufacturing"
+    category: smart_factory
+    kind: tech
+    region: global
+    url: https://aws.amazon.com/blogs/industries/category/manufacturing/feed/
+
+  - id: azure-industrial-iot
+    name: "[クラウド] Microsoft Azure IoT Blog"
+    category: smart_factory
+    kind: tech
+    region: global
+    url: https://azure.microsoft.com/en-us/blog/topics/internet-of-things/feed/
 
   # --- 高炉 ---
   - id: worldsteel-ironmaking
