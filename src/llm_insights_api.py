@@ -371,6 +371,7 @@ def call_llm(topic_title, category, url, body, kind: str | None = None):
         "key_pointsは入力textに明記された事実のみ。推測・解釈・一般論は禁止。"
         "evidence_urlsは必ず1つ以上で、入力のevidence_urlを必ず含める。"
         "tagsは1〜5個の配列。短い名詞。重複禁止。本文/要約から抽出。足りない場合は推測で補ってよい。"
+        "OT/セキュリティ関連では tags に sbom / patch_window / safety_impact を含めることを優先する。"
         "算定・規制関連トピックでは、算定対象範囲(scope)と報告義務(reporting_obligation)を必ず抽出する。"
         "必須キー: importance(int), type(string), summary(string), key_points(array[3]), perspectives(object), tags(array[1..5]), evidence_urls(array[>=1]), compliance(object)。"
         "perspectivesの各コメントは推論可。"
@@ -384,7 +385,7 @@ def call_llm(topic_title, category, url, body, kind: str | None = None):
         "summary": "日本語100字以内の要約1行（結論→理由の順）",
         "key_points": ["本文に明記された事実1", "本文に明記された事実2", "本文に明記された事実3"],
         "perspectives": {"engineer": "技術者目線のコメント（50字以内）", "management": "経営者目線のコメント（50字以内）", "consumer": "消費者目線のコメント（50字以内）"},
-        "tags": ["1〜5個"],
+        "tags": ["1〜5個。OT/セキュリティ関連では sbom, patch_window, safety_impact を含める"],
         "evidence_urls": ["根拠URL（最低1つ）"],
         "compliance": {"scope": "算定対象範囲（例: Scope1/2/3、対象製品、対象拠点）。不明なら'不明'", "reporting_obligation": "報告義務（対象事業者、期限、制度名など）。不明なら'不明'"},
     }
