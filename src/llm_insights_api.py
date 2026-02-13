@@ -12,6 +12,7 @@ _SESSION = requests.Session()
 _LMSTUDIO_READY = False
 _AUTOSTART_ATTEMPTED = False
 _SELECTED_MODEL = None
+_FAILED_MODELS = set()
 
 
 def _is_lmstudio_ready(timeout: float = 2.0) -> bool:
@@ -38,37 +39,60 @@ def _extract_model_ids(data: dict) -> list[str]:
     return ids
 
 
-def _pick_usable_model(timeout: float = 4.0) -> str:
-    global _SELECTED_MODEL
-    if _SELECTED_MODEL:
-        return _SELECTED_MODEL
+def _available_models(timeout: float = 4.0) -> list[str]:
+    r = _SESSION.get(_models_url(), timeout=timeout)
+    if r.status_code >= 400:
+        raise RuntimeError(f"HTTP {r.status_code}")
+    return _extract_model_ids(r.json())
 
+
+def _pick_model_candidates(timeout: float = 4.0) -> list[str]:
     requested = (os.getenv("LMSTUDIO_MODEL") or DEFAULT_MODEL).strip() or DEFAULT_MODEL
     fallback = (os.getenv("LMSTUDIO_FALLBACK_MODEL") or "").strip()
 
     try:
-        r = _SESSION.get(_models_url(), timeout=timeout)
-        if r.status_code >= 400:
-            raise RuntimeError(f"HTTP {r.status_code}")
-        model_ids = _extract_model_ids(r.json())
+        model_ids = _available_models(timeout=timeout)
     except Exception:
-        _SELECTED_MODEL = requested
-        return _SELECTED_MODEL
+        model_ids = []
 
-    if requested in model_ids:
-        _SELECTED_MODEL = requested
-        return _SELECTED_MODEL
-    if fallback and fallback in model_ids:
-        _SELECTED_MODEL = fallback
-        print(f"[WARN] requested LMSTUDIO_MODEL '{requested}' is unavailable; using fallback '{fallback}'")
-        return _SELECTED_MODEL
+    candidates = []
+
+    def _add(mid: str):
+        if mid and (mid not in candidates) and (mid not in _FAILED_MODELS):
+            candidates.append(mid)
+
+    _add(_SELECTED_MODEL or "")
+
     if model_ids:
-        _SELECTED_MODEL = model_ids[0]
-        print(f"[WARN] requested LMSTUDIO_MODEL '{requested}' is unavailable; using loaded model '{_SELECTED_MODEL}'")
-        return _SELECTED_MODEL
+        if requested in model_ids:
+            _add(requested)
+        if fallback and fallback in model_ids:
+            _add(fallback)
+        for mid in model_ids:
+            _add(mid)
+        _add(requested)
+        _add(fallback)
+    else:
+        _add(requested)
+        _add(fallback)
 
-    _SELECTED_MODEL = requested
-    return _SELECTED_MODEL
+    if not candidates:
+        candidates = [requested]
+
+    return candidates
+
+
+def _pick_usable_model(timeout: float = 4.0) -> str:
+    return _pick_model_candidates(timeout=timeout)[0]
+
+
+def _is_model_load_error(detail) -> bool:
+    msg = str(detail).lower()
+    return (
+        "failed to load model" in msg
+        or "erroroutofdevicememory" in msg
+        or "out of memory" in msg
+    )
 
 
 def _ensure_lmstudio_ready() -> None:
@@ -118,26 +142,42 @@ def _get_lm_content(resp: requests.Response) -> str:
 
 
 def post_lmstudio(payload: dict, timeout: int, retries: int = 2, backoff_sec: float = 0.8):
+    global _SELECTED_MODEL
     _ensure_lmstudio_ready()
     body = dict(payload)
-    body["model"] = _pick_usable_model()
     last_err = None
+
     for i in range(retries + 1):
-        try:
-            r = _SESSION.post(LMSTUDIO_URL, json=body, timeout=timeout)
-            if r.status_code >= 400:
-                try:
-                    detail = r.json()
-                except Exception:
-                    detail = r.text
-                raise RuntimeError(f"LMStudio HTTP {r.status_code}: {detail}")
-            return r
-        except Exception as e:
-            last_err = e
-            if i < retries:
-                time.sleep(backoff_sec * (i + 1))
-                continue
-            raise
+        candidates = _pick_model_candidates()
+        for model in candidates:
+            body["model"] = model
+            try:
+                r = _SESSION.post(LMSTUDIO_URL, json=body, timeout=timeout)
+                if r.status_code >= 400:
+                    try:
+                        detail = r.json()
+                    except Exception:
+                        detail = r.text
+                    if _is_model_load_error(detail):
+                        _FAILED_MODELS.add(model)
+                        if _SELECTED_MODEL == model:
+                            _SELECTED_MODEL = None
+                        print(f"[WARN] model '{model}' failed to load on LM Studio; trying another loaded model")
+                        continue
+                    raise RuntimeError(f"LMStudio HTTP {r.status_code}: {detail}")
+
+                _SELECTED_MODEL = model
+                return r
+            except Exception as e:
+                last_err = e
+
+        if i < retries:
+            time.sleep(backoff_sec * (i + 1))
+            continue
+
+    if last_err:
+        raise last_err
+    raise RuntimeError("LMStudio request failed: no model candidate succeeded")
 
 
 def _extract_json_object(text: str) -> str | None:
