@@ -39,6 +39,8 @@ class DummySession:
 def _reset_flags():
     llm_insights_api._LMSTUDIO_READY = False
     llm_insights_api._AUTOSTART_ATTEMPTED = False
+    llm_insights_api._SELECTED_MODEL = None
+    llm_insights_api._FAILED_MODELS = set()
 
 
 def test_post_lmstudio_uses_existing_running_server(monkeypatch):
@@ -83,3 +85,82 @@ def test_post_lmstudio_autostarts_and_waits_until_ready(monkeypatch):
     assert launched["ok"]
     assert res.status_code == 200
     assert session.post_calls == 1
+
+
+class DummyModelSession(DummySession):
+    def __init__(self, model_ids):
+        super().__init__(get_results=[200])
+        self.model_ids = model_ids
+
+    def get(self, *_args, **_kwargs):
+        return DummyResponse(status_code=200, payload={"data": [{"id": m} for m in self.model_ids]})
+
+
+def test_pick_usable_model_prefers_requested(monkeypatch):
+    _reset_flags()
+    monkeypatch.setattr(llm_insights_api, "_SESSION", DummyModelSession(["openai/gpt-oss-20b", "other/model"]))
+    monkeypatch.delenv("LMSTUDIO_MODEL", raising=False)
+
+    model = llm_insights_api._pick_usable_model()
+
+    assert model == "openai/gpt-oss-20b"
+
+
+def test_pick_usable_model_falls_back_to_loaded_first(monkeypatch):
+    _reset_flags()
+    monkeypatch.setattr(llm_insights_api, "_SESSION", DummyModelSession(["local/model-a", "local/model-b"]))
+    monkeypatch.setenv("LMSTUDIO_MODEL", "openai/gpt-oss-20b")
+
+    model = llm_insights_api._pick_usable_model()
+
+    assert model == "local/model-a"
+
+
+def test_post_lmstudio_overrides_unavailable_requested_model(monkeypatch):
+    _reset_flags()
+
+    class HybridSession:
+        def __init__(self):
+            self.post_model = None
+
+        def get(self, *_args, **_kwargs):
+            return DummyResponse(status_code=200, payload={"data": [{"id": "local/model-a"}]})
+
+        def post(self, *_args, **kwargs):
+            self.post_model = kwargs["json"]["model"]
+            return DummyResponse()
+
+    session = HybridSession()
+    monkeypatch.setattr(llm_insights_api, "_SESSION", session)
+    monkeypatch.setenv("LMSTUDIO_MODEL", "openai/gpt-oss-20b")
+
+    llm_insights_api.post_lmstudio({"model": "openai/gpt-oss-20b"}, timeout=1, retries=0)
+
+    assert session.post_model == "local/model-a"
+
+
+def test_post_lmstudio_retries_with_another_model_on_oom(monkeypatch):
+    _reset_flags()
+
+    class OOMThenSuccessSession:
+        def __init__(self):
+            self.calls = []
+
+        def get(self, *_args, **_kwargs):
+            return DummyResponse(status_code=200, payload={"data": [{"id": "openai/gpt-oss-20b"}, {"id": "local/small-model"}]})
+
+        def post(self, *_args, **kwargs):
+            model = kwargs["json"]["model"]
+            self.calls.append(model)
+            if model == "openai/gpt-oss-20b":
+                return DummyResponse(status_code=400, payload={"error": "Failed to load model: vk::Queue::submit: ErrorOutOfDeviceMemory"})
+            return DummyResponse()
+
+    session = OOMThenSuccessSession()
+    monkeypatch.setattr(llm_insights_api, "_SESSION", session)
+    monkeypatch.setenv("LMSTUDIO_MODEL", "openai/gpt-oss-20b")
+
+    res = llm_insights_api.post_lmstudio({"model": "openai/gpt-oss-20b"}, timeout=1, retries=0)
+
+    assert res.status_code == 200
+    assert session.calls == ["openai/gpt-oss-20b", "local/small-model"]

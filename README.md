@@ -10,3 +10,11 @@
 - `LMSTUDIO_AUTOSTART_WAIT_SEC`: 起動待ち秒数（デフォルト `45`）
 
 未指定の場合は、従来通りエラー終了します。
+
+- `LMSTUDIO_MODEL`: 利用したいモデルID（デフォルト: `openai/gpt-oss-20b`）
+- `LMSTUDIO_FALLBACK_MODEL`: `LMSTUDIO_MODEL` が未ロード時に優先する代替モデルID（任意）
+
+`LMSTUDIO_MODEL` が LM Studio 側で未ロードの場合は、`LMSTUDIO_FALLBACK_MODEL`、それも無ければ `/v1/models` の先頭モデルに自動フォールバックします。
+
+
+LM Studio が `Failed to load model` / `ErrorOutOfDeviceMemory` を返した場合は、そのモデルを除外して別のロード済みモデルへ自動で再試行します。
