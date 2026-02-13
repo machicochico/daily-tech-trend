@@ -45,12 +45,44 @@ sources:
   - id: cisa-all
     name: CISA Cybersecurity Advisories
     category: security
+    subcategory: security_ot
     url: https://www.cisa.gov/cybersecurity-advisories/all.xml
 
   - id: jpcert
     name: JPCERT/CC
     category: security
+    subcategory: security_ot
     url: https://www.jpcert.or.jp/rss/jpcert-all.rdf
+
+  - id: cisa-ics-advisories
+    name: CISA ICS Advisories
+    category: security
+    subcategory: security_ot
+    url: https://www.cisa.gov/cybersecurity-advisories/ics-advisories.xml
+
+  - id: cisa-ics-medical-advisories
+    name: CISA ICS Medical Advisories
+    category: security
+    subcategory: security_ot
+    url: https://www.cisa.gov/cybersecurity-advisories/ics-medical-advisories.xml
+
+  - id: cisa-ics-mitigation-guides
+    name: CISA ICS Recommended Practices / Mitigation Guides
+    category: security
+    subcategory: security_ot
+    url: https://www.cisa.gov/cybersecurity-advisories/ics-recommended-practices.xml
+
+  - id: cisa-sbom
+    name: CISA SBOM Resources
+    category: security
+    subcategory: security_ot
+    url: https://www.cisa.gov/sbom.xml
+
+  - id: cisa-known-exploited-vulns
+    name: CISA Known Exploited Vulnerabilities Catalog
+    category: security
+    subcategory: security_ot
+    url: https://www.cisa.gov/known-exploited-vulnerabilities-catalog.xml
 
   # --- 標準化・規格 ---
   - id: iso-news
