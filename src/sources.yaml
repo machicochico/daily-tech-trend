@@ -185,18 +185,58 @@ sources:
     url: https://worldsteel.org/feed/
 
   - id: jfe-holdings
-    name: JFE Holdings Releases
+    name: JFEホールディングス
     category: manufacturing
     url: https://www.jfe-holdings.co.jp/rss/release.xml
 
+  - id: nippon-steel
+    name: 日本製鉄
+    category: manufacturing
+    url: https://www.nipponsteel.com/news/rss.xml
+
+  - id: kobe-steel
+    name: 神戸製鋼所
+    category: manufacturing
+    url: https://www.kobelco.co.jp/rss/news.xml
+
+  - id: posco-holdings
+    name: POSCO Holdings
+    category: manufacturing
+    url: https://www.posco-inc.com:4451/poscoinc/v2/company/news_en/feed
+
+  - id: arcelormittal
+    name: ArcelorMittal
+    category: manufacturing
+    url: https://corporate.arcelormittal.com/media/news-articles/rss
+
+  - id: nucor
+    name: Nucor
+    category: manufacturing
+    url: https://nucor.com/rss/news.xml
+
+  - id: us-steel
+    name: U.S. Steel
+    category: manufacturing
+    url: https://www.ussteel.com/rss/news.xml
+
+  - id: tata-steel
+    name: Tata Steel
+    category: manufacturing
+    url: https://www.tatasteel.com/media/newsroom/press-releases/rss.xml
+
+  - id: thyssenkrupp-steel
+    name: thyssenkrupp Steel
+    category: manufacturing
+    url: https://www.thyssenkrupp-steel.com/en/newsroom/rss.xml
+
   # 既存（製造/OT・ICSも残す）
   - id: mhi
-    name: Mitsubishi Heavy Industries News
+    name: 三菱重工業
     category: manufacturing
     url: https://www.mhi.com/rss/mhi_news.xml
 
   - id: siemens-cert
-    name: Siemens ProductCERT Advisories
+    name: Siemens
     category: manufacturing
     url: https://www.siemens.com/cert/rss/advisories.xml
 
@@ -225,28 +265,28 @@ sources:
     url: https://www.iiot-world.com/feed/
 
   - id: inductive-automation-blog
-    name: "[SCADA Vendor] Inductive Automation Blog"
+    name: Inductive Automation
     category: manufacturing
     kind: tech
     region: global
     url: https://inductiveautomation.com/blog/rss.xml
 
   - id: aveva-insight
-    name: "[SCADA Vendor] AVEVA Insights"
+    name: AVEVA
     category: manufacturing
     kind: tech
     region: global
     url: https://www.aveva.com/en/perspectives/blog/rss/
 
   - id: rockwell-blog
-    name: "[MES Vendor] Rockwell Automation Blog"
+    name: Rockwell Automation
     category: manufacturing
     kind: tech
     region: global
     url: https://www.rockwellautomation.com/en-us/company/news/blogs.feed.xml
 
   - id: siemens-industry-blog
-    name: "[MES/SCADA Vendor] Siemens Industry Blog"
+    name: Siemens
     category: manufacturing
     kind: tech
     region: global

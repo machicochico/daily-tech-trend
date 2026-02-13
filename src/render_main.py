@@ -124,6 +124,9 @@ TECH_EXTRA_CSS = r"""
     .top-col h3{margin:0 0 8px;font-size:14px}
     .top-list{margin:0;padding-left:18px}
     .mini{color:#666;font-size:12px;margin-top:2px}
+    .source-table{width:100%;border-collapse:collapse;font-size:13px}
+    .source-table th,.source-table td{padding:6px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+    .source-table th.num,.source-table td.num{text-align:right;white-space:nowrap}
 
     .quick-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
     #q{padding:6px 10px;border:1px solid var(--border);border-radius:10px;min-width:260px}
@@ -555,6 +558,35 @@ HTML = r"""
     </div>
   </section>
   {% endif %}
+
+  <section class="top-col" style="margin:0 0 16px;">
+    <h3>🏭 Source露出（競合比較）</h3>
+    <div class="small" style="margin-bottom:8px">同一企業名で集計（全期間 / 48h）</div>
+    {% if source_exposure and source_exposure|length > 0 %}
+      <table class="source-table">
+        <thead>
+          <tr>
+            <th>企業</th>
+            <th class="num">露出</th>
+            <th class="num">48h</th>
+            <th>主カテゴリ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in source_exposure %}
+            <tr>
+              <td>{{ s.source }}</td>
+              <td class="num">{{ s.total }}</td>
+              <td class="num">{{ s.recent48 }}</td>
+              <td>{{ s.categories }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="meta">該当ソースなし</div>
+    {% endif %}
+  </section>
 
     {% for cat in categories %}
   <section class="category-section" id="cat-{{ cat.id }}">
@@ -2489,6 +2521,40 @@ def main():
     )
     new_articles_48h = int(cur.fetchone()[0] or 0)
 
+    cur.execute(
+        """
+        SELECT
+          COALESCE(NULLIF(source,''), '') AS source,
+          COUNT(*) AS total,
+          SUM(
+            CASE
+              WHEN datetime(COALESCE(NULLIF(published_at,''), fetched_at)) >= datetime(?) THEN 1
+              ELSE 0
+            END
+          ) AS recent48,
+          GROUP_CONCAT(DISTINCT COALESCE(NULLIF(category,''), 'other')) AS categories
+        FROM articles
+        WHERE kind='tech'
+          AND COALESCE(NULLIF(source,''), '') != ''
+        GROUP BY source
+        ORDER BY total DESC, recent48 DESC, source ASC
+        LIMIT 15
+        """,
+        (cutoff_48h,),
+    )
+    source_exposure = []
+    for source, total, recent48, categories_str in cur.fetchall():
+        cat_ids = [c for c in (categories_str or "").split(",") if c]
+        category_labels = [cat_name.get(c, c) for c in cat_ids[:3]]
+        source_exposure.append(
+            {
+                "source": source,
+                "total": int(total or 0),
+                "recent48": int(recent48 or 0),
+                "categories": " / ".join(category_labels) if category_labels else "-",
+            }
+        )
+
     # RSS数（sources.yamlから拾える範囲でカウント。取れなければ0）
     rss_sources = 0
     try:
@@ -2881,6 +2947,7 @@ def main():
         market_top=market_top,
         market_trending_top=market_trending_top,
         tag_list=tag_list,
+        source_exposure=source_exposure,
         fmt_date=fmt_date,
     )
 
@@ -2900,6 +2967,7 @@ def main():
         market_top=market_top,
         market_trending_top=market_trending_top,
         tag_list=tag_list,
+        source_exposure=source_exposure,
         fmt_date=fmt_date,
     )
 
