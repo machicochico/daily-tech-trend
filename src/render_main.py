@@ -1205,7 +1205,8 @@ NEWS_HTML = r"""
               data-imp="{{ it.importance or 0 }}"
               data-date="{{ it.dt }}"
               data-tags="{{ it.tags|default([])|join(',') }}">
-            <span class="badge imp">重要度 {{ it.importance or 0 }}</span>            
+            <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
+            {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}            
             <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
             <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">open</a>
             <span class="date">{{ it.dt_jst }}</span>
@@ -1234,7 +1235,8 @@ NEWS_HTML = r"""
               data-imp="{{ it.importance or 0 }}"
               data-date="{{ it.dt }}"
               data-tags="{{ it.tags|default([])|join(',') }}">
-            <span class="badge imp">重要度 {{ it.importance or 0 }}</span>           
+            <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
+            {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}           
             <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
             <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">open</a>
             <span class="date">{{ it.dt_jst }}</span>
@@ -1280,6 +1282,7 @@ NEWS_HTML = r"""
 
            <div>
             <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
+            {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}
             <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a>
             <span class="date">{{ it.dt_jst }}</span>
 
@@ -1343,6 +1346,30 @@ NEWS_HTML = r"""
           </li>
 
         {% endfor %}
+        {% if sec.other_rows and sec.other_rows|length > 0 %}
+          <li class="topic-row">
+            <details class="insight">
+              <summary class="small">その他 {{ sec.other_rows|length }} 件を表示</summary>
+              <ul>
+                {% for it in sec.other_rows %}
+                  <li id="news-{{ it.id }}" class="topic-row"
+                    data-title="{{ it.title|e }}"
+                    data-summary="{{ (it.summary or '')|e }}"
+                    data-imp="{{ it.importance or 0 }}"
+                    data-date="{{ it.dt }}"
+                    data-tags="{{ it.tags|default([])|join(',') }}">
+                    <div>
+                      <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
+                      <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a>
+                      <span class="date">{{ it.dt_jst }}</span>
+                    </div>
+                    {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </details>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </section>
@@ -1833,7 +1860,8 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None):
             # fetch_news_articles_by_category() のSELECT順に合わせる
             (
                 article_id, title, url, source, category, dt,
-                importance, typ, summary, key_points, perspectives, tags, evidence_urls
+                importance, typ, summary, key_points, perspectives, tags, evidence_urls,
+                is_representative,
             ) = r
 
             # フィルタ/検索向けのタグは LLM tags を優先し、無い場合はフォールバック
@@ -1860,7 +1888,12 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None):
                 "perspectives": _safe_json_obj(perspectives),
                 "tags": llm_tags,
                 "evidence_urls": _safe_json_list(evidence_urls),
+                "is_representative": int(is_representative or 0),
             })
+
+        items.sort(key=lambda x: (x.get("is_representative", 0), x.get("dt") or "", x.get("id", 0)), reverse=True)
+        representative_items = [it for it in items if it.get("is_representative", 0) == 1]
+        other_items = [it for it in items if it.get("is_representative", 0) != 1]
 
         recent48 = 0
         if cutoff_dt:
@@ -1879,9 +1912,11 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None):
         sections.append({
             "title": title,
             "count": len(items),
+            "rep_count": len(representative_items),
             "recent48": recent48,
             "point": NEWS_SECTION_POINTS.get(cat, ""),
-            "rows": items,
+            "rows": representative_items,
+            "other_rows": other_items,
             "anchor": cat,
             "tech_link": tech_link[0] if tech_link else None,
             "tech_label": tech_link[1] if tech_link else None,
