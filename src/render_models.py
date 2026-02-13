@@ -14,6 +14,7 @@ NAME_MAP = {
     "quality": "品質",
     "maintenance": "保全",
     "security": "セキュリティ",
+    "standards": "標準化・規格",
     "ai": "AI",
     "dev": "開発",
     "other": "その他",
@@ -65,7 +66,7 @@ def build_categories_fallback(cur) -> list[dict[str, str]]:
         cur.execute("SELECT DISTINCT category FROM articles WHERE category IS NOT NULL AND category != ''")
         cats = [r[0] for r in cur.fetchall()]
     if not cats:
-        cats = ["other"]
+        cats = ["standards", "other"]
     return [{"id": c, "name": NAME_MAP.get(c, c)} for c in cats]
 
 
@@ -78,5 +79,8 @@ def ensure_category_coverage(cur, categories: list[dict[str, str]]) -> list[dict
             categories.append({"id": c, "name": NAME_MAP.get(c, c)})
             ids.add(c)
     if not categories:
-        categories = [{"id": "other", "name": NAME_MAP["other"]}]
+        categories = [
+            {"id": "standards", "name": NAME_MAP["standards"]},
+            {"id": "other", "name": NAME_MAP["other"]},
+        ]
     return categories

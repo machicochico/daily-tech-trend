@@ -20,6 +20,8 @@ categories:
     name: 脱炭素オペレーション（算定・LCA）
   - id: security
     name: セキュリティ
+  - id: standards
+    name: 標準化・規格
   - id: market
     name: 市況（コモディティ・海運・スクラップ）
   - id: ai
@@ -49,6 +51,32 @@ sources:
     name: JPCERT/CC
     category: security
     url: https://www.jpcert.or.jp/rss/jpcert-all.rdf
+
+  # --- 標準化・規格 ---
+  - id: iso-news
+    name: ISO News
+    category: standards
+    url: https://www.iso.org/contents/news/all.rss
+
+  - id: iec-news
+    name: IEC Newsroom
+    category: standards
+    url: https://www.iec.ch/newsroom/rss.xml
+
+  - id: nist-news
+    name: NIST News
+    category: standards
+    url: https://www.nist.gov/news-events/news/rss.xml
+
+  - id: enisa-news
+    name: ENISA News
+    category: standards
+    url: https://www.enisa.europa.eu/news/enisa-news/RSS
+
+  - id: jisc-news
+    name: JISC News (JIS)
+    category: standards
+    url: https://www.jisc.go.jp/newstopics/rss.xml
 
   # --- 市況（コモディティ・港湾/海運・スクラップ指数） ---
   - id: oilprice-commodities
