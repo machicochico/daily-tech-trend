@@ -8,6 +8,11 @@ import yaml
 NAME_MAP = {
     "system": "システム",
     "manufacturing": "製造",
+    "blast_furnace": "高炉",
+    "eaf": "電炉",
+    "rolling": "圧延",
+    "quality": "品質",
+    "maintenance": "保全",
     "security": "セキュリティ",
     "ai": "AI",
     "dev": "開発",
