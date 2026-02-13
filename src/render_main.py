@@ -127,6 +127,7 @@ TECH_EXTRA_CSS = r"""
     .source-table{width:100%;border-collapse:collapse;font-size:13px}
     .source-table th,.source-table td{padding:6px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
     .source-table th.num,.source-table td.num{text-align:right;white-space:nowrap}
+    .warn-text{color:#b91c1c;font-weight:700}
 
     .quick-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
     #q{padding:6px 10px;border:1px solid var(--border);border-radius:10px;min-width:260px}
@@ -585,6 +586,37 @@ HTML = r"""
       </table>
     {% else %}
       <div class="meta">該当ソースなし</div>
+    {% endif %}
+  </section>
+
+  <section class="top-col" style="margin:0 0 16px;">
+    <h3>🧭 カテゴリ別 一次情報比率</h3>
+    <div class="small" style="margin-bottom:8px">一次情報率 = primary / 全記事（tech）。閾値 {{ (primary_ratio_threshold * 100)|round(0)|int }}% 未満は警告表示。</div>
+    {% if primary_ratio_by_category and primary_ratio_by_category|length > 0 %}
+      <table class="source-table">
+        <thead>
+          <tr>
+            <th>カテゴリ</th>
+            <th class="num">一次情報率</th>
+            <th class="num">primary</th>
+            <th class="num">total</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in primary_ratio_by_category %}
+            <tr>
+              <td>{{ cat_name.get(r.category, r.category) }}</td>
+              <td class="num">{{ r.ratio_pct }}%</td>
+              <td class="num">{{ r.primary_count }}</td>
+              <td class="num">{{ r.total_count }}</td>
+              <td>{% if r.warn %}<span class="warn-text">⚠ 閾値未達</span>{% else %}OK{% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="meta">カテゴリ集計対象なし</div>
     {% endif %}
   </section>
 
@@ -2555,6 +2587,35 @@ def main():
             }
         )
 
+    primary_ratio_threshold = float(os.environ.get("PRIMARY_RATIO_THRESHOLD", "0.5") or "0.5")
+
+    cur.execute(
+        """
+        SELECT
+          COALESCE(NULLIF(category,''), 'other') AS category,
+          COUNT(*) AS total_count,
+          SUM(CASE WHEN COALESCE(NULLIF(source_tier,''), 'secondary') = 'primary' THEN 1 ELSE 0 END) AS primary_count
+        FROM articles
+        WHERE kind='tech'
+        GROUP BY COALESCE(NULLIF(category,''), 'other')
+        ORDER BY total_count DESC, category ASC
+        """
+    )
+    primary_ratio_by_category = []
+    for category, total_count, primary_count in cur.fetchall():
+        total_count = int(total_count or 0)
+        primary_count = int(primary_count or 0)
+        ratio = (primary_count / total_count) if total_count else 0.0
+        primary_ratio_by_category.append(
+            {
+                "category": category,
+                "total_count": total_count,
+                "primary_count": primary_count,
+                "ratio_pct": round(ratio * 100, 1),
+                "warn": ratio < primary_ratio_threshold,
+            }
+        )
+
     # RSS数（sources.yamlから拾える範囲でカウント。取れなければ0）
     rss_sources = 0
     try:
@@ -2948,6 +3009,8 @@ def main():
         market_trending_top=market_trending_top,
         tag_list=tag_list,
         source_exposure=source_exposure,
+        primary_ratio_by_category=primary_ratio_by_category,
+        primary_ratio_threshold=primary_ratio_threshold,
         fmt_date=fmt_date,
     )
 
@@ -2968,6 +3031,8 @@ def main():
         market_trending_top=market_trending_top,
         tag_list=tag_list,
         source_exposure=source_exposure,
+        primary_ratio_by_category=primary_ratio_by_category,
+        primary_ratio_threshold=primary_ratio_threshold,
         fmt_date=fmt_date,
     )
 
