@@ -3,8 +3,8 @@ from datetime import datetime, timezone
 from rapidfuzz import fuzz
 from db import connect
 
-# ★ 閾値を少し下げる（集まりやすくする）
-TOPIC_SIM = 82
+# トピック統合が粗くなりすぎないよう、統合閾値を引き上げる
+TOPIC_SIM = 88
 
 # 比較対象を増やしすぎないため、各カテゴリで直近の topic をこの件数だけ比較
 CANDIDATE_TOPICS_PER_CAT = 400
