@@ -9,6 +9,10 @@ from collect import (
     should_fetch_fulltext,
     should_route_to_low_priority,
     resolve_week_key,
+    is_arxiv_feed,
+    matches_manufacturing_keywords,
+    build_manufacturing_keyword_pattern,
+    load_manufacturing_keywords,
 )
 
 
@@ -58,3 +62,28 @@ def test_should_route_to_low_priority_only_when_new_and_limit_exceeded():
     assert should_route_to_low_priority(is_new=True, current_new_count=5, weekly_limit=5)
     assert not should_route_to_low_priority(is_new=False, current_new_count=99, weekly_limit=1)
     assert not should_route_to_low_priority(is_new=True, current_new_count=1, weekly_limit=None)
+
+
+
+def test_is_arxiv_feed_detects_source_vendor_or_url():
+    assert is_arxiv_feed({"source": "arXiv AI (cs.AI)"})
+    assert is_arxiv_feed({"vendor": "arXiv"})
+    assert is_arxiv_feed({"url": "http://export.arxiv.org/rss/cs.LG"})
+    assert not is_arxiv_feed({"source": "OpenAI News", "url": "https://openai.com/news/rss.xml"})
+
+
+def test_matches_manufacturing_keywords_works_with_external_dictionary(tmp_path):
+    keywords_file = tmp_path / "keywords.yaml"
+    keywords_file.write_text("keywords:\n  - steel\n  - 高炉\n", encoding="utf-8")
+
+    load_manufacturing_keywords.cache_clear()
+    build_manufacturing_keyword_pattern.cache_clear()
+
+    assert load_manufacturing_keywords(str(keywords_file)) == ("steel", "高炉")
+    assert build_manufacturing_keyword_pattern(str(keywords_file)).search("new steel process")
+
+    assert matches_manufacturing_keywords("Advanced Steel Control", "")
+    assert not matches_manufacturing_keywords("Large Language Models", "benchmark only")
+
+    load_manufacturing_keywords.cache_clear()
+    build_manufacturing_keyword_pattern.cache_clear()
