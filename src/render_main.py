@@ -928,7 +928,11 @@ NEWS_HTML = r"""
             <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
             <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">開く</a>
             <span class="date">{{ it.dt_jst }}</span>
-            <div class="small">算出根拠（簡易）: {{ it.importance_basis }}</div>
+            <details class="insight">
+              <summary class="small">要約・解説を表示</summary>
+              {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
+              <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
+            </details>
 
             {% if it.tags and it.tags|length>0 %}
               <span class="small">
@@ -959,7 +963,11 @@ NEWS_HTML = r"""
             <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
             <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">開く</a>
             <span class="date">{{ it.dt_jst }}</span>
-            <div class="small">算出根拠（簡易）: {{ it.importance_basis }}</div>
+            <details class="insight">
+              <summary class="small">要約・解説を表示</summary>
+              {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
+              <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
+            </details>
 
             {% if it.tags and it.tags|length>0 %}
               <span class="small">
@@ -1005,8 +1013,6 @@ NEWS_HTML = r"""
             {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}
             <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a>
             <span class="date">{{ it.dt_jst }}</span>
-            <div class="small">算出根拠（簡易）: {{ it.importance_basis }}</div>
-
             {% if it.tags and it.tags|length>0 %}
               <span class="small">
                 {% for tg in it.tags %}
@@ -1018,9 +1024,10 @@ NEWS_HTML = r"""
 
           {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
 
-           {% if it.summary or (it.key_points and it.key_points|length>0) or (it.perspectives and (it.perspectives.engineer or it.perspectives.management or it.perspectives.consumer)) %}
+           {% if it.importance_basis or it.summary or (it.key_points and it.key_points|length>0) or (it.perspectives and (it.perspectives.engineer or it.perspectives.management or it.perspectives.consumer)) %}
               <details class="insight">
                 <summary class="small">要約・解説を表示</summary>
+                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
 
                 {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
 
@@ -1083,7 +1090,11 @@ NEWS_HTML = r"""
                       <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
                       <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a>
                       <span class="date">{{ it.dt_jst }}</span>
-            <div class="small">算出根拠（簡易）: {{ it.importance_basis }}</div>
+                      <details class="insight">
+                        <summary class="small">要約・解説を表示</summary>
+                        {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
+                        <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
+                      </details>
                     </div>
                     {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
                   </li>

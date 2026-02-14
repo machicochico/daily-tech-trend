@@ -256,6 +256,45 @@
     if (first) setActive(first);
   }
 
+
+  function moveImportanceBasisIntoInsight(){
+    const rows = document.querySelectorAll('.topic-row');
+    rows.forEach(row => {
+      const basis = [...row.querySelectorAll(':scope > div.small, :scope > .small')]
+        .find(el => (el.textContent || '').trim().startsWith('算出根拠（簡易）'));
+      if (!basis) return;
+
+      let details = row.querySelector(':scope > details.insight');
+      if (!details) {
+        details = document.createElement('details');
+        details.className = 'insight';
+        const summary = document.createElement('summary');
+        summary.className = 'small';
+        summary.textContent = '要約・解説を表示';
+        details.appendChild(summary);
+        basis.insertAdjacentElement('afterend', details);
+      }
+
+      const alreadyMoved = details.querySelector('[data-importance-basis]');
+      if (alreadyMoved) {
+        basis.remove();
+        return;
+      }
+
+      const wrapped = document.createElement('div');
+      wrapped.className = 'small';
+      wrapped.style.marginTop = '6px';
+      wrapped.dataset.importanceBasis = '1';
+      wrapped.innerHTML = `<strong>算出根拠（簡易）</strong>：${basis.textContent.replace(/^\s*算出根拠（簡易）\s*[:：]\s*/, '')}`;
+
+      const summaryEl = details.querySelector(':scope > summary');
+      if (summaryEl) summaryEl.insertAdjacentElement('afterend', wrapped);
+      else details.prepend(wrapped);
+
+      basis.remove();
+    });
+  }
+
   function setupCommon(pagePrefix){
     document.getElementById('q')?.addEventListener('input', applyFilter);
     document.getElementById('tagModeOr')?.addEventListener('change', e => { tagMode = e.target.checked ? 'OR' : 'AND'; updateTagActiveView(); applyFilter(); });
@@ -267,6 +306,7 @@
     });
     window.addEventListener('resize', syncStickyOffsets);
     window.addEventListener('load', syncStickyOffsets);
+    moveImportanceBasisIntoInsight();
     initSortUI();
     collapseTopZonesOnFirstView();
     enableMobileTopZoneAccordion();
