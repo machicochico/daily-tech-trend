@@ -734,6 +734,24 @@ HTML = r"""
     </section>
   </details>
 
+  <div class="layout-with-sidebar">
+    <aside class="category-toc" aria-label="カテゴリ一覧">
+      <div class="category-toc-title">カテゴリ一覧</div>
+      <label for="category-toc-select" class="sr-only">カテゴリへ移動</label>
+      <select id="category-toc-select" class="category-toc-select" aria-label="カテゴリへ移動">
+        <option value="">カテゴリへ移動</option>
+        {% for cat in categories %}
+          <option value="#cat-{{ cat.id }}">{{ cat.name }}</option>
+        {% endfor %}
+      </select>
+      <nav class="category-toc-links">
+        {% for cat in categories %}
+          <a href="#cat-{{ cat.id }}" data-category-link="{{ cat.id }}">{{ cat.name }}</a>
+        {% endfor %}
+      </nav>
+    </aside>
+
+    <div class="layout-with-sidebar-content">
     {% for cat in categories %}
   <section class="category-section" id="cat-{{ cat.id }}">
     <div class="category-header">
@@ -895,6 +913,8 @@ HTML = r"""
       </div>
   </section>
   {% endfor %}
+    </div>
+  </div>
 <script src="{{ common_js_src }}"></script>
 <script>
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';

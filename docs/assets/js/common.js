@@ -202,6 +202,60 @@
     more.textContent = bar.classList.contains('collapsed') ? '＋ よく使うタグ以外も表示' : '− タグ一覧をたたむ';
   }
 
+
+  function setupCategoryToc(){
+    const toc = document.querySelector('.category-toc');
+    if (!toc) return;
+
+    const links = [...toc.querySelectorAll('[data-category-link]')];
+    const select = toc.querySelector('#category-toc-select');
+    const sections = links
+      .map(link => document.getElementById(`cat-${link.dataset.categoryLink}`))
+      .filter(Boolean);
+
+    const setActive = (id) => {
+      links.forEach(link => {
+        const active = link.dataset.categoryLink === id;
+        link.classList.toggle('active', active);
+      });
+      if (select) {
+        const nextValue = id ? `#cat-${id}` : '';
+        if (select.value !== nextValue) select.value = nextValue;
+      }
+    };
+
+    if (select) {
+      select.addEventListener('change', e => {
+        const hash = e.target.value;
+        if (!hash) return;
+        revealHashTarget('topic', hash);
+        history.replaceState(null, '', hash);
+      });
+    }
+
+    if (!sections.length || !('IntersectionObserver' in window)) {
+      const first = links[0]?.dataset.categoryLink;
+      if (first) setActive(first);
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      if (!visible.length) return;
+      const id = visible[0].target.id.replace('cat-', '');
+      setActive(id);
+    }, {
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: [0.1, 0.25, 0.5],
+    });
+
+    sections.forEach(sec => observer.observe(sec));
+    const first = links[0]?.dataset.categoryLink;
+    if (first) setActive(first);
+  }
+
   function setupCommon(pagePrefix){
     document.getElementById('q')?.addEventListener('input', applyFilter);
     document.getElementById('tagModeOr')?.addEventListener('change', e => { tagMode = e.target.checked ? 'OR' : 'AND'; updateTagActiveView(); applyFilter(); });
@@ -217,6 +271,7 @@
     collapseTopZonesOnFirstView();
     enableMobileTopZoneAccordion();
     bindHashNavigation(pagePrefix);
+    setupCategoryToc();
     syncToggleAllCatsLabel();
     syncTagMoreLabel();
     updateTagActiveView();
