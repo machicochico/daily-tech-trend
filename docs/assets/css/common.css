@@ -100,5 +100,5 @@ details.insight[open]>*:not(summary){margin-top:6px}
   .top-zone{grid-template-columns:1fr 1fr}
   #q{width:auto;min-width:260px}
   .quick-controls{gap:10px}
-  .summary-card{position:sticky;top:8px;z-index:10}
+  .summary-card{position:static}
 }
