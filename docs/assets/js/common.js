@@ -138,14 +138,61 @@
     return true;
   }
 
+  function openTopZoneFor(el){
+    const fold = el?.closest('details[data-top-zone-details]');
+    if (fold) fold.open = true;
+  }
+
+  function collapseTopZonesOnFirstView(){
+    const folds = document.querySelectorAll('details[data-top-zone-details]');
+    if (!folds.length) return;
+    if (location.hash) return;
+    let seen = false;
+    try { seen = sessionStorage.getItem('dtt-top-zone-seen') === '1'; } catch (_) {}
+    if (seen) return;
+    folds.forEach(f => { f.open = false; });
+    try { sessionStorage.setItem('dtt-top-zone-seen', '1'); } catch (_) {}
+  }
+
+  function enableMobileTopZoneAccordion(){
+    const folds = [...document.querySelectorAll('details[data-top-zone-details]')];
+    if (!folds.length) return;
+    folds.forEach(fold => {
+      fold.addEventListener('toggle', () => {
+        if (!fold.open || window.innerWidth > 640) return;
+        folds.forEach(other => {
+          if (other !== fold) other.open = false;
+        });
+      });
+    });
+  }
+
+  function revealHashTarget(prefix, hash){
+    if (!hash) return;
+    if (scrollToHash(prefix, hash)) {
+      const topicEl = document.querySelector(hash);
+      if (topicEl) openTopZoneFor(topicEl);
+      return;
+    }
+    if (hash.startsWith('#cat-')) {
+      const sec = document.querySelector(hash);
+      if (sec) {
+        sec.classList.remove('collapsed');
+        requestAnimationFrame(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      }
+    }
+  }
+
   function bindHashNavigation(prefix){
     document.addEventListener('click', e => {
-      const a = e.target.closest(`a[href^="#${prefix}-"]`);
+      const a = e.target.closest(`a[href^="#${prefix}-"], a[href^="#cat-"]`);
       if (!a) return;
       const hash = a.getAttribute('href');
-      if (scrollToHash(prefix, hash)) { e.preventDefault(); history.replaceState(null, '', hash); }
+      revealHashTarget(prefix, hash);
+      e.preventDefault();
+      history.replaceState(null, '', hash);
     });
-    window.addEventListener('load', () => { if (location.hash) scrollToHash(prefix, location.hash); });
+    window.addEventListener('load', () => { if (location.hash) revealHashTarget(prefix, location.hash); });
   }
 
   function syncTagMoreLabel(){
@@ -167,6 +214,8 @@
     window.addEventListener('resize', syncStickyOffsets);
     window.addEventListener('load', syncStickyOffsets);
     initSortUI();
+    collapseTopZonesOnFirstView();
+    enableMobileTopZoneAccordion();
     bindHashNavigation(pagePrefix);
     syncToggleAllCatsLabel();
     syncTagMoreLabel();
