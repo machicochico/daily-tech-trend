@@ -18,7 +18,7 @@ def test_init_db_creates_required_tables_and_columns(tmp_path):
     cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
     tables = {row[0] for row in cur.fetchall()}
 
-    for t in {"articles", "topics", "topic_articles", "topic_insights", "edges", "low_priority_articles"}:
+    for t in {"articles", "topics", "topic_articles", "topic_insights", "edges", "low_priority_articles", "feed_health"}:
         assert t in tables
 
     cur.execute("PRAGMA table_info(topics)")
@@ -28,6 +28,11 @@ def test_init_db_creates_required_tables_and_columns(tmp_path):
     cur.execute("PRAGMA table_info(articles)")
     article_columns = {row[1] for row in cur.fetchall()}
     assert "source_tier" in article_columns
+
+
+    cur.execute("PRAGMA table_info(feed_health)")
+    feed_health_columns = {row[1] for row in cur.fetchall()}
+    assert {"feed_url", "failure_count", "last_success_at", "last_failure_reason", "suspend_until"}.issubset(feed_health_columns)
 
     conn.close()
 

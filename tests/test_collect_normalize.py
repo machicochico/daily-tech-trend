@@ -4,6 +4,8 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from collect import (
+    FAILURE_THRESHOLD,
+    SUSPEND_HOURS,
     MIN_CONTENT_CHARS,
     normalize_url,
     should_fetch_fulltext,
@@ -13,6 +15,9 @@ from collect import (
     matches_manufacturing_keywords,
     build_manufacturing_keyword_pattern,
     load_manufacturing_keywords,
+    get_feed_health,
+    mark_feed_failure,
+    mark_feed_success,
 )
 
 
@@ -87,3 +92,44 @@ def test_matches_manufacturing_keywords_works_with_external_dictionary(tmp_path)
 
     load_manufacturing_keywords.cache_clear()
     build_manufacturing_keyword_pattern.cache_clear()
+
+
+def test_feed_health_failure_then_success_flow(tmp_path):
+    import sqlite3
+    from datetime import datetime, timedelta, timezone
+
+    conn = sqlite3.connect(":memory:")
+    cur = conn.cursor()
+    cur.execute(
+        """
+        CREATE TABLE feed_health (
+            feed_url TEXT PRIMARY KEY,
+            failure_count INTEGER DEFAULT 0,
+            last_success_at TEXT,
+            last_failure_reason TEXT,
+            suspend_until TEXT
+        )
+        """
+    )
+
+    feed = {"url": "https://example.com/rss.xml", "source": "example"}
+    now = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    now_iso = now.isoformat(timespec="seconds")
+
+    for _ in range(FAILURE_THRESHOLD):
+        mark_feed_failure(cur, feed=feed, error_type="parse_error", now_iso=now_iso)
+
+    health = get_feed_health(cur, feed["url"])
+    assert health["failure_count"] == FAILURE_THRESHOLD
+    assert health["last_failure_reason"] == "parse_error"
+
+    suspend_until = datetime.fromisoformat(health["suspend_until"])
+    assert suspend_until >= now + timedelta(hours=SUSPEND_HOURS)
+
+    success_time = (now + timedelta(hours=1)).isoformat(timespec="seconds")
+    mark_feed_success(cur, feed=feed, now_iso=success_time)
+    health_after_success = get_feed_health(cur, feed["url"])
+    assert health_after_success["failure_count"] == 0
+    assert health_after_success["last_success_at"] == success_time
+    assert health_after_success["last_failure_reason"] == ""
+    assert health_after_success["suspend_until"] == ""

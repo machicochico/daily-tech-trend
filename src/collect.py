@@ -18,6 +18,9 @@ import urllib.error
 import html as _html
 import socket
 
+FAILURE_THRESHOLD = 3
+SUSPEND_HOURS = 24
+
 
 def _now_sec():
     return time.perf_counter()
@@ -295,6 +298,116 @@ def matches_manufacturing_keywords(title: str, content: str) -> bool:
     return bool(pattern.search(haystack))
 
 
+def _parse_iso8601(value: str | None):
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except (TypeError, ValueError, AttributeError):
+        return None
+
+
+def get_feed_health(cur, feed_url: str) -> dict:
+    cur.execute(
+        """
+        SELECT failure_count, last_success_at, last_failure_reason, suspend_until
+        FROM feed_health
+        WHERE feed_url=?
+        """,
+        (feed_url,),
+    )
+    row = cur.fetchone()
+    if not row:
+        return {
+            "failure_count": 0,
+            "last_success_at": "",
+            "last_failure_reason": "",
+            "suspend_until": "",
+        }
+    return {
+        "failure_count": row[0] or 0,
+        "last_success_at": row[1] or "",
+        "last_failure_reason": row[2] or "",
+        "suspend_until": row[3] or "",
+    }
+
+
+def upsert_feed_health(cur, feed_url: str, health: dict):
+    cur.execute(
+        """
+        INSERT INTO feed_health(feed_url, failure_count, last_success_at, last_failure_reason, suspend_until)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(feed_url) DO UPDATE SET
+            failure_count=excluded.failure_count,
+            last_success_at=excluded.last_success_at,
+            last_failure_reason=excluded.last_failure_reason,
+            suspend_until=excluded.suspend_until
+        """,
+        (
+            feed_url,
+            health.get("failure_count", 0),
+            health.get("last_success_at", ""),
+            health.get("last_failure_reason", ""),
+            health.get("suspend_until", ""),
+        ),
+    )
+
+
+def log_feed_health(*, source: str, url: str, error_type: str, failure_count: int, suspended: bool):
+    print(
+        "[INFO] feed_health "
+        f"source={source} url={url} error_type={error_type} "
+        f"failure_count={failure_count} suspended={int(suspended)}"
+    )
+
+
+def mark_feed_failure(cur, *, feed: dict, error_type: str, now_iso: str) -> dict:
+    url = feed["url"]
+    health = get_feed_health(cur, url)
+    failure_count = int(health.get("failure_count", 0)) + 1
+    suspend_until = ""
+    suspended = False
+    if failure_count >= FAILURE_THRESHOLD:
+        suspended = True
+        suspend_until = (
+            datetime.fromisoformat(now_iso).astimezone(timezone.utc).timestamp() + SUSPEND_HOURS * 3600
+        )
+        suspend_until = datetime.fromtimestamp(suspend_until, tz=timezone.utc).isoformat(timespec="seconds")
+
+    new_health = {
+        "failure_count": failure_count,
+        "last_success_at": health.get("last_success_at", ""),
+        "last_failure_reason": error_type,
+        "suspend_until": suspend_until,
+    }
+    upsert_feed_health(cur, url, new_health)
+    log_feed_health(
+        source=feed.get("source", ""),
+        url=url,
+        error_type=error_type,
+        failure_count=failure_count,
+        suspended=suspended,
+    )
+    return new_health
+
+
+def mark_feed_success(cur, *, feed: dict, now_iso: str):
+    health = {
+        "failure_count": 0,
+        "last_success_at": now_iso,
+        "last_failure_reason": "",
+        "suspend_until": "",
+    }
+    upsert_feed_health(cur, feed["url"], health)
+    log_feed_health(
+        source=feed.get("source", ""),
+        url=feed["url"],
+        error_type="none",
+        failure_count=0,
+        suspended=False,
+    )
+
+
 def main():
     t0 = _now_sec()
     print("[TIME] step=collect start")
@@ -310,6 +423,24 @@ def main():
     source_week_new_count = defaultdict(int)
 
     for feed in feed_list:
+        loop_now = datetime.now(timezone.utc)
+        now_iso = loop_now.isoformat(timespec="seconds")
+        health = get_feed_health(cur, feed["url"])
+        suspend_until = _parse_iso8601(health.get("suspend_until"))
+        if suspend_until and suspend_until > loop_now:
+            print(
+                f"[INFO] feed suspended source={feed.get('source', '')} "
+                f"url={feed['url']} suspend_until={health.get('suspend_until', '')}"
+            )
+            log_feed_health(
+                source=feed.get("source", ""),
+                url=feed["url"],
+                error_type="suspended",
+                failure_count=int(health.get("failure_count", 0)),
+                suspended=True,
+            )
+            continue
+
         fetch_count = 0
         fetch_limit = 30  # Forest Watchは30件全部補完してもよい
         # d = feedparser.parse(feed["url"])
@@ -317,14 +448,24 @@ def main():
             d = feedparser.parse(feed["url"], request_headers=HEADERS)
         except (urllib.error.URLError, ValueError, OSError) as e:
             print(f"[WARN] feed fetch failed source={feed.get('source', '')} url={feed['url']} err={e}")
+            mark_feed_failure(cur, feed=feed, error_type="parse_error", now_iso=now_iso)
             continue
 
-        if getattr(d, "bozo", 0):
+        entries = getattr(d, "entries", [])
+        bozo = getattr(d, "bozo", 0)
+        if bozo:
             # 壊れたXMLでも entries が取れることがあるので続行はする
             print(f"[WARN] malformed feed source={feed.get('source', '')} url={feed['url']} err={getattr(d, 'bozo_exception', '')}")
 
+        if bozo and not entries:
+            mark_feed_failure(cur, feed=feed, error_type="bozo_empty", now_iso=now_iso)
+            continue
+
+        if entries:
+            mark_feed_success(cur, feed=feed, now_iso=now_iso)
+
         limit = feed.get("limit", 30)
-        for e in getattr(d, "entries", [])[:limit]:
+        for e in entries[:limit]:
             raw_link = getattr(e, "link", None)
             if not raw_link:
                 print(f"[WARN] skip entry without link source={feed.get('source', '')} feed_url={feed['url']}")
@@ -452,6 +593,22 @@ def main():
         "UPDATE articles SET category='news' "
         "WHERE kind='news' AND (category IS NULL OR TRIM(category)='')"
     )
+
+    cur.execute(
+        """
+        SELECT feed_url, failure_count, suspend_until
+        FROM feed_health
+        WHERE failure_count > 0
+        ORDER BY failure_count DESC, feed_url ASC
+        LIMIT 10
+        """
+    )
+    for feed_url, failure_count, suspend_until in cur.fetchall():
+        print(
+            "[INFO] daily feed failure ranking "
+            f"url={feed_url} failure_count={failure_count} suspended={int(bool(suspend_until))}"
+        )
+
     conn.commit()
     conn.close()
 

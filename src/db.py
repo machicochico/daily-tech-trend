@@ -159,6 +159,22 @@ def init_db():
     ON low_priority_articles(url)
     """)
 
+    # ---- feed_health (フィード取得健全性の監視) ----
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS feed_health (
+      feed_url TEXT PRIMARY KEY,
+      failure_count INTEGER DEFAULT 0,
+      last_success_at TEXT,
+      last_failure_reason TEXT,
+      suspend_until TEXT
+    )
+    """)
+
+    ensure_column(cur, "feed_health", "failure_count", "INTEGER DEFAULT 0")
+    ensure_column(cur, "feed_health", "last_success_at", "TEXT")
+    ensure_column(cur, "feed_health", "last_failure_reason", "TEXT")
+    ensure_column(cur, "feed_health", "suspend_until", "TEXT")
+
 
     conn.commit()
     conn.close()
