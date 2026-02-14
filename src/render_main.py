@@ -433,7 +433,7 @@ HTML = r"""
     <div id="tag-active" class="small" style="margin-top:6px; display:none;"></div>
     <div class="quick-controls">
       <input id="q" type="search" placeholder="タイトル・要約を検索" />
-      <button class="btn" type="button" onclick="toggleAllCats()">カテゴリ表示切替</button>
+      <button class="btn" type="button" data-toggle-all-cats onclick="toggleAllCats()">すべて閉じる</button>
       <label class="small">並び替え
         <select id="sortKey">
           <option value="date">日付</option>
@@ -946,7 +946,7 @@ NEWS_HTML = r"""
     <!-- techと同じ：検索（imp/recentはnewsでは使わないので固定） -->
     <div class="quick-controls">
       <input id="q" type="search" placeholder="タイトル・要約を検索" />
-      <button class="btn" type="button" onclick="toggleAllCats()">カテゴリ表示切替</button>
+      <button class="btn" type="button" data-toggle-all-cats onclick="toggleAllCats()">すべて閉じる</button>
       <label class="small">並び替え
         <select id="sortKey">
           <option value="date">日付</option>
@@ -1156,7 +1156,6 @@ NEWS_HTML = r"""
 window.addEventListener('load', () => {
   setTimeout(() => {
     if (!location.hash) window.scrollTo(0, 0);
-    toggleAllCats();
   }, 0);
 });
 
