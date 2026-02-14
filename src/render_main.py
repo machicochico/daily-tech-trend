@@ -369,6 +369,19 @@ HTML = r"""
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>技術動向ダイジェスト</title>
+  <meta name="description" content="国内外の技術トレンドをカテゴリ別に要約し、注目度・新着・解説を1ページで確認できる技術動向ダイジェスト。">
+  <link rel="canonical" href="/daily-tech-trend/">
+
+  <meta property="og:title" content="技術動向ダイジェスト">
+  <meta property="og:description" content="国内外の技術トレンドをカテゴリ別に要約し、注目度・新着・解説を1ページで確認できる技術動向ダイジェスト。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/daily-tech-trend/">
+  <meta property="og:site_name" content="Daily Tech Trend">
+  <meta property="og:locale" content="ja_JP">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="技術動向ダイジェスト">
+  <meta name="twitter:description" content="国内外の技術トレンドをカテゴリ別に要約し、注目度・新着・解説を1ページで確認できる技術動向ダイジェスト。">
   <style>
     {{ common_css }}
     {{ tech_extra_css }}
@@ -1112,6 +1125,19 @@ NEWS_HTML = r"""
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ title }}</title>
+  <meta name="description" content="国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。">
+  <link rel="canonical" href="/daily-tech-trend/news/">
+
+  <meta property="og:title" content="ニュースダイジェスト">
+  <meta property="og:description" content="国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/daily-tech-trend/news/">
+  <meta property="og:site_name" content="Daily Tech Trend">
+  <meta property="og:locale" content="ja_JP">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ニュースダイジェスト">
+  <meta name="twitter:description" content="国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。">
   <style>
     {{ common_css }}
     {{ tech_extra_css }}
