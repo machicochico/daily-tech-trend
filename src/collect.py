@@ -11,6 +11,7 @@ from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 import re
 import time
 from functools import lru_cache
+import json
 
 # ★本文フェッチ用
 import urllib.request
@@ -42,6 +43,7 @@ FULLTEXT_SOURCES = {
 MIN_CONTENT_CHARS = 200          # RSS本文がこれ未満なら「薄い」と判定して補完を試みる
 MAX_FETCH_BYTES = 2_000_000      # 取得上限 2MB（暴走防止）
 FETCH_TIMEOUT_SEC = 15
+LOG_DETAIL_LIMIT_PER_RUN = 20
 MANUFACTURING_KEYWORDS_PATH = Path(__file__).with_name("keywords_manufacturing.yaml")
 
 # 同意画面/JS依存など、取得しても本文抽出できない・リスク高いドメインは除外
@@ -84,12 +86,12 @@ def fetch_fulltext(url: str, source: str = "") -> str:
         with urllib.request.urlopen(req, timeout=FETCH_TIMEOUT_SEC) as resp:
             ctype = (resp.headers.get("Content-Type") or "").lower()
             if "text/html" not in ctype:
-                return ""
+                raise ValueError(f"content_type_mismatch:{ctype}")
 
             data = resp.read(MAX_FETCH_BYTES + 1)
             if len(data) > MAX_FETCH_BYTES:
                 # 大きすぎるページは無視（事故防止）
-                return ""
+                raise ValueError("response_too_large")
 
             # charset 推定
             charset = "utf-8"
@@ -102,15 +104,101 @@ def fetch_fulltext(url: str, source: str = "") -> str:
 
             # 短すぎる場合は失敗扱い
             if len(text) < MIN_CONTENT_CHARS:
-                return ""
+                raise ValueError("content_too_short")
 
             return text
-    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, socket.timeout) as e:
-        print(f"[WARN] fulltext fetch failed source={source} url={url} host={host} err={e}")
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, socket.timeout, ValueError):
         return ""
-    except ValueError as e:
-        print(f"[WARN] fulltext response invalid source={source} url={url} host={host} err={e}")
-        return ""
+
+
+def classify_error(exc: Exception | None = None, *, hint: str = "") -> str:
+    """失敗を運用向け error_type へ分類する。"""
+    if hint:
+        return hint
+    if exc is None:
+        return "unknown_error"
+    if isinstance(exc, ssl.SSLError):
+        return "ssl_error"
+    if isinstance(exc, socket.gaierror):
+        return "dns_error"
+    if isinstance(exc, socket.timeout) or isinstance(exc, TimeoutError):
+        return "timeout_error"
+    if isinstance(exc, urllib.error.HTTPError):
+        return "http_error"
+    if isinstance(exc, urllib.error.URLError):
+        reason = getattr(exc, "reason", None)
+        if isinstance(reason, ssl.SSLError):
+            return "ssl_error"
+        if isinstance(reason, socket.gaierror):
+            return "dns_error"
+        if isinstance(reason, socket.timeout):
+            return "timeout_error"
+    if isinstance(exc, requests.exceptions.SSLError):
+        return "ssl_error"
+    if isinstance(exc, requests.exceptions.Timeout):
+        return "timeout_error"
+    if isinstance(exc, requests.exceptions.ConnectionError):
+        text = str(exc).lower()
+        if "name or service not known" in text or "temporary failure in name resolution" in text:
+            return "dns_error"
+        return "connection_error"
+    if isinstance(exc, ValueError):
+        if "content_type_mismatch" in str(exc):
+            return "content_type_mismatch"
+        return "parse_error"
+    return "parse_error"
+
+
+def init_failure_stats() -> dict:
+    return {
+        "total": 0,
+        "by_source": defaultdict(int),
+        "by_error_type": defaultdict(int),
+        "seen_url_error": set(),
+        "detailed_logs": 0,
+        "suppressed_logs": 0,
+    }
+
+
+def record_failure(stats: dict, *, source: str, url: str, error_type: str) -> tuple[bool, int]:
+    stats["total"] += 1
+    stats["by_source"][source or "unknown"] += 1
+    stats["by_error_type"][error_type] += 1
+    key = (url, error_type)
+    if key in stats["seen_url_error"]:
+        stats["suppressed_logs"] += 1
+        return False, stats["suppressed_logs"]
+    stats["seen_url_error"].add(key)
+    if stats["detailed_logs"] >= LOG_DETAIL_LIMIT_PER_RUN:
+        stats["suppressed_logs"] += 1
+        return False, stats["suppressed_logs"]
+    stats["detailed_logs"] += 1
+    return True, stats["suppressed_logs"]
+
+
+def append_collect_health_log(*, stats: dict, started_at: datetime, ended_at: datetime):
+    day_key = ended_at.strftime("%Y%m%d")
+    log_path = Path("logs") / f"collect_health_{day_key}.jsonl"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "ts": ended_at.isoformat(timespec="seconds"),
+        "started_at": started_at.isoformat(timespec="seconds"),
+        "ended_at": ended_at.isoformat(timespec="seconds"),
+        "failure_total": stats["total"],
+        "top_sources": sorted(stats["by_source"].items(), key=lambda x: x[1], reverse=True)[:5],
+        "top_error_types": sorted(stats["by_error_type"].items(), key=lambda x: x[1], reverse=True)[:5],
+        "suppressed_logs": stats["suppressed_logs"],
+    }
+    with log_path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(payload, ensure_ascii=False) + "\n")
+
+
+def print_collect_summary(stats: dict):
+    top_sources = sorted(stats["by_source"].items(), key=lambda x: x[1], reverse=True)[:5]
+    top_error_types = sorted(stats["by_error_type"].items(), key=lambda x: x[1], reverse=True)[:5]
+    print(f"[INFO] collect failure summary total={stats['total']} suppressed_logs={stats['suppressed_logs']}")
+    print(f"[INFO] collect failure top_sources={top_sources}")
+    print(f"[INFO] collect failure top_error_types={top_error_types}")
 
 
 DROP_QS = {"utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "ref", "fbclid", "gclid"}
@@ -426,6 +514,7 @@ def _parse_feed_with_requests(url: str, *, tls_mode: str):
 
 
 def main():
+    started_at = datetime.now(timezone.utc)
     t0 = _now_sec()
     print("[TIME] step=collect start")
     init_db()
@@ -438,6 +527,7 @@ def main():
     conn = connect()
     cur = conn.cursor()
     source_week_new_count = defaultdict(int)
+    failure_stats = init_failure_stats()
 
     for feed in feed_list:
         loop_now = datetime.now(timezone.utc)
@@ -465,29 +555,72 @@ def main():
         try:
             d = feedparser.parse(feed["url"], request_headers=HEADERS)
         except ssl.SSLError as e:
-            print(
-                f"[WARN] feed fetch ssl failed source={feed.get('source', '')} "
-                f"url={feed['url']} tls_mode={tls_mode} err={e}"
+            error_type = classify_error(e)
+            should_log, suppressed = record_failure(
+                failure_stats,
+                source=feed.get("source", ""),
+                url=feed["url"],
+                error_type=error_type,
             )
+            if should_log:
+                print(
+                    f"[WARN] feed fetch failed source={feed.get('source', '')} "
+                    f"url={feed['url']} tls_mode={tls_mode} error_type={error_type} err={e}"
+                )
+            elif suppressed == 1:
+                print("[INFO] collect failure detailed logs are now rate-limited")
             try:
                 d = _parse_feed_with_requests(feed["url"], tls_mode=tls_mode)
             except requests.exceptions.SSLError as retry_e:
-                print(
-                    f"[WARN] feed fetch ssl retry failed source={feed.get('source', '')} "
-                    f"url={feed['url']} tls_mode={tls_mode} err={retry_e}"
+                retry_error_type = classify_error(retry_e)
+                should_log, suppressed = record_failure(
+                    failure_stats,
+                    source=feed.get("source", ""),
+                    url=feed["url"],
+                    error_type=retry_error_type,
                 )
-                mark_feed_failure(cur, feed=feed, error_type="ssl_cert_verify_failed", now_iso=now_iso)
+                if should_log:
+                    print(
+                        f"[WARN] feed fetch retry failed source={feed.get('source', '')} "
+                        f"url={feed['url']} tls_mode={tls_mode} error_type={retry_error_type} err={retry_e}"
+                    )
+                elif suppressed == 1:
+                    print("[INFO] collect failure detailed logs are now rate-limited")
+                mark_feed_failure(cur, feed=feed, error_type=retry_error_type, now_iso=now_iso)
                 continue
             except (requests.RequestException, ValueError, OSError) as retry_e:
-                print(
-                    f"[WARN] feed fetch retry failed source={feed.get('source', '')} "
-                    f"url={feed['url']} tls_mode={tls_mode} err={retry_e}"
+                retry_error_type = classify_error(retry_e)
+                should_log, suppressed = record_failure(
+                    failure_stats,
+                    source=feed.get("source", ""),
+                    url=feed["url"],
+                    error_type=retry_error_type,
                 )
-                mark_feed_failure(cur, feed=feed, error_type="parse_error", now_iso=now_iso)
+                if should_log:
+                    print(
+                        f"[WARN] feed fetch retry failed source={feed.get('source', '')} "
+                        f"url={feed['url']} tls_mode={tls_mode} error_type={retry_error_type} err={retry_e}"
+                    )
+                elif suppressed == 1:
+                    print("[INFO] collect failure detailed logs are now rate-limited")
+                mark_feed_failure(cur, feed=feed, error_type=retry_error_type, now_iso=now_iso)
                 continue
         except (urllib.error.URLError, ValueError, OSError) as e:
-            print(f"[WARN] feed fetch failed source={feed.get('source', '')} url={feed['url']} err={e}")
-            mark_feed_failure(cur, feed=feed, error_type="parse_error", now_iso=now_iso)
+            error_type = classify_error(e)
+            should_log, suppressed = record_failure(
+                failure_stats,
+                source=feed.get("source", ""),
+                url=feed["url"],
+                error_type=error_type,
+            )
+            if should_log:
+                print(
+                    f"[WARN] feed fetch failed source={feed.get('source', '')} "
+                    f"url={feed['url']} error_type={error_type} err={e}"
+                )
+            elif suppressed == 1:
+                print("[INFO] collect failure detailed logs are now rate-limited")
+            mark_feed_failure(cur, feed=feed, error_type=error_type, now_iso=now_iso)
             continue
 
         entries = getattr(d, "entries", [])
@@ -650,6 +783,10 @@ def main():
 
     conn.commit()
     conn.close()
+
+    ended_at = datetime.now(timezone.utc)
+    print_collect_summary(failure_stats)
+    append_collect_health_log(stats=failure_stats, started_at=started_at, ended_at=ended_at)
 
     sec = _now_sec() - t0
     print(f"[TIME] step=collect end sec={sec:.1f}")
