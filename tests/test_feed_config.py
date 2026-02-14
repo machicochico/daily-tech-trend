@@ -4,6 +4,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from collect import load_feed_list
+from feed_lint import lint_feed_list
 
 
 def test_load_feed_list_accepts_legacy_feeds_format():
@@ -89,3 +90,20 @@ def test_load_feed_list_accepts_sources_with_rss_string_and_object():
             "weekly_new_limit": 3,
         },
     ]
+
+
+def test_feed_lint_detects_duplicates_and_warnings():
+    feeds = [
+        {"url": "http://example.com/about", "source": "A", "category": "x"},
+        {"url": "http://example.com/about?utm_source=a", "source": "B", "category": "y"},
+        {"url": "https://dup.example.com/feed.xml", "source": "C", "category": "z"},
+        {"url": "https://dup.example.com/feed.xml", "source": "D", "category": "z2"},
+    ]
+
+    issues = lint_feed_list(feeds)
+    issue_codes = {issue.code for issue in issues}
+
+    assert "duplicate-exact-url" in issue_codes
+    assert "duplicate-normalized-url" in issue_codes
+    assert "http-url" in issue_codes
+    assert "non-rss-heuristic" in issue_codes

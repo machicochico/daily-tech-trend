@@ -28,6 +28,7 @@ jobs:
           python -c "import src.db as d; d.init_db()"
 
       - run: python -c "from src.db import init_db; init_db()"
+      - run: python src/feed_lint.py --config src/sources.yaml
       - run: python src/collect.py
       - name: Count articles by category (after collect)
         run: |
