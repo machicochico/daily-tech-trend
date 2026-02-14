@@ -5,23 +5,16 @@ def _read(path: str) -> str:
     return Path(path).read_text(encoding="utf-8")
 
 
-def test_docs_root_uses_root_relative_assets() -> None:
-    html = _read("docs/index.html")
-    assert 'href="./assets/css/common.css"' in html
-    assert 'src="./assets/js/common.js"' in html
-    assert 'href="../assets/css/common.css"' not in html
-    assert 'src="../assets/js/common.js"' not in html
-
-
-def test_docs_news_uses_parent_relative_assets() -> None:
-    html = _read("docs/news/index.html")
-    assert 'href="../assets/css/common.css"' in html
-    assert 'src="../assets/js/common.js"' in html
-
-
-def test_render_source_builds_root_relative_assets_for_depth_zero() -> None:
+def test_render_source_uses_absolute_project_asset_paths() -> None:
     source = _read("src/render_main.py")
-    assert "def build_asset_paths(depth: int)" in source
-    assert 'prefix = "./" if depth == 0 else "../" * depth' in source
-    assert 'f"{prefix}assets/css/common.css"' in source
-    assert 'f"{prefix}assets/js/common.js"' in source
+    assert 'def build_asset_paths(base_path: str = "/daily-tech-trend/")' in source
+    assert 'normalized_base = f"/{base_path.strip(\'/\')}/"' in source
+    assert 'f"{normalized_base}assets/css/common.css"' in source
+    assert 'f"{normalized_base}assets/js/common.js"' in source
+
+
+def test_render_source_uses_common_asset_builder_for_all_pages() -> None:
+    source = _read("src/render_main.py")
+    assert 'news_assets = build_asset_paths()' in source
+    assert 'tech_sub_assets = build_asset_paths()' in source
+    assert 'tech_root_assets = build_asset_paths()' in source
