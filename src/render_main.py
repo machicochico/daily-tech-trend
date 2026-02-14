@@ -11,6 +11,7 @@ from jinja2 import Template
 from datetime import datetime, timedelta, timezone
 
 from db import connect
+from text_clean import clean_for_html, clean_json_like
 
 from typing import Any, List
 import time
@@ -1189,13 +1190,13 @@ def _safe_json_list(s: str | None) -> List[str]:
     if not s:
         return []
     try:
-        v = json.loads(s)
+        v = clean_json_like(json.loads(s))
         if isinstance(v, list):
             out = []
             for x in v:
                 if x is None:
                     continue
-                out.append(str(x))
+                out.append(clean_for_html(str(x)))
             return out
     except Exception:
         pass
@@ -1220,7 +1221,7 @@ def _safe_json_obj(s: str | None) -> Dict[str, Any]:
     if not s:
         return {}
     try:
-        v = json.loads(s)
+        v = clean_json_like(json.loads(s))
         return v if isinstance(v, dict) else {}
     except Exception:
         return {}
@@ -1288,17 +1289,17 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
 
           out.append({
               "id": int(article_id),
-              "title": title,
-              "url": url,
-              "source": source,
-              "category": category or "other",
+              "title": clean_for_html(title),
+              "url": clean_for_html(url),
+              "source": clean_for_html(source),
+              "category": clean_for_html(category or "other"),
               "region": region_label,
-              "dt": dt,
+              "dt": clean_for_html(dt),
               "dt_jst": fmt_date(dt),
               "tags": llm_tags,
               "recent": 0,
               "importance": imp,
-              "summary": (summary or "").strip() or f"{source} / {fmt_date(dt)}",
+              "summary": clean_for_html((summary or "").strip() or f"{source} / {fmt_date(dt)}"),
           })
       return out
 
@@ -1461,17 +1462,17 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None):
 
             items.append({
                 "id": int(article_id),
-                "title": title,
-                "url": url,
-                "source": source,
-                "category": category or cat or "other",  # ←追加
-                "dt": dt,                                # ←追加（data-date用）
+                "title": clean_for_html(title),
+                "url": clean_for_html(url),
+                "source": clean_for_html(source),
+                "category": clean_for_html(category or cat or "other"),  # ←追加
+                "dt": clean_for_html(dt),                                # ←追加（data-date用）
                 "dt_jst": fmt_date(dt),
 
                 # LLM結果
                 "importance": int(importance) if importance is not None else 0,
-                "type": typ or "",
-                "summary": summary or "",
+                "type": clean_for_html(typ or ""),
+                "summary": clean_for_html(summary or ""),
                 "key_points": _safe_json_list(key_points),
                 "perspectives": _safe_json_obj(perspectives),
                 "tags": llm_tags,
@@ -1498,7 +1499,7 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None):
         tech_link = TECH_LINK_MAP.get(cat)
 
         sections.append({
-            "title": title,
+            "title": clean_for_html(title),
             "count": len(items),
             "rep_count": len(representative_items),
             "recent48": recent48,
@@ -1844,7 +1845,7 @@ def main():
 
         rows = cur.fetchall()
         hot_by_cat[cat_id] = [
-            {"id": tid, "title": title, "articles": int(total), "recent": int(recent),"date": article_date}
+            {"id": tid, "title": clean_for_html(title), "articles": int(total), "recent": int(recent),"date": article_date}
             for (tid, title, total, recent, article_date) in rows
         ]
 
@@ -2011,7 +2012,7 @@ def main():
             items.append(
                 {
                     "id": tid,
-                    "title": title,  # ← ここはSQLで title_ja 優先済み
+                    "title": clean_for_html(title),  # ← ここはSQLで title_ja 優先済み
                     "url": url or "#",
                     "date": article_date,
                     "recent": int(recent or 0),
@@ -2184,7 +2185,7 @@ def main():
                 items.append(
                     {
                         "id": tid,
-                        "title": title,
+                        "title": clean_for_html(title),
                         "url": url or "#",
                         "date": article_date,
                         "recent": int(recent or 0),
@@ -2271,7 +2272,7 @@ def main():
         category_labels = [cat_name.get(c, c) for c in cat_ids[:3]]
         source_exposure.append(
             {
-                "source": source,
+                "source": clean_for_html(source),
                 "total": int(total or 0),
                 "recent48": int(recent48 or 0),
                 "categories": " / ".join(category_labels) if category_labels else "-",
@@ -2415,7 +2416,7 @@ def main():
     for tid, title, category, url, article_date, recent, importance, summary, tags, perspectives in cur.fetchall():
         jp_priority_top.append({
             "id": tid,
-            "title": title,
+            "title": clean_for_html(title),
             "category": category,
             "url": url or "#",
             "recent": int(recent or 0),
@@ -2509,7 +2510,7 @@ def main():
     for tid, title, category, url, article_date, recent, importance, summary, tags, perspectives in cur.fetchall():
         jp_priority_trending_top.append({
             "id": tid,
-            "title": title,
+            "title": clean_for_html(title),
             "category": category,
             "url": url or "#",
             "recent": int(recent or 0),
@@ -2601,7 +2602,7 @@ def main():
     for tid, title, category, url, article_date,recent, importance, summary, tags, perspectives in cur.fetchall():
         global_top.append({
             "id": tid,
-            "title": title,
+            "title": clean_for_html(title),
             "category": category,   # ★追加
             "url": url or "#",
             "recent": int(recent or 0),
@@ -2693,7 +2694,7 @@ def main():
     for tid, title, category, url, article_date, recent, importance, summary, tags, perspectives in cur.fetchall():
         trending_top.append({
             "id": tid,
-            "title": title,
+            "title": clean_for_html(title),
             "category": category,   # ★追加
             "url": url or "#",
             "recent": int(recent or 0),
@@ -2759,7 +2760,7 @@ def main():
     for tid, title, category, url, article_date, recent, importance, summary, tags, perspectives in cur.fetchall():
         market_top.append({
             "id": tid,
-            "title": title,
+            "title": clean_for_html(title),
             "category": category,
             "url": url or "#",
             "recent": int(recent or 0),
@@ -2841,7 +2842,7 @@ def main():
     for tid, title, category, url, article_date, recent, importance, summary, tags, perspectives in cur.fetchall():
         market_trending_top.append({
             "id": tid,
-            "title": title,
+            "title": clean_for_html(title),
             "category": category,
             "url": url or "#",
             "recent": int(recent or 0),
