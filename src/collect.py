@@ -17,6 +17,10 @@ import urllib.request
 import urllib.error
 import html as _html
 import socket
+import ssl
+
+import certifi
+import requests
 
 FAILURE_THRESHOLD = 3
 SUSPEND_HOURS = 24
@@ -154,6 +158,7 @@ def load_feed_list(cfg: dict):
                     "region": x.get("region", "") or "",
                     "limit": x.get("limit", 30),
                     "weekly_new_limit": x.get("weekly_new_limit"),
+                    "tls_mode": x.get("tls_mode", "strict"),
                 }
             )
         return out
@@ -174,6 +179,7 @@ def load_feed_list(cfg: dict):
                 "region": s.get("region", "") or "",
                 "limit": s.get("limit", 30),
                 "weekly_new_limit": s.get("weekly_new_limit"),
+                "tls_mode": s.get("tls_mode", "strict"),
             }
 
             rss_list = s.get("rss") or []
@@ -198,6 +204,7 @@ def load_feed_list(cfg: dict):
                             "weekly_new_limit": r.get("weekly_new_limit", base["weekly_new_limit"]),
                             "vendor": r.get("vendor", base["vendor"]),
                             "source_tier": r.get("source_tier", base["source_tier"]),
+                            "tls_mode": r.get("tls_mode", base["tls_mode"]),
                         }
                     )
 
@@ -408,6 +415,16 @@ def mark_feed_success(cur, *, feed: dict, now_iso: str):
     )
 
 
+def _parse_feed_with_requests(url: str, *, tls_mode: str):
+    verify = certifi.where()
+    if tls_mode == "relaxed":
+        verify = False
+
+    response = requests.get(url, headers=HEADERS, timeout=FETCH_TIMEOUT_SEC, verify=verify)
+    response.raise_for_status()
+    return feedparser.parse(response.content)
+
+
 def main():
     t0 = _now_sec()
     print("[TIME] step=collect start")
@@ -444,8 +461,30 @@ def main():
         fetch_count = 0
         fetch_limit = 30  # Forest Watchは30件全部補完してもよい
         # d = feedparser.parse(feed["url"])
+        tls_mode = (feed.get("tls_mode") or "strict").lower()
         try:
             d = feedparser.parse(feed["url"], request_headers=HEADERS)
+        except ssl.SSLError as e:
+            print(
+                f"[WARN] feed fetch ssl failed source={feed.get('source', '')} "
+                f"url={feed['url']} tls_mode={tls_mode} err={e}"
+            )
+            try:
+                d = _parse_feed_with_requests(feed["url"], tls_mode=tls_mode)
+            except requests.exceptions.SSLError as retry_e:
+                print(
+                    f"[WARN] feed fetch ssl retry failed source={feed.get('source', '')} "
+                    f"url={feed['url']} tls_mode={tls_mode} err={retry_e}"
+                )
+                mark_feed_failure(cur, feed=feed, error_type="ssl_cert_verify_failed", now_iso=now_iso)
+                continue
+            except (requests.RequestException, ValueError, OSError) as retry_e:
+                print(
+                    f"[WARN] feed fetch retry failed source={feed.get('source', '')} "
+                    f"url={feed['url']} tls_mode={tls_mode} err={retry_e}"
+                )
+                mark_feed_failure(cur, feed=feed, error_type="parse_error", now_iso=now_iso)
+                continue
         except (urllib.error.URLError, ValueError, OSError) as e:
             print(f"[WARN] feed fetch failed source={feed.get('source', '')} url={feed['url']} err={e}")
             mark_feed_failure(cur, feed=feed, error_type="parse_error", now_iso=now_iso)

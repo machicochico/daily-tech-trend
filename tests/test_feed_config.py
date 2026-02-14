@@ -34,6 +34,7 @@ def test_load_feed_list_accepts_legacy_feeds_format():
             "region": "global",
             "limit": 10,
             "weekly_new_limit": None,
+            "tls_mode": "strict",
         }
     ]
 
@@ -77,6 +78,7 @@ def test_load_feed_list_accepts_sources_with_rss_string_and_object():
             "region": "jp",
             "limit": 20,
             "weekly_new_limit": 8,
+            "tls_mode": "strict",
         },
         {
             "url": "https://example.com/b.xml",
@@ -88,6 +90,7 @@ def test_load_feed_list_accepts_sources_with_rss_string_and_object():
             "region": "jp",
             "limit": 5,
             "weekly_new_limit": 3,
+            "tls_mode": "strict",
         },
     ]
 
