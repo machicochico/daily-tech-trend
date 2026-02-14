@@ -25,6 +25,16 @@ def fmt_date(s):
 def _now_sec():
     return time.perf_counter()
 
+
+def build_asset_paths(base_path: str = "/daily-tech-trend/") -> dict[str, str]:
+    """Return absolute asset paths under the GitHub Pages project base path."""
+    normalized_base = f"/{base_path.strip('/')}/"
+    return {
+        "common_css_href": f"{normalized_base}assets/css/common.css",
+        "common_js_src": f"{normalized_base}assets/js/common.js",
+        "nav_prefix": normalized_base,
+    }
+
 COMMON_CSS = r"""
 :root{
   /* Base */
@@ -1388,14 +1398,16 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
         ("news",   "ニュースダイジェスト", "ニュースダイジェスト", sections_all, "index.html"),
     ]
 
+    news_assets = build_asset_paths()
+
     for page, title, heading, sections, filename in pages:
         (news_dir / filename).write_text(
             Template(NEWS_HTML).render(
-                common_css_href="../assets/css/common.css",
-                common_js_src="../assets/js/common.js",
+                common_css_href=news_assets["common_css_href"],
+                common_js_src=news_assets["common_js_src"],
 
                 page=page,
-                nav_prefix="../", 
+                nav_prefix=news_assets["nav_prefix"], 
                 title=title,
                 heading=heading,
                 generated_at=generated_at,
@@ -2861,11 +2873,14 @@ def main():
     tech_dir = out_dir / "tech"
     tech_dir.mkdir(exist_ok=True)
 
+    tech_sub_assets = build_asset_paths()
+    tech_root_assets = build_asset_paths()
+
     tech_html_sub = Template(HTML).render(
-        common_css_href="../assets/css/common.css",
-        common_js_src="../assets/js/common.js",
+        common_css_href=tech_sub_assets["common_css_href"],
+        common_js_src=tech_sub_assets["common_js_src"],
         page="tech",
-        nav_prefix="../",
+        nav_prefix=tech_sub_assets["nav_prefix"],
         categories=tech_categories,
         cat_name=cat_name,
         topics_by_cat=topics_by_cat,
@@ -2886,10 +2901,10 @@ def main():
     )
 
     tech_html_root = Template(HTML).render(
-        common_css_href="./assets/css/common.css",
-        common_js_src="./assets/js/common.js",
+        common_css_href=tech_root_assets["common_css_href"],
+        common_js_src=tech_root_assets["common_js_src"],
         page="tech",
-        nav_prefix="./",
+        nav_prefix=tech_root_assets["nav_prefix"],
         categories=tech_categories,
         cat_name=cat_name,
         topics_by_cat=topics_by_cat,
