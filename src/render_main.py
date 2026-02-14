@@ -427,7 +427,7 @@ HTML = r"""
         {% endfor %}
       </div>
 
-      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ もっと見る</button>
+      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ よく使うタグ以外も表示</button>
 
     </div>
     <div id="tag-active" class="small" style="margin-top:6px; display:none;"></div>
@@ -938,7 +938,7 @@ NEWS_HTML = r"""
           </button>
         {% endfor %}
       </div>
-      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ もっと見る</button>
+      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ よく使うタグ以外も表示</button>
     </div>
 
     <div id="tag-active" class="small" style="margin-top:6px; display:none;"></div>
