@@ -369,6 +369,8 @@ def main():
             source_unit = (feed.get("vendor") or feed.get("source") or "").strip() or "unknown"
             source_count_key = (source_unit, week_key)
             weekly_limit = feed.get("weekly_new_limit")
+            if weekly_limit is None and feed.get("kind") == "news":
+                weekly_limit = 12
 
             if should_route_to_low_priority(
                 is_new=is_new_article,
