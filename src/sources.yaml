@@ -32,6 +32,7 @@ categories:
     name: 開発
 
 sources:
+  # tls_mode: strict(既定) / relaxed(証明書検証を緩和して運用する例外)
   # --- システム ---
   - id: aws-blog
     name: AWS Blog
@@ -224,6 +225,7 @@ sources:
   - id: posco-holdings
     name: POSCO Holdings
     category: manufacturing
+    tls_mode: relaxed
     url: https://www.posco-inc.com:4451/poscoinc/v2/company/news_en/feed
 
   - id: arcelormittal

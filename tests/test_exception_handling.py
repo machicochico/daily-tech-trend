@@ -1,4 +1,5 @@
 import sqlite3
+import ssl
 import sys
 from pathlib import Path
 from urllib.error import URLError
@@ -130,3 +131,106 @@ def test_llm_main_re_raises_db_errors(monkeypatch):
 
     with pytest.raises(sqlite3.OperationalError):
         llm_insights_local.main()
+
+
+def test_collect_main_marks_ssl_failure_after_single_retry(monkeypatch, tmp_path):
+    db_path = tmp_path / "state.sqlite"
+
+    def fake_init_db():
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS articles (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                kind TEXT,
+                region TEXT,
+                source TEXT,
+                title TEXT,
+                title_ja TEXT,
+                url TEXT UNIQUE,
+                url_norm TEXT,
+                content TEXT,
+                category TEXT,
+                source_tier TEXT,
+                published_at TEXT,
+                fetched_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS low_priority_articles (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                url TEXT UNIQUE,
+                title TEXT,
+                content TEXT,
+                source TEXT,
+                vendor TEXT,
+                category TEXT,
+                source_tier TEXT,
+                published_at TEXT,
+                fetched_at TEXT,
+                kind TEXT,
+                region TEXT,
+                reason TEXT,
+                queued_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS feed_health (
+                feed_url TEXT PRIMARY KEY,
+                failure_count INTEGER DEFAULT 0,
+                last_success_at TEXT,
+                last_failure_reason TEXT,
+                suspend_until TEXT
+            )
+            """
+        )
+        conn.commit()
+        conn.close()
+
+    monkeypatch.setattr(collect, "init_db", fake_init_db)
+    monkeypatch.setattr(collect, "connect", lambda: sqlite3.connect(db_path))
+    monkeypatch.setattr(
+        collect,
+        "load_feed_list",
+        lambda _cfg: [
+            {
+                "url": "https://ssl.example.com/feed.xml",
+                "source": "SSL Feed",
+                "category": "ai",
+                "vendor": "SSL Feed",
+                "source_tier": "secondary",
+                "kind": "tech",
+                "region": "global",
+                "limit": 10,
+                "weekly_new_limit": None,
+                "tls_mode": "strict",
+            }
+        ],
+    )
+
+    monkeypatch.setattr(
+        collect.feedparser,
+        "parse",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(ssl.SSLError("certificate verify failed")),
+    )
+    monkeypatch.setattr(
+        collect.requests,
+        "get",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(requests.exceptions.SSLError("certificate verify failed")),
+    )
+
+    collect.main()
+
+    conn = sqlite3.connect(db_path)
+    row = conn.execute(
+        "SELECT failure_count, last_failure_reason FROM feed_health WHERE feed_url=?",
+        ("https://ssl.example.com/feed.xml",),
+    ).fetchone()
+    conn.close()
+
+    assert row == (1, "ssl_cert_verify_failed")
