@@ -1330,13 +1330,27 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
 
 
     # 1) Japan / Global はカテゴリ見出しで分割
-    sections_jp = render_news_region_page(cur, "jp", limit_each=30, cutoff_dt=cutoff_48h_str)
-    sections_gl = render_news_region_page(cur, "global", limit_each=30, cutoff_dt=cutoff_48h_str)
+    jp_limit_each = NEWS_REGION_LIMIT_EACH.get("jp", 30)
+    gl_limit_each = NEWS_REGION_LIMIT_EACH.get("global", 30)
+    sections_jp = render_news_region_page(
+        cur,
+        "jp",
+        limit_each=jp_limit_each,
+        cutoff_dt=cutoff_48h_str,
+        min_per_category=NEWS_MIN_PER_CATEGORY.get("jp", 0),
+    )
+    sections_gl = render_news_region_page(
+        cur,
+        "global",
+        limit_each=gl_limit_each,
+        cutoff_dt=cutoff_48h_str,
+        min_per_category=NEWS_MIN_PER_CATEGORY.get("global", 0),
+    )
 
     # --- techと同じ構成にするためのnews用データ ---
     # Top（最新）
-    jp_top = fetch_news_articles(cur, "jp", 10)
-    gl_top = fetch_news_articles(cur, "global", 10)
+    jp_top = fetch_news_articles(cur, "jp", NEWS_REGION_TOP_LIMIT.get("jp", 10))
+    gl_top = fetch_news_articles(cur, "global", NEWS_REGION_TOP_LIMIT.get("global", 10))
 
     def to_top_items(rows, region_label):
       out = []
@@ -1500,10 +1514,36 @@ NEWS_SECTION_POINTS = {
     "other": "個別要因。将来の技術動向と結び付けて整理。",
 }
 
-def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None):
+NEWS_REGION_LIMIT_EACH = {
+    "jp": 50,
+    "global": 30,
+}
+
+NEWS_REGION_TOP_LIMIT = {
+    "jp": 10,
+    "global": 6,
+}
+
+NEWS_MIN_PER_CATEGORY = {
+    "jp": 8,
+    "global": 0,
+}
+
+def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None, min_per_category=0):
     sections = []
     for cat, title in NEWS_SECTIONS:
-        rows = fetch_news_articles_by_category(cur, region, cat, limit_each)
+        fetch_limit = max(limit_each, min_per_category or 0)
+        rows = fetch_news_articles_by_category(cur, region, cat, fetch_limit)
+
+        # 国内不足時はカテゴリ内の最小件数を満たすまで追加取得する
+        while (
+            min_per_category
+            and len(rows) < min_per_category
+            and len(rows) >= fetch_limit
+            and fetch_limit < 200
+        ):
+            fetch_limit += max(limit_each, min_per_category)
+            rows = fetch_news_articles_by_category(cur, region, cat, fetch_limit)
         items = []
         for r in rows:
             # fetch_news_articles_by_category() のSELECT順に合わせる

@@ -492,25 +492,72 @@ sources:
   - name: ITmedia NEWS
     kind: news
     region: jp
+    category: news
+    vendor: ITmedia
+    weekly_new_limit: 10
     rss:
       - https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml
 
-  
+  - name: NHKニュース
+    kind: news
+    region: jp
+    category: policy
+    vendor: NHK
+    weekly_new_limit: 10
+    rss:
+      - https://www.nhk.or.jp/rss/news/cat0.xml
+
+  - name: IPA セキュリティセンター
+    kind: news
+    region: jp
+    category: security
+    vendor: IPA
+    weekly_new_limit: 6
+    rss:
+      - https://www.ipa.go.jp/security/rss/rss.rdf
+
+  - name: NIKKEI TECH
+    kind: news
+    region: jp
+    category: industry
+    vendor: 日経BP
+    weekly_new_limit: 8
+    rss:
+      - https://xtech.nikkei.com/rss/index.rdf
+
+  - name: PR TIMES テクノロジー
+    kind: news
+    region: jp
+    category: company
+    vendor: PR TIMES
+    weekly_new_limit: 8
+    rss:
+      - https://prtimes.jp/main/html/rss/it.rdf
+
   - name: Impress Watch (INTERNET Watch)
     kind: news
     region: jp
+    category: security
+    vendor: Impress
+    weekly_new_limit: 12
     rss:
       - https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf
 
   - name: INTERNET Watch
     kind: news
     region: jp
+    category: industry
+    vendor: Impress
+    weekly_new_limit: 12
     rss:
       - https://internet.watch.impress.co.jp/data/rss/1.0/iw/feed.rdf
 
   - name: Forest Watch
     kind: news
     region: jp
+    category: company
+    vendor: Impress
+    weekly_new_limit: 12
     rss:
       - https://forest.watch.impress.co.jp/data/rss/1.0/wf/feed.rdf
 
@@ -519,6 +566,8 @@ sources:
     category: news
     kind: news
     region: jp
+    vendor: 時事通信
+    weekly_new_limit: 8
     url: https://www.jiji.com/rss/ranking.rdf
 
   - id: bbc-world
@@ -526,4 +575,6 @@ sources:
     category: news
     kind: news
     region: global
+    vendor: BBC
+    weekly_new_limit: 12
     url: https://feeds.bbci.co.uk/news/world/rss.xml
