@@ -61,8 +61,17 @@
     }
   }
 
+  function syncToggleAllCatsLabel(){
+    const label = catsCollapsed ? 'すべて開く' : 'すべて閉じる';
+    document.querySelectorAll('[data-toggle-all-cats]').forEach(btn => { btn.textContent = label; });
+  }
+
   function toggleCat(id){ const sec = document.getElementById('cat-' + id); if (sec) sec.classList.toggle('collapsed'); }
-  function toggleAllCats(){ catsCollapsed = !catsCollapsed; document.querySelectorAll('.category-section').forEach(sec => sec.classList.toggle('collapsed', catsCollapsed)); }
+  function toggleAllCats(){
+    catsCollapsed = !catsCollapsed;
+    document.querySelectorAll('.category-section').forEach(sec => sec.classList.toggle('collapsed', catsCollapsed));
+    syncToggleAllCatsLabel();
+  }
   function parseDateValue(v){ const t = Date.parse(String(v || '').replace(' ', 'T')); return Number.isNaN(t) ? 0 : t; }
 
   function applySort(){
@@ -125,6 +134,7 @@
     });
     initSortUI();
     bindHashNavigation(pagePrefix);
+    syncToggleAllCatsLabel();
   }
 
   window.toggleTag = toggleTag;
