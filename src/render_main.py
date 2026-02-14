@@ -419,7 +419,7 @@ HTML = r"""
       <span class="badge">Tags</span>
 
       <div id="tagBar" class="tag-bar collapsed" style="margin-top:6px">
-        <button class="btn btn-reset" type="button" onclick="clearTagFilter()">🔄 Reset</button>
+        <button class="btn btn-reset" type="button" onclick="clearTagFilter()">🔄 リセット</button>
 
         <label class="small tag-mode">
           <input type="checkbox" id="tagModeOr"> OR（どれか）
@@ -432,28 +432,28 @@ HTML = r"""
         {% endfor %}
       </div>
 
-      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ more</button>
+      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ もっと見る</button>
 
     </div>
     <div id="tag-active" class="small" style="margin-top:6px; display:none;"></div>
     <div class="quick-controls">
-      <input id="q" type="search" placeholder="Search title/summary..." />
-      <button class="btn" type="button" onclick="toggleAllCats()">Toggle categories</button>
-      <label class="small">sort
+      <input id="q" type="search" placeholder="タイトル・要約を検索" />
+      <button class="btn" type="button" onclick="toggleAllCats()">カテゴリ表示切替</button>
+      <label class="small">並び替え
         <select id="sortKey">
           <option value="date">日付</option>
           <option value="importance">重要度</option>
         </select>
       </label>
 
-      <label class="small">order
+      <label class="small">順序
         <select id="sortDir">
           <option value="desc">降順</option>
           <option value="asc">昇順</option>
         </select>
       </label>
 
-      <button class="btn" type="button" onclick="applySort()">Apply</button>
+      <button class="btn" type="button" onclick="applySort()">適用</button>
 
     </div>
     <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
@@ -696,7 +696,7 @@ HTML = r"""
   <section class="category-section" id="cat-{{ cat.id }}">
     <div class="category-header">
       <h2 style="margin:0">{{ cat.name }} <span class="tag">{{ cat.id }}</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('{{ cat.id }}')">Toggle</button>
+      <button class="btn" type="button" onclick="toggleCat('{{ cat.id }}')">表示切替</button>
     </div>
 
     <div class="category-body">
@@ -1043,7 +1043,7 @@ document.getElementById('tagMore')?.addEventListener('click', () => {
 
   // ボタン文言切替（任意）
   const more = document.getElementById('tagMore');
-  if (more) more.textContent = bar.classList.contains('collapsed') ? '＋ more' : '− less';
+  if (more) more.textContent = bar.classList.contains('collapsed') ? '＋ もっと見る' : '− 閉じる';
 });
 
 function parseDateValue(v){
@@ -1179,7 +1179,7 @@ NEWS_HTML = r"""
     <div class="small" style="margin-top:10px">
       <span class="badge">Tags</span>
       <div id="tagBar" class="tag-bar collapsed" style="margin-top:6px">
-        <button class="btn btn-reset" type="button" onclick="clearTagFilter()">🔄 Reset</button>
+        <button class="btn btn-reset" type="button" onclick="clearTagFilter()">🔄 リセット</button>
         <label class="small tag-mode">
           <input type="checkbox" id="tagModeOr"> OR（どれか）
         </label>
@@ -1189,30 +1189,30 @@ NEWS_HTML = r"""
           </button>
         {% endfor %}
       </div>
-      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ more</button>
+      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ もっと見る</button>
     </div>
 
     <div id="tag-active" class="small" style="margin-top:6px; display:none;"></div>
 
     <!-- techと同じ：検索（imp/recentはnewsでは使わないので固定） -->
     <div class="quick-controls">
-      <input id="q" type="search" placeholder="Search title/summary..." />
-      <button class="btn" type="button" onclick="toggleAllCats()">Toggle categories</button>
-      <label class="small">sort
+      <input id="q" type="search" placeholder="タイトル・要約を検索" />
+      <button class="btn" type="button" onclick="toggleAllCats()">カテゴリ表示切替</button>
+      <label class="small">並び替え
         <select id="sortKey">
           <option value="date">日付</option>
           <option value="importance">重要度</option>
         </select>
       </label>
 
-      <label class="small">order
+      <label class="small">順序
         <select id="sortDir">
           <option value="desc">降順</option>
           <option value="asc">昇順</option>
         </select>
       </label>
 
-      <button class="btn" type="button" onclick="applySort()">Apply</button>
+      <button class="btn" type="button" onclick="applySort()">適用</button>
 
     </div>
     <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
@@ -1234,7 +1234,7 @@ NEWS_HTML = r"""
             <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
             {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}            
             <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
-            <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">open</a>
+            <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">開く</a>
             <span class="date">{{ it.dt_jst }}</span>
 
             {% if it.tags and it.tags|length>0 %}
@@ -1264,7 +1264,7 @@ NEWS_HTML = r"""
             <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
             {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}           
             <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
-            <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">open</a>
+            <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">開く</a>
             <span class="date">{{ it.dt_jst }}</span>
 
             {% if it.tags and it.tags|length>0 %}
@@ -1293,7 +1293,7 @@ NEWS_HTML = r"""
           <span class="badge">+{{ sec.recent48 }}/48h</span>
         {% endif %}
       </h2>
-      <button class="btn" type="button" onclick="toggleCat('{{ sec.anchor }}')">Toggle</button>
+      <button class="btn" type="button" onclick="toggleCat('{{ sec.anchor }}')">表示切替</button>
     </div>
 
     <div class="category-body">
@@ -1497,7 +1497,7 @@ document.getElementById('tagMore')?.addEventListener('click', () => {
   if (!bar) return;
   bar.classList.toggle('collapsed');
   const more = document.getElementById('tagMore');
-  if (more) more.textContent = bar.classList.contains('collapsed') ? '＋ more' : '− less';
+  if (more) more.textContent = bar.classList.contains('collapsed') ? '＋ もっと見る' : '− 閉じる';
 });
 function parseDateValue(v){
   if (!v) return 0;
