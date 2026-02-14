@@ -139,6 +139,7 @@ TECH_EXTRA_CSS = r"""
     .source-table th,.source-table td{padding:6px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
     .source-table th.num,.source-table td.num{text-align:right;white-space:nowrap}
     .warn-text{color:#b91c1c;font-weight:700}
+    .metric-note{margin:6px 0 10px;font-size:12px;color:#4b5563;line-height:1.6}
 
     .quick-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
     #q{padding:6px 10px;border:1px solid var(--border);border-radius:10px;min-width:260px}
@@ -658,6 +659,10 @@ HTML = r"""
   <details class="foldable-section top-zone-fold" data-top-zone-details>
     <summary>🏭 Source露出（競合比較）</summary>
     <section class="top-col" style="margin:8px 0 16px;">
+    <div class="metric-note">
+      <div>この指標で分かること: どの企業ソースに記事露出が偏っているか、直近48hで増勢のある企業はどこかを把握できます。</div>
+      <div>閾値を下回った時の対応: 露出が特定企業に集中する場合は、他の一次情報源（公式ブログ・開発者向け発表）を優先追加してください。</div>
+    </div>
     <div class="small" style="margin-bottom:8px">同一企業名で集計（全期間 / 48h）</div>
     {% if source_exposure and source_exposure|length > 0 %}
       <table class="source-table">
@@ -689,6 +694,10 @@ HTML = r"""
   <details class="foldable-section top-zone-fold" data-top-zone-details>
     <summary>🧭 カテゴリ別 一次情報比率</summary>
     <section class="top-col" style="margin:8px 0 16px;">
+    <div class="metric-note">
+      <div>この指標で分かること: カテゴリごとに一次情報（公式発表・一次資料）がどれだけ確保できているかを確認できます。</div>
+      <div>閾値を下回った時の対応: 警告理由を見て「一次ソース追加候補」か「サンプル不足」かを切り分け、収集対象を補強してください。</div>
+    </div>
     <div class="small" style="margin-bottom:8px">一次情報率 = primary / 全記事（tech）。閾値 {{ (primary_ratio_threshold * 100)|round(0)|int }}% 未満は警告表示。</div>
     {% if primary_ratio_by_category and primary_ratio_by_category|length > 0 %}
       <table class="source-table">
@@ -708,7 +717,13 @@ HTML = r"""
               <td class="num">{{ r.ratio_pct }}%</td>
               <td class="num">{{ r.primary_count }}</td>
               <td class="num">{{ r.total_count }}</td>
-              <td>{% if r.warn %}<span class="warn-text">⚠ 閾値未達</span>{% else %}OK{% endif %}</td>
+              <td>
+                {% if r.warn %}
+                  <span class="warn-text">⚠ 閾値未達（{{ r.warn_reason }}）</span>
+                {% else %}
+                  OK
+                {% endif %}
+              </td>
             </tr>
           {% endfor %}
         </tbody>
@@ -2327,17 +2342,26 @@ def main():
         """
     )
     primary_ratio_by_category = []
+    primary_ratio_min_sample = int(os.environ.get("PRIMARY_RATIO_MIN_SAMPLE", "5") or "5")
     for category, total_count, primary_count in cur.fetchall():
         total_count = int(total_count or 0)
         primary_count = int(primary_count or 0)
         ratio = (primary_count / total_count) if total_count else 0.0
+        warn = ratio < primary_ratio_threshold
+        warn_reason = ""
+        if warn:
+            if total_count < primary_ratio_min_sample:
+                warn_reason = "サンプル不足"
+            else:
+                warn_reason = "一次ソース追加候補"
         primary_ratio_by_category.append(
             {
                 "category": category,
                 "total_count": total_count,
                 "primary_count": primary_count,
                 "ratio_pct": round(ratio * 100, 1),
-                "warn": ratio < primary_ratio_threshold,
+                "warn": warn,
+                "warn_reason": warn_reason,
             }
         )
 
