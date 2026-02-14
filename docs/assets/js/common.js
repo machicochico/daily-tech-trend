@@ -2,18 +2,28 @@
   const selectedTags = new Set();
   let tagMode = 'AND';
   let catsCollapsed = false;
+  let currentQuery = '';
+
+  function renderStateChips(states){
+    return states.map(([label, value]) => `<span class="state-chip"><b>${label}</b>${value}</span>`).join('');
+  }
 
   function updateTagActiveView(){
     const box = document.getElementById('tag-active');
     if (!box) return;
-    if (selectedTags.size === 0){ box.style.display = 'none'; box.textContent = ''; return; }
+    const states = [];
+    if (currentQuery) states.push(['検索', `「${currentQuery}」`]);
+    if (selectedTags.size > 0) states.push(['タグ', [...selectedTags].join(', ')]);
+    if (selectedTags.size > 1) states.push(['モード', tagMode]);
+    if (states.length === 0){ box.style.display = 'none'; box.textContent = ''; return; }
     box.style.display = '';
-    box.textContent = `tags: ${[...selectedTags].join(', ')} (${tagMode})`;
+    box.innerHTML = renderStateChips(states);
   }
 
   function toggleTag(tg){
     selectedTags.has(tg) ? selectedTags.delete(tg) : selectedTags.add(tg);
     document.querySelectorAll(`[data-tag-btn="${tg}"]`).forEach(b => b.classList.toggle('active', selectedTags.has(tg)));
+    syncTagMoreLabel();
     updateTagActiveView();
     applyFilter();
   }
@@ -21,12 +31,14 @@
   function clearTagFilter(){
     selectedTags.clear();
     document.querySelectorAll('[data-tag-btn]').forEach(b => b.classList.remove('active'));
+    syncTagMoreLabel();
     updateTagActiveView();
     applyFilter();
   }
 
   function applyFilter(){
     const q = (document.getElementById('q')?.value || '').toLowerCase();
+    currentQuery = q.trim();
     const rows = document.querySelectorAll('.category-body .topic-row, .top-zone .topic-row');
     let hit = 0;
 
@@ -45,9 +57,12 @@
 
     const box = document.getElementById('filter-count');
     if (box){
-      const isFiltering = q || selectedTags.size > 0;
+      const byQuery = !!currentQuery;
+      const byTag = selectedTags.size > 0;
+      const isFiltering = byQuery || byTag;
       if (isFiltering) {
-        box.textContent = document.body.dataset.filterTotal === '1' ? `該当: ${hit}件 / 全${rows.length}件` : `該当: ${hit}件`;
+        const mode = byQuery && byTag ? '（検索＋タグ）' : byQuery ? '（検索）' : '（タグ）';
+        box.textContent = `該当 ${hit} / 全 ${rows.length}${mode}`;
         box.style.display = '';
       } else box.style.display = 'none';
     }
@@ -59,6 +74,15 @@
         hint.style.display = '';
       } else hint.style.display = 'none';
     }
+    updateTagActiveView();
+  }
+
+  function syncStickyOffsets(){
+    const summary = document.querySelector('.summary-card');
+    const category = document.querySelector('.category-header');
+    const root = document.documentElement;
+    if (summary) root.style.setProperty('--mobile-summary-height', `${Math.ceil(summary.getBoundingClientRect().height)}px`);
+    if (category) root.style.setProperty('--mobile-category-height', `${Math.ceil(category.getBoundingClientRect().height)}px`);
   }
 
   function syncToggleAllCatsLabel(){
@@ -124,17 +148,30 @@
     window.addEventListener('load', () => { if (location.hash) scrollToHash(prefix, location.hash); });
   }
 
+  function syncTagMoreLabel(){
+    const bar = document.getElementById('tagBar');
+    const more = document.getElementById('tagMore');
+    if (!bar || !more) return;
+    more.textContent = bar.classList.contains('collapsed') ? '＋ よく使うタグ以外も表示' : '− タグ一覧をたたむ';
+  }
+
   function setupCommon(pagePrefix){
     document.getElementById('q')?.addEventListener('input', applyFilter);
     document.getElementById('tagModeOr')?.addEventListener('change', e => { tagMode = e.target.checked ? 'OR' : 'AND'; updateTagActiveView(); applyFilter(); });
     document.getElementById('tagMore')?.addEventListener('click', () => {
       const bar = document.getElementById('tagBar'); if (!bar) return;
       bar.classList.toggle('collapsed');
-      const more = document.getElementById('tagMore'); if (more) more.textContent = bar.classList.contains('collapsed') ? '＋ もっと見る' : '− 閉じる';
+      syncTagMoreLabel();
+      syncStickyOffsets();
     });
+    window.addEventListener('resize', syncStickyOffsets);
+    window.addEventListener('load', syncStickyOffsets);
     initSortUI();
     bindHashNavigation(pagePrefix);
     syncToggleAllCatsLabel();
+    syncTagMoreLabel();
+    updateTagActiveView();
+    applyFilter();
   }
 
   window.toggleTag = toggleTag;
