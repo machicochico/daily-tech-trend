@@ -35,8 +35,20 @@ TRACKING_QUERY_KEYS = {
 }
 
 # 速度劣化を防ぐため、カテゴリ内で比較する候補数を制限する。
-CANDIDATE_WINDOW_PER_CATEGORY = 600
-CANDIDATE_WINDOW_PER_BLOCK = 120
+CANDIDATE_WINDOW_PER_CATEGORY = {
+    "default": 600,
+    "business": 420,
+    "ai": 520,
+}
+CANDIDATE_WINDOW_PER_BLOCK = {
+    "default": 120,
+    "business": 80,
+    "ai": 100,
+}
+
+# 類似度計算前の軽量フィルタ（大きく離れた候補を除外）
+MAX_TOKEN_COUNT_DIFF = 8
+MAX_TITLE_LENGTH_DIFF = 48
 
 
 def _now_sec() -> float:
@@ -99,9 +111,30 @@ def _blocking_keys(norm_title: str) -> tuple[str, ...]:
 def _token_set_ratio(a: str, b: str) -> float:
     ta = set((a or "").split())
     tb = set((b or "").split())
+    return _token_set_ratio_from_sets(ta, tb)
+
+
+def _token_set_ratio_from_sets(ta: set[str], tb: set[str]) -> float:
     sa = " ".join(sorted(ta))
     sb = " ".join(sorted(tb))
     return _ratio(sa, sb)
+
+
+def _window_for_category(window_config: dict[str, int], category: str) -> int:
+    key = (category or "").strip().lower()
+    return window_config.get(key, window_config["default"])
+
+
+def _is_viable_candidate(
+    norm_title: str,
+    title_token_count: int,
+    kept_entry: dict,
+) -> bool:
+    token_diff = abs(title_token_count - kept_entry["token_count"])
+    if token_diff > MAX_TOKEN_COUNT_DIFF:
+        return False
+    char_diff = abs(len(norm_title) - kept_entry["title_length"])
+    return char_diff <= MAX_TITLE_LENGTH_DIFF
 
 
 def _composite_score(title_score: float, url_score: float) -> float:
@@ -199,6 +232,7 @@ def main():
     seen_by_category_block: Dict[str, dict[str, list[dict]]] = defaultdict(dict)
     seen_by_norm_url: Dict[str, dict] = {}
     deleted = 0
+    candidate_checked = 0
 
     for idx, (i, source, category, title, url, url_norm) in enumerate(rows, start=1):
         cat_key = (category or "").strip().lower() or "default"
@@ -230,12 +264,17 @@ def main():
 
         category_seen = seen_by_category.get(cat_key, [])
         category_block = seen_by_category_block[cat_key]
+        category_window = _window_for_category(CANDIDATE_WINDOW_PER_CATEGORY, cat_key)
+        block_window = _window_for_category(CANDIDATE_WINDOW_PER_BLOCK, cat_key)
+        title_tokens = _title_tokens(norm_title)
+        title_token_set = set(title_tokens)
+        title_token_count = len(title_tokens)
 
         blocking_keys = _blocking_keys(norm_title)
         blocked_candidates: list[dict] = []
         seen_ids: set[int] = set()
         for bk in blocking_keys:
-            for kept in reversed(category_block.get(bk, [])[-CANDIDATE_WINDOW_PER_BLOCK:]):
+            for kept in reversed(category_block.get(bk, [])[-block_window:]):
                 kept_id = kept["id"]
                 if kept_id in seen_ids:
                     continue
@@ -245,13 +284,17 @@ def main():
         if blocked_candidates:
             candidate_slice = blocked_candidates
         else:
-            candidate_slice = list(reversed(category_seen[-CANDIDATE_WINDOW_PER_CATEGORY:]))
+            candidate_slice = list(reversed(category_seen[-category_window:]))
 
         for kept in candidate_slice:
+            candidate_checked += 1
+            if not _is_viable_candidate(norm_title, title_token_count, kept):
+                continue
+
             kept_title = kept["norm_title"]
             kept_url = kept["norm_url"]
 
-            title_score = _token_set_ratio(norm_title, kept_title)
+            title_score = _token_set_ratio_from_sets(title_token_set, kept["token_set"])
             title_match = title_score >= (threshold - 5)
             if not title_match:
                 continue
@@ -288,6 +331,9 @@ def main():
                 "norm_title": norm_title,
                 "norm_url": norm_url,
                 "source": source,
+                "token_set": set(title_tokens),
+                "token_count": title_token_count,
+                "title_length": len(norm_title),
             }
             category_seen.append(kept_entry)
             seen_by_category[cat_key] = category_seen
@@ -295,8 +341,8 @@ def main():
             for bk in blocking_keys:
                 key_items = category_block.setdefault(bk, [])
                 key_items.append(kept_entry)
-                if len(key_items) > CANDIDATE_WINDOW_PER_BLOCK * 2:
-                    del key_items[:-CANDIDATE_WINDOW_PER_BLOCK]
+                if len(key_items) > block_window * 2:
+                    del key_items[:-block_window]
 
             if norm_url:
                 seen_by_norm_url[norm_url] = kept_entry
@@ -304,7 +350,7 @@ def main():
         if idx % 500 == 0:
             print(
                 f"[TIME] dedupe progress processed={idx}/{len(rows)} "
-                f"deleted={deleted} sec={_now_sec() - t0:.1f}"
+                f"deleted={deleted} candidate_checked={candidate_checked} sec={_now_sec() - t0:.1f}"
             )
 
     conn.commit()
