@@ -911,79 +911,6 @@ NEWS_HTML = r"""
     <div id="filter-hint" class="small" style="margin-top:4px; display:none;"></div>
   </div>
 
-  <!-- techと同じ：Top-zone 2カラム -->
-  <section class="top-zone">
-    <div class="top-col">
-      <h3>🇯🇵 Japan Top 10（importance / date）</h3>
-      <ol class="top-list">
-        {% for it in jp_top %}
-          <li class="topic-row"
-              data-title="{{ it.title|e }}"
-              data-summary="{{ (it.summary or '')|e }}"
-              data-imp="{{ it.importance or 0 }}"
-              data-date="{{ it.dt }}"
-              data-tags="{{ it.tags|default([])|join(',') }}">
-            <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
-            {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}            
-            <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
-            <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">開く</a>
-            <span class="date">{{ it.dt_jst }}</span>
-            <details class="insight">
-              <summary class="small">要約・解説を表示</summary>
-              {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
-              <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
-            </details>
-
-            {% if it.tags and it.tags|length>0 %}
-              <span class="small">
-                {% for tg in it.tags %}
-                  <span class="badge">{{ tg }}</span>
-                {% endfor %}
-              </span>
-            {% endif %}
-
-            {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
-          </li>
-        {% endfor %}
-      </ol>
-    </div>
-
-    <div class="top-col">
-      <h3>🌍 Global Top 10（importance / date）</h3>
-      <ol class="top-list">
-        {% for it in global_top %}
-          <li class="topic-row"
-              data-title="{{ it.title|e }}"
-              data-summary="{{ (it.summary or '')|e }}"
-              data-imp="{{ it.importance or 0 }}"
-              data-date="{{ it.dt }}"
-              data-tags="{{ it.tags|default([])|join(',') }}">
-            <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
-            {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}           
-            <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
-            <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">開く</a>
-            <span class="date">{{ it.dt_jst }}</span>
-            <details class="insight">
-              <summary class="small">要約・解説を表示</summary>
-              {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
-              <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
-            </details>
-
-            {% if it.tags and it.tags|length>0 %}
-              <span class="small">
-                {% for tg in it.tags %}
-                  <span class="badge">{{ tg }}</span>
-                {% endfor %}
-              </span>
-            {% endif %}
-
-            {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
-          </li>
-        {% endfor %}
-      </ol>
-    </div>
-  </section>
-
   <!-- techと同じ：カテゴリ（折りたたみ） -->
  {% for sec in sections %}
   <section class="category-section" id="cat-{{ sec.anchor }}">
@@ -1270,47 +1197,6 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
         min_per_category=NEWS_MIN_PER_CATEGORY.get("global", 0),
     )
 
-    # --- techと同じ構成にするためのnews用データ ---
-    # Top（最新）
-    jp_top = fetch_news_articles(cur, "jp", NEWS_REGION_TOP_LIMIT.get("jp", 10))
-    gl_top = fetch_news_articles(cur, "global", NEWS_REGION_TOP_LIMIT.get("global", 10))
-
-    def to_top_items(rows, region_label):
-      out = []
-      for r in rows:
-          # fetch_news_articles(region指定) の戻り:
-          # title,url,source,category,dt,importance,tags,summary
-          article_id, title, url, source, category, dt, importance, tags, summary = r
-
-          imp = int(importance) if importance is not None else 0
-
-          llm_tags = _safe_json_list(tags)
-          if not llm_tags:
-              llm_tags = [region_label, (category or "other")]
-              if source:
-                  llm_tags.append(source)
-
-          out.append({
-              "id": int(article_id),
-              "title": clean_for_html(title),
-              "url": clean_for_html(url),
-              "source": clean_for_html(source),
-              "category": clean_for_html(category or "other"),
-              "region": region_label,
-              "dt": clean_for_html(dt),
-              "dt_jst": fmt_date(dt),
-              "tags": llm_tags,
-              "recent": 0,
-              "importance": imp,
-              "summary": clean_for_html((summary or "").strip() or f"{source} / {fmt_date(dt)}"),
-              "importance_basis": _news_importance_basis_simple(imp, dt, category, llm_tags),
-          })
-      return out
-
-
-    jp_top_items = to_top_items(jp_top, "jp")
-    gl_top_items = to_top_items(gl_top, "global")
-
     # Tag list（source中心 + category/regionも混ぜる）
     tag_count = {}
     def add_tags_from_sections(sections, region_label):
@@ -1409,8 +1295,6 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
 
                 meta=meta_news,
                 tag_list=tag_list_news,
-                jp_top=jp_top_items,
-                global_top=gl_top_items,
 
                 sections=sections,
             ),
@@ -1441,11 +1325,6 @@ NEWS_SECTION_POINTS = {
 NEWS_REGION_LIMIT_EACH = {
     "jp": 50,
     "global": 30,
-}
-
-NEWS_REGION_TOP_LIMIT = {
-    "jp": 10,
-    "global": 6,
 }
 
 NEWS_MIN_PER_CATEGORY = {
