@@ -126,6 +126,7 @@ a:hover{
 
     .quick-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
     #q{padding:6px 10px;border:1px solid var(--border);border-radius:10px;min-width:260px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     .btn{padding:6px 10px;border:1px solid var(--border);border-radius:10px;background:var(--bg);cursor:pointer}
 
     .badge.hot{font-weight:800}
@@ -566,6 +567,7 @@ a:hover{
     </div>
     <div id="tag-active" class="small" style="margin-top:6px; display:none;"></div>
     <div class="quick-controls">
+      <label for="q" class="sr-only">検索キーワード</label>
       <input id="q" type="search" placeholder="タイトル・要約を検索" />
       <button class="btn" type="button" onclick="toggleAllCats()">カテゴリ表示切替</button>
       <label class="small">並び替え
@@ -585,7 +587,7 @@ a:hover{
       <button class="btn" type="button" onclick="applySort()">適用</button>
 
     </div>
-    <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
+    <div id="filter-count" class="small" style="margin-top:6px; display:none;" aria-live="polite"></div>
     <div id="filter-hint" class="small" style="margin-top:4px; display:none;"></div>
   </div>
 
@@ -1833,10 +1835,10 @@ a:hover{
   <section class="category-section" id="cat-system">
     <div class="category-header">
       <h2 style="margin:0">システム <span class="tag">system</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('system')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('system')" aria-expanded="true" aria-controls="cat-body-system">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-system">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -3896,10 +3898,10 @@ a:hover{
   <section class="category-section" id="cat-manufacturing">
     <div class="category-header">
       <h2 style="margin:0">製造（鉄鋼） <span class="tag">manufacturing</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('manufacturing')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('manufacturing')" aria-expanded="true" aria-controls="cat-body-manufacturing">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-manufacturing">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -5999,10 +6001,10 @@ a:hover{
   <section class="category-section" id="cat-blast_furnace">
     <div class="category-header">
       <h2 style="margin:0">高炉 <span class="tag">blast_furnace</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('blast_furnace')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('blast_furnace')" aria-expanded="true" aria-controls="cat-body-blast_furnace">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-blast_furnace">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -6226,10 +6228,10 @@ a:hover{
   <section class="category-section" id="cat-eaf">
     <div class="category-header">
       <h2 style="margin:0">電炉 <span class="tag">eaf</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('eaf')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('eaf')" aria-expanded="true" aria-controls="cat-body-eaf">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-eaf">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -6249,10 +6251,10 @@ a:hover{
   <section class="category-section" id="cat-rolling">
     <div class="category-header">
       <h2 style="margin:0">圧延 <span class="tag">rolling</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('rolling')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('rolling')" aria-expanded="true" aria-controls="cat-body-rolling">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-rolling">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -6272,10 +6274,10 @@ a:hover{
   <section class="category-section" id="cat-quality">
     <div class="category-header">
       <h2 style="margin:0">品質 <span class="tag">quality</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('quality')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('quality')" aria-expanded="true" aria-controls="cat-body-quality">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-quality">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -6295,10 +6297,10 @@ a:hover{
   <section class="category-section" id="cat-maintenance">
     <div class="category-header">
       <h2 style="margin:0">保全 <span class="tag">maintenance</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('maintenance')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('maintenance')" aria-expanded="true" aria-controls="cat-body-maintenance">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-maintenance">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -6318,10 +6320,10 @@ a:hover{
   <section class="category-section" id="cat-market">
     <div class="category-header">
       <h2 style="margin:0">市況（コモディティ・海運・スクラップ） <span class="tag">market</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('market')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('market')" aria-expanded="true" aria-controls="cat-body-market">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-market">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -8598,10 +8600,10 @@ a:hover{
   <section class="category-section" id="cat-environment">
     <div class="category-header">
       <h2 style="margin:0">environment <span class="tag">environment</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('environment')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('environment')" aria-expanded="true" aria-controls="cat-body-environment">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-environment">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -10609,10 +10611,10 @@ a:hover{
   <section class="category-section" id="cat-security">
     <div class="category-header">
       <h2 style="margin:0">セキュリティ <span class="tag">security</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('security')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('security')" aria-expanded="true" aria-controls="cat-body-security">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-security">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -12889,10 +12891,10 @@ a:hover{
   <section class="category-section" id="cat-ai">
     <div class="category-header">
       <h2 style="margin:0">AI <span class="tag">ai</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('ai')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('ai')" aria-expanded="true" aria-controls="cat-body-ai">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-ai">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -15065,10 +15067,10 @@ a:hover{
   <section class="category-section" id="cat-dev">
     <div class="category-header">
       <h2 style="margin:0">開発 <span class="tag">dev</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('dev')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('dev')" aria-expanded="true" aria-controls="cat-body-dev">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-dev">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -17148,10 +17150,10 @@ a:hover{
   <section class="category-section" id="cat-decarbonization_ops">
     <div class="category-header">
       <h2 style="margin:0">脱炭素オペレーション（算定・LCA） <span class="tag">decarbonization_ops</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('decarbonization_ops')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('decarbonization_ops')" aria-expanded="true" aria-controls="cat-body-decarbonization_ops">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-decarbonization_ops">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -17171,10 +17173,10 @@ a:hover{
   <section class="category-section" id="cat-policy">
     <div class="category-header">
       <h2 style="margin:0">政策・規制（脱炭素） <span class="tag">policy</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('policy')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('policy')" aria-expanded="true" aria-controls="cat-body-policy">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-policy">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -17294,10 +17296,10 @@ a:hover{
   <section class="category-section" id="cat-smart_factory">
     <div class="category-header">
       <h2 style="margin:0">スマートファクトリー（導入事例） <span class="tag">smart_factory</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('smart_factory')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('smart_factory')" aria-expanded="true" aria-controls="cat-body-smart_factory">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-smart_factory">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -19317,10 +19319,10 @@ a:hover{
   <section class="category-section" id="cat-standards">
     <div class="category-header">
       <h2 style="margin:0">標準化・規格 <span class="tag">standards</span></h2>
-      <button class="btn" type="button" onclick="toggleCat('standards')">表示切替</button>
+      <button class="btn" type="button" onclick="toggleCat('standards')" aria-expanded="true" aria-controls="cat-body-standards">表示切替</button>
     </div>
 
-    <div class="category-body">
+    <div class="category-body" id="cat-body-standards">
       <!-- ここに既存の topbox と topics list をそのまま置く -->
 
 
@@ -21404,6 +21406,7 @@ function toggleTag(tg){
   // ボタン見た目（active クラス）
   document.querySelectorAll(`[data-tag-btn="${tg}"]`).forEach(b=>{
     b.classList.toggle('active', selectedTags.has(tg));
+    b.setAttribute('aria-pressed', selectedTags.has(tg) ? 'true' : 'false');
   });
 
   updateTagActiveView();
@@ -21412,7 +21415,10 @@ function toggleTag(tg){
 
 function clearTagFilter(){
   selectedTags.clear();
-  document.querySelectorAll('[data-tag-btn]').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('[data-tag-btn]').forEach(b=>{
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
   updateTagActiveView();
   applyFilter();
 }
@@ -21482,15 +21488,30 @@ document.getElementById('tagModeOr')?.addEventListener('change', (e) => {
   applyFilter();
 });
 
+document.querySelectorAll('[data-tag-btn]').forEach(b => b.setAttribute('aria-pressed', 'false'));
+document.querySelectorAll('.category-section').forEach(sec => {
+  const id = sec.id.replace('cat-', '');
+  syncCatAria(id, sec.classList.contains('collapsed'));
+});
+
+function syncCatAria(id, collapsed){
+  const btn = document.querySelector(`#cat-${id} .category-header .btn[aria-controls]`);
+  if (btn) btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+}
+
 function toggleCat(id) {
   const sec = document.getElementById('cat-' + id);
-  if (sec) sec.classList.toggle('collapsed');
+  if (!sec) return;
+  sec.classList.toggle('collapsed');
+  syncCatAria(id, sec.classList.contains('collapsed'));
 }
 let catsCollapsed = false;
 function toggleAllCats() {
   catsCollapsed = !catsCollapsed;
   document.querySelectorAll('.category-section').forEach(sec => {
     sec.classList.toggle('collapsed', catsCollapsed);
+    const id = sec.id.replace('cat-', '');
+    syncCatAria(id, catsCollapsed);
   });
 }
 
