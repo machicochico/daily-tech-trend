@@ -43,3 +43,10 @@ logs/
 # GitHub Pages output
 docs/*
 !docs/index.html
+!docs/news/
+!docs/news/index.html
+!docs/assets/
+!docs/assets/css/
+!docs/assets/css/common.css
+!docs/assets/js/
+!docs/assets/js/common.js

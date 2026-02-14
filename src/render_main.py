@@ -331,10 +331,7 @@ PORTAL_HTML = r"""
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Daily Tech Trend</title>
-  <style>
-    {{ common_css }}
-    {{ tech_extra_css }}
-  </style>
+  <link rel="stylesheet" href="{{ common_css_href }}">
 </head>
 <body>
   <h1>Daily Tech Trend</h1>
@@ -352,8 +349,8 @@ PORTAL_HTML = r"""
     <a class="btn" href="./news/index.html">ニュースを見る →</a>
   </div>
 
+  <script src="{{ common_js_src }}"></script>
   <script>
-    // 旧URL互換：以前の /#topic-xxx を /tech/index.html#topic-xxx に寄せる
     if (location.hash && location.hash.startsWith("#topic-")) {
       location.replace("./tech/index.html" + location.hash);
     }
@@ -382,12 +379,9 @@ HTML = r"""
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="技術動向ダイジェスト">
   <meta name="twitter:description" content="国内外の技術トレンドをカテゴリ別に要約し、注目度・新着・解説を1ページで確認できる技術動向ダイジェスト。">
-  <style>
-    {{ common_css }}
-    {{ tech_extra_css }}
-  </style>
+  <link rel="stylesheet" href="{{ common_css_href }}">
 </head>
-<body>
+<body data-filter-total="1">
   <h1>技術動向ダイジェスト</h1>
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
@@ -853,266 +847,23 @@ HTML = r"""
       </div>
   </section>
   {% endfor %}
+<script src="{{ common_js_src }}"></script>
 <script>
-// Safari対策：スクロール復元を抑止
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
 function forceTopIfNoHash(){
   if (!location.hash) window.scrollTo(0, 0);
 }
 
-// bfcache/戻る対策（Safariで重要）
-window.addEventListener('pageshow', () => {
-  forceTopIfNoHash();
-});
-
-// 通常ロード対策
+window.addEventListener('pageshow', forceTopIfNoHash);
 window.addEventListener('load', () => {
-  setTimeout(forceTopIfNoHash, 0);
-});
-const selectedTags = new Set(); // 複数タグ
-let tagMode = "AND";            // "AND" or "OR"
-const btn = document.getElementById('closeFloating');
-
-function setFloatingClose(open, closeFn){
-  if(!open){ btn.hidden = true; btn.onclick = null; return; }
-  btn.hidden = false;
-  btn.onclick = closeFn;
-}
-
-function updateTagActiveView(){
-  const box = document.getElementById('tag-active');
-  if (!box) return;
-
-  if (selectedTags.size === 0){
-    box.style.display = 'none';
-    box.textContent = '';
-    return;
-  }
-  box.style.display = '';
-  box.textContent = `tags: ${[...selectedTags].join(', ')} (${tagMode})`;
-}
-
-function toggleTag(tg){
-  if (selectedTags.has(tg)) selectedTags.delete(tg);
-  else selectedTags.add(tg);
-
-  // ボタン見た目（active クラス）
-  document.querySelectorAll(`[data-tag-btn="${tg}"]`).forEach(b=>{
-    b.classList.toggle('active', selectedTags.has(tg));
-  });
-
-  updateTagActiveView();
-  applyFilter();
-}
-
-function clearTagFilter(){
-  selectedTags.clear();
-  document.querySelectorAll('[data-tag-btn]').forEach(b=>b.classList.remove('active'));
-  updateTagActiveView();
-  applyFilter();
-}
-
-function applyFilter() {
-  const q = (document.getElementById('q')?.value || '').toLowerCase();
-
-  const rows = document.querySelectorAll('.category-body .topic-row, .top-zone .topic-row');
-  let hit = 0;
-
-  rows.forEach(el => {
-    const title = (el.dataset.title || '').toLowerCase();
-    const summary = (el.dataset.summary || '').toLowerCase();
-    const imp = parseInt(el.dataset.imp || '0', 10);
-    const recent = parseInt(el.dataset.recent || '0', 10);
-    const tags = (el.dataset.tags || ''); // "EU規制,CBAM" など
-
-    const hitQ = !q || title.includes(q) || summary.includes(q);
-    const itemTags = tags.split(',').map(s=>s.trim()).filter(Boolean);
-
-    let hitTag = true;
-    if (selectedTags.size > 0){
-      const sel = [...selectedTags];
-      hitTag = (tagMode === "AND")
-        ? sel.every(t => itemTags.includes(t))
-        : sel.some(t => itemTags.includes(t));
-    }
-
-    const show = hitQ && hitTag;
-    el.style.display = show ? '' : 'none';
-    if (show) hit++;
-  });
-
-  // ★ 件数表示
-  const box = document.getElementById('filter-count');
-  if (!box) return;
-
-  const isFiltering = q || selectedTags.size > 0;
-  if (isFiltering) {
-    box.textContent = `該当: ${hit}件 / 全${rows.length}件`;
-    box.style.display = '';
-  } else {
-    box.style.display = 'none';
-  }
-  
-    // ★ 0件時のヒント表示
-  const hint = document.getElementById('filter-hint');
-  if (!hint) return;
-
-  if (isFiltering && hit === 0) {
-    const tips = [];
-    if (q) tips.push('検索語を短くする／別表現にする');
-    tips.push('フィルタをすべてリセットする');
-
-    hint.innerHTML = `該当なし。<strong>条件を緩めてください：</strong> ${tips.join('・')}`;
-    hint.style.display = '';
-  } else {
-    hint.style.display = 'none';
-  }
-}
-
-
-document.getElementById('q')?.addEventListener('input', applyFilter);
-document.getElementById('tagModeOr')?.addEventListener('change', (e) => {
-  tagMode = e.target.checked ? "OR" : "AND";
-  updateTagActiveView();
-  applyFilter();
-});
-
-function toggleCat(id) {
-  const sec = document.getElementById('cat-' + id);
-  if (sec) sec.classList.toggle('collapsed');
-}
-let catsCollapsed = false;
-function toggleAllCats() {
-  catsCollapsed = !catsCollapsed;
-  document.querySelectorAll('.category-section').forEach(sec => {
-    sec.classList.toggle('collapsed', catsCollapsed);
-  });
-}
-
-function openSectionFor(el){
-  const sec = el.closest('.category-section');
-  if (sec) sec.classList.remove('collapsed');
-}
-
-function ensureVisible(el){
-  // フィルタ等で非表示なら一旦表示に戻す（最低限）
-  if (el.style.display === 'none') el.style.display = '';
-}
-
-function scrollToTopic(hash){
-  if (!hash || !hash.startsWith('#topic-')) return false;
-  const el = document.querySelector(hash);
-  if (!el) return false;
-
-  // カテゴリを開く
-  openSectionFor(el);
-  ensureVisible(el);
-
-  // details を自動で開く（あれば）
-  const det = el.querySelector('details.insight');
-  if (det && !det.open) det.open = true;
-
-  requestAnimationFrame(() => {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-  return true;
-}
-
-
-document.addEventListener('click', (e) => {
-  const a = e.target.closest('a[href^="#topic-"]');
-  if (!a) return;
-
-  const hash = a.getAttribute('href');
-  if (scrollToTopic(hash)) {
-    e.preventDefault();
-    history.replaceState(null, '', hash);
-  }
-});
-
-window.addEventListener('load', () => {
-  if (location.hash) scrollToTopic(location.hash);
-});
-
-// Tag bar: More toggle（スマホ圧迫対策）
-document.getElementById('tagMore')?.addEventListener('click', () => {
-  const bar = document.getElementById('tagBar');
-  if (!bar) return;
-  bar.classList.toggle('collapsed');
-
-  // ボタン文言切替（任意）
-  const more = document.getElementById('tagMore');
-  if (more) more.textContent = bar.classList.contains('collapsed') ? '＋ もっと見る' : '− 閉じる';
-});
-
-function parseDateValue(v){
-  if (!v) return 0;
-  // 例: "2025-12-21T10:00:00+00:00" / "2025-12-21 10:00:00" などを許容
-  const t = Date.parse(String(v).replace(' ', 'T'));
-  return isNaN(t) ? 0 : t;
-}
-
-function applySort(){
-  const key = (document.getElementById('sortKey')?.value || 'date');
-  const dir = (document.getElementById('sortDir')?.value || 'desc');
-  const sign = (dir === 'asc') ? 1 : -1;
-
-  // 対象: Top list + 各カテゴリの直下 ul + topbox(tech) の ul
-  const lists = [
-    ...document.querySelectorAll('ol.top-list'),
-    ...document.querySelectorAll('.category-body > ul'),
-    ...document.querySelectorAll('.topbox > ul')
-  ];
-
-  for (const list of lists){
-    const items = [...list.querySelectorAll(':scope > li.topic-row')];
-    if (items.length <= 1) continue;
-
-    items.sort((a,b) => {
-      if (key === 'importance'){
-        const av = parseInt(a.dataset.imp || '0', 10) || 0;
-        const bv = parseInt(b.dataset.imp || '0', 10) || 0;
-        if (av !== bv) return (av - bv) * sign;
-      } else {
-        const av = parseDateValue(a.dataset.date);
-        const bv = parseDateValue(b.dataset.date);
-        if (av !== bv) return (av - bv) * sign;
-      }
-      // 同点のときは安定化（タイトル）
-      const at = (a.dataset.title || '');
-      const bt = (b.dataset.title || '');
-      return at.localeCompare(bt);
-    });
-
-    for (const li of items) list.appendChild(li);
-  }
-
-  // 保存（任意：次回アクセス時も同じ）
-  try{
-    localStorage.setItem('sortKey', key);
-    localStorage.setItem('sortDir', dir);
-  }catch(e){}
-}
-
-// 初期反映（任意）
-(function initSortUI(){
-  try{
-    const k = localStorage.getItem('sortKey');
-    const d = localStorage.getItem('sortDir');
-    if (k && document.getElementById('sortKey')) document.getElementById('sortKey').value = k;
-    if (d && document.getElementById('sortDir')) document.getElementById('sortDir').value = d;
-  }catch(e){}
-  applySort();
-})();
-window.addEventListener('load', () => {
-  // 先にトップ固定→その後に折りたたみ（ズレを減らす）
   setTimeout(() => {
-    if (!location.hash) window.scrollTo(0, 0);
+    forceTopIfNoHash();
     toggleAllCats();
   }, 0);
 });
 
+window.DTTCommon.setupCommon('topic');
 </script>
 
 </body>
@@ -1138,12 +889,9 @@ NEWS_HTML = r"""
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ニュースダイジェスト">
   <meta name="twitter:description" content="国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。">
-  <style>
-    {{ common_css }}
-    {{ tech_extra_css }}
-  </style>
+  <link rel="stylesheet" href="{{ common_css_href }}">
 </head>
-<body>
+<body data-filter-total="0">
   <h1>{{ heading }}</h1>
 
   <div class="nav">
@@ -1402,210 +1150,16 @@ NEWS_HTML = r"""
   {% endfor %}
 
 
+<script src="{{ common_js_src }}"></script>
 <script>
-/* techのJSをそのまま使う（newsではimp/recentはhidden固定） */
-const selectedTags = new Set();
-let tagMode = "AND";
-
-function updateTagActiveView(){
-  const box = document.getElementById('tag-active');
-  if (!box) return;
-  if (selectedTags.size === 0){
-    box.style.display = 'none';
-    box.textContent = '';
-    return;
-  }
-  box.style.display = '';
-  box.textContent = `tags: ${[...selectedTags].join(', ')} (${tagMode})`;
-}
-
-function toggleTag(tg){
-  if (selectedTags.has(tg)) selectedTags.delete(tg);
-  else selectedTags.add(tg);
-  document.querySelectorAll(`[data-tag-btn="${tg}"]`).forEach(b=>{
-    b.classList.toggle('active', selectedTags.has(tg));
-  });
-  updateTagActiveView();
-  applyFilter();
-}
-
-function clearTagFilter(){
-  selectedTags.clear();
-  document.querySelectorAll('[data-tag-btn]').forEach(b=>b.classList.remove('active'));
-  updateTagActiveView();
-  applyFilter();
-}
-
-function applyFilter() {
-  const q = (document.getElementById('q')?.value || '').toLowerCase();
-  const rows = document.querySelectorAll('.category-body .topic-row, .top-zone .topic-row');
-  let hit = 0;
-
-  rows.forEach(el => {
-    const title = (el.dataset.title || '').toLowerCase();
-    const summary = (el.dataset.summary || '').toLowerCase();
-    const tags = (el.dataset.tags || '');
-    const hitQ = !q || title.includes(q) || summary.includes(q);
-
-    const itemTags = tags.split(',').map(s=>s.trim()).filter(Boolean);
-    let hitTag = true;
-    if (selectedTags.size > 0){
-      const sel = [...selectedTags];
-      hitTag = (tagMode === "AND")
-        ? sel.every(t => itemTags.includes(t))
-        : sel.some(t => itemTags.includes(t));
-    }
-
-    const show = hitQ && hitTag;
-    el.style.display = show ? '' : 'none';
-    if (show) hit++;
-  });
-
-  const box = document.getElementById('filter-count');
-  if (box){
-    const isFiltering = q || selectedTags.size > 0;
-    if (isFiltering) {
-      box.textContent = `該当: ${hit}件`;
-      box.style.display = '';
-    } else {
-      box.style.display = 'none';
-    }
-  }
-}
-
-document.getElementById('q')?.addEventListener('input', applyFilter);
-document.getElementById('tagModeOr')?.addEventListener('change', (e) => {
-  tagMode = e.target.checked ? "OR" : "AND";
-  updateTagActiveView();
-  applyFilter();
-});
-
-function toggleCat(id) {
-  const sec = document.getElementById('cat-' + id);
-  if (sec) sec.classList.toggle('collapsed');
-}
-let catsCollapsed = false;
-function toggleAllCats() {
-  catsCollapsed = !catsCollapsed;
-  document.querySelectorAll('.category-section').forEach(sec => {
-    sec.classList.toggle('collapsed', catsCollapsed);
-  });
-}
-
-document.getElementById('tagMore')?.addEventListener('click', () => {
-  const bar = document.getElementById('tagBar');
-  if (!bar) return;
-  bar.classList.toggle('collapsed');
-  const more = document.getElementById('tagMore');
-  if (more) more.textContent = bar.classList.contains('collapsed') ? '＋ もっと見る' : '− 閉じる';
-});
-function parseDateValue(v){
-  if (!v) return 0;
-  // 例: "2025-12-21T10:00:00+00:00" / "2025-12-21 10:00:00" などを許容
-  const t = Date.parse(String(v).replace(' ', 'T'));
-  return isNaN(t) ? 0 : t;
-}
-
-function applySort(){
-  const key = (document.getElementById('sortKey')?.value || 'date');
-  const dir = (document.getElementById('sortDir')?.value || 'desc');
-  const sign = (dir === 'asc') ? 1 : -1;
-
-  // 対象: Top list + 各カテゴリの直下 ul + topbox(tech) の ul
-  const lists = [
-    ...document.querySelectorAll('ol.top-list'),
-    ...document.querySelectorAll('.category-body > ul'),
-    ...document.querySelectorAll('.topbox > ul')
-  ];
-
-  for (const list of lists){
-    const items = [...list.querySelectorAll(':scope > li.topic-row')];
-    if (items.length <= 1) continue;
-
-    items.sort((a,b) => {
-      if (key === 'importance'){
-        const av = parseInt(a.dataset.imp || '0', 10) || 0;
-        const bv = parseInt(b.dataset.imp || '0', 10) || 0;
-        if (av !== bv) return (av - bv) * sign;
-      } else {
-        const av = parseDateValue(a.dataset.date);
-        const bv = parseDateValue(b.dataset.date);
-        if (av !== bv) return (av - bv) * sign;
-      }
-      // 同点のときは安定化（タイトル）
-      const at = (a.dataset.title || '');
-      const bt = (b.dataset.title || '');
-      return at.localeCompare(bt);
-    });
-
-    for (const li of items) list.appendChild(li);
-  }
-
-  // 保存（任意：次回アクセス時も同じ）
-  try{
-    localStorage.setItem('sortKey', key);
-    localStorage.setItem('sortDir', dir);
-  }catch(e){}
-}
-
-// 初期反映（任意）
-(function initSortUI(){
-  try{
-    const k = localStorage.getItem('sortKey');
-    const d = localStorage.getItem('sortDir');
-    if (k && document.getElementById('sortKey')) document.getElementById('sortKey').value = k;
-    if (d && document.getElementById('sortDir')) document.getElementById('sortDir').value = d;
-  }catch(e){}
-  applySort();
-})();
-
-function openSectionFor(el){
-  const sec = el.closest('.category-section');
-  if (sec) sec.classList.remove('collapsed');
-}
-function ensureVisible(el){
-  if (el.style.display === 'none') el.style.display = '';
-}
-function scrollToNews(hash){
-  if (!hash || !hash.startsWith('#news-')) return false;
-  const el = document.querySelector(hash);
-  if (!el) return false;
-
-  openSectionFor(el);
-  ensureVisible(el);
-
-  const det = el.querySelector('details.insight');
-  if (det && !det.open) det.open = true;
-
-  requestAnimationFrame(() => {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-  return true;
-}
-
-document.addEventListener('click', (e) => {
-  const a = e.target.closest('a[href^="#news-"]');
-  if (!a) return;
-  const hash = a.getAttribute('href');
-  if (scrollToNews(hash)) {
-    e.preventDefault();
-    history.replaceState(null, '', hash);
-  }
-});
-
 window.addEventListener('load', () => {
-  if (location.hash) scrollToNews(location.hash);
-});
-
-
-window.addEventListener('load', () => {
-  // 先にトップ固定→その後に折りたたみ（ズレを減らす）
   setTimeout(() => {
     if (!location.hash) window.scrollTo(0, 0);
     toggleAllCats();
   }, 0);
 });
 
+window.DTTCommon.setupCommon('news');
 </script>
 
 </body>
@@ -1837,8 +1391,8 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     for page, title, heading, sections, filename in pages:
         (news_dir / filename).write_text(
             Template(NEWS_HTML).render(
-                common_css=COMMON_CSS,
-                tech_extra_css=TECH_EXTRA_CSS,
+                common_css_href="../assets/css/common.css",
+                common_js_src="../assets/js/common.js",
 
                 page=page,
                 nav_prefix="../", 
@@ -3308,8 +2862,8 @@ def main():
     tech_dir.mkdir(exist_ok=True)
 
     tech_html_sub = Template(HTML).render(
-        common_css=COMMON_CSS,
-        tech_extra_css=TECH_EXTRA_CSS,
+        common_css_href="../assets/css/common.css",
+        common_js_src="../assets/js/common.js",
         page="tech",
         nav_prefix="../",
         categories=tech_categories,
@@ -3332,8 +2886,8 @@ def main():
     )
 
     tech_html_root = Template(HTML).render(
-        common_css=COMMON_CSS,
-        tech_extra_css=TECH_EXTRA_CSS,
+        common_css_href="./assets/css/common.css",
+        common_js_src="./assets/js/common.js",
         page="tech",
         nav_prefix="./",
         categories=tech_categories,
