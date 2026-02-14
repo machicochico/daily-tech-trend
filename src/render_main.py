@@ -465,7 +465,18 @@ HTML = r"""
     <div id="filter-hint" class="small" style="margin-top:4px; display:none;"></div>
   </div>
 
-  <section class="top-zone">
+  <section class="quick-jump" aria-label="クイックジャンプ（カテゴリへ移動）">
+    <div class="small" style="margin-bottom:6px"><strong>クイックジャンプ（カテゴリへ移動）</strong></div>
+    <div class="tag-bar">
+      {% for cat in categories %}
+        <a class="btn" href="#cat-{{ cat.id }}">{{ cat.name }}</a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <details class="foldable-section top-zone-fold" data-top-zone-details>
+    <summary>🇯🇵 JP Priority ハイライト</summary>
+    <section class="top-zone">
     <div class="top-col">
       <h3>🇯🇵JP Priority Top 10（importance × recent）</h3>
       <ol class="top-list">
@@ -522,9 +533,12 @@ HTML = r"""
         {% endfor %}
       </ol>
     </div>
-  </section>
+    </section>
+  </details>
 
-  <section class="top-zone">
+  <details class="foldable-section top-zone-fold" data-top-zone-details>
+    <summary>🌍 Global / Trending ハイライト</summary>
+    <section class="top-zone">
     <div class="top-col">
       <h3>🌍Global Top 10（importance × recent）</h3>
       <ol class="top-list">
@@ -581,10 +595,13 @@ HTML = r"""
         {% endfor %}
       </ol>
     </div>
-  </section>
+    </section>
+  </details>
 
   {% if market_top or market_trending_top %}
-  <section class="top-zone">
+  <details class="foldable-section top-zone-fold" data-top-zone-details>
+    <summary>📈 Market ハイライト</summary>
+    <section class="top-zone">
     <div class="top-col" id="market-card">
       <h3>📈Market Top 10（importance × recent）</h3>
       <ol class="top-list">
@@ -634,11 +651,13 @@ HTML = r"""
         {% endfor %}
       </ol>
     </div>
-  </section>
+    </section>
+  </details>
   {% endif %}
 
-  <section class="top-col" style="margin:0 0 16px;">
-    <h3>🏭 Source露出（競合比較）</h3>
+  <details class="foldable-section top-zone-fold" data-top-zone-details>
+    <summary>🏭 Source露出（競合比較）</summary>
+    <section class="top-col" style="margin:8px 0 16px;">
     <div class="small" style="margin-bottom:8px">同一企業名で集計（全期間 / 48h）</div>
     {% if source_exposure and source_exposure|length > 0 %}
       <table class="source-table">
@@ -664,10 +683,12 @@ HTML = r"""
     {% else %}
       <div class="meta">該当ソースなし</div>
     {% endif %}
-  </section>
+    </section>
+  </details>
 
-  <section class="top-col" style="margin:0 0 16px;">
-    <h3>🧭 カテゴリ別 一次情報比率</h3>
+  <details class="foldable-section top-zone-fold" data-top-zone-details>
+    <summary>🧭 カテゴリ別 一次情報比率</summary>
+    <section class="top-col" style="margin:8px 0 16px;">
     <div class="small" style="margin-bottom:8px">一次情報率 = primary / 全記事（tech）。閾値 {{ (primary_ratio_threshold * 100)|round(0)|int }}% 未満は警告表示。</div>
     {% if primary_ratio_by_category and primary_ratio_by_category|length > 0 %}
       <table class="source-table">
@@ -695,7 +716,8 @@ HTML = r"""
     {% else %}
       <div class="meta">カテゴリ集計対象なし</div>
     {% endif %}
-  </section>
+    </section>
+  </details>
 
     {% for cat in categories %}
   <section class="category-section" id="cat-{{ cat.id }}">
@@ -870,7 +892,7 @@ window.addEventListener('pageshow', forceTopIfNoHash);
 window.addEventListener('load', () => {
   setTimeout(() => {
     forceTopIfNoHash();
-    toggleAllCats();
+    if (!location.hash) toggleAllCats();
   }, 0);
 });
 
