@@ -87,6 +87,70 @@ def _row_get(row, key, default=""):
         return default
     return default if value is None else value
 
+
+def _clip_importance(v: int) -> int:
+    return max(0, min(100, int(v)))
+
+
+def _estimate_news_importance(row: dict) -> tuple[int, str]:
+    source = str(_row_get(row, "source", "") or "").lower()
+    category = str(_row_get(row, "category", "") or "").lower()
+
+    high_trust = ("reuters", "nikkei", "bloomberg", "ap", "nhk", "wsj", "ft")
+    medium_trust = ("cnet", "techcrunch", "the verge", "wired", "itmedia")
+    if any(x in source for x in high_trust):
+        source_score = 28
+        source_label = "高"
+    elif any(x in source for x in medium_trust):
+        source_score = 18
+        source_label = "中"
+    else:
+        source_score = 12
+        source_label = "標準"
+
+    freshness_score = 8
+    published_at = (_row_get(row, "published_at", "") or "").strip()
+    if published_at:
+        try:
+            dt = datetime.fromisoformat(published_at.replace("Z", "+00:00"))
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            age_h = max(0.0, (datetime.now(timezone.utc) - dt).total_seconds() / 3600.0)
+            if age_h <= 6:
+                freshness_score = 30
+            elif age_h <= 24:
+                freshness_score = 24
+            elif age_h <= 72:
+                freshness_score = 16
+            else:
+                freshness_score = 10
+        except Exception:
+            freshness_score = 8
+
+    category_weight = {
+        "security": 22,
+        "policy": 19,
+        "market": 17,
+        "industry": 15,
+        "company": 13,
+        "news": 12,
+        "other": 10,
+    }.get(category, 11)
+
+    try:
+        related = int(_row_get(row, "importance_hint", 0) or 0)
+    except Exception:
+        related = 0
+    related_score = min(20, max(0, related * 2))
+
+    raw = source_score + freshness_score + category_weight + related_score
+    importance = _clip_importance(raw)
+    reason = (
+        f"信頼度:{source_label}({source_score}) / 速報性:{freshness_score} / "
+        f"カテゴリ重み:{category_weight} / 関連トピック:{related}件→{related_score}"
+    )
+    return importance, reason
+
 def compute_src_hash(title: str, url: str, body: str) -> str:
     seed = (title or "") + "\n" + (url or "") + "\n" + (body or "")[:2000]
     return hashlib.sha256(seed.encode("utf-8", errors="ignore")).hexdigest()
@@ -101,7 +165,13 @@ def postprocess_insight(ins: dict, row: dict) -> dict:
     except Exception:
         ins["importance"] = 0
     if ins["importance"] <= 0:
-        ins["importance"] = 10 if is_news else 20
+        if is_news:
+            estimated_importance, reason = _estimate_news_importance(row)
+            ins["importance"] = estimated_importance
+            ins["importance_reason"] = reason
+        else:
+            ins["importance"] = 20
+    ins["importance"] = _clip_importance(ins["importance"])
 
     if not ins.get("type"):
         ins["type"] = "other"

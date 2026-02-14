@@ -273,6 +273,7 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
         "key_points は配列で最大3つ。事実が足りない場合、残りは必ず '推測: ' で始めて補完する（断定しない）。"
         "perspectives は {engineer,management,consumer} の3キー。短い本文でも必ず埋める。"
         "perspectives は原則 '推測: ' で始める（本文に明記された事実だけで言える場合のみ推測不要）。"
+        "importance は 0〜100 の整数を必ず出力する。"
         "同じ内容の繰り返しは禁止。抽象的すぎる文（例:『詳細は本文確認が必要』だけ）は禁止。"
     )
     body_for_llm = (body or "").strip()[:1200]
@@ -282,6 +283,7 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
         f"タイトル: {title}\nURL: {url}\n本文:\n{body_for_llm}\n\n"
         "次のJSONを出力:\n"
         "{\n"
+        '  "importance": 0,\n'
         '  "summary": "事実のみの日本語1文（推測禁止）",\n'
         '  "key_points": ["箇条書き1","箇条書き2","箇条書き3"],\n'
         '  "perspectives": {\n'
@@ -291,6 +293,7 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
         "  },\n"
         '  "inferred": 0\n'
         "}\n"
+        "importance は 0〜100 の整数。"
         "inferred は、key_points または perspectives に '推測:' が1つでも含まれる場合 1、それ以外は0。"
     )
 
@@ -303,6 +306,7 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
             f"タイトル: {title}\nURL: {url}\n本文:\n{body_for_llm}\n\n"
             "JSONのみで返して:\n"
             "{\n"
+            '  "importance": 10,\n'
             '  "summary": "事実のみの日本語1文",\n'
             '  "key_points": ["推測: ..."],\n'
             '  "perspectives": {"engineer":"推測: ...","management":"推測: ...","consumer":"推測: ..."},\n'
@@ -317,9 +321,11 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
     key_points = []
     perspectives = {"engineer": "", "management": "", "consumer": ""}
     inferred = 0
+    importance = 0
     if candidate:
         try:
             obj = json.loads(candidate)
+            importance = int(obj.get("importance") or 0)
             summary = (obj.get("summary") or "").strip()
             key_points = obj.get("key_points") or []
             p = obj.get("perspectives") or {}
@@ -345,8 +351,10 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
     if inferred == 0 and "推測:" in (" ".join(kps) + " " + " ".join(perspectives.values())):
         inferred = 1
 
+    importance = max(0, min(100, int(importance or 0)))
+
     return {
-        "importance": 10,
+        "importance": importance,
         "type": "other",
         "summary": summary,
         "key_points": kps,

@@ -1038,7 +1038,7 @@ NEWS_HTML = r"""
   <!-- techと同じ：Top-zone 2カラム -->
   <section class="top-zone">
     <div class="top-col">
-      <h3>🇯🇵 Japan Top 10（latest）</h3>
+      <h3>🇯🇵 Japan Top 10（importance / date）</h3>
       <ol class="top-list">
         {% for it in jp_top %}
           <li class="topic-row"
@@ -1052,6 +1052,7 @@ NEWS_HTML = r"""
             <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
             <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">開く</a>
             <span class="date">{{ it.dt_jst }}</span>
+            <div class="small">算出根拠（簡易）: {{ it.importance_basis }}</div>
 
             {% if it.tags and it.tags|length>0 %}
               <span class="small">
@@ -1068,7 +1069,7 @@ NEWS_HTML = r"""
     </div>
 
     <div class="top-col">
-      <h3>🌍 Global Top 10（latest）</h3>
+      <h3>🌍 Global Top 10（importance / date）</h3>
       <ol class="top-list">
         {% for it in global_top %}
           <li class="topic-row"
@@ -1082,6 +1083,7 @@ NEWS_HTML = r"""
             <a class="topic-link" href="#news-{{ it.id }}">{{ it.title }}</a>
             <a class="small" href="{{ it.url }}" target="_blank" rel="noopener">開く</a>
             <span class="date">{{ it.dt_jst }}</span>
+            <div class="small">算出根拠（簡易）: {{ it.importance_basis }}</div>
 
             {% if it.tags and it.tags|length>0 %}
               <span class="small">
@@ -1127,6 +1129,7 @@ NEWS_HTML = r"""
             {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}
             <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a>
             <span class="date">{{ it.dt_jst }}</span>
+            <div class="small">算出根拠（簡易）: {{ it.importance_basis }}</div>
 
             {% if it.tags and it.tags|length>0 %}
               <span class="small">
@@ -1204,6 +1207,7 @@ NEWS_HTML = r"""
                       <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
                       <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a>
                       <span class="date">{{ it.dt_jst }}</span>
+            <div class="small">算出根拠（簡易）: {{ it.importance_basis }}</div>
                     </div>
                     {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
                   </li>
@@ -1291,6 +1295,38 @@ def _safe_json_obj(s: str | None) -> Dict[str, Any]:
         return v if isinstance(v, dict) else {}
     except Exception:
         return {}
+
+
+
+def _news_importance_basis_simple(importance: int, dt: str, category: str, tags: List[str]) -> str:
+    imp = int(importance or 0)
+    freshness = "通常"
+    try:
+        now = datetime.now(timezone.utc)
+        d = datetime.fromisoformat((dt or "").replace("Z", "+00:00"))
+        if d.tzinfo is None:
+            d = d.replace(tzinfo=timezone.utc)
+        age_h = max(0.0, (now - d).total_seconds() / 3600.0)
+        if age_h <= 6:
+            freshness = "高"
+        elif age_h <= 24:
+            freshness = "中"
+        else:
+            freshness = "低"
+    except Exception:
+        pass
+
+    cat_weight = {
+        "security": "高",
+        "policy": "中",
+        "market": "中",
+        "industry": "中",
+        "company": "低",
+        "news": "低",
+    }.get((category or "").lower(), "低")
+    related = len(tags or [])
+    return f"importance={imp} / 速報性:{freshness} / カテゴリ重み:{cat_weight} / 関連:{related}タグ"
+
 
 def build_categories_fallback(cur) -> List[Dict[str, str]]:
     """
@@ -1380,6 +1416,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
               "recent": 0,
               "importance": imp,
               "summary": clean_for_html((summary or "").strip() or f"{source} / {fmt_date(dt)}"),
+              "importance_basis": _news_importance_basis_simple(imp, dt, category, llm_tags),
           })
       return out
 
@@ -1586,6 +1623,12 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None, min_per_
                 "tags": llm_tags,
                 "evidence_urls": _safe_json_list(evidence_urls),
                 "is_representative": int(is_representative or 0),
+                "importance_basis": _news_importance_basis_simple(
+                    int(importance) if importance is not None else 0,
+                    dt,
+                    category or cat or "other",
+                    llm_tags,
+                ),
             })
 
         items.sort(key=lambda x: (x.get("is_representative", 0), x.get("dt") or "", x.get("id", 0)), reverse=True)
@@ -1662,6 +1705,7 @@ def fetch_news_articles(cur, region: str, limit: int = 60):
             FROM articles
             WHERE kind='news' AND region=?
             ORDER BY
+              COALESCE(importance, 0) DESC,
               datetime(
                 substr(
                   replace(replace(COALESCE(NULLIF(published_at,''), fetched_at),'T',' '),'+00:00',''),
