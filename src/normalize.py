@@ -1,5 +1,6 @@
 from urllib.parse import urlsplit, urlunsplit
 from db import connect
+from text_clean import clean_text
 
 import time
 
@@ -7,6 +8,7 @@ def _now_sec():
     return time.perf_counter()
 
 def normalize(url):
+    url = clean_text(url).strip()
     p = urlsplit(url)
     return urlunsplit((p.scheme, p.netloc.lower(), p.path.rstrip("/"), "", ""))
 

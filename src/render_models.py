@@ -5,6 +5,8 @@ from typing import Any
 
 import yaml
 
+from text_clean import clean_for_html, clean_json_like
+
 NAME_MAP = {
     "system": "システム",
     "manufacturing": "製造",
@@ -25,9 +27,9 @@ def safe_json_list(s: str | None) -> list[str]:
     if not s:
         return []
     try:
-        v = json.loads(s)
+        v = clean_json_like(json.loads(s))
         if isinstance(v, list):
-            return [str(x) for x in v if x is not None]
+            return [clean_for_html(str(x)) for x in v if x is not None]
     except Exception:
         pass
     return []
@@ -37,7 +39,7 @@ def safe_json_obj(s: str | None) -> dict[str, Any]:
     if not s:
         return {}
     try:
-        v = json.loads(s)
+        v = clean_json_like(json.loads(s))
         return v if isinstance(v, dict) else {}
     except Exception:
         return {}

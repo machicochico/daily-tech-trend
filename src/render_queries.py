@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+from text_clean import clean_for_html
+
+
+def _clean_rows(rows):
+    cleaned = []
+    for row in rows:
+        cleaned.append(tuple(clean_for_html(v) if isinstance(v, str) else v for v in row))
+    return cleaned
+
 
 def fetch_news_articles(cur, region: str, limit: int = 60):
     if region:
@@ -52,7 +61,7 @@ def fetch_news_articles(cur, region: str, limit: int = 60):
             """,
             (limit,),
         )
-    return cur.fetchall()
+    return _clean_rows(cur.fetchall())
 
 
 def fetch_news_articles_by_category(cur, region: str, category: str, limit: int = 40):
@@ -121,7 +130,7 @@ def fetch_news_articles_by_category(cur, region: str, category: str, limit: int 
         """,
         (region, category, limit),
     )
-    return cur.fetchall()
+    return _clean_rows(cur.fetchall())
 
 
 def count_news_recent_48h(cur, region: str, category: str, cutoff_dt: str) -> int:
