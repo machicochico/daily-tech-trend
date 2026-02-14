@@ -1946,6 +1946,7 @@ def main():
                 JOIN articles a ON a.id = ta.article_id
                 WHERE (t.category IS NULL OR t.category = '')
                   AND COALESCE(t.category,'') <> 'news'
+                  AND COALESCE(a.kind,'') <> 'news'
                 GROUP BY t.id
                 HAVING recent_count > 0
                 ORDER BY recent_count DESC, total_count DESC, t.id DESC
@@ -1986,6 +1987,7 @@ def main():
                 JOIN articles a ON a.id = ta.article_id
                 WHERE t.category = ?
                   AND COALESCE(t.category,'') <> 'news'
+                  AND COALESCE(a.kind,'') <> 'news'
                 GROUP BY t.id
                 HAVING recent_count > 0
                 ORDER BY recent_count DESC, total_count DESC, t.id DESC
@@ -2073,6 +2075,13 @@ def main():
                 FROM topics t
                 LEFT JOIN topic_insights i ON i.topic_id = t.id
                 WHERE (t.category IS NULL OR t.category = '')
+                  AND NOT EXISTS (
+                    SELECT 1
+                    FROM topic_articles ta4
+                    JOIN articles a4 ON a4.id = ta4.article_id
+                    WHERE ta4.topic_id = t.id
+                      AND COALESCE(a4.kind,'') = 'news'
+                  )
                 ORDER BY
                   COALESCE(i.importance, 0) DESC,
                   COALESCE(recent, 0) DESC,
@@ -2147,6 +2156,13 @@ def main():
                 LEFT JOIN topic_insights i ON i.topic_id = t.id
                 WHERE t.category = ?
                   AND COALESCE(t.category,'') <> 'news'
+                  AND NOT EXISTS (
+                    SELECT 1
+                    FROM topic_articles ta4
+                    JOIN articles a4 ON a4.id = ta4.article_id
+                    WHERE ta4.topic_id = t.id
+                      AND COALESCE(a4.kind,'') = 'news'
+                  )
                 ORDER BY
                   COALESCE(i.importance, 0) DESC,
                   COALESCE(recent, 0) DESC,
@@ -2260,6 +2276,13 @@ def main():
                 LEFT JOIN topic_insights i ON i.topic_id = t.id
                 WHERE (t.category IS NULL OR t.category = '')
                   AND COALESCE(NULLIF(t.category,''), 'other') NOT IN ('news', 'market')
+                  AND NOT EXISTS (
+                    SELECT 1
+                    FROM topic_articles ta4
+                    JOIN articles a4 ON a4.id = ta4.article_id
+                    WHERE ta4.topic_id = t.id
+                      AND COALESCE(a4.kind,'') = 'news'
+                  )
                   AND t.id IN ({placeholders})
                 """
                 params = [cutoff_48h, *missing_ids]
@@ -2327,6 +2350,13 @@ def main():
                 LEFT JOIN topic_insights i ON i.topic_id = t.id
                 WHERE t.category = ?
                   AND COALESCE(NULLIF(t.category,''), 'other') <> 'news'
+                  AND NOT EXISTS (
+                    SELECT 1
+                    FROM topic_articles ta4
+                    JOIN articles a4 ON a4.id = ta4.article_id
+                    WHERE ta4.topic_id = t.id
+                      AND COALESCE(a4.kind,'') = 'news'
+                  )
                   AND t.id IN ({placeholders})
                 """
                 params = [cutoff_48h, cat_id, *missing_ids]
@@ -2561,6 +2591,13 @@ def main():
         FROM topics t
         LEFT JOIN topic_insights i ON i.topic_id = t.id
         WHERE COALESCE(NULLIF(t.category,''), 'other') NOT IN ('news', 'market')
+          AND NOT EXISTS (
+            SELECT 1
+            FROM topic_articles ta4
+            JOIN articles a4 ON a4.id = ta4.article_id
+            WHERE ta4.topic_id = t.id
+              AND COALESCE(a4.kind,'') = 'news'
+          )
           AND EXISTS (
             SELECT 1
             FROM topic_articles ta
@@ -2645,6 +2682,13 @@ def main():
         FROM topics t
         LEFT JOIN topic_insights i ON i.topic_id = t.id
         WHERE COALESCE(NULLIF(t.category,''), 'other') NOT IN ('news', 'market')
+          AND NOT EXISTS (
+            SELECT 1
+            FROM topic_articles ta4
+            JOIN articles a4 ON a4.id = ta4.article_id
+            WHERE ta4.topic_id = t.id
+              AND COALESCE(a4.kind,'') = 'news'
+          )
           AND (
             SELECT COALESCE(SUM(
               CASE
@@ -2746,6 +2790,13 @@ def main():
     FROM topics t
     LEFT JOIN topic_insights i ON i.topic_id = t.id
     WHERE COALESCE(NULLIF(t.category,''), 'other') NOT IN ('news', 'market')
+      AND NOT EXISTS (
+        SELECT 1
+        FROM topic_articles ta4
+        JOIN articles a4 ON a4.id = ta4.article_id
+        WHERE ta4.topic_id = t.id
+          AND COALESCE(a4.kind,'') = 'news'
+      )
     ORDER BY
       CASE
         WHEN COALESCE(NULLIF(t.category,''), 'other') IN ({ph}) THEN 1
@@ -2846,6 +2897,13 @@ def main():
           WHERE ta3.topic_id = t.id
         ) > 0
           AND COALESCE(NULLIF(t.category,''), 'other') NOT IN ('news', 'market')
+          AND NOT EXISTS (
+            SELECT 1
+            FROM topic_articles ta4
+            JOIN articles a4 ON a4.id = ta4.article_id
+            WHERE ta4.topic_id = t.id
+              AND COALESCE(a4.kind,'') = 'news'
+          )
         ORDER BY COALESCE(recent,0) DESC, COALESCE(i.importance,0) DESC, t.id ASC
         LIMIT 10
         """,
