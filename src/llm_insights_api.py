@@ -266,6 +266,38 @@ def _repair_json_with_llm(bad_text: str) -> dict:
     return json.loads(candidate)
 
 
+def _normalize_perspectives(raw) -> dict:
+    """Normalize perspective keys/values from unstable LLM outputs."""
+    normalized = {"engineer": "", "management": "", "consumer": ""}
+    if not isinstance(raw, dict):
+        return normalized
+
+    key_aliases = {
+        "engineer": "engineer",
+        "技術者目線": "engineer",
+        "技術者": "engineer",
+        "エンジニア": "engineer",
+        "management": "management",
+        "経営者目線": "management",
+        "経営": "management",
+        "マネジメント": "management",
+        "consumer": "consumer",
+        "消費者目線": "consumer",
+        "利用者目線": "consumer",
+        "ユーザー目線": "consumer",
+        "生活者目線": "consumer",
+    }
+
+    for k, v in raw.items():
+        canonical = key_aliases.get(str(k).strip().lower()) or key_aliases.get(str(k).strip())
+        if not canonical:
+            continue
+        text = v.strip() if isinstance(v, str) else ""
+        if text:
+            normalized[canonical] = text
+    return normalized
+
+
 def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
     system = (
         "あなたはニュース記事の要約アシスタント。出力はJSONのみ。"
@@ -328,8 +360,7 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
             importance = int(obj.get("importance") or 0)
             summary = (obj.get("summary") or "").strip()
             key_points = obj.get("key_points") or []
-            p = obj.get("perspectives") or {}
-            perspectives = {"engineer": (p.get("engineer") or "").strip(), "management": (p.get("management") or "").strip(), "consumer": (p.get("consumer") or "").strip()}
+            perspectives = _normalize_perspectives(obj.get("perspectives") or {})
             inferred = 1 if int(obj.get("inferred") or 0) == 1 else 0
         except Exception:
             pass
