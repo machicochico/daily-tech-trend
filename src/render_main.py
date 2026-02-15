@@ -1032,7 +1032,7 @@ OPINION_HTML = r"""
   {% for role in role_sections %}
   <section class="top-col" style="margin:8px 0 16px;">
     <h2>{{ role.label }}の意見（線）</h2>
-    <div class="small">重要記事（点）を立場別に組み合わせ、1本の意見へ整理</div>
+    <div class="small">{{ role.focus }}</div>
     <ul>
       {% for art in role.articles %}
       <li>
@@ -1293,14 +1293,27 @@ def _build_trial_opinion(item: dict, role: str) -> str:
     return _fit_text_length(text)
 
 
-ROLE_KEYWORDS = {
-    "engineer": ["ai", "security", "cloud", "半導体", "開発", "障害", "データ", "api", "モデル", "ソフト"],
-    "management": ["market", "policy", "industry", "企業", "投資", "業績", "提携", "戦略", "価格", "規制"],
-    "consumer": ["consumer", "サービス", "料金", "privacy", "アプリ", "ユーザー", "生活", "販売", "端末", "サポート"],
+ROLE_PROFILES = {
+    "engineer": {
+        "keywords": ["ai", "security", "cloud", "半導体", "開発", "障害", "データ", "api", "モデル", "ソフト", "運用", "品質"],
+        "categories": {"security": 12, "manufacturing": 8, "company": 3},
+        "opinion_focus": "実装難易度・運用品質・セキュリティの両立",
+    },
+    "management": {
+        "keywords": ["market", "policy", "industry", "企業", "投資", "業績", "提携", "戦略", "価格", "規制", "ガバナンス", "収益"],
+        "categories": {"industry": 10, "policy": 10, "company": 9},
+        "opinion_focus": "投資対効果・事業継続・意思決定速度",
+    },
+    "consumer": {
+        "keywords": ["consumer", "サービス", "料金", "privacy", "アプリ", "ユーザー", "生活", "販売", "端末", "サポート", "安全", "利便"],
+        "categories": {"news": 8, "policy": 6, "other": 5},
+        "opinion_focus": "体験価値・負担増・情報の分かりやすさ",
+    },
 }
 
 
 def _score_item_for_role(item: dict, role: str) -> int:
+    profile = ROLE_PROFILES.get(role, {})
     score = int(item.get("importance") or 0) * 10
     text_blob = " ".join([
         str(item.get("title") or "").lower(),
@@ -1308,29 +1321,68 @@ def _score_item_for_role(item: dict, role: str) -> int:
         " ".join([str(k).lower() for k in item.get("key_points") or []]),
         " ".join([str(t).lower() for t in item.get("tags") or []]),
     ])
-    for kw in ROLE_KEYWORDS.get(role, []):
+
+    for kw in profile.get("keywords", []):
         if kw in text_blob:
-            score += 3
+            score += 4
+
+    category = str(item.get("category") or "").lower()
+    score += int(profile.get("categories", {}).get(category, 0))
 
     perspectives = item.get("perspectives") or {}
-    if (perspectives.get(role) or "").strip():
-        score += 8
+    perspective_text = (perspectives.get(role) or "").strip()
+    if perspective_text:
+        score += 15
+
+    # 立場に関連しないperspectiveだけ埋まっている記事は過剰評価しない
+    other_roles = [r for r in ["engineer", "management", "consumer"] if r != role]
+    if not perspective_text and any((perspectives.get(r) or "").strip() for r in other_roles):
+        score -= 4
     return score
 
 
-def _pick_role_articles(items: list[dict], role: str, max_items: int = 3) -> list[dict]:
+def _pick_role_articles(items: list[dict], role: str, max_items: int = 3, blocked_ids: set[int] | None = None) -> list[dict]:
+    blocked_ids = blocked_ids or set()
     ranked = sorted(items, key=lambda it: (_score_item_for_role(it, role), it.get("dt") or ""), reverse=True)
     picked = []
-    seen_ids = set()
     for it in ranked:
-        item_id = it.get("id")
-        if item_id in seen_ids:
+        item_id = int(it.get("id") or 0)
+        if item_id in blocked_ids:
             continue
         picked.append(it)
-        seen_ids.add(item_id)
         if len(picked) >= max_items:
             break
     return picked
+
+
+def _select_role_articles(items: list[dict], roles: list[str], max_items: int = 3) -> dict[str, list[dict]]:
+    selected: dict[str, list[dict]] = {r: [] for r in roles}
+    used_by_role: dict[str, set[int]] = {r: set() for r in roles}
+
+    # 1周目は役割間の重複を避ける
+    globally_used: set[int] = set()
+    for role in roles:
+        picked = _pick_role_articles(items, role, max_items=max_items, blocked_ids=globally_used)
+        selected[role] = picked
+        ids = {int(it.get("id") or 0) for it in picked}
+        used_by_role[role] = ids
+        globally_used.update(ids)
+
+    # 足りない場合のみ重複を許容して補完
+    for role in roles:
+        if len(selected[role]) >= max_items:
+            continue
+        existing_ids = {int(it.get("id") or 0) for it in selected[role]}
+        refill = _pick_role_articles(items, role, max_items=max_items)
+        for it in refill:
+            item_id = int(it.get("id") or 0)
+            if item_id in existing_ids:
+                continue
+            selected[role].append(it)
+            existing_ids.add(item_id)
+            if len(selected[role]) >= max_items:
+                break
+    return selected
 
 
 def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
@@ -1344,17 +1396,32 @@ def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
     point_2 = (hooks[1] if len(hooks) > 1 else "関連トピック")[:90]
     point_3 = (hooks[2] if len(hooks) > 2 else "市場・利用者影響")[:90]
 
-    action_map = {
-        "engineer": "実装優先順位を決め、互換性・運用品質・セキュリティの検証項目を同時に設計する",
-        "management": "投資対効果と実行順序をそろえ、組織横断で意思決定の基準を先に固定する",
-        "consumer": "利用者メリットと負担の差分を可視化し、説明責任と問い合わせ導線を先に整える",
+    style_map = {
+        "engineer": {
+            "start": "設計レビューの観点で",
+            "action": "仕様の曖昧さを潰し、障害時の切り戻しと監視指標を先に決める",
+            "ending": "特に、性能とセキュリティのトレードオフを数値で比較して合意する。",
+        },
+        "management": {
+            "start": "経営判断の観点で",
+            "action": "投資順序・撤退基準・責任者を同時に定義し、意思決定の遅延を防ぐ",
+            "ending": "短期収益だけでなく、規制対応とレピュテーションコストまで含めて判断する。",
+        },
+        "consumer": {
+            "start": "生活者の観点で",
+            "action": "利便性の向上と負担増の両面を確認し、分かりやすい説明と選択肢を求める",
+            "ending": "見出しだけでなく一次情報を確認し、家族や職場で前提を共有することが重要だ。",
+        },
     }
+    style = style_map.get(role, style_map["consumer"])
+    focus = ROLE_PROFILES.get(role, {}).get("opinion_focus", "影響")
+
     text = (
-        f"{role_label}の立場では、まず『{point_1}』を起点に現状を捉える。"
-        f"次に『{point_2}』を重ねることで、単発ニュースでは見えない因果を確認できる。"
-        f"さらに『{point_3}』までつなぐと、技術・事業・利用体験が同時に変わる局面だと分かる。"
-        f"したがって、{action_map.get(role)}。"
-        f"判断時は、推測と事実を分離し、短期成果だけでなく中期の信頼低下リスクまで含めて評価するべきだ。"
+        f"{role_label}としては{style['start']}、まず『{point_1}』を起点に{focus}を捉える。"
+        f"続いて『{point_2}』を接続すると、単発では見えない構造的な課題が明確になる。"
+        f"さらに『{point_3}』まで並べると、直近対応と中期対応を分けて設計すべき局面だと判断できる。"
+        f"このため、{style['action']}。"
+        f"{style['ending']}"
     )
     return _fit_text_length(text, target=330, min_len=260, max_len=420)
 
@@ -1503,9 +1570,12 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
         "management": "経営者",
         "consumer": "消費者",
     }
+    roles = ["engineer", "management", "consumer"]
+    selected_articles = _select_role_articles(opinion_items, roles, max_items=3)
+
     role_sections = []
-    for role in ["engineer", "management", "consumer"]:
-        picked = _pick_role_articles(opinion_items, role, max_items=3)
+    for role in roles:
+        picked = selected_articles.get(role, [])
         opinion = _build_combined_opinion(role, picked)
         role_sections.append({
             "role": role,
@@ -1513,6 +1583,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
             "articles": picked,
             "opinion": opinion,
             "opinion_len": len(opinion),
+            "focus": f"{role_labels[role]}視点: {ROLE_PROFILES.get(role, {}).get('opinion_focus', '重要記事（点）をつないで意見（線）を構成')}" ,
         })
 
     opinion_assets = build_asset_paths()

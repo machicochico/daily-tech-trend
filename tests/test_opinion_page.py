@@ -59,3 +59,30 @@ def test_build_combined_opinion_length_range() -> None:
 
     text = render_main._build_combined_opinion("engineer", picked)
     assert 260 <= len(text) <= 420
+
+
+def test_select_role_articles_reduces_overlap() -> None:
+    items = [
+        {"id": 1, "importance": 10, "title": "security patch", "summary": "zero-day response", "key_points": [], "tags": ["security"], "category": "security", "perspectives": {"engineer": "fix"}, "dt": "2026-01-04 00:00:00"},
+        {"id": 2, "importance": 9, "title": "quarter earnings", "summary": "margin and strategy", "key_points": [], "tags": ["market"], "category": "company", "perspectives": {"management": "decision"}, "dt": "2026-01-03 00:00:00"},
+        {"id": 3, "importance": 8, "title": "consumer app update", "summary": "pricing and support", "key_points": [], "tags": ["consumer"], "category": "news", "perspectives": {"consumer": "impact"}, "dt": "2026-01-02 00:00:00"},
+        {"id": 4, "importance": 7, "title": "policy reform", "summary": "regulation for industry", "key_points": [], "tags": ["policy"], "category": "policy", "perspectives": {}, "dt": "2026-01-01 00:00:00"},
+    ]
+    selected = render_main._select_role_articles(items, ["engineer", "management", "consumer"], max_items=2)
+    top_ids = {role: selected[role][0]["id"] for role in selected if selected[role]}
+    assert len(set(top_ids.values())) == len(top_ids)
+
+
+def test_build_combined_opinion_includes_role_specific_tone() -> None:
+    picked = [
+        {"summary": "クラウド移行で認証基盤の再設計が必要になった。"},
+        {"summary": "障害対応の手順を標準化し、運用負荷を下げる検討が進む。"},
+        {"summary": "利用者向け通知の改善が継続率と信頼性に影響している。"},
+    ]
+    engineer = render_main._build_combined_opinion("engineer", picked)
+    management = render_main._build_combined_opinion("management", picked)
+    consumer = render_main._build_combined_opinion("consumer", picked)
+
+    assert "設計レビュー" in engineer
+    assert "経営判断" in management
+    assert "生活者" in consumer
