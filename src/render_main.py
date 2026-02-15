@@ -1257,13 +1257,29 @@ def ensure_category_coverage(cur, categories: List[Dict[str, str]]) -> List[Dict
 
 def _fit_text_length(text: str, target: int = 400, min_len: int = 360, max_len: int = 440) -> str:
     body = " ".join((text or "").split())
+
+    def _trim_at_sentence_boundary(src: str, limit: int) -> str:
+        clipped = src[:limit]
+        boundary = max(clipped.rfind("。"), clipped.rfind("！"), clipped.rfind("？"))
+        if boundary >= 0:
+            return clipped[: boundary + 1].strip()
+        boundary = max(clipped.rfind("、"), clipped.rfind(" "))
+        if boundary >= 0:
+            return clipped[:boundary].rstrip("、。 ") + "。"
+        return clipped.rstrip("、。 ") + "。"
+
     if len(body) > max_len:
-        return body[:max_len].rstrip("、。 ") + "。"
-    filler = " なお、情報が不足する場合は一次情報と公式発表を必ず確認し、誤解を避けるため関係者と前提を共有する。"
+        return _trim_at_sentence_boundary(body, max_len)
+
+    filler = " なお、情報が不足する場合は一次情報と公式発表を確認し、前提を共有して誤解を防ぐ。"
     while len(body) < min_len:
         body += filler
+
     if len(body) > target + 20:
-        body = body[: target + 20].rstrip("、。 ") + "。"
+        body = _trim_at_sentence_boundary(body, target + 20)
+
+    if not body.endswith(("。", "！", "？")):
+        body = body.rstrip("、。 ") + "。"
     return body
 
 
@@ -1385,16 +1401,34 @@ def _select_role_articles(items: list[dict], roles: list[str], max_items: int = 
     return selected
 
 
+def _extract_clear_point(article: dict) -> str:
+    title = str(article.get("title") or "").strip()
+    summary = str(article.get("summary") or "").strip()
+    perspectives = article.get("perspectives") or {}
+    perspective = next((str(v).strip() for v in perspectives.values() if str(v).strip()), "")
+
+    base = title or summary or perspective or "主要トピック"
+    base = " ".join(base.split())
+    for sep in ["。", "!", "？", "?", "！"]:
+        idx = base.find(sep)
+        if 0 < idx <= 70:
+            base = base[: idx + 1]
+            break
+    if len(base) > 72:
+        base = base[:72].rstrip("、。 ") + "…"
+    return base
+
+
 def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
     role_map = {"engineer": "技術者", "management": "経営者", "consumer": "消費者"}
     role_label = role_map.get(role, role)
     if not picked_articles:
         return f"{role_label}の立場で重要記事を選定できませんでした。一次情報の件数を増やして再評価してください。"
 
-    hooks = [a.get("summary") for a in picked_articles if (a.get("summary") or "").strip()]
-    point_1 = (hooks[0] if hooks else "主要トピック")[:90]
-    point_2 = (hooks[1] if len(hooks) > 1 else "関連トピック")[:90]
-    point_3 = (hooks[2] if len(hooks) > 2 else "市場・利用者影響")[:90]
+    points = [_extract_clear_point(a) for a in picked_articles[:3]]
+    point_1 = points[0] if len(points) > 0 else "主要トピック"
+    point_2 = points[1] if len(points) > 1 else "関連トピック"
+    point_3 = points[2] if len(points) > 2 else "市場・利用者影響"
 
     style_map = {
         "engineer": {
@@ -1417,10 +1451,11 @@ def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
     focus = ROLE_PROFILES.get(role, {}).get("opinion_focus", "影響")
 
     text = (
-        f"{role_label}としては{style['start']}、まず『{point_1}』を起点に{focus}を捉える。"
-        f"続いて『{point_2}』を接続すると、単発では見えない構造的な課題が明確になる。"
-        f"さらに『{point_3}』まで並べると、直近対応と中期対応を分けて設計すべき局面だと判断できる。"
-        f"このため、{style['action']}。"
+        f"{role_label}としては{style['start']}、次の3点を順に読むと論点が明確になる。"
+        f"第1に『{point_1}』は、{focus}の出発点を示している。"
+        f"第2に『{point_2}』を重ねると、短期対応だけでは解けない制約が見える。"
+        f"第3に『{point_3}』までつなぐことで、直近施策と中期施策を分離して判断できる。"
+        f"したがって、{style['action']}。"
         f"{style['ending']}"
     )
     return _fit_text_length(text, target=330, min_len=260, max_len=420)

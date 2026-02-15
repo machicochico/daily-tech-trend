@@ -86,3 +86,20 @@ def test_build_combined_opinion_includes_role_specific_tone() -> None:
     assert "設計レビュー" in engineer
     assert "経営判断" in management
     assert "生活者" in consumer
+
+
+def test_fit_text_length_trims_on_sentence_boundary() -> None:
+    long_text = "。".join([f"文{i}" for i in range(1, 40)]) + "。"
+    got = render_main._fit_text_length(long_text, target=120, min_len=100, max_len=140)
+    assert len(got) <= 140
+    assert got.endswith("。")
+
+
+def test_extract_clear_point_prefers_title_and_is_short() -> None:
+    article = {
+        "title": "これは非常に長いタイトルですが、途中で切れて意味不明にならないように短くしたいタイトルです",
+        "summary": "summary text",
+    }
+    point = render_main._extract_clear_point(article)
+    assert len(point) <= 73
+    assert point.startswith("これは非常に長いタイトル")
