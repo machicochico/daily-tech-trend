@@ -361,6 +361,12 @@ PORTAL_HTML = r"""
     <a class="btn" href="./news/index.html">ニュースを見る →</a>
   </div>
 
+  <div class="card">
+    <h2 style="margin:0 0 6px">運用メトリクス</h2>
+    <div class="small">Source露出（競合比較）とカテゴリ別 一次情報比率を確認</div>
+    <a class="btn" href="./ops/index.html">運用ページを見る →</a>
+  </div>
+
   <script src="{{ common_js_src }}"></script>
   <script>
     if (location.hash && location.hash.startsWith("#topic-")) {
@@ -398,6 +404,7 @@ HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
+    <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
     <div class="summary-card">
@@ -533,80 +540,12 @@ HTML = r"""
   {% endif %}
 
   <details class="foldable-section top-zone-fold" data-top-zone-details>
-    <summary>🏭 Source露出（競合比較）</summary>
+    <summary>🛠 運用メトリクスは専用ページへ移動</summary>
     <section class="top-col" style="margin:8px 0 16px;">
-    <div class="metric-note">
-      <div>この指標で分かること: どの企業ソースに記事露出が偏っているか、直近48hで増勢のある企業はどこかを把握できます。</div>
-      <div>閾値を下回った時の対応: 露出が特定企業に集中する場合は、他の一次情報源（公式ブログ・開発者向け発表）を優先追加してください。</div>
-    </div>
-    <div class="small" style="margin-bottom:8px">同一企業名で集計（全期間 / 48h）</div>
-    {% if source_exposure and source_exposure|length > 0 %}
-      <table class="source-table">
-        <thead>
-          <tr>
-            <th>企業</th>
-            <th class="num">露出</th>
-            <th class="num">48h</th>
-            <th>主カテゴリ</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for s in source_exposure %}
-            <tr>
-              <td>{{ s.source }}</td>
-              <td class="num">{{ s.total }}</td>
-              <td class="num">{{ s.recent48 }}</td>
-              <td>{{ s.categories }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <div class="meta">該当ソースなし</div>
-    {% endif %}
-    </section>
-  </details>
-
-  <details class="foldable-section top-zone-fold" data-top-zone-details>
-    <summary>🧭 カテゴリ別 一次情報比率</summary>
-    <section class="top-col" style="margin:8px 0 16px;">
-    <div class="metric-note">
-      <div>この指標で分かること: カテゴリごとに一次情報（公式発表・一次資料）がどれだけ確保できているかを確認できます。</div>
-      <div>閾値を下回った時の対応: 警告理由を見て「一次ソース追加候補」か「サンプル不足」かを切り分け、収集対象を補強してください。</div>
-    </div>
-    <div class="small" style="margin-bottom:8px">一次情報率 = primary / 全記事（tech）。閾値 {{ (primary_ratio_threshold * 100)|round(0)|int }}% 未満は警告表示。</div>
-    {% if primary_ratio_by_category and primary_ratio_by_category|length > 0 %}
-      <table class="source-table">
-        <thead>
-          <tr>
-            <th>カテゴリ</th>
-            <th class="num">一次情報率</th>
-            <th class="num">primary</th>
-            <th class="num">total</th>
-            <th>ステータス</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for r in primary_ratio_by_category %}
-            <tr>
-              <td>{{ cat_name.get(r.category, r.category) }}</td>
-              <td class="num">{{ r.ratio_pct }}%</td>
-              <td class="num">{{ r.primary_count }}</td>
-              <td class="num">{{ r.total_count }}</td>
-              <td>
-                {% if r.warn %}
-                  <span class="warn-text">⚠ 閾値未達（{{ r.warn_reason }}）</span>
-                {% else %}
-                  OK
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <div class="meta">カテゴリ集計対象なし</div>
-    {% endif %}
+      <div class="metric-note">
+        <div>Source露出（競合比較）とカテゴリ別 一次情報比率は、運用向けの専用ページに集約しました。</div>
+        <div>日次の監視・改善アクションは <a href="/daily-tech-trend/ops/">運用ページ</a> で確認してください。</div>
+      </div>
     </section>
   </details>
 
@@ -841,6 +780,7 @@ NEWS_HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
+    <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
 
@@ -1085,6 +1025,86 @@ def _safe_json_list(s: str | None) -> List[str]:
     except Exception:
         pass
     return []
+
+
+OPS_HTML = r"""
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>運用メトリクス | Daily Tech Trend</title>
+  <meta name="description" content="Source露出（競合比較）とカテゴリ別 一次情報比率を確認し、収集改善アクションに繋げる運用ページ。">
+  <link rel="canonical" href="/daily-tech-trend/ops/">
+  <link rel="stylesheet" href="{{ common_css_href }}">
+</head>
+<body>
+  <h1>運用メトリクス</h1>
+  <div class="nav">
+    <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
+    <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
+    <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-title">今日の要点（運用）</div>
+    <div class="summary-grid">
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">{{ meta.generated_at_jst }}</div></div>
+      <div class="summary-item"><div class="k">Articles</div><div class="v">{{ meta.total_articles }} <span class="small">(new48h {{ meta.new_articles_48h }})</span></div></div>
+      <div class="summary-item"><div class="k">RSS Sources</div><div class="v">{{ meta.rss_sources }}</div></div>
+      <div class="summary-item"><div class="k">Primary Threshold</div><div class="v">{{ (primary_ratio_threshold * 100)|round(0)|int }}%</div></div>
+    </div>
+  </div>
+
+  <section class="top-col" style="margin:8px 0 16px;">
+    <h2>🏭 Source露出（競合比較）</h2>
+    <div class="metric-note">
+      <div>露出が特定企業に偏っていないか、全期間と48hで確認します。</div>
+      <div>改善案: 上位3社への偏りが続く場合は、同カテゴリの一次ソースを追加して偏りを緩和。</div>
+    </div>
+    {% if source_exposure and source_exposure|length > 0 %}
+      <table class="source-table">
+        <thead><tr><th>企業</th><th class="num">露出</th><th class="num">48h</th><th>主カテゴリ</th></tr></thead>
+        <tbody>
+        {% for s in source_exposure %}
+          <tr><td>{{ s.source }}</td><td class="num">{{ s.total }}</td><td class="num">{{ s.recent48 }}</td><td>{{ s.categories }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="meta">該当ソースなし</div>
+    {% endif %}
+  </section>
+
+  <section class="top-col" style="margin:8px 0 16px;">
+    <h2>🧭 カテゴリ別 一次情報比率</h2>
+    <div class="small" style="margin-bottom:8px">一次情報率 = primary / 全記事（tech）。閾値 {{ (primary_ratio_threshold * 100)|round(0)|int }}% 未満は警告表示。</div>
+    {% if primary_ratio_by_category and primary_ratio_by_category|length > 0 %}
+      <table class="source-table">
+        <thead>
+          <tr><th>カテゴリ</th><th class="num">一次情報率</th><th class="num">primary</th><th class="num">total</th><th>ステータス</th></tr>
+        </thead>
+        <tbody>
+          {% for r in primary_ratio_by_category %}
+            <tr>
+              <td>{{ cat_name.get(r.category, r.category) }}</td>
+              <td class="num">{{ r.ratio_pct }}%</td>
+              <td class="num">{{ r.primary_count }}</td>
+              <td class="num">{{ r.total_count }}</td>
+              <td>{% if r.warn %}<span class="warn-text">⚠ 閾値未達（{{ r.warn_reason }}）</span>{% else %}OK{% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="meta">カテゴリ集計対象なし</div>
+    {% endif %}
+  </section>
+
+  <script src="{{ common_js_src }}"></script>
+</body>
+</html>
+"""
 
 def load_categories_from_yaml() -> List[Dict[str, str]]:
     try:
@@ -2900,6 +2920,22 @@ def main():
 
     (tech_dir / "index.html").write_text(tech_html_sub, encoding="utf-8")
     (out_dir / "index.html").write_text(tech_html_root, encoding="utf-8")
+
+    ops_dir = out_dir / "ops"
+    ops_dir.mkdir(exist_ok=True)
+    ops_assets = build_asset_paths()
+    ops_html = Template(OPS_HTML).render(
+        common_css_href=ops_assets["common_css_href"],
+        common_js_src=ops_assets["common_js_src"],
+        page="ops",
+        nav_prefix=ops_assets["nav_prefix"],
+        meta=meta,
+        cat_name=cat_name,
+        source_exposure=source_exposure,
+        primary_ratio_by_category=primary_ratio_by_category,
+        primary_ratio_threshold=primary_ratio_threshold,
+    )
+    (ops_dir / "index.html").write_text(ops_html, encoding="utf-8")
 
     render_news_pages(out_dir, generated_at, cur)
 
