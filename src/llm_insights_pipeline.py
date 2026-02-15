@@ -65,7 +65,9 @@ def pick_topic_inputs(conn, limit=300, rescue=False):
     WHERE (
       ti.topic_id IS NULL
       OR (? = 1 AND (
-            COALESCE(ti.importance, 0) = 0
+            COALESCE(NULLIF(t.category,''), '') = 'news'
+         OR COALESCE(NULLIF(l.kind,''), '') = 'news'
+         OR COALESCE(ti.importance, 0) = 0
          OR COALESCE(ti.summary, '') = ''
          OR COALESCE(ti.src_hash, '') = ''
       ))
