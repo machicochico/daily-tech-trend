@@ -1023,21 +1023,27 @@ OPINION_HTML = r"""
     <div class="summary-title">今日の要点（意見・お試し版）</div>
     <div class="summary-grid">
       <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">{{ generated_at }}</div></div>
-      <div class="summary-item"><div class="k">対象記事数</div><div class="v">{{ items|length }}</div></div>
-      <div class="summary-item"><div class="k">文字数目標</div><div class="v">各立場 400文字前後</div></div>
+      <div class="summary-item"><div class="k">対象記事数</div><div class="v">{{ source_item_count }}</div></div>
+      <div class="summary-item"><div class="k">文字数目標</div><div class="v">各立場 260〜420文字</div></div>
       <div class="summary-item"><div class="k">立場</div><div class="v">技術者 / 経営者 / 消費者</div></div>
     </div>
   </div>
 
-  {% for it in items %}
+  {% for role in role_sections %}
   <section class="top-col" style="margin:8px 0 16px;">
-    <h2><a href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a></h2>
-    <div class="small">{{ it.dt_jst }} / {{ it.source }}</div>
+    <h2>{{ role.label }}の意見（線）</h2>
+    <div class="small">{{ role.focus }}</div>
+    <ul>
+      {% for art in role.articles %}
+      <li>
+        <a href="{{ art.url }}" target="_blank" rel="noopener">{{ art.title }}</a>
+        <span class="small"> / {{ art.source }} / 重要度 {{ art.importance }}</span>
+      </li>
+      {% endfor %}
+    </ul>
     <details class="insight" open>
-      <summary class="small">3立場の意見（お試し版）を表示</summary>
-      <div class="small" style="margin-top:8px"><b>技術者（約{{ it.engineer_len }}文字）</b><br>{{ it.engineer_opinion }}</div>
-      <div class="small" style="margin-top:10px"><b>経営者（約{{ it.management_len }}文字）</b><br>{{ it.management_opinion }}</div>
-      <div class="small" style="margin-top:10px"><b>消費者（約{{ it.consumer_len }}文字）</b><br>{{ it.consumer_opinion }}</div>
+      <summary class="small">{{ role.label }}の意見（約{{ role.opinion_len }}文字）を表示</summary>
+      <div class="small" style="margin-top:8px">{{ role.opinion }}</div>
     </details>
   </section>
   {% endfor %}
@@ -1251,13 +1257,29 @@ def ensure_category_coverage(cur, categories: List[Dict[str, str]]) -> List[Dict
 
 def _fit_text_length(text: str, target: int = 400, min_len: int = 360, max_len: int = 440) -> str:
     body = " ".join((text or "").split())
+
+    def _trim_at_sentence_boundary(src: str, limit: int) -> str:
+        clipped = src[:limit]
+        boundary = max(clipped.rfind("。"), clipped.rfind("！"), clipped.rfind("？"))
+        if boundary >= 0:
+            return clipped[: boundary + 1].strip()
+        boundary = max(clipped.rfind("、"), clipped.rfind(" "))
+        if boundary >= 0:
+            return clipped[:boundary].rstrip("、。 ") + "。"
+        return clipped.rstrip("、。 ") + "。"
+
     if len(body) > max_len:
-        return body[:max_len].rstrip("、。 ") + "。"
-    filler = " なお、情報が不足する場合は一次情報と公式発表を必ず確認し、誤解を避けるため関係者と前提を共有する。"
+        return _trim_at_sentence_boundary(body, max_len)
+
+    filler = " なお、情報が不足する場合は一次情報と公式発表を確認し、前提を共有して誤解を防ぐ。"
     while len(body) < min_len:
         body += filler
+
     if len(body) > target + 20:
-        body = body[: target + 20].rstrip("、。 ") + "。"
+        body = _trim_at_sentence_boundary(body, target + 20)
+
+    if not body.endswith(("。", "！", "？")):
+        body = body.rstrip("、。 ") + "。"
     return body
 
 
@@ -1285,6 +1307,158 @@ def _build_trial_opinion(item: dict, role: str) -> str:
         f"参考記事: {url or 'URL未取得'}"
     )
     return _fit_text_length(text)
+
+
+ROLE_PROFILES = {
+    "engineer": {
+        "keywords": ["ai", "security", "cloud", "半導体", "開発", "障害", "データ", "api", "モデル", "ソフト", "運用", "品質"],
+        "categories": {"security": 12, "manufacturing": 8, "company": 3},
+        "opinion_focus": "実装難易度・運用品質・セキュリティの両立",
+    },
+    "management": {
+        "keywords": ["market", "policy", "industry", "企業", "投資", "業績", "提携", "戦略", "価格", "規制", "ガバナンス", "収益"],
+        "categories": {"industry": 10, "policy": 10, "company": 9},
+        "opinion_focus": "投資対効果・事業継続・意思決定速度",
+    },
+    "consumer": {
+        "keywords": ["consumer", "サービス", "料金", "privacy", "アプリ", "ユーザー", "生活", "販売", "端末", "サポート", "安全", "利便"],
+        "categories": {"news": 8, "policy": 6, "other": 5},
+        "opinion_focus": "体験価値・負担増・情報の分かりやすさ",
+    },
+}
+
+
+def _score_item_for_role(item: dict, role: str) -> int:
+    profile = ROLE_PROFILES.get(role, {})
+    score = int(item.get("importance") or 0) * 10
+    text_blob = " ".join([
+        str(item.get("title") or "").lower(),
+        str(item.get("summary") or "").lower(),
+        " ".join([str(k).lower() for k in item.get("key_points") or []]),
+        " ".join([str(t).lower() for t in item.get("tags") or []]),
+    ])
+
+    for kw in profile.get("keywords", []):
+        if kw in text_blob:
+            score += 4
+
+    category = str(item.get("category") or "").lower()
+    score += int(profile.get("categories", {}).get(category, 0))
+
+    perspectives = item.get("perspectives") or {}
+    perspective_text = (perspectives.get(role) or "").strip()
+    if perspective_text:
+        score += 15
+
+    # 立場に関連しないperspectiveだけ埋まっている記事は過剰評価しない
+    other_roles = [r for r in ["engineer", "management", "consumer"] if r != role]
+    if not perspective_text and any((perspectives.get(r) or "").strip() for r in other_roles):
+        score -= 4
+    return score
+
+
+def _pick_role_articles(items: list[dict], role: str, max_items: int = 3, blocked_ids: set[int] | None = None) -> list[dict]:
+    blocked_ids = blocked_ids or set()
+    ranked = sorted(items, key=lambda it: (_score_item_for_role(it, role), it.get("dt") or ""), reverse=True)
+    picked = []
+    for it in ranked:
+        item_id = int(it.get("id") or 0)
+        if item_id in blocked_ids:
+            continue
+        picked.append(it)
+        if len(picked) >= max_items:
+            break
+    return picked
+
+
+def _select_role_articles(items: list[dict], roles: list[str], max_items: int = 3) -> dict[str, list[dict]]:
+    selected: dict[str, list[dict]] = {r: [] for r in roles}
+    used_by_role: dict[str, set[int]] = {r: set() for r in roles}
+
+    # 1周目は役割間の重複を避ける
+    globally_used: set[int] = set()
+    for role in roles:
+        picked = _pick_role_articles(items, role, max_items=max_items, blocked_ids=globally_used)
+        selected[role] = picked
+        ids = {int(it.get("id") or 0) for it in picked}
+        used_by_role[role] = ids
+        globally_used.update(ids)
+
+    # 足りない場合のみ重複を許容して補完
+    for role in roles:
+        if len(selected[role]) >= max_items:
+            continue
+        existing_ids = {int(it.get("id") or 0) for it in selected[role]}
+        refill = _pick_role_articles(items, role, max_items=max_items)
+        for it in refill:
+            item_id = int(it.get("id") or 0)
+            if item_id in existing_ids:
+                continue
+            selected[role].append(it)
+            existing_ids.add(item_id)
+            if len(selected[role]) >= max_items:
+                break
+    return selected
+
+
+def _extract_clear_point(article: dict) -> str:
+    title = str(article.get("title") or "").strip()
+    summary = str(article.get("summary") or "").strip()
+    perspectives = article.get("perspectives") or {}
+    perspective = next((str(v).strip() for v in perspectives.values() if str(v).strip()), "")
+
+    base = title or summary or perspective or "主要トピック"
+    base = " ".join(base.split())
+    for sep in ["。", "!", "？", "?", "！"]:
+        idx = base.find(sep)
+        if 0 < idx <= 70:
+            base = base[: idx + 1]
+            break
+    if len(base) > 72:
+        base = base[:72].rstrip("、。 ") + "…"
+    return base
+
+
+def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
+    role_map = {"engineer": "技術者", "management": "経営者", "consumer": "消費者"}
+    role_label = role_map.get(role, role)
+    if not picked_articles:
+        return f"{role_label}の立場で重要記事を選定できませんでした。一次情報の件数を増やして再評価してください。"
+
+    points = [_extract_clear_point(a) for a in picked_articles[:3]]
+    point_1 = points[0] if len(points) > 0 else "主要トピック"
+    point_2 = points[1] if len(points) > 1 else "関連トピック"
+    point_3 = points[2] if len(points) > 2 else "市場・利用者影響"
+
+    style_map = {
+        "engineer": {
+            "start": "設計レビューの観点で",
+            "action": "仕様の曖昧さを潰し、障害時の切り戻しと監視指標を先に決める",
+            "ending": "特に、性能とセキュリティのトレードオフを数値で比較して合意する。",
+        },
+        "management": {
+            "start": "経営判断の観点で",
+            "action": "投資順序・撤退基準・責任者を同時に定義し、意思決定の遅延を防ぐ",
+            "ending": "短期収益だけでなく、規制対応とレピュテーションコストまで含めて判断する。",
+        },
+        "consumer": {
+            "start": "生活者の観点で",
+            "action": "利便性の向上と負担増の両面を確認し、分かりやすい説明と選択肢を求める",
+            "ending": "見出しだけでなく一次情報を確認し、家族や職場で前提を共有することが重要だ。",
+        },
+    }
+    style = style_map.get(role, style_map["consumer"])
+    focus = ROLE_PROFILES.get(role, {}).get("opinion_focus", "影響")
+
+    text = (
+        f"{role_label}としては{style['start']}、次の3点を順に読むと論点が明確になる。"
+        f"第1に『{point_1}』は、{focus}の出発点を示している。"
+        f"第2に『{point_2}』を重ねると、短期対応だけでは解けない制約が見える。"
+        f"第3に『{point_3}』までつなぐことで、直近施策と中期施策を分離して判断できる。"
+        f"したがって、{style['action']}。"
+        f"{style['ending']}"
+    )
+    return _fit_text_length(text, target=330, min_len=260, max_len=420)
 
 def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     news_dir = out_dir / "news"
@@ -1426,22 +1600,25 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     opinion_items.sort(key=lambda x: (x.get("dt") or "", x.get("importance") or 0), reverse=True)
     opinion_items = opinion_items[:15]
 
-    rendered_items = []
-    for it in opinion_items:
-        engineer_opinion = _build_trial_opinion(it, "engineer")
-        management_opinion = _build_trial_opinion(it, "management")
-        consumer_opinion = _build_trial_opinion(it, "consumer")
-        rendered_items.append({
-            "title": it.get("title") or "",
-            "url": it.get("url") or "",
-            "dt_jst": it.get("dt_jst") or "",
-            "source": it.get("source") or "",
-            "engineer_opinion": engineer_opinion,
-            "management_opinion": management_opinion,
-            "consumer_opinion": consumer_opinion,
-            "engineer_len": len(engineer_opinion),
-            "management_len": len(management_opinion),
-            "consumer_len": len(consumer_opinion),
+    role_labels = {
+        "engineer": "技術者",
+        "management": "経営者",
+        "consumer": "消費者",
+    }
+    roles = ["engineer", "management", "consumer"]
+    selected_articles = _select_role_articles(opinion_items, roles, max_items=3)
+
+    role_sections = []
+    for role in roles:
+        picked = selected_articles.get(role, [])
+        opinion = _build_combined_opinion(role, picked)
+        role_sections.append({
+            "role": role,
+            "label": role_labels[role],
+            "articles": picked,
+            "opinion": opinion,
+            "opinion_len": len(opinion),
+            "focus": f"{role_labels[role]}視点: {ROLE_PROFILES.get(role, {}).get('opinion_focus', '重要記事（点）をつないで意見（線）を構成')}" ,
         })
 
     opinion_assets = build_asset_paths()
@@ -1450,7 +1627,8 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
         common_js_src=opinion_assets["common_js_src"],
         page="opinion",
         generated_at=generated_at,
-        items=rendered_items,
+        role_sections=role_sections,
+        source_item_count=len(opinion_items),
     )
     (opinion_dir / "index.html").write_text(opinion_html, encoding="utf-8")
 
