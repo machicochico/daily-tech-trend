@@ -1023,21 +1023,27 @@ OPINION_HTML = r"""
     <div class="summary-title">今日の要点（意見・お試し版）</div>
     <div class="summary-grid">
       <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">{{ generated_at }}</div></div>
-      <div class="summary-item"><div class="k">対象記事数</div><div class="v">{{ items|length }}</div></div>
-      <div class="summary-item"><div class="k">文字数目標</div><div class="v">各立場 400文字前後</div></div>
+      <div class="summary-item"><div class="k">対象記事数</div><div class="v">{{ source_item_count }}</div></div>
+      <div class="summary-item"><div class="k">文字数目標</div><div class="v">各立場 260〜420文字</div></div>
       <div class="summary-item"><div class="k">立場</div><div class="v">技術者 / 経営者 / 消費者</div></div>
     </div>
   </div>
 
-  {% for it in items %}
+  {% for role in role_sections %}
   <section class="top-col" style="margin:8px 0 16px;">
-    <h2><a href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a></h2>
-    <div class="small">{{ it.dt_jst }} / {{ it.source }}</div>
+    <h2>{{ role.label }}の意見（線）</h2>
+    <div class="small">重要記事（点）を立場別に組み合わせ、1本の意見へ整理</div>
+    <ul>
+      {% for art in role.articles %}
+      <li>
+        <a href="{{ art.url }}" target="_blank" rel="noopener">{{ art.title }}</a>
+        <span class="small"> / {{ art.source }} / 重要度 {{ art.importance }}</span>
+      </li>
+      {% endfor %}
+    </ul>
     <details class="insight" open>
-      <summary class="small">3立場の意見（お試し版）を表示</summary>
-      <div class="small" style="margin-top:8px"><b>技術者（約{{ it.engineer_len }}文字）</b><br>{{ it.engineer_opinion }}</div>
-      <div class="small" style="margin-top:10px"><b>経営者（約{{ it.management_len }}文字）</b><br>{{ it.management_opinion }}</div>
-      <div class="small" style="margin-top:10px"><b>消費者（約{{ it.consumer_len }}文字）</b><br>{{ it.consumer_opinion }}</div>
+      <summary class="small">{{ role.label }}の意見（約{{ role.opinion_len }}文字）を表示</summary>
+      <div class="small" style="margin-top:8px">{{ role.opinion }}</div>
     </details>
   </section>
   {% endfor %}
@@ -1286,6 +1292,72 @@ def _build_trial_opinion(item: dict, role: str) -> str:
     )
     return _fit_text_length(text)
 
+
+ROLE_KEYWORDS = {
+    "engineer": ["ai", "security", "cloud", "半導体", "開発", "障害", "データ", "api", "モデル", "ソフト"],
+    "management": ["market", "policy", "industry", "企業", "投資", "業績", "提携", "戦略", "価格", "規制"],
+    "consumer": ["consumer", "サービス", "料金", "privacy", "アプリ", "ユーザー", "生活", "販売", "端末", "サポート"],
+}
+
+
+def _score_item_for_role(item: dict, role: str) -> int:
+    score = int(item.get("importance") or 0) * 10
+    text_blob = " ".join([
+        str(item.get("title") or "").lower(),
+        str(item.get("summary") or "").lower(),
+        " ".join([str(k).lower() for k in item.get("key_points") or []]),
+        " ".join([str(t).lower() for t in item.get("tags") or []]),
+    ])
+    for kw in ROLE_KEYWORDS.get(role, []):
+        if kw in text_blob:
+            score += 3
+
+    perspectives = item.get("perspectives") or {}
+    if (perspectives.get(role) or "").strip():
+        score += 8
+    return score
+
+
+def _pick_role_articles(items: list[dict], role: str, max_items: int = 3) -> list[dict]:
+    ranked = sorted(items, key=lambda it: (_score_item_for_role(it, role), it.get("dt") or ""), reverse=True)
+    picked = []
+    seen_ids = set()
+    for it in ranked:
+        item_id = it.get("id")
+        if item_id in seen_ids:
+            continue
+        picked.append(it)
+        seen_ids.add(item_id)
+        if len(picked) >= max_items:
+            break
+    return picked
+
+
+def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
+    role_map = {"engineer": "技術者", "management": "経営者", "consumer": "消費者"}
+    role_label = role_map.get(role, role)
+    if not picked_articles:
+        return f"{role_label}の立場で重要記事を選定できませんでした。一次情報の件数を増やして再評価してください。"
+
+    hooks = [a.get("summary") for a in picked_articles if (a.get("summary") or "").strip()]
+    point_1 = (hooks[0] if hooks else "主要トピック")[:90]
+    point_2 = (hooks[1] if len(hooks) > 1 else "関連トピック")[:90]
+    point_3 = (hooks[2] if len(hooks) > 2 else "市場・利用者影響")[:90]
+
+    action_map = {
+        "engineer": "実装優先順位を決め、互換性・運用品質・セキュリティの検証項目を同時に設計する",
+        "management": "投資対効果と実行順序をそろえ、組織横断で意思決定の基準を先に固定する",
+        "consumer": "利用者メリットと負担の差分を可視化し、説明責任と問い合わせ導線を先に整える",
+    }
+    text = (
+        f"{role_label}の立場では、まず『{point_1}』を起点に現状を捉える。"
+        f"次に『{point_2}』を重ねることで、単発ニュースでは見えない因果を確認できる。"
+        f"さらに『{point_3}』までつなぐと、技術・事業・利用体験が同時に変わる局面だと分かる。"
+        f"したがって、{action_map.get(role)}。"
+        f"判断時は、推測と事実を分離し、短期成果だけでなく中期の信頼低下リスクまで含めて評価するべきだ。"
+    )
+    return _fit_text_length(text, target=330, min_len=260, max_len=420)
+
 def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     news_dir = out_dir / "news"
     news_dir.mkdir(exist_ok=True)
@@ -1426,22 +1498,21 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     opinion_items.sort(key=lambda x: (x.get("dt") or "", x.get("importance") or 0), reverse=True)
     opinion_items = opinion_items[:15]
 
-    rendered_items = []
-    for it in opinion_items:
-        engineer_opinion = _build_trial_opinion(it, "engineer")
-        management_opinion = _build_trial_opinion(it, "management")
-        consumer_opinion = _build_trial_opinion(it, "consumer")
-        rendered_items.append({
-            "title": it.get("title") or "",
-            "url": it.get("url") or "",
-            "dt_jst": it.get("dt_jst") or "",
-            "source": it.get("source") or "",
-            "engineer_opinion": engineer_opinion,
-            "management_opinion": management_opinion,
-            "consumer_opinion": consumer_opinion,
-            "engineer_len": len(engineer_opinion),
-            "management_len": len(management_opinion),
-            "consumer_len": len(consumer_opinion),
+    role_labels = {
+        "engineer": "技術者",
+        "management": "経営者",
+        "consumer": "消費者",
+    }
+    role_sections = []
+    for role in ["engineer", "management", "consumer"]:
+        picked = _pick_role_articles(opinion_items, role, max_items=3)
+        opinion = _build_combined_opinion(role, picked)
+        role_sections.append({
+            "role": role,
+            "label": role_labels[role],
+            "articles": picked,
+            "opinion": opinion,
+            "opinion_len": len(opinion),
         })
 
     opinion_assets = build_asset_paths()
@@ -1450,7 +1521,8 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
         common_js_src=opinion_assets["common_js_src"],
         page="opinion",
         generated_at=generated_at,
-        items=rendered_items,
+        role_sections=role_sections,
+        source_item_count=len(opinion_items),
     )
     (opinion_dir / "index.html").write_text(opinion_html, encoding="utf-8")
 
