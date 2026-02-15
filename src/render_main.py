@@ -362,6 +362,12 @@ PORTAL_HTML = r"""
   </div>
 
   <div class="card">
+    <h2 style="margin:0 0 6px">意見（お試し版）</h2>
+    <div class="small">3つの立場で、記事を400文字前後の意見として整理</div>
+    <a class="btn" href="./opinion/index.html">意見ページを見る →</a>
+  </div>
+
+  <div class="card">
     <h2 style="margin:0 0 6px">運用メトリクス</h2>
     <div class="small">Source露出（競合比較）とカテゴリ別 一次情報比率を確認</div>
     <a class="btn" href="./ops/index.html">運用ページを見る →</a>
@@ -404,6 +410,7 @@ HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
+    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">意見（お試し版）</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
@@ -540,11 +547,11 @@ HTML = r"""
   {% endif %}
 
   <details class="foldable-section top-zone-fold" data-top-zone-details>
-    <summary>🛠 運用メトリクスは専用ページへ移動</summary>
+    <summary>🛠 運用メトリクス</summary>
     <section class="top-col" style="margin:8px 0 16px;">
       <div class="metric-note">
-        <div>Source露出（競合比較）とカテゴリ別 一次情報比率は、運用向けの専用ページに集約しました。</div>
-        <div>日次の監視・改善アクションは <a href="/daily-tech-trend/ops/">運用ページ</a> で確認してください。</div>
+        <div>Source露出（競合比較）とカテゴリ別 一次情報比率は、<a href="/daily-tech-trend/ops/">運用ページ</a> で確認できます。</div>
+        <div>日次の監視・改善アクションに活用してください。</div>
       </div>
     </section>
   </details>
@@ -780,6 +787,7 @@ NEWS_HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
+    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">意見（お試し版）</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
@@ -991,6 +999,54 @@ window.DTTCommon.setupCommon('news');
 </html>
 """
 
+OPINION_HTML = r"""
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>意見（お試し版）</title>
+  <meta name="description" content="技術者・経営者・消費者の3つの立場で、直近記事を400文字前後の意見として整理した試験ページ。">
+  <link rel="canonical" href="/daily-tech-trend/opinion/">
+  <link rel="stylesheet" href="{{ common_css_href }}">
+</head>
+<body>
+  <h1>意見（お試し版）</h1>
+  <div class="nav">
+    <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
+    <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
+    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">意見（お試し版）</a>
+    <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-title">今日の要点（意見・お試し版）</div>
+    <div class="summary-grid">
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">{{ generated_at }}</div></div>
+      <div class="summary-item"><div class="k">対象記事数</div><div class="v">{{ items|length }}</div></div>
+      <div class="summary-item"><div class="k">文字数目標</div><div class="v">各立場 400文字前後</div></div>
+      <div class="summary-item"><div class="k">立場</div><div class="v">技術者 / 経営者 / 消費者</div></div>
+    </div>
+  </div>
+
+  {% for it in items %}
+  <section class="top-col" style="margin:8px 0 16px;">
+    <h2><a href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a></h2>
+    <div class="small">{{ it.dt_jst }} / {{ it.source }}</div>
+    <details class="insight" open>
+      <summary class="small">3立場の意見（お試し版）を表示</summary>
+      <div class="small" style="margin-top:8px"><b>技術者（約{{ it.engineer_len }}文字）</b><br>{{ it.engineer_opinion }}</div>
+      <div class="small" style="margin-top:10px"><b>経営者（約{{ it.management_len }}文字）</b><br>{{ it.management_opinion }}</div>
+      <div class="small" style="margin-top:10px"><b>消費者（約{{ it.consumer_len }}文字）</b><br>{{ it.consumer_opinion }}</div>
+    </details>
+  </section>
+  {% endfor %}
+
+  <script src="{{ common_js_src }}"></script>
+</body>
+</html>
+"""
+
 
 
 NAME_MAP = {
@@ -1043,6 +1099,7 @@ OPS_HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
+    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">意見（お試し版）</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
@@ -1191,9 +1248,49 @@ def ensure_category_coverage(cur, categories: List[Dict[str, str]]) -> List[Dict
         categories = [{"id": "other", "name": NAME_MAP["other"]}]
     return categories
 
+
+def _fit_text_length(text: str, target: int = 400, min_len: int = 360, max_len: int = 440) -> str:
+    body = " ".join((text or "").split())
+    if len(body) > max_len:
+        return body[:max_len].rstrip("、。 ") + "。"
+    filler = " なお、情報が不足する場合は一次情報と公式発表を必ず確認し、誤解を避けるため関係者と前提を共有する。"
+    while len(body) < min_len:
+        body += filler
+    if len(body) > target + 20:
+        body = body[: target + 20].rstrip("、。 ") + "。"
+    return body
+
+
+def _build_trial_opinion(item: dict, role: str) -> str:
+    role_map = {
+        "engineer": "技術者",
+        "management": "経営者",
+        "consumer": "消費者",
+    }
+    role_label = role_map.get(role, role)
+    perspectives = item.get("perspectives") or {}
+    perspective_text = (perspectives.get(role) or "").strip()
+    summary = (item.get("summary") or "").strip()
+    key_points = [kp for kp in (item.get("key_points") or []) if isinstance(kp, str) and kp.strip()]
+    key_points_text = " / ".join(key_points[:2]) if key_points else "主要ポイントは本文確認が必要"
+    url = (item.get("url") or "").strip()
+
+    text = (
+        f"{role_label}としての考え方は、まず『{summary or '事実関係'}』を起点に、"
+        f"優先順位と影響範囲を切り分けること。"
+        f"行動としては、{perspective_text or '関係者と現状を共有し、対応方針を具体化する'}。"
+        f"加えて、{key_points_text}を確認し、当日中に実行計画へ落とし込む。"
+        f"注意点は、断片情報で結論を急がず、推測と事実を明確に分離すること。"
+        f"コスト・品質・信頼への副作用を先に洗い出し、説明可能な判断を維持する。"
+        f"参考記事: {url or 'URL未取得'}"
+    )
+    return _fit_text_length(text)
+
 def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     news_dir = out_dir / "news"
     news_dir.mkdir(exist_ok=True)
+    opinion_dir = out_dir / "opinion"
+    opinion_dir.mkdir(exist_ok=True)
     
     now = datetime.now(timezone.utc)
     cutoff_48h_str = (now - timedelta(hours=48)).strftime("%Y-%m-%d %H:%M:%S")
@@ -1321,6 +1418,41 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
 
             encoding="utf-8",
         )
+
+    opinion_items = []
+    for sec in sections_all:
+        opinion_items.extend(sec.get("rows", []))
+
+    opinion_items.sort(key=lambda x: (x.get("dt") or "", x.get("importance") or 0), reverse=True)
+    opinion_items = opinion_items[:15]
+
+    rendered_items = []
+    for it in opinion_items:
+        engineer_opinion = _build_trial_opinion(it, "engineer")
+        management_opinion = _build_trial_opinion(it, "management")
+        consumer_opinion = _build_trial_opinion(it, "consumer")
+        rendered_items.append({
+            "title": it.get("title") or "",
+            "url": it.get("url") or "",
+            "dt_jst": it.get("dt_jst") or "",
+            "source": it.get("source") or "",
+            "engineer_opinion": engineer_opinion,
+            "management_opinion": management_opinion,
+            "consumer_opinion": consumer_opinion,
+            "engineer_len": len(engineer_opinion),
+            "management_len": len(management_opinion),
+            "consumer_len": len(consumer_opinion),
+        })
+
+    opinion_assets = build_asset_paths()
+    opinion_html = Template(OPINION_HTML).render(
+        common_css_href=opinion_assets["common_css_href"],
+        common_js_src=opinion_assets["common_js_src"],
+        page="opinion",
+        generated_at=generated_at,
+        items=rendered_items,
+    )
+    (opinion_dir / "index.html").write_text(opinion_html, encoding="utf-8")
 
 NEWS_SECTIONS = [
     ("news",          "一般ニュース（未分類）"),
