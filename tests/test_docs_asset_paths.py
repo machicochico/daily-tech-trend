@@ -24,3 +24,13 @@ def test_render_source_uses_common_asset_builder_for_all_pages() -> None:
 def test_navigation_contains_ops_page_link() -> None:
     source = _read("src/render_main.py")
     assert '/daily-tech-trend/ops/' in source
+
+
+def test_gitignore_allows_ops_page_publish() -> None:
+    source = _read(".gitignore")
+    assert "!docs/ops/" in source
+    assert "!docs/ops/index.html" in source
+
+
+def test_ops_page_exists() -> None:
+    assert Path("docs/ops/index.html").exists()

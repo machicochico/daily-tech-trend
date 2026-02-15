@@ -45,6 +45,8 @@ docs/*
 !docs/index.html
 !docs/news/
 !docs/news/index.html
+!docs/ops/
+!docs/ops/index.html
 !docs/assets/
 !docs/assets/css/
 !docs/assets/css/common.css
