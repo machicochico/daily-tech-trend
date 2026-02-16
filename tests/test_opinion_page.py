@@ -160,3 +160,27 @@ def test_opinion_news_sources_show_timestamps_and_reason() -> None:
     assert "公開日時:" in source
     assert "取得元時刻:" in source
     assert "重要度理由:" in source
+
+
+def test_opinion_template_has_role_discussion_block() -> None:
+    source = _read("src/render_main.py")
+    assert "立場間ディスカッション（仕様検討）" in source
+    assert "{{ pair.from }}＞{{ pair.to }}" in source
+    assert '"discussion_pairs"' in source
+
+
+def test_build_role_discussion_generates_cross_role_pairs() -> None:
+    sections = [
+        {"role": "engineer", "summary": "監視設計を先に固定する。", "recommendation": "段階導入する。"},
+        {"role": "management", "summary": "投資優先順位を整理する。", "recommendation": "四半期計画を更新する。"},
+        {"role": "consumer", "summary": "利用条件を比較する。", "recommendation": "設定変更を今週中に実行する。"},
+    ]
+
+    discussions = render_main._build_role_discussion(sections)
+
+    assert set(discussions.keys()) == {"engineer", "management", "consumer"}
+    assert len(discussions["engineer"]) == 4
+    assert discussions["engineer"][0]["from"] == "技術者"
+    assert discussions["engineer"][0]["to"] == "経営者"
+    assert "仕様の確定タイミングと受け入れ条件" in discussions["engineer"][0]["text"]
+    assert discussions["management"][0]["from"] == "経営者"
