@@ -121,5 +121,20 @@ def test_extract_conclusion_line_prefers_claim_sentence() -> None:
 
 def test_opinion_template_is_collapsed_by_default() -> None:
     source = _read("src/render_main.py")
-    assert "詳細を読む（{{ role.label }}の意見約{{ role.opinion_len }}文字・ニュースソース）" in source
+    assert "詳細を読む（{{ role.label }}の意見約{{ role.full_text_len }}文字・ニュースソース）" in source
     assert '<details class="insight" open>' not in source
+
+
+def test_extract_recommended_action_line_prefers_impact_sentence() -> None:
+    opinion = "主張: 結論。根拠: 事実。影響: 段階導入で検証を進める。"
+    assert render_main._extract_recommended_action_line(opinion) == "段階導入で検証を進める。"
+
+
+def test_opinion_template_has_view_mode_switch_and_comparison_labels() -> None:
+    source = _read("src/render_main.py")
+    assert "縦スクロール表示" in source
+    assert "比較表示（タブ/3カラム）" in source
+    assert "立場別の結論サマリ" in source
+    assert "<h4>結論</h4>" in source
+    assert "<h4>主要根拠</h4>" in source
+    assert "<h4>推奨アクション</h4>" in source

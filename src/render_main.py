@@ -1001,6 +1001,34 @@ OPINION_HTML = r"""
   <meta name="description" content="技術者・経営者・消費者の3つの立場で、直近記事を400文字前後の意見として整理した試験ページ。">
   <link rel="canonical" href="/daily-tech-trend/opinion/">
   <link rel="stylesheet" href="{{ common_css_href }}">
+  <style>
+    .view-mode-switch{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+    .mode-btn{padding:8px 12px;border:1px solid var(--border);border-radius:999px;background:var(--bg);cursor:pointer;font-size:13px}
+    .mode-btn.active{border-color:var(--accent);color:var(--accent);font-weight:700;background:var(--accent-soft)}
+    .comparison-only{display:none}
+    .role-vertical{display:block}
+    body[data-view-mode="comparison"] .comparison-only{display:block}
+    body[data-view-mode="comparison"] .role-vertical{display:none}
+
+    .comparison-layout{margin:8px 0 16px}
+    .comparison-grid{display:none;gap:12px}
+    .comparison-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px}
+    .comparison-card h3{margin:0 0 8px;font-size:16px}
+    .comparison-item{margin:10px 0}
+    .comparison-item h4{margin:0 0 4px;font-size:13px}
+
+    .comparison-tabs{display:block}
+    .tab-buttons{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+    .tab-btn{padding:7px 10px;border:1px solid var(--border);border-radius:999px;background:var(--bg);cursor:pointer;font-size:13px}
+    .tab-btn.active{border-color:var(--accent);color:var(--accent);font-weight:700;background:var(--accent-soft)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    @media (min-width: 821px){
+      .comparison-grid{display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));}
+      .comparison-tabs{display:none}
+    }
+  </style>
 </head>
 <body>
   <h1>意見（お試し版）</h1>
@@ -1021,18 +1049,71 @@ OPINION_HTML = r"""
     </div>
   </div>
 
+  <div class="view-mode-switch" role="group" aria-label="表示モード切替">
+    <button class="mode-btn active" type="button" data-view-mode="vertical">縦スクロール表示</button>
+    <button class="mode-btn" type="button" data-view-mode="comparison">比較表示（タブ/3カラム）</button>
+  </div>
+
   <section class="top-col" style="margin:8px 0 16px;">
-    <h2>3立場の結論サマリ</h2>
+    <h2>立場別の結論サマリ</h2>
     <ul>
       {% for role in role_sections %}
-      <li><strong>{{ role.label }}</strong>: {{ role.summary }}</li>
+      <li><strong>{{ role.label }}視点</strong>: {{ role.summary }}</li>
       {% endfor %}
     </ul>
   </section>
 
+  <section class="top-col comparison-only comparison-layout">
+    <h2>立場別の結論サマリ（比較表示）</h2>
+    <div class="comparison-grid">
+      {% for role in role_sections %}
+      <article class="comparison-card">
+        <h3>{{ role.label }}視点</h3>
+        <div class="comparison-item">
+          <h4>結論</h4>
+          <div class="small">{{ role.summary }}</div>
+        </div>
+        <div class="comparison-item">
+          <h4>主要根拠</h4>
+          <div class="small">{{ role.primary_evidence }}</div>
+        </div>
+        <div class="comparison-item">
+          <h4>推奨アクション</h4>
+          <div class="small">{{ role.recommendation }}</div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    <div class="comparison-tabs">
+      <div class="tab-buttons" role="tablist" aria-label="比較表示タブ">
+        {% for role in role_sections %}
+        <button type="button" class="tab-btn{% if loop.first %} active{% endif %}" data-tab="{{ role.role }}" role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}">{{ role.label }}視点</button>
+        {% endfor %}
+      </div>
+      {% for role in role_sections %}
+      <article class="comparison-card tab-panel{% if loop.first %} active{% endif %}" data-panel="{{ role.role }}" role="tabpanel">
+        <h3>{{ role.label }}視点</h3>
+        <div class="comparison-item">
+          <h4>結論</h4>
+          <div class="small">{{ role.summary }}</div>
+        </div>
+        <div class="comparison-item">
+          <h4>主要根拠</h4>
+          <div class="small">{{ role.primary_evidence }}</div>
+        </div>
+        <div class="comparison-item">
+          <h4>推奨アクション</h4>
+          <div class="small">{{ role.recommendation }}</div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
   {% for role in role_sections %}
-  <section class="top-col" style="margin:8px 0 16px;">
-    <h2>{{ role.label }}の結論</h2>
+  <section class="top-col role-vertical" style="margin:8px 0 16px;">
+    <h2>{{ role.label }}視点</h2>
     <div class="small"><strong>結論</strong>: {{ role.summary }}</div>
     <div class="small"><strong>要約（2〜3行）</strong></div>
     <ul class="small" style="margin:6px 0 8px;">
@@ -1041,6 +1122,7 @@ OPINION_HTML = r"""
       {% endfor %}
     </ul>
     <div class="small"><strong>主要根拠</strong>: {{ role.primary_evidence }}</div>
+    <div class="small"><strong>推奨アクション</strong>: {{ role.recommendation }}</div>
     <div class="small">{{ role.focus }}</div>
     {% if role.selection_note %}
     <div class="small" style="color:#b45309; margin-top:6px;">{{ role.selection_note }}</div>
@@ -1066,10 +1148,31 @@ OPINION_HTML = r"""
   {% endfor %}
 
   <script src="{{ common_js_src }}"></script>
+  <script>
+    (function(){
+      const modeButtons = [...document.querySelectorAll('.mode-btn')];
+      const setMode = (mode) => {
+        document.body.dataset.viewMode = mode;
+        modeButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.viewMode === mode));
+      };
+      modeButtons.forEach(btn => btn.addEventListener('click', () => setMode(btn.dataset.viewMode)));
+
+      const tabButtons = [...document.querySelectorAll('.tab-btn')];
+      const tabPanels = [...document.querySelectorAll('.tab-panel')];
+      const setTab = (role) => {
+        tabButtons.forEach(btn => {
+          const active = btn.dataset.tab === role;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        tabPanels.forEach(panel => panel.classList.toggle('active', panel.dataset.panel === role));
+      };
+      tabButtons.forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+    })();
+  </script>
 </body>
 </html>
 """
-
 
 
 NAME_MAP = {
@@ -1611,6 +1714,16 @@ def _extract_conclusion_line(opinion: str) -> str:
     return s
 
 
+def _extract_recommended_action_line(opinion: str, fallback: str = "関係者合意のもとで段階導入を進める。") -> str:
+    m = re.search(r"影響:\s*([^。]+。)", opinion or "")
+    if m:
+        return m.group(1).strip()
+    sentences = [s.strip() + "。" for s in re.findall(r"([^。]+)。", opinion or "") if s.strip()]
+    if sentences:
+        return sentences[-1]
+    return fallback
+
+
 def _extract_labelled_sentences(opinion: str, label: str) -> list[str]:
     pattern = rf"{label}:\s*([^。]+。)"
     return [m.strip() for m in re.findall(pattern, opinion or "") if m.strip()]
@@ -1812,6 +1925,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
             "primary_evidence": _build_primary_evidence_line(picked),
             "selection_note": selection_note,
             "focus": f"{role_labels[role]}視点: {ROLE_PROFILES.get(role, {}).get('opinion_focus', '重要記事（点）をつないで意見（線）を構成')}" ,
+            "recommendation": _extract_recommended_action_line(full_text),
         })
 
     opinion_assets = build_asset_paths()
