@@ -1025,14 +1025,15 @@ OPINION_HTML = r"""
     <h2>3立場の結論サマリ</h2>
     <ul>
       {% for role in role_sections %}
-      <li><strong>{{ role.label }}</strong>: {{ role.conclusion }}</li>
+      <li><strong>{{ role.label }}</strong>: {{ role.summary }}</li>
       {% endfor %}
     </ul>
   </section>
 
   {% for role in role_sections %}
   <section class="top-col" style="margin:8px 0 16px;">
-    <h2>{{ role.label }}の結論: {{ role.conclusion }}</h2>
+    <h2>{{ role.label }}の結論</h2>
+    <div class="small"><strong>結論</strong>: {{ role.summary }}</div>
     <div class="small"><strong>要約（2〜3行）</strong></div>
     <ul class="small" style="margin:6px 0 8px;">
       {% for line in role.preview_lines %}
@@ -1045,9 +1046,9 @@ OPINION_HTML = r"""
     <div class="small" style="color:#b45309; margin-top:6px;">{{ role.selection_note }}</div>
     {% endif %}
     <details class="insight">
-      <summary class="small">詳細を読む（{{ role.label }}の意見約{{ role.opinion_len }}文字・ニュースソース）</summary>
+      <summary class="small">詳細を読む（{{ role.label }}の意見約{{ role.full_text_len }}文字・ニュースソース）</summary>
       <h3 style="margin:10px 0 4px;">意見本文</h3>
-      <div class="small" style="margin-top:8px">{{ role.opinion }}</div>
+      <div class="small" style="margin-top:8px">{{ role.full_text }}</div>
       <h3 style="margin:10px 0 4px;">ニュースソース</h3>
       <ul>
         {% for art in role.articles %}
@@ -1797,18 +1798,17 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     role_sections = []
     for role in roles:
         picked = selected_articles.get(role, [])
-        opinion = _build_combined_opinion(role, picked)
-        conclusion = _extract_conclusion_line(opinion)
+        full_text = _build_combined_opinion(role, picked)
+        summary = _extract_conclusion_line(full_text)
         selection_note = "" if len(picked) >= 3 else "本日は立場条件に合う記事が少ないため、該当ソースのみで構成しています。"
         role_sections.append({
             "role": role,
             "label": role_labels[role],
             "articles": picked,
-            "opinion": opinion,
-            "opinion_len": len(opinion),
-            "conclusion": conclusion,
-            "summary_line": conclusion,
-            "preview_lines": _build_opinion_preview_lines(opinion),
+            "summary": summary,
+            "full_text": full_text,
+            "full_text_len": len(full_text),
+            "preview_lines": _build_opinion_preview_lines(full_text),
             "primary_evidence": _build_primary_evidence_line(picked),
             "selection_note": selection_note,
             "focus": f"{role_labels[role]}視点: {ROLE_PROFILES.get(role, {}).get('opinion_focus', '重要記事（点）をつないで意見（線）を構成')}" ,
