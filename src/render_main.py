@@ -1,10 +1,12 @@
 # src/render.py
 from __future__ import annotations
 import os
+import re
 
 import json
 from pathlib import Path
 from typing import Any, Dict, List
+from urllib.parse import urlparse
 
 import yaml
 from jinja2 import Template
@@ -1029,10 +1031,24 @@ OPINION_HTML = r"""
     </div>
   </div>
 
+  <section class="top-col" style="margin:8px 0 16px;">
+    <h2>3立場の結論サマリ</h2>
+    <ul>
+      {% for role in role_sections %}
+      <li><strong>{{ role.label }}</strong>: {{ role.conclusion }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
   {% for role in role_sections %}
   <section class="top-col" style="margin:8px 0 16px;">
-    <h2>{{ role.label }}の意見（線）</h2>
+    <h2>{{ role.label }}の結論: {{ role.conclusion }}</h2>
+    <div class="small">{{ role.summary_line }}</div>
     <div class="small">{{ role.focus }}</div>
+    {% if role.selection_note %}
+    <div class="small" style="color:#b45309; margin-top:6px;">{{ role.selection_note }}</div>
+    {% endif %}
+    <h3 style="margin:10px 0 4px;">ニュースソース</h3>
     <ul>
       {% for art in role.articles %}
       <li>
@@ -1041,6 +1057,10 @@ OPINION_HTML = r"""
       </li>
       {% endfor %}
     </ul>
+    {% if not role.articles %}
+    <div class="small">本日は該当する記事が少ないため、無関係なニュースは採用していません。</div>
+    {% endif %}
+    <h3 style="margin:10px 0 4px;">意見本文</h3>
     <details class="insight" open>
       <summary class="small">{{ role.label }}の意見（約{{ role.opinion_len }}文字）を表示</summary>
       <div class="small" style="margin-top:8px">{{ role.opinion }}</div>
@@ -1327,6 +1347,82 @@ ROLE_PROFILES = {
     },
 }
 
+ROLE_SOURCE_RULES = {
+    "engineer": {
+        "allow_categories": {"ai", "dev", "security", "manufacturing", "system", "quality", "maintenance", "industry"},
+        "allow_keywords": ["ai", "ソフト", "開発", "インフラ", "運用", "セキュリティ", "障害", "データ", "クラウド", "api", "半導体", "品質"],
+        "allow_domains": ["github.com", "techcrunch", "zdnet", "itmedia", "aws.amazon", "cloud", "security", "developer"],
+        "override_keywords": [],
+    },
+    "management": {
+        "allow_categories": {"industry", "policy", "company", "manufacturing", "security"},
+        "allow_keywords": ["市場", "投資", "規制", "ガバナンス", "業績", "提携", "サプライ", "人材", "価格", "収益", "事業", "調達", "決算", "戦略"],
+        "allow_domains": ["reuters.com", "nikkei.com", "bloomberg", "wsj.com", "ft.com", "経済", "business"],
+        "override_keywords": ["価格", "規制", "供給", "投資", "決算", "インフレ"],
+    },
+    "consumer": {
+        "allow_categories": {"news", "policy", "company", "other", "security"},
+        "allow_keywords": ["料金", "値上げ", "ux", "ユーザー", "privacy", "個人情報", "サービス", "サポート", "アプリ", "生活", "使い", "安全", "品質", "インフレ"],
+        "allow_domains": ["cnet", "engadget", "lifehacker", "yahoo", "itmedia", "consumer", "support"],
+        "override_keywords": ["料金", "値上げ", "インフレ", "補助金", "規制", "電気代", "通信料", "保険料"],
+    },
+}
+
+DEFAULT_EXCLUDE_KEYWORDS = [
+    "天気", "大雨", "台風", "地震速報", "積雪", "熱中症", "洪水",
+    "殺人", "逮捕", "強盗", "刺傷", "暴行", "窃盗", "詐欺事件", "放火",
+    "芸能", "ゴシップ", "結婚発表", "熱愛", "スポーツ", "勝敗", "ドラフト",
+]
+
+
+def _normalize_blob(item: dict) -> str:
+    return " ".join(
+        [
+            str(item.get("title") or ""),
+            str(item.get("summary") or ""),
+            " ".join([str(k) for k in (item.get("key_points") or [])]),
+            " ".join([str(t) for t in (item.get("tags") or [])]),
+            str(item.get("source") or ""),
+        ]
+    ).lower()
+
+
+def _extract_domain(url: str) -> str:
+    try:
+        return (urlparse(url).netloc or "").lower()
+    except Exception:
+        return ""
+
+
+def _is_excluded_topic(item: dict, role: str) -> bool:
+    blob = _normalize_blob(item)
+    rules = ROLE_SOURCE_RULES.get(role, {})
+    if any(kw.lower() in blob for kw in rules.get("override_keywords", [])):
+        return False
+    return any(kw.lower() in blob for kw in DEFAULT_EXCLUDE_KEYWORDS)
+
+
+def _is_role_compatible(item: dict, role: str, relaxed: bool = False) -> bool:
+    if _is_excluded_topic(item, role):
+        return False
+
+    rules = ROLE_SOURCE_RULES.get(role, {})
+    blob = _normalize_blob(item)
+    category = str(item.get("category") or "").lower()
+    domain = _extract_domain(str(item.get("url") or ""))
+
+    category_hit = category in rules.get("allow_categories", set())
+    keyword_hit = any(kw.lower() in blob for kw in rules.get("allow_keywords", []))
+    domain_hit = any(d.lower() in domain for d in rules.get("allow_domains", []))
+
+    if relaxed:
+        return category_hit or keyword_hit
+    return category_hit or keyword_hit or domain_hit
+
+
+def _filter_role_candidates(items: list[dict], role: str, relaxed: bool = False) -> list[dict]:
+    return [it for it in items if _is_role_compatible(it, role, relaxed=relaxed)]
+
 
 def _score_item_for_role(item: dict, role: str) -> int:
     profile = ROLE_PROFILES.get(role, {})
@@ -1373,23 +1469,39 @@ def _pick_role_articles(items: list[dict], role: str, max_items: int = 3, blocke
 
 def _select_role_articles(items: list[dict], roles: list[str], max_items: int = 3) -> dict[str, list[dict]]:
     selected: dict[str, list[dict]] = {r: [] for r in roles}
-    used_by_role: dict[str, set[int]] = {r: set() for r in roles}
 
-    # 1周目は役割間の重複を避ける
+    role_candidates = {role: _filter_role_candidates(items, role, relaxed=False) for role in roles}
+
+    # 1周目は立場適合 + 役割間の重複を避ける
     globally_used: set[int] = set()
     for role in roles:
-        picked = _pick_role_articles(items, role, max_items=max_items, blocked_ids=globally_used)
+        picked = _pick_role_articles(role_candidates[role], role, max_items=max_items, blocked_ids=globally_used)
         selected[role] = picked
         ids = {int(it.get("id") or 0) for it in picked}
-        used_by_role[role] = ids
         globally_used.update(ids)
 
-    # 足りない場合のみ重複を許容して補完
+    # 不足分は「同立場の条件を満たす記事」から重複を許容して補完
     for role in roles:
         if len(selected[role]) >= max_items:
             continue
         existing_ids = {int(it.get("id") or 0) for it in selected[role]}
-        refill = _pick_role_articles(items, role, max_items=max_items)
+        refill = _pick_role_articles(role_candidates[role], role, max_items=max_items)
+        for it in refill:
+            item_id = int(it.get("id") or 0)
+            if item_id in existing_ids:
+                continue
+            selected[role].append(it)
+            existing_ids.add(item_id)
+            if len(selected[role]) >= max_items:
+                break
+
+    # それでも不足する場合だけ、少し緩い条件で追加する
+    for role in roles:
+        if len(selected[role]) >= max_items:
+            continue
+        relaxed_pool = _filter_role_candidates(items, role, relaxed=True)
+        existing_ids = {int(it.get("id") or 0) for it in selected[role]}
+        refill = _pick_role_articles(relaxed_pool, role, max_items=max_items)
         for it in refill:
             item_id = int(it.get("id") or 0)
             if item_id in existing_ids:
@@ -1423,42 +1535,38 @@ def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
     role_map = {"engineer": "技術者", "management": "経営者", "consumer": "消費者"}
     role_label = role_map.get(role, role)
     if not picked_articles:
-        return f"{role_label}の立場で重要記事を選定できませんでした。一次情報の件数を増やして再評価してください。"
+        return f"主張: 本日は{role_label}の判断に直結する記事が少ないため、結論は保留する。根拠: 立場条件を満たす一次情報が不足しており、無関係な記事は採用しない。影響: 次回更新で市場・規制・製品情報を追加確認し、判断を再提示する。"
 
     points = [_extract_clear_point(a) for a in picked_articles[:3]]
-    point_1 = points[0] if len(points) > 0 else "主要トピック"
-    point_2 = points[1] if len(points) > 1 else "関連トピック"
-    point_3 = points[2] if len(points) > 2 else "市場・利用者影響"
+    evidence_points = []
+    for article in picked_articles[:2]:
+        source = str(article.get("source") or "出典未記載").strip()
+        evidence_points.append(f"{_extract_clear_point(article)}（{source}）")
 
-    style_map = {
-        "engineer": {
-            "start": "設計レビューの観点で",
-            "action": "仕様の曖昧さを潰し、障害時の切り戻しと監視指標を先に決める",
-            "ending": "特に、性能とセキュリティのトレードオフを数値で比較して合意する。",
-        },
-        "management": {
-            "start": "経営判断の観点で",
-            "action": "投資順序・撤退基準・責任者を同時に定義し、意思決定の遅延を防ぐ",
-            "ending": "短期収益だけでなく、規制対応とレピュテーションコストまで含めて判断する。",
-        },
-        "consumer": {
-            "start": "生活者の観点で",
-            "action": "利便性の向上と負担増の両面を確認し、分かりやすい説明と選択肢を求める",
-            "ending": "見出しだけでなく一次情報を確認し、家族や職場で前提を共有することが重要だ。",
-        },
+    while len(evidence_points) < 2:
+        evidence_points.append("関連一次情報の追加確認が必要（出典精査中）")
+
+    action_map = {
+        "engineer": "影響範囲をサービス別に切り分け、次スプリントで監視指標と切り戻し条件を実装計画へ落とし込む。",
+        "management": "投資優先順位・規制対応・供給リスクを同じ会議体で決裁し、四半期計画の修正を即日判断する。",
+        "consumer": "価格・使い勝手・個人情報の条件を比較して、契約見直しや利用設定の変更を今週中に実行する。",
     }
-    style = style_map.get(role, style_map["consumer"])
-    focus = ROLE_PROFILES.get(role, {}).get("opinion_focus", "影響")
 
-    text = (
-        f"{role_label}としては{style['start']}、次の3点を順に読むと論点が明確になる。"
-        f"第1に『{point_1}』は、{focus}の出発点を示している。"
-        f"第2に『{point_2}』を重ねると、短期対応だけでは解けない制約が見える。"
-        f"第3に『{point_3}』までつなぐことで、直近施策と中期施策を分離して判断できる。"
-        f"したがって、{style['action']}。"
-        f"{style['ending']}"
-    )
+    claim = f"主張: {role_label}の判断軸は『{ROLE_PROFILES.get(role, {}).get('opinion_focus', '影響の見極め')}』であり、短期の話題性より実行可能性を優先すべきだ。"
+    evidence = f"根拠: {evidence_points[0]}。さらに、{evidence_points[1]}。"
+    impact = f"影響: {action_map.get(role, action_map['consumer'])}"
+    text = f"{claim}{evidence}{impact}"
     return _fit_text_length(text, target=330, min_len=260, max_len=420)
+
+
+def _extract_conclusion_line(opinion: str) -> str:
+    m = re.search(r"主張:\s*([^。]+。)", opinion)
+    if m:
+        return m.group(1).strip()
+    s = " ".join((opinion or "").split())
+    if len(s) > 70:
+        return s[:70].rstrip("、。 ") + "…"
+    return s
 
 def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     news_dir = out_dir / "news"
@@ -1598,7 +1706,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
         opinion_items.extend(sec.get("rows", []))
 
     opinion_items.sort(key=lambda x: (x.get("dt") or "", x.get("importance") or 0), reverse=True)
-    opinion_items = opinion_items[:15]
+    opinion_seed_items = opinion_items[:15]
 
     role_labels = {
         "engineer": "技術者",
@@ -1612,12 +1720,17 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     for role in roles:
         picked = selected_articles.get(role, [])
         opinion = _build_combined_opinion(role, picked)
+        conclusion = _extract_conclusion_line(opinion)
+        selection_note = "" if len(picked) >= 3 else "本日は立場条件に合う記事が少ないため、該当ソースのみで構成しています。"
         role_sections.append({
             "role": role,
             "label": role_labels[role],
             "articles": picked,
             "opinion": opinion,
             "opinion_len": len(opinion),
+            "conclusion": conclusion,
+            "summary_line": conclusion,
+            "selection_note": selection_note,
             "focus": f"{role_labels[role]}視点: {ROLE_PROFILES.get(role, {}).get('opinion_focus', '重要記事（点）をつないで意見（線）を構成')}" ,
         })
 
@@ -1628,7 +1741,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
         page="opinion",
         generated_at=generated_at,
         role_sections=role_sections,
-        source_item_count=len(opinion_items),
+        source_item_count=len(opinion_seed_items),
     )
     (opinion_dir / "index.html").write_text(opinion_html, encoding="utf-8")
 

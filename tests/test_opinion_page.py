@@ -73,19 +73,18 @@ def test_select_role_articles_reduces_overlap() -> None:
     assert len(set(top_ids.values())) == len(top_ids)
 
 
-def test_build_combined_opinion_includes_role_specific_tone() -> None:
+def test_build_combined_opinion_uses_claim_evidence_impact() -> None:
     picked = [
-        {"summary": "クラウド移行で認証基盤の再設計が必要になった。"},
-        {"summary": "障害対応の手順を標準化し、運用負荷を下げる検討が進む。"},
-        {"summary": "利用者向け通知の改善が継続率と信頼性に影響している。"},
+        {"summary": "クラウド移行で認証基盤の再設計が必要になった。", "source": "Tech Media"},
+        {"summary": "障害対応の手順を標準化し、運用負荷を下げる検討が進む。", "source": "Ops Journal"},
+        {"summary": "利用者向け通知の改善が継続率と信頼性に影響している。", "source": "Product News"},
     ]
     engineer = render_main._build_combined_opinion("engineer", picked)
-    management = render_main._build_combined_opinion("management", picked)
-    consumer = render_main._build_combined_opinion("consumer", picked)
 
-    assert "設計レビュー" in engineer
-    assert "経営判断" in management
-    assert "生活者" in consumer
+    assert "主張:" in engineer
+    assert "根拠:" in engineer
+    assert "影響:" in engineer
+    assert "第1に" not in engineer
 
 
 def test_fit_text_length_trims_on_sentence_boundary() -> None:
@@ -103,3 +102,18 @@ def test_extract_clear_point_prefers_title_and_is_short() -> None:
     point = render_main._extract_clear_point(article)
     assert len(point) <= 73
     assert point.startswith("これは非常に長いタイトル")
+
+
+def test_role_filter_excludes_weather_and_incidents_for_management_consumer() -> None:
+    weather = {"id": 1, "title": "関東で大雨", "summary": "天気の急変", "category": "news", "tags": ["weather"]}
+    crime = {"id": 2, "title": "広島で殺人事件", "summary": "事件の捜査", "category": "news", "tags": ["incident"]}
+    business = {"id": 3, "title": "半導体投資を拡大", "summary": "サプライチェーン強化", "category": "industry", "tags": ["投資"]}
+
+    assert not render_main._is_role_compatible(weather, "management")
+    assert not render_main._is_role_compatible(crime, "consumer")
+    assert render_main._is_role_compatible(business, "management")
+
+
+def test_extract_conclusion_line_prefers_claim_sentence() -> None:
+    opinion = "主張: 結論文です。根拠: 事実A。影響: 次の一手。"
+    assert render_main._extract_conclusion_line(opinion) == "結論文です。"
