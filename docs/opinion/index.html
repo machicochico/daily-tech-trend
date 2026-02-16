@@ -8,8 +8,20 @@
   <meta name="description" content="技術者・経営者・消費者の3つの立場で、直近記事を400文字前後の意見として整理した試験ページ。">
   <link rel="canonical" href="/daily-tech-trend/opinion/">
   <link rel="stylesheet" href="/daily-tech-trend/assets/css/common.css">
+  <style>
+    .opinion-toc{margin:8px 0 16px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft)}
+    .opinion-toc strong{font-size:13px}
+    .opinion-toc ul{margin:8px 0 0;padding-left:18px;display:flex;gap:10px;flex-wrap:wrap}
+    .opinion-toc a{font-size:13px}
+    .sticky-mini-nav{position:fixed;right:12px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:20}
+    .sticky-mini-nav a,.sticky-mini-nav button{padding:8px 10px;border-radius:999px;border:1px solid var(--border);background:var(--bg);font-size:12px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+    .sticky-mini-nav .mini-toc{display:none}
+    @media (min-width: 821px){
+      .sticky-mini-nav .mini-toc{display:inline-block}
+    }
+  </style>
 </head>
-<body>
+<body id="top">
   <h1>意見（お試し版）</h1>
   <div class="nav">
     <a href="/daily-tech-trend/" class="">技術</a>
@@ -28,6 +40,15 @@
     </div>
   </div>
 
+  <nav class="opinion-toc" aria-label="立場別目次">
+    <strong>目次</strong>
+    <ul>
+      <li><a href="#engineer">技術者視点</a></li>
+      <li><a href="#executive">経営者視点</a></li>
+      <li><a href="#consumer">消費者視点</a></li>
+    </ul>
+  </nav>
+
   <section class="top-col" style="margin:8px 0 16px;">
     <h2>3立場の結論サマリ</h2>
     <ul>
@@ -42,7 +63,7 @@
   </section>
 
   
-  <section class="top-col" style="margin:8px 0 16px;">
+  <section id="engineer" class="top-col" style="margin:8px 0 16px; scroll-margin-top: 20px;">
     <h2>技術者の結論</h2>
     <div class="small"><strong>結論</strong>: 技術者としては、機能拡張よりも先に『監視指標と切り戻し手順を前提にした仕様確定』を優先すべきだ。</div>
     <div class="small">技術者視点: 実装難易度・運用品質・セキュリティの両立</div>
@@ -74,7 +95,7 @@
     </details>
   </section>
   
-  <section class="top-col" style="margin:8px 0 16px;">
+  <section id="executive" class="top-col" style="margin:8px 0 16px; scroll-margin-top: 20px;">
     <h2>経営者の結論</h2>
     <div class="small"><strong>結論</strong>: 経営者の判断軸は『投資対効果・事業継続・意思決定速度』であり、短期の話題性より実行可能性を優先すべきだ。</div>
     <div class="small">経営者視点: 投資対効果・事業継続・意思決定速度</div>
@@ -106,7 +127,7 @@
     </details>
   </section>
   
-  <section class="top-col" style="margin:8px 0 16px;">
+  <section id="consumer" class="top-col" style="margin:8px 0 16px; scroll-margin-top: 20px;">
     <h2>消費者の結論</h2>
     <div class="small"><strong>結論</strong>: 消費者の判断軸は『体験価値・負担増・情報の分かりやすさ』であり、短期の話題性より実行可能性を優先すべきだ。</div>
     <div class="small">消費者視点: 体験価値・負担増・情報の分かりやすさ</div>
@@ -139,6 +160,20 @@
   </section>
   
 
+  <div class="sticky-mini-nav" aria-label="スクロール補助">
+    <a class="mini-toc" href="#top">目次へ戻る</a>
+    <button type="button" class="back-to-top">先頭へ戻る</button>
+  </div>
+
   <script src="/daily-tech-trend/assets/js/common.js"></script>
+  <script>
+    (function(){
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (!backToTopButton) return;
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
 </body>
 </html>

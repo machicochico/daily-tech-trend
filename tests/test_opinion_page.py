@@ -138,3 +138,12 @@ def test_opinion_template_has_view_mode_switch_and_comparison_labels() -> None:
     assert "<h4>結論</h4>" in source
     assert "<h4>主要根拠</h4>" in source
     assert "<h4>推奨アクション</h4>" in source
+
+
+def test_opinion_template_has_anchor_toc_and_scroll_helpers() -> None:
+    source = _read("src/render_main.py")
+    assert 'aria-label="立場別目次"' in source
+    assert 'href="#{{ role.anchor_id }}"' in source
+    assert '"management": "executive"' in source
+    assert 'class="sticky-mini-nav"' in source
+    assert "window.scrollTo({ top: 0, behavior: 'smooth' });" in source
