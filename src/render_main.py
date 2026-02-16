@@ -1028,9 +1028,20 @@ OPINION_HTML = r"""
       .comparison-grid{display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));}
       .comparison-tabs{display:none}
     }
+
+    .opinion-toc{margin:8px 0 16px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft)}
+    .opinion-toc strong{font-size:13px}
+    .opinion-toc ul{margin:8px 0 0;padding-left:18px;display:flex;gap:10px;flex-wrap:wrap}
+    .opinion-toc a{font-size:13px}
+    .sticky-mini-nav{position:fixed;right:12px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:20}
+    .sticky-mini-nav a,.sticky-mini-nav button{padding:8px 10px;border-radius:999px;border:1px solid var(--border);background:var(--bg);font-size:12px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+    .sticky-mini-nav .mini-toc{display:none}
+    @media (min-width: 821px){
+      .sticky-mini-nav .mini-toc{display:inline-block}
+    }
   </style>
 </head>
-<body>
+<body id="top">
   <h1>意見（お試し版）</h1>
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
@@ -1048,6 +1059,15 @@ OPINION_HTML = r"""
       <div class="summary-item"><div class="k">立場</div><div class="v">技術者 / 経営者 / 消費者</div></div>
     </div>
   </div>
+
+  <nav class="opinion-toc" aria-label="立場別目次">
+    <strong>目次</strong>
+    <ul>
+      {% for role in role_sections %}
+      <li><a href="#{{ role.anchor_id }}">{{ role.label }}視点</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
 
   <div class="view-mode-switch" role="group" aria-label="表示モード切替">
     <button class="mode-btn active" type="button" data-view-mode="vertical">縦スクロール表示</button>
@@ -1112,7 +1132,7 @@ OPINION_HTML = r"""
   </section>
 
   {% for role in role_sections %}
-  <section class="top-col role-vertical" style="margin:8px 0 16px;">
+  <section id="{{ role.anchor_id }}" class="top-col role-vertical" style="margin:8px 0 16px; scroll-margin-top: 20px;">
     <h2>{{ role.label }}視点</h2>
     <div class="small"><strong>結論</strong>: {{ role.summary }}</div>
     <div class="small"><strong>要約（2〜3行）</strong></div>
@@ -1147,6 +1167,11 @@ OPINION_HTML = r"""
   </section>
   {% endfor %}
 
+  <div class="sticky-mini-nav" aria-label="スクロール補助">
+    <a class="mini-toc" href="#top">目次へ戻る</a>
+    <button type="button" class="back-to-top">先頭へ戻る</button>
+  </div>
+
   <script src="{{ common_js_src }}"></script>
   <script>
     (function(){
@@ -1168,6 +1193,13 @@ OPINION_HTML = r"""
         tabPanels.forEach(panel => panel.classList.toggle('active', panel.dataset.panel === role));
       };
       tabButtons.forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (backToTopButton) {
+        backToTopButton.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
     })();
   </script>
 </body>
@@ -1909,6 +1941,11 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     selected_articles = _select_role_articles(opinion_items, roles, max_items=3)
 
     role_sections = []
+    anchor_ids = {
+        "engineer": "engineer",
+        "management": "executive",
+        "consumer": "consumer",
+    }
     for role in roles:
         picked = selected_articles.get(role, [])
         full_text = _build_combined_opinion(role, picked)
@@ -1916,6 +1953,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
         selection_note = "" if len(picked) >= 3 else "本日は立場条件に合う記事が少ないため、該当ソースのみで構成しています。"
         role_sections.append({
             "role": role,
+            "anchor_id": anchor_ids[role],
             "label": role_labels[role],
             "articles": picked,
             "summary": summary,
