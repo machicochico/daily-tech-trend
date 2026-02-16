@@ -147,3 +147,16 @@ def test_opinion_template_has_anchor_toc_and_scroll_helpers() -> None:
     assert '"management": "executive"' in source
     assert 'class="sticky-mini-nav"' in source
     assert "window.scrollTo({ top: 0, behavior: 'smooth' });" in source
+
+
+def test_opinion_summary_shows_top_evidence_tags() -> None:
+    source = _read("src/render_main.py")
+    assert "根拠 {{ loop.index }}:" in source
+    assert '"top_evidence_tags": _build_top_evidence_tags(picked, limit=2)' in source
+
+
+def test_opinion_news_sources_show_timestamps_and_reason() -> None:
+    source = _read("src/render_main.py")
+    assert "公開日時:" in source
+    assert "取得元時刻:" in source
+    assert "重要度理由:" in source

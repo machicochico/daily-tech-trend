@@ -1078,7 +1078,16 @@ OPINION_HTML = r"""
     <h2>立場別の結論サマリ</h2>
     <ul>
       {% for role in role_sections %}
-      <li><strong>{{ role.label }}視点</strong>: {{ role.summary }}</li>
+      <li>
+        <strong>{{ role.label }}視点</strong>: {{ role.summary }}
+        {% if role.top_evidence_tags %}
+        <div class="small" style="margin-top:4px; display:flex; gap:6px; flex-wrap:wrap;">
+          {% for tag in role.top_evidence_tags %}
+          <span class="badge">根拠 {{ loop.index }}: {{ tag }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </li>
       {% endfor %}
     </ul>
   </section>
@@ -1156,7 +1165,9 @@ OPINION_HTML = r"""
         {% for art in role.articles %}
         <li>
           <a href="{{ art.url }}" target="_blank" rel="noopener">{{ art.title }}</a>
-          <span class="small"> / {{ art.source }} / 重要度 {{ art.importance }}</span>
+          <div class="small">{{ art.source }} / 重要度 {{ art.importance }}</div>
+          <div class="small">公開日時: {{ art.published_at_jst or '不明' }} / 取得元時刻: {{ art.fetched_at_jst or '不明' }}</div>
+          <div class="small">重要度理由: {{ art.importance_basis or '重要語・カテゴリ一致・鮮度から総合判定' }}</div>
         </li>
         {% endfor %}
       </ul>
@@ -1792,6 +1803,20 @@ def _build_primary_evidence_line(picked_articles: list[dict]) -> str:
         return f"{title}（{source} / 重要度 {importance}）"
     return f"{title}（{source}）"
 
+
+def _build_top_evidence_tags(picked_articles: list[dict], limit: int = 2) -> list[str]:
+    tags: list[str] = []
+    for article in picked_articles:
+        label = _extract_clear_point(article)
+        if not label:
+            continue
+        if label in tags:
+            continue
+        tags.append(label)
+        if len(tags) >= limit:
+            break
+    return tags
+
 def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     news_dir = out_dir / "news"
     news_dir.mkdir(exist_ok=True)
@@ -1961,6 +1986,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
             "full_text_len": len(full_text),
             "preview_lines": _build_opinion_preview_lines(full_text),
             "primary_evidence": _build_primary_evidence_line(picked),
+            "top_evidence_tags": _build_top_evidence_tags(picked, limit=2),
             "selection_note": selection_note,
             "focus": f"{role_labels[role]}視点: {ROLE_PROFILES.get(role, {}).get('opinion_focus', '重要記事（点）をつないで意見（線）を構成')}" ,
             "recommendation": _extract_recommended_action_line(full_text),
@@ -2025,16 +2051,16 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None, min_per_
         items = []
         for r in rows:
             # fetch_news_articles_by_category() のSELECT順に合わせる
-            # （旧実装: 14列, 現実装: 13列）
-            if len(r) == 14:
+            # （現実装: 代表フラグあり=16列 / 旧互換=15列）
+            if len(r) >= 16:
                 (
-                    article_id, title, url, source, category, dt,
+                    article_id, title, url, source, category, published_at, fetched_at, dt,
                     importance, typ, summary, key_points, perspectives, tags, evidence_urls,
                     is_representative,
                 ) = r
             else:
                 (
-                    article_id, title, url, source, category, dt,
+                    article_id, title, url, source, category, published_at, fetched_at, dt,
                     importance, typ, summary, key_points, perspectives, tags, evidence_urls,
                 ) = r
                 is_representative = 0
@@ -2054,6 +2080,10 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None, min_per_
                 "category": clean_for_html(category or cat or "other"),  # ←追加
                 "dt": clean_for_html(dt),                                # ←追加（data-date用）
                 "dt_jst": fmt_date(dt),
+                "published_at": clean_for_html(published_at),
+                "published_at_jst": fmt_date(published_at),
+                "fetched_at": clean_for_html(fetched_at),
+                "fetched_at_jst": fmt_date(fetched_at),
 
                 # LLM結果
                 "importance": int(importance) if importance is not None else 0,
@@ -2194,6 +2224,8 @@ def fetch_news_articles_by_category(cur, region: str, category: str, limit: int 
           a.url,
           COALESCE(NULLIF(a.source,''), '') AS source,
           COALESCE(NULLIF(a.category,''), '') AS category,
+          COALESCE(NULLIF(a.published_at,''), '') AS published_at,
+          COALESCE(NULLIF(a.fetched_at,''), '') AS fetched_at,
           COALESCE(NULLIF(a.published_at,''), a.fetched_at) AS dt,
 
           -- 代表insight（importanceが高いtopicを採用）
