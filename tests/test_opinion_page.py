@@ -117,3 +117,9 @@ def test_role_filter_excludes_weather_and_incidents_for_management_consumer() ->
 def test_extract_conclusion_line_prefers_claim_sentence() -> None:
     opinion = "主張: 結論文です。根拠: 事実A。影響: 次の一手。"
     assert render_main._extract_conclusion_line(opinion) == "結論文です。"
+
+
+def test_opinion_template_is_collapsed_by_default() -> None:
+    source = _read("src/render_main.py")
+    assert "詳細を読む（{{ role.label }}の意見約{{ role.opinion_len }}文字・ニュースソース）" in source
+    assert '<details class="insight" open>' not in source
