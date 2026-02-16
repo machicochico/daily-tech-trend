@@ -1033,9 +1033,26 @@ OPINION_HTML = r"""
     .opinion-toc strong{font-size:13px}
     .opinion-toc ul{margin:8px 0 0;padding-left:18px;display:flex;gap:10px;flex-wrap:wrap}
     .opinion-toc a{font-size:13px}
+    .role-vertical h2{margin:0 0 14px}
+    .role-vertical .section-heading{margin:18px 0 8px;font-size:16px}
+    .role-vertical .news-source-list{margin:0;padding-left:20px}
+    .role-vertical .news-source-list li{margin:14px 0}
+    .role-vertical .opinion-body{margin-top:10px;line-height:1.8}
+    .role-vertical details.insight[open]{padding:10px 14px}
+    .role-vertical details.insight[open] > *:not(summary){margin-top:10px}
+    .role-vertical details.insight[open] .opinion-body + .section-heading{margin-top:18px}
     .sticky-mini-nav{position:fixed;right:12px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:20}
     .sticky-mini-nav a,.sticky-mini-nav button{padding:8px 10px;border-radius:999px;border:1px solid var(--border);background:var(--bg);font-size:12px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     .sticky-mini-nav .mini-toc{display:none}
+    @media (max-width: 640px){
+      .role-vertical{line-height:1.75}
+      .role-vertical .small{line-height:1.8}
+      .role-vertical p,.role-vertical li{margin-top:14px;margin-bottom:14px}
+      .role-vertical details.insight[open]{padding:12px 16px}
+      .role-vertical .opinion-body{padding:0 2px;line-height:1.9}
+      .role-vertical .news-source-list li{margin:16px 0}
+      .role-vertical .section-heading{margin:20px 0 10px}
+    }
     @media (min-width: 821px){
       .sticky-mini-nav .mini-toc{display:inline-block}
     }
@@ -1158,10 +1175,10 @@ OPINION_HTML = r"""
     {% endif %}
     <details class="insight">
       <summary class="small">詳細を読む（{{ role.label }}の意見約{{ role.full_text_len }}文字・ニュースソース）</summary>
-      <h3 style="margin:10px 0 4px;">意見本文</h3>
-      <div class="small" style="margin-top:8px">{{ role.full_text }}</div>
-      <h3 style="margin:10px 0 4px;">ニュースソース</h3>
-      <ul>
+      <h3 class="section-heading">意見本文</h3>
+      <div class="small opinion-body">{{ role.full_text }}</div>
+      <h3 class="section-heading">ニュースソース</h3>
+      <ul class="news-source-list">
         {% for art in role.articles %}
         <li>
           <a href="{{ art.url }}" target="_blank" rel="noopener">{{ art.title }}</a>
