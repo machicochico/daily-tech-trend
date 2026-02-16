@@ -1038,6 +1038,9 @@ OPINION_HTML = r"""
     .role-vertical .news-source-list{margin:0;padding-left:20px}
     .role-vertical .news-source-list li{margin:14px 0}
     .role-vertical .opinion-body{margin-top:10px;line-height:1.8}
+    .role-discussion{margin:12px 0 8px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft)}
+    .role-discussion ul{margin:8px 0 0;padding-left:18px}
+    .role-discussion li{margin:8px 0}
     .role-vertical details.insight[open]{padding:10px 14px}
     .role-vertical details.insight[open] > *:not(summary){margin-top:10px}
     .role-vertical details.insight[open] .opinion-body + .section-heading{margin-top:18px}
@@ -1170,6 +1173,16 @@ OPINION_HTML = r"""
     <div class="small"><strong>主要根拠</strong>: {{ role.primary_evidence }}</div>
     <div class="small"><strong>推奨アクション</strong>: {{ role.recommendation }}</div>
     <div class="small">{{ role.focus }}</div>
+    {% if role.discussion_pairs %}
+    <div class="role-discussion">
+      <div class="small"><strong>立場間ディスカッション（仕様検討）</strong></div>
+      <ul class="small">
+        {% for pair in role.discussion_pairs %}
+        <li><strong>{{ pair.from }}＞{{ pair.to }}</strong> {{ pair.text }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
     {% if role.selection_note %}
     <div class="small" style="color:#b45309; margin-top:6px;">{{ role.selection_note }}</div>
     {% endif %}
@@ -1784,6 +1797,45 @@ def _extract_recommended_action_line(opinion: str, fallback: str = "関係者合
     return fallback
 
 
+def _build_role_discussion(role_sections: list[dict]) -> dict[str, list[dict[str, str]]]:
+    role_map = {str(section.get("role") or ""): section for section in role_sections}
+    role_order = ["engineer", "management", "consumer"]
+    role_labels = {
+        "engineer": "技術者",
+        "management": "経営者",
+        "consumer": "消費者",
+    }
+    default_summary = "判断に直結する情報が不足しているため、仕様の前提条件を整理する。"
+    default_reco = "関係者レビューを実施し、リスクと優先順位を更新する。"
+
+    discussions_by_role: dict[str, list[dict[str, str]]] = {}
+    for focus_role in role_order:
+        focus_discussions: list[dict[str, str]] = []
+        for speaker in role_order:
+            for listener in role_order:
+                if speaker == listener:
+                    continue
+
+                speaker_summary = str(role_map.get(speaker, {}).get("summary") or default_summary)
+                listener_reco = str(role_map.get(listener, {}).get("recommendation") or default_reco)
+
+                focus_discussions.append(
+                    {
+                        "from": role_labels[speaker],
+                        "to": role_labels[listener],
+                        "text": (
+                            f"あなたは『{listener_reco}』と述べていますが、"
+                            f"{speaker_summary}を踏まえると、仕様の前提とリスク境界を"
+                            "どの時点で固定するのかを明確化すべきではないか。"
+                        ),
+                    }
+                )
+
+        discussions_by_role[focus_role] = focus_discussions
+
+    return discussions_by_role
+
+
 def _extract_labelled_sentences(opinion: str, label: str) -> list[str]:
     pattern = rf"{label}:\s*([^。]+。)"
     return [m.strip() for m in re.findall(pattern, opinion or "") if m.strip()]
@@ -2008,6 +2060,10 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
             "focus": f"{role_labels[role]}視点: {ROLE_PROFILES.get(role, {}).get('opinion_focus', '重要記事（点）をつないで意見（線）を構成')}" ,
             "recommendation": _extract_recommended_action_line(full_text),
         })
+
+    role_discussions = _build_role_discussion(role_sections)
+    for section in role_sections:
+        section["discussion_pairs"] = role_discussions.get(section["role"], [])
 
     opinion_assets = build_asset_paths()
     opinion_html = Template(OPINION_HTML).render(
