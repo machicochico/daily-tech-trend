@@ -1810,26 +1810,37 @@ def _build_role_discussion(role_sections: list[dict]) -> dict[str, list[dict[str
 
     discussions_by_role: dict[str, list[dict[str, str]]] = {}
     for focus_role in role_order:
+        focus_summary = str(role_map.get(focus_role, {}).get("summary") or default_summary)
+        focus_reco = str(role_map.get(focus_role, {}).get("recommendation") or default_reco)
         focus_discussions: list[dict[str, str]] = []
-        for speaker in role_order:
-            for listener in role_order:
-                if speaker == listener:
-                    continue
 
-                speaker_summary = str(role_map.get(speaker, {}).get("summary") or default_summary)
-                listener_reco = str(role_map.get(listener, {}).get("recommendation") or default_reco)
+        for other_role in role_order:
+            if other_role == focus_role:
+                continue
 
-                focus_discussions.append(
-                    {
-                        "from": role_labels[speaker],
-                        "to": role_labels[listener],
-                        "text": (
-                            f"あなたは『{listener_reco}』と述べていますが、"
-                            f"{speaker_summary}を踏まえると、仕様の前提とリスク境界を"
-                            "どの時点で固定するのかを明確化すべきではないか。"
-                        ),
-                    }
-                )
+            other_summary = str(role_map.get(other_role, {}).get("summary") or default_summary)
+            other_reco = str(role_map.get(other_role, {}).get("recommendation") or default_reco)
+
+            focus_discussions.append(
+                {
+                    "from": role_labels[focus_role],
+                    "to": role_labels[other_role],
+                    "text": (
+                        f"あなたは『{other_reco}』と述べていますが、{focus_summary}の観点では"
+                        "仕様の確定タイミングと受け入れ条件を先に合意しないと実行リスクが残りませんか。"
+                    ),
+                }
+            )
+            focus_discussions.append(
+                {
+                    "from": role_labels[other_role],
+                    "to": role_labels[focus_role],
+                    "text": (
+                        f"その懸念は理解します。とはいえ{other_summary}を踏まえると、"
+                        f"まずは『{focus_reco}』を段階的に適用し、運用データで仕様妥当性を確認する進め方が現実的です。"
+                    ),
+                }
+            )
 
         discussions_by_role[focus_role] = focus_discussions
 

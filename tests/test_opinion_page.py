@@ -179,6 +179,8 @@ def test_build_role_discussion_generates_cross_role_pairs() -> None:
     discussions = render_main._build_role_discussion(sections)
 
     assert set(discussions.keys()) == {"engineer", "management", "consumer"}
-    assert len(discussions["engineer"]) == 6
-    assert discussions["engineer"][0]["from"] in {"技術者", "経営者", "消費者"}
-    assert "仕様の前提とリスク境界" in discussions["engineer"][0]["text"]
+    assert len(discussions["engineer"]) == 4
+    assert discussions["engineer"][0]["from"] == "技術者"
+    assert discussions["engineer"][0]["to"] == "経営者"
+    assert "仕様の確定タイミングと受け入れ条件" in discussions["engineer"][0]["text"]
+    assert discussions["management"][0]["from"] == "経営者"
