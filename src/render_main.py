@@ -1033,27 +1033,33 @@ OPINION_HTML = r"""
   {% for role in role_sections %}
   <section class="top-col" style="margin:8px 0 16px;">
     <h2>{{ role.label }}の結論: {{ role.conclusion }}</h2>
-    <div class="small">{{ role.summary_line }}</div>
+    <div class="small"><strong>要約（2〜3行）</strong></div>
+    <ul class="small" style="margin:6px 0 8px;">
+      {% for line in role.preview_lines %}
+      <li>{{ line }}</li>
+      {% endfor %}
+    </ul>
+    <div class="small"><strong>主要根拠</strong>: {{ role.primary_evidence }}</div>
     <div class="small">{{ role.focus }}</div>
     {% if role.selection_note %}
     <div class="small" style="color:#b45309; margin-top:6px;">{{ role.selection_note }}</div>
     {% endif %}
-    <h3 style="margin:10px 0 4px;">ニュースソース</h3>
-    <ul>
-      {% for art in role.articles %}
-      <li>
-        <a href="{{ art.url }}" target="_blank" rel="noopener">{{ art.title }}</a>
-        <span class="small"> / {{ art.source }} / 重要度 {{ art.importance }}</span>
-      </li>
-      {% endfor %}
-    </ul>
-    {% if not role.articles %}
-    <div class="small">本日は該当する記事が少ないため、無関係なニュースは採用していません。</div>
-    {% endif %}
-    <h3 style="margin:10px 0 4px;">意見本文</h3>
-    <details class="insight" open>
-      <summary class="small">{{ role.label }}の意見（約{{ role.opinion_len }}文字）を表示</summary>
+    <details class="insight">
+      <summary class="small">詳細を読む（{{ role.label }}の意見約{{ role.opinion_len }}文字・ニュースソース）</summary>
+      <h3 style="margin:10px 0 4px;">意見本文</h3>
       <div class="small" style="margin-top:8px">{{ role.opinion }}</div>
+      <h3 style="margin:10px 0 4px;">ニュースソース</h3>
+      <ul>
+        {% for art in role.articles %}
+        <li>
+          <a href="{{ art.url }}" target="_blank" rel="noopener">{{ art.title }}</a>
+          <span class="small"> / {{ art.source }} / 重要度 {{ art.importance }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% if not role.articles %}
+      <div class="small">本日は該当する記事が少ないため、無関係なニュースは採用していません。</div>
+      {% endif %}
     </details>
   </section>
   {% endfor %}
@@ -1603,6 +1609,43 @@ def _extract_conclusion_line(opinion: str) -> str:
         return s[:70].rstrip("、。 ") + "…"
     return s
 
+
+def _extract_labelled_sentences(opinion: str, label: str) -> list[str]:
+    pattern = rf"{label}:\s*([^。]+。)"
+    return [m.strip() for m in re.findall(pattern, opinion or "") if m.strip()]
+
+
+def _build_opinion_preview_lines(opinion: str, min_lines: int = 2, max_lines: int = 3) -> list[str]:
+    lines: list[str] = []
+    lines.extend(_extract_labelled_sentences(opinion, "根拠"))
+    lines.extend(_extract_labelled_sentences(opinion, "影響"))
+
+    if len(lines) < min_lines:
+        raw_sentences = [s.strip() + "。" for s in re.findall(r"([^。]+)。", opinion or "") if s.strip()]
+        claim_sentences = set(_extract_labelled_sentences(opinion, "主張"))
+        for sent in raw_sentences:
+            if sent in claim_sentences:
+                continue
+            if sent not in lines:
+                lines.append(sent)
+            if len(lines) >= min_lines:
+                break
+
+    return lines[:max_lines]
+
+
+def _build_primary_evidence_line(picked_articles: list[dict]) -> str:
+    if not picked_articles:
+        return "関連一次情報の追加確認が必要（出典精査中）"
+
+    lead = picked_articles[0]
+    title = str(lead.get("title") or lead.get("summary") or "主要トピック").strip()
+    source = str(lead.get("source") or "出典未記載").strip()
+    importance = lead.get("importance")
+    if importance is not None:
+        return f"{title}（{source} / 重要度 {importance}）"
+    return f"{title}（{source}）"
+
 def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     news_dir = out_dir / "news"
     news_dir.mkdir(exist_ok=True)
@@ -1765,6 +1808,8 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
             "opinion_len": len(opinion),
             "conclusion": conclusion,
             "summary_line": conclusion,
+            "preview_lines": _build_opinion_preview_lines(opinion),
+            "primary_evidence": _build_primary_evidence_line(picked),
             "selection_note": selection_note,
             "focus": f"{role_labels[role]}視点: {ROLE_PROFILES.get(role, {}).get('opinion_focus', '重要記事（点）をつないで意見（線）を構成')}" ,
         })
