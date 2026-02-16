@@ -1531,10 +1531,33 @@ def _extract_clear_point(article: dict) -> str:
     return base
 
 
+ENGINEER_BANNED_PHRASES = [
+    "総合的に判断すべき",
+    "バランスが重要",
+    "今後の動向を注視",
+    "詳細は引き続き確認",
+    "ケースバイケース",
+]
+
+
+def _sanitize_engineer_phrase(text: str) -> str:
+    cleaned = str(text or "")
+    for phrase in ENGINEER_BANNED_PHRASES:
+        cleaned = cleaned.replace(phrase, "")
+    return " ".join(cleaned.split())
+
+
 def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
     role_map = {"engineer": "技術者", "management": "経営者", "consumer": "消費者"}
     role_label = role_map.get(role, role)
     if not picked_articles:
+        if role == "engineer":
+            return (
+                "主張: 技術者としては、機能拡張より先に監視指標と切り戻し手順を前提にした仕様確定を優先する。"
+                "根拠: 可観測性軸では、立場条件を満たす一次情報が不足しているため監視設計の妥当性を検証できない。"
+                "根拠: 依存関係・権限境界軸では、無関係な記事を採用すると責務分離の前提を誤る。"
+                "影響: SLO・更新手順・ロールバック条件を先に明文化し、追加情報が揃い次第に実装判断を再提示する。"
+            )
         return f"主張: 本日は{role_label}の判断に直結する記事が少ないため、結論は保留する。根拠: 立場条件を満たす一次情報が不足しており、無関係な記事は採用しない。影響: 次回更新で市場・規制・製品情報を追加確認し、判断を再提示する。"
 
     points = [_extract_clear_point(a) for a in picked_articles[:3]]
@@ -1551,6 +1574,28 @@ def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
         "management": "投資優先順位・規制対応・供給リスクを同じ会議体で決裁し、四半期計画の修正を即日判断する。",
         "consumer": "価格・使い勝手・個人情報の条件を比較して、契約見直しや利用設定の変更を今週中に実行する。",
     }
+
+    if role == "engineer":
+        article_a = picked_articles[0]
+        article_b = picked_articles[1] if len(picked_articles) > 1 else picked_articles[0]
+        article_c = picked_articles[2] if len(picked_articles) > 2 else article_b
+        point_a = _sanitize_engineer_phrase(_extract_clear_point(article_a))
+        point_b = _sanitize_engineer_phrase(_extract_clear_point(article_b))
+        point_c = _sanitize_engineer_phrase(_extract_clear_point(article_c))
+
+        claim = (
+            "主張: 技術者としては、機能拡張よりも先に『監視指標と切り戻し手順を前提にした仕様確定』を優先すべきだ。"
+        )
+        evidence = (
+            f"根拠: 可観測性の評価軸では、{point_a}を根拠にSLOと障害検知閾値を先に固定する必要がある。"
+            f"根拠: 依存関係と権限境界の評価軸では、{point_b}を根拠に外部連携の責務分離と認可境界の先行定義が必須になる。"
+            f"根拠: 運用品質とデータ整合性の評価軸では、{point_c}を根拠に更新手順と整合性検証の自動化要件を同時に設計すべきだ。"
+        )
+        impact = (
+            "影響: したがって初期段階でSLO・更新手順・ロールバック条件を明文化し、設計レビューでは可観測性と障害波及範囲を重点確認する。"
+        )
+        text = f"{claim}{evidence}{impact}"
+        return _fit_text_length(text, target=330, min_len=260, max_len=420)
 
     claim = f"主張: {role_label}の判断軸は『{ROLE_PROFILES.get(role, {}).get('opinion_focus', '影響の見極め')}』であり、短期の話題性より実行可能性を優先すべきだ。"
     evidence = f"根拠: {evidence_points[0]}。さらに、{evidence_points[1]}。"
