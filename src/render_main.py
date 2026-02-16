@@ -548,16 +548,6 @@ HTML = r"""
   </details>
   {% endif %}
 
-  <details class="foldable-section top-zone-fold" data-top-zone-details>
-    <summary>🛠 運用メトリクス</summary>
-    <section class="top-col" style="margin:8px 0 16px;">
-      <div class="metric-note">
-        <div>Source露出（競合比較）とカテゴリ別 一次情報比率は、<a href="/daily-tech-trend/ops/">運用ページ</a> で確認できます。</div>
-        <div>日次の監視・改善アクションに活用してください。</div>
-      </div>
-    </section>
-  </details>
-
   <div class="layout-with-sidebar">
     <aside class="category-toc" aria-label="カテゴリ一覧">
       <div class="category-toc-title">カテゴリ一覧</div>
