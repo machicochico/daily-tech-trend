@@ -2620,19 +2620,23 @@ def main():
     category_order = [
         "system",
         "manufacturing",
-        "blast_furnace",
-        "eaf",
-        "rolling",
-        "quality",
-        "maintenance",
+        "smart_factory",
         "market",
         "environment",
+        "quality",
+        "maintenance",
+        "policy",
+        "decarbonization_ops",
         "security",
+        "standards",
         "ai",
         "dev",
         "other",
     ]
     order_index = {cat_id: idx for idx, cat_id in enumerate(category_order)}
+    # YAML定義から削除されたカテゴリ（DBに残存データがあっても非表示）
+    allowed_cats = set(category_order)
+    categories = [c for c in categories if c["id"] in allowed_cats]
     categories = sorted(
         categories,
         key=lambda c: (order_index.get(c["id"], len(category_order)), c["id"]),

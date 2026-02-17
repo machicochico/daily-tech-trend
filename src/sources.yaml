@@ -4,12 +4,6 @@ categories:
     name: システム
   - id: manufacturing
     name: 製造（鉄鋼）
-  - id: blast_furnace
-    name: 高炉
-  - id: eaf
-    name: 電炉
-  - id: rolling
-    name: 圧延
   - id: quality
     name: 品質
   - id: maintenance
@@ -267,20 +261,6 @@ sources:
   # MES / SCADA / IIoT 専門媒体・主要ベンダ技術アラート
   # kind は tech のまま、category は manufacturing に統一し
   # 運用上は name の接頭辞でサブカテゴリを識別する
-  - id: automation-world-mes
-    name: "[MES] Automation World"
-    category: manufacturing
-    kind: tech
-    region: global
-    url: https://www.automationworld.com/rss.xml
-
-  - id: control-global-scada
-    name: "[SCADA] Control Global"
-    category: manufacturing
-    kind: tech
-    region: global
-    url: https://www.controlglobal.com/rss.xml
-
   - id: iiot-world
     name: "[IIoT] IIoT World"
     category: manufacturing
@@ -345,50 +325,27 @@ sources:
     region: global
     url: https://azure.microsoft.com/en-us/blog/topics/internet-of-things/feed/
 
-  # --- 高炉 ---
-  - id: primetals-ironmaking
-    name: Primetals Technologies News (Ironmaking)
-    category: blast_furnace
-    url: https://www.primetals.com/news-media/news/rss/
-
-  # --- 電炉 ---
-  - id: steel-times-eaf
-    name: Steel Times International (EAF)
-    category: eaf
-    url: https://www.steeltimesint.com/feed/
-
-  - id: tenova-eaf
-    name: Tenova News (EAF)
-    category: eaf
-    url: https://www.tenova.com/news/feed/
-
-  # --- 圧延 ---
-  - id: sms-rolling
-    name: SMS group Newsroom (Rolling)
-    category: rolling
-    url: https://www.sms-group.com/company/newsroom/rss.xml
-
-  - id: danieli-rolling
-    name: Danieli News (Rolling)
-    category: rolling
-    url: https://www.danieli.com/en/news/rss.xml
-
   # --- 品質 ---
-  - id: zeiss-quality
-    name: ZEISS Metrology Newsroom
+  - id: metrology-news
+    name: Metrology and Quality News
     category: quality
-    url: https://www.zeiss.com/metrology/en/news-events/newsroom/rss.xml
+    url: https://metrology.news/feed/
+
+  - id: plant-engineering
+    name: Plant Engineering
+    category: quality
+    url: https://www.plantengineering.com/feed/
 
   # --- 保全 ---
-  - id: skf-maintenance
-    name: SKF Blog (Reliability/Maintenance)
+  - id: maintenance-world
+    name: Maintenance World
     category: maintenance
-    url: https://blog.skf.com/feed/
+    url: https://www.maintenanceworld.com/feed/
 
-  - id: fiix-maintenance
-    name: Fiix CMMS Blog (Maintenance)
+  - id: worktrek-cmms
+    name: WorkTrek CMMS Blog
     category: maintenance
-    url: https://fiixsoftware.com/blog/feed/
+    url: https://www.worktrek.com/feed/
 
   # --- 政策・規制（脱炭素） ---
   - id: eu-clima
@@ -436,18 +393,23 @@ sources:
     category: policy
     url: https://ec.europa.eu/newsroom/taxation_customs/feed?item_type_id=1536&lang=en&orderby=item_date
 
-  # --- 脱炭素オペレーション（算定・LCA） ---
-  - id: ghg-protocol
-    name: GHG Protocol Updates
-    category: decarbonization_ops
-    url: https://ghgprotocol.org/blog/feed
-
-  - id: env-japan
-    name: Ministry of the Environment, Japan - Press Releases
-    category: decarbonization_ops
+  - id: atit
+    name: "@IT"
+    category: policy
     kind: tech
     region: jp
-    url: https://www.env.go.jp/press/rss.xml
+    url: https://rss.itmedia.co.jp/rss/2.0/ait.xml
+
+  # --- 脱炭素オペレーション（算定・LCA） ---
+  - id: carbon-brief
+    name: Carbon Brief
+    category: decarbonization_ops
+    url: https://www.carbonbrief.org/feed/
+
+  - id: edie-sustainability
+    name: edie (Sustainability)
+    category: decarbonization_ops
+    url: https://www.edie.net/feed/
 
   # --- 開発 ---
   - id: github-blog
