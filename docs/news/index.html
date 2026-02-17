@@ -38,11 +38,11 @@
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2026-02-17 21:26:06 JST</div>
+        <div class="v">2026-02-17 22:35:33 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">News</div>
-        <div class="v">280 <span class="small">(new48h 265)</span></div>
+        <div class="v">280 <span class="small">(new48h 262)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">Japan</div>
@@ -137,6 +137,7 @@
         <select id="sortKey">
           <option value="date">日付</option>
           <option value="importance">重要度</option>
+          <option value="composite">重要度×新着</option>
         </select>
       </label>
 
@@ -147,7 +148,7 @@
         </select>
       </label>
 
-      <button class="btn" type="button" onclick="applySort()">適用</button>
+      <button class="btn" type="button" onclick="applySort()" aria-label="ソートを適用">適用</button>
 
     </div>
     <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
@@ -156,13 +157,13 @@
 
   <!-- techと同じ：カテゴリ（折りたたみ） -->
  
-  <section class="category-section" id="cat-jp">
+  <section class="category-section" id="cat-jp" role="region" aria-label="🇯🇵 国内ニュース">
     <div class="category-header">
       <h2>
         🇯🇵 国内ニュース
         <span class="badge">250</span>
         
-          <span class="badge">+221/48h</span>
+          <span class="badge">+219/48h</span>
         
       </h2>
       <button class="btn" type="button" onclick="toggleCat('jp')">表示切替</button>
@@ -192,10 +193,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">消費者庁が、cheeroブランドのモバイルバッテリーで発火事故が起きたと公表した。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -272,10 +276,11 @@
             
           </div>
 
+          
           <div class="mini">Jiji Press (Japan)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:高 / カテゴリ重み:低 / 関連:3タグ</div>
 
@@ -313,12 +318,15 @@
             
           </div>
 
+          
+            <div class="summary-preview">TENGAの米国拠点で従業員1人のメールアカウントが第三者による不正アクセスを受け、顧客情報が一部漏えいした。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
-                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
+                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
                 <div><strong>要約</strong>：TENGAの米国拠点で従業員1人のメールアカウントが第三者による不正アクセスを受け、顧客情報が一部漏えいした。</div>
 
@@ -389,10 +397,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">個別指導塾を運営するルミナリスが、全講師がVTuberのオンライン学習塾サービス「Wish High」を開始した。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -465,10 +476,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ニトリはエアスプリングの硬さを自動調整するAIマットレスを39万9900円で発表した。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -541,10 +555,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">GoogleがDeveloper Knowledge APIとMCPサーバのパブリックプレビューを発表し、これによりGoogle Cloud、Android、F…</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -617,10 +634,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">中学生のSNS利用率は95%で、女子23%が1日4時間以上使用し、男子10%が同じく4時間以上使用している。未利用者は女子5%、男子6%である。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -693,10 +713,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">AppleがApple Podcastsに動画配信機能を追加し、HLS規格で音声と映像の境界をなくすことで安定再生と広告挿入を可能にした。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -769,10 +792,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Brave groupはVTuber「ぶいすぽっ!」を含む所属VTuberへの迷惑行為に対し、性的イラストの作成者を特定し、損害賠償1,000万円を求める訴訟を…</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -845,10 +871,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">朝日新聞社子会社の4Xが、宇宙ビジネスメディア「UchuBiz」の運営を終了すると発表した。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -921,10 +950,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ガンホー・オンライン・エンターテイメントは2025年12月期通期連結決算で大幅な減収減益を報告した。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -997,10 +1029,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">米国でフィジカルAIを用いた人型ロボットの開発が加速しており、製造業・物流・医療など多様な分野で労働力として期待されている。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -1075,10 +1110,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">中国は2026年を人型ロボットの商業化元年と位置付け、企業が販売店やレンタル事業を立ち上げ、官民でフィジカルAIの社会実装を急いでいる。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -1151,10 +1189,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">オンライン家庭教師「メガスタ」を提供するバンザンは、2026年2月16日に破産手続きを開始し、負債額が約14億円を超え、債権者数が3,000人を超えると報じられ…</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -1227,10 +1268,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Anthropicが元トランプ政権副首席補佐官のクリス・リデル氏を取締役に任命した。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -1303,10 +1347,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ワシントンホテルは14日に一部サーバーへの不正アクセスとランサムウェア感染を確認した。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=75 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -1379,10 +1426,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">2025年分の確定申告受付が開始され、20万円以上の収入がある自営業者や副業者が対象となった。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -1455,10 +1505,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ポーランドのアスビロ大学などに所属する研究者らは2022年、髪を不自然な色に染めることとメンタルヘルスの関連性を調査し、海外マッチングアプリで1万人以上のユーザ…</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -1531,10 +1584,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">著者は以前ドラゴンクエストシリーズに苦手意識を持っていたが、今回の『ドラゴンボールVII Reimagined』では全く苦労しなかった。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -1607,10 +1663,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ニコンのZシリーズにシネマカメラ「Nikon ZR」が加わり、REDを買収したことでミラーレス一眼としても優秀であると報告されている。</div>
+          
           <div class="mini">ITmedia NEWS</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=10 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -1683,10 +1742,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">横浜市鶴見区の住宅で17日午後7時半頃に煙と爆発音が報告され、5棟が燃え、一人が負傷した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -1759,10 +1821,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ミラノ・コルティナオリンピックのスキーノルディック複合個人大ヒルで、山本涼太選手が前半ジャンプでトップに立ち、渡部暁斗選手は今シーズン限りで現役引退を表明した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -1835,10 +1900,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">アメリカの黒人指導者ジェシー・ジャクソン師が84歳で死去した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:高 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -1911,10 +1979,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">JR東日本が宇都宮線の架線切断により約17時間運転不能となり、3年前に摩耗を把握していたにもかかわらず、人為的ミスで別架線を張り替えていたことが判明した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:高 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -1987,10 +2058,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">今年の花粉飛散量は平年のおよそ1.3倍になる見通しで、2月下旬から東日本と西日本を中心に飛散エリアが急速に拡大する恐れがある。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:高 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2063,10 +2137,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">中国では春節期間中にふるさとに帰省できない労働者が増えている。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:高 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2140,10 +2217,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">中道改革連合の小川代表が芳野会長と会談し、衆議院選挙での大敗を陳謝した上で、新体制のもと緊密に連携していく意向を示した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2216,10 +2296,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">神奈川県警の今村剛本部長が不適切な交通違反取締り問題について県議会で陳謝し、捜査・調査を進め再発防止策をまとめると述べた。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:高 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2292,12 +2375,15 @@
             
           </div>
 
+          
+            <div class="summary-preview">公正取引委員会は、スマホ法に基づき規制対象となったアップルとグーグルの報告書を公開した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
-                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:高 / カテゴリ重み:中 / 関連:1タグ</div>
+                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
                 <div><strong>要約</strong>：公正取引委員会は、スマホ法に基づき規制対象となったアップルとグーグルの報告書を公開した。</div>
 
@@ -2368,10 +2454,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">財界の有力者がエプスタイン氏との交友関係を指摘され、辞任するケースが相次いでいる。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2444,10 +2533,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">三浦璃来選手と木原龍一選手の“りくりゅう”ペアがミラノ・コルティナオリンピックで前半5位から金メダルを獲得し、歴代最高得点をマークした。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2520,10 +2612,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">メルシャンは、日本で使用が認められていない食品添加物を含む一部ワインの自主回収を発表した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2596,10 +2691,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">タイ国籍の女性容疑者が、12歳のタイ国籍少女を不法に働かせたとして再逮捕された。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2672,10 +2770,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ミラノ・コルティナオリンピックのスノーボードハーフパイプで戸塚優斗選手が金メダル、山田琉聖選手と小野光希選手が銅メダルを獲得し、日本に帰国して会見を開いた。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2748,10 +2849,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ミラノ・コルティナオリンピックで三浦璃来選手と木原龍一選手のペア“りくりゅう”が金メダルを獲得したことにより、国内では喜びの声が相次いだ。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2824,10 +2928,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ミラノ・コルティナオリンピックで男子スーパーチームの新種目が予想外の結果で終了し、選手たちは悔しさを示した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2902,10 +3009,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">三浦璃来選手と木原龍一選手のペア“りくりゅう”がミラノ・コルティナオリンピックで逆転により金メダルを獲得し、日本勢初の同種目メダルとなった。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -2978,10 +3088,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">大谷翔平選手はキャンプ4日目に実戦形式のバッティング練習でヒット性の鋭い当たりを打った。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3054,10 +3167,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">日本の女子団体パシュートメンバーは、ミラノ・コルティナオリンピックのスピードスケート準決勝と決勝に向けて16日に最終調整を行った。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3130,10 +3246,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ミラノ・コルティナオリンピックの男子スーパーチーム競技で日本は6位に終わった。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3206,10 +3325,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">日本はミラノ・コルティナオリンピックで合計18個のメダルを獲得し、過去最多の北京大会と同等となった。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3282,10 +3404,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ロシア大統領府の報道官は、17日からスイスで行われる米国を交えた和平協議において、領土問題などに焦点をあて、より幅広い議論を行うと述べた。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3360,10 +3485,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">坂本花織選手を含む日本勢がミラノ・コルティナオリンピック女子シングルショートプログラム前日の練習で順調な調整ぶりを示した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3438,10 +3566,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">香港で日本人男性が多額の現金を奪われ、検察は実行役とされる日本人被告が犯行後に報酬を受け取るよう依頼されたと供述した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3514,10 +3645,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">政府と自民党は、食料品の消費税を2年間ゼロにする公約実現に向けて、野党参加を呼びかけつつ超党派の国民会議で早期議論を開始しようとしている。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3590,10 +3724,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">広島県東広島市の住宅で火災が発生し、消火活動中に敷地内で男性が首から血を流して死亡しているのが見つかった。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3666,10 +3803,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">三浦璃来選手と木原龍一選手のフィギュアスケートペアはミラノ・コルティナオリンピックで前半5位に位置し、後半フリーでは技術修正と気持ちの切り替えを目標として金メダ…</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3742,10 +3882,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">NHKの世論調査によると、食料品の消費税を2年間ゼロにすることに対して57%が賛成した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3818,10 +3961,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">オリンピック公式SNSで、競技をイタリアのデザートや食材に例えて紹介する画像が公開された。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -3894,12 +4040,15 @@
             
           </div>
 
+          
+            <div class="summary-preview">住宅内で男性が首から血を流して死亡し、女性は訪問者に襲われ火事を起こされたと主張した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
-                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
+                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
                 <div><strong>要約</strong>：住宅内で男性が首から血を流して死亡し、女性は訪問者に襲われ火事を起こされたと主張した。</div>
 
@@ -3972,10 +4121,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">東京地方裁判所は、広域強盗事件で強盗致死などの罪に問われた藤田聖也被告に対し無期懲役を言い渡した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=75 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4048,10 +4200,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">吉永一貴選手がミラノ・コルティナオリンピックのショートトラック男子500メートル予選を突破し、準々決勝に進出した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4124,10 +4279,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">TikTokの親会社バイトダンスが動画生成AI最新モデルを公開し、国内アニメーター団体が著作権侵害の懸念で声明を発表した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4200,10 +4358,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">福岡高等裁判所が、飯塚事件の元死刑囚に対する再審を認めない決定を下した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4276,10 +4437,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">国土交通省は、関税措置に関する日米合意を受けて、アメリカの安全基準を満たした自動車が追加試験なしで日本へ輸入できるよう、省令を改正し、16日に施行した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4352,10 +4516,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">昨年10月から12月までのGDPは前期比実質年率でプラス0.2%となった。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=50 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4429,10 +4596,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">みずほ証券の社員が株式不正取引に関与した疑いで、証券取引等監視委員会が本社および関係先を強制調査するよう命じた。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4505,10 +4675,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">中道改革連合の小川代表は、党の役員人事で新たな幹事長に代表選挙を争った階猛氏を起用する意向を固めました。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=50 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4581,10 +4754,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">自民党と維新党の幹部が会談し、新年度予算案をできるだけ早く成立させるため審議を加速することに合意した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4657,10 +4833,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">関東甲信地方では、16日の夕方以降に冷たい雨が降り、気温が下がる見込みである。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4733,10 +4912,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">広島県東広島市の住宅で火災が発生し、消火活動中に敷地内で男性が血を流して倒れているのが見つかり、その場で死亡が確認された。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4809,10 +4991,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">大阪道頓堀で17歳の少年3人が刃物で刺され、1人死亡・2人負傷し、21歳容疑者は事件直前に少女への迷惑行為を行い注意されたとみられる。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4885,10 +5070,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">三浦璃来と木原龍一のペア「りくりゅう」がミラノ・コルティナオリンピックでショートプログラム中にリフトでミスを犯し、5位でフリーへ進出した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -4961,10 +5149,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">オバマ元大統領は、トランプ大統領が夫婦をゴリラなどに見立てた動画を投稿したことについて「恥の意識は喪失してしまった」と批判した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -5037,10 +5228,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">トランプ大統領は、ガザ地区の平和評議会初会合に参加国が50億ドル以上(約7600億円)を人道支援や復興事業に拠出すると述べた。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -5113,10 +5307,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">柏崎刈羽原発6号機で、16日午前3時ごろに試験的な発電と送電を開始した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -5189,10 +5386,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">「ルフィ」などと名乗る指示役による広域強盗事件で、被告の藤田聖也が判決前にNHK記者との接見で後悔を語った。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -5265,10 +5465,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">衆議院選挙後の特別国会で自民党は新年度予算案審議を加速したいと考えている。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -5341,10 +5544,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">大阪道頓堀で17歳の少年3人が刃物で刺され、1人が死亡し2人が負傷した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -5417,10 +5623,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">丸山希選手がミラノ・コルティナオリンピックのスキージャンプ女子ラージヒルで8位に入賞した。</div>
+          
           <div class="mini">NHKニュース</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -5493,10 +5702,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">SBI証券は2月28日に投資信託の積立専用アプリ「かんたん積立アプリ」の名称を『投信つみたてアプリ』に変更し、デザインリニューアルする。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=50 / 速報性:高 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -5569,10 +5781,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ニコン・エシロールがカメラレンズ技術を応用した単焦点メガネレンズ「Zシリーズ SINGLE VISION」を発売した。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:高 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -5645,10 +5860,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">freeeはChatGPT向けアプリ「freee確定申告」を開始し、税理士が回答した1万件以上の相談例から最適なテキスト情報を抽出して提示する。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -5721,10 +5939,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ソフトバンクは米国の半導体設計企業Ampere ComputingとGPUを活用したAIモデルの運用効率化に向けた共同検証を開始した。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -5797,10 +6018,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">野村證券、大和証券と3メガバンクが、ブロックチェーンやデジタルマネーを活用して株式・国債の取引・決済を高度化する実証実験を行い、金融庁の支援案件に採択された。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:高 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -5873,12 +6097,15 @@
             
           </div>
 
+          
+            <div class="summary-preview">フィリップ・モリス・ジャパンがIQOS用タバコスティック『テリア』『センティア』と紙巻たばこ『マールボロ』の値上げを4月1日に実施することを財務省から認可された…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
-                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:高 / カテゴリ重み:高 / 関連:1タグ</div>
+                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
                 <div><strong>要約</strong>：フィリップ・モリス・ジャパンがIQOS用タバコスティック『テリア』『センティア』と紙巻たばこ『マールボロ』の値上げを4月1日に実施することを財務省から認可されたと発表した。</div>
 
@@ -5949,12 +6176,15 @@
             
           </div>
 
+          
+            <div class="summary-preview">スターバックス コーヒー ジャパンは、地上150mに位置する日本一高い場所にある「スターバックス リザーブ カフェ東京スカイツリータウン30F店」を3月10日に…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
-                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:高 / カテゴリ重み:高 / 関連:1タグ</div>
+                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
                 <div><strong>要約</strong>：スターバックス コーヒー ジャパンは、地上150mに位置する日本一高い場所にある「スターバックス リザーブ カフェ東京スカイツリータウン30F店」を3月10日にオープンした。</div>
 
@@ -6025,12 +6255,15 @@
             
           </div>
 
+          
+            <div class="summary-preview">沖縄都市モノレールとJR東日本は、2027年春以降に「モバイルSuica」でゆいレールの定期券を発売することを発表した。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
-                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:高 / カテゴリ重み:高 / 関連:1タグ</div>
+                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
                 <div><strong>要約</strong>：沖縄都市モノレールとJR東日本は、2027年春以降に「モバイルSuica」でゆいレールの定期券を発売することを発表した。</div>
 
@@ -6101,10 +6334,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">NTTドコモがAmazon新生活セール期間中に、dポイントを20%還元するキャンペーンを実施し、参加にはキャンペーンサイトからのエントリーが必要である。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6177,10 +6413,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">阪急阪神ホールディングスと阪急阪神カードが池田泉州銀行と提携し、2027年以降にネット銀行サービス「(仮称)Hankyu Hanshin cross BANK」…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6253,10 +6492,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">KDDI新宿ビルの社員専用フロアに、ローソンが「Real×Tech LAWSON」実験店舗を開店し、24時間営業でネットワーク保守・運用部門の従業員が利用できる…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6329,10 +6571,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">寺岡精工が5月にフルセルフレジ向け計量器搭載システム「はかりセルフ」を発売し、重量で商品スキャンミスや不正をチェックすることでパック商品のスキャン飛ばしを防止す…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6405,10 +6650,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">JR東日本が千葉県内の久留里線で、祇園~久留里間の各駅にSuica利用エリアを2027年春に拡大する。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6481,10 +6729,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">JR東日本は千葉・久留里線の一部区間を廃止する予定で、代替交通に20億円を拠出する。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6559,10 +6810,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">アップルは17日、新しいビデオポッドキャスト体験の仕組みを発表し、2026年春から導入予定である。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6635,10 +6889,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">エースはプロテカブランドから国産トラベルバッグシリーズ『スターボード』を銀座三越で2月16日に先行発売し、3月中旬以降に直営店・オンラインストア・一部百貨店へ順…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6711,10 +6968,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">筆者は毎月の経費精算を行っておらず、領収書整理に手間がかかり精神的負担も大きいと述べている。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6787,10 +7047,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">JIS C 60529 が2026年1月20日に制定され、IPX9という高圧・高温水噴流に対する保護等級が追加された。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6863,10 +7126,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Googleは「Google マップ」にGeminiを活用した新機能「この場所のヒント」を追加し、口コミの要約や目的地情報の検索を容易にするとともに、ニックネー…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -6939,10 +7205,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">SwitchBotは物理スイッチを遠隔で押すロボットの充電式バッテリー版「BotCharge」を5,480円で販売開始し、2月16日から予約が可能、3月9日まで…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7015,10 +7284,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">JR西日本とスペイシーが統合したスペース予約サービス「Yoyappin」を3月から全国約14,000カ所で提供開始する。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7091,10 +7363,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">JCBは2024年2月16日に、年間ショッピング利用金額が500万円以上のJCBプラチナ会員とJCBザ・クラス会員を対象に、MyJCBアプリのデジタルコンシェル…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7167,10 +7442,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">BASEGATE横浜関内は、JR関内駅前に位置し、3月19日にオープン予定の複合施設である。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7243,10 +7521,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">LINEヤフーがLINEミニアプリとして「Yahoo!天気・災害」を提供開始した。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7319,10 +7600,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">テレビ朝日が臨海副都心有明南地区に建設した複合型エンタテインメント施設「TOKYO DREAM PARK」の竣工式を2月13日に行い、開業は3月27日とする。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7395,10 +7679,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">auが月額190円からのスマホ保険を2月16日に販売開始し、故障や画面割れに対して最大5万円まで補償される。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7471,10 +7758,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ファミリーマートは「ファミペイ」アプリとデジタルサイネージを連携させたメディアコマース戦略を展開し、現在のメディア・広告関連売上高は約150億円で、2030年度…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7547,10 +7837,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">OpenAIは、AIエージェント「OpenClaw」の開発者ピーター・シュタインベルガー氏を迎え入れ、彼が次世代パーソナルエージェントの開発を推進する。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7623,10 +7916,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Oura Ring 4 Ceramic がオンラインで販売開始され、Amazon公式ストア・ビックカメラ・ヨドバシカメラ・ヤマダデンキで価格74,800円で購入…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7699,10 +7995,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">オリコカーライフがカーリースサービス「SOMPOで乗ーる」の名称を4月1日から「オリコで乗ーる」へ変更した。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=50 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7777,10 +8076,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Apple Vision ProでYouTubeがネイティブに利用できるようになり、App Storeから「YouTube for visionOS」をダウンロ…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7853,10 +8155,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ロッテリアは2月16日付で社名を『バーガー・ワン』に変更した。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -7929,10 +8234,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">無印良品が京都市東山区清水に地域体験型宿泊施設「MUJI BASE KYOTO kiyomizu」を5月20日にオープンし、宿泊料金は1泊1室20,600円から…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -8005,10 +8313,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">2024年1月下旬から2月上旬にかけて、株式市場でSaaS関連企業やソフトウェア企業の株価が急落し、Microsoft、Salesforce、Adobe、Wor…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -8081,10 +8392,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">損害保険ジャパンが自動車事故連絡システム「SOMPOあんしん事故連絡」を開始し、GPSで正確な事故現場情報とスマートフォン撮影の写真をアップロードできる機能を提…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -8157,10 +8471,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ソニーがBlu‐rayレコーダーの終売を発表した。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -8235,10 +8552,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">LINEヤフーは、飲食・理美容業界向けに「LINEレストランプラス」と「LINEビューティープラス」を6月から開始し、LINE公式アカウントを予約・注文・顧客管…</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -8311,10 +8631,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">東京・京橋のアーティゾン美術館で、モネ没後100年を記念した「クロード・モネ —風景への問いかけ」展が2月7日に開幕し、会期は5月24日まで。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -8387,10 +8710,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">パイロットコーポレーションが「消せる」インキと「消えない」インキを1本に搭載した多機能筆記具『フリクションボールスイッチ』を3月5日に880円で発売する。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=10 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -8463,10 +8789,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">黒板消しクリーナーを購入し、画面掃除用に使用することにした。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=10 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -8539,10 +8868,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">無印良品が2月18日に折りたたみ式高さ調整枕(価格3,990円)と寝返りを受け止める低め枕(価格6,990円)の発売を発表した。</div>
+          
           <div class="mini">Impress Watch (INTERNET Watch)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=10 / 速報性:低 / カテゴリ重み:高 / 関連:1タグ</div>
 
@@ -8615,10 +8947,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">バッファローのドッキングステーション「LUD-U3-CGC」がAmazon.co.jpで4400円にてセール中で、4K映像出力と85W電源供給、無制限LAN接続…</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -8693,10 +9028,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">GoogleはAppleのVision Pro向けに公式YouTubeアプリをリリースした。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -8771,10 +9109,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">YouTubeで動画のコメントや説明が消える現象が報告されている。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -8847,10 +9188,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Amazon.co.jpのPHILIPSストアで、USB Type‐C充電式LED懐中電灯「SFL5806」が5990円にタイムセール中です。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -8923,10 +9267,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">サンワサプライがUSB Type-Cから有線LANに変換できるCAT6対応メッシュケーブル「500-LAN6KCSL」シリーズを発売した。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -8999,10 +9346,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">サンワサプライ株式会社が光ファイバーテスター用ライトソース「LAN-HTST-LS01」を4万8180円で発売した。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9075,10 +9425,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ライラ・イブラヒム氏は旧ディープマインドで初代COOを務め、2023年の組織改編で融合に奔走し、2026年1月には最高AI準備責任者に就任した。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9151,10 +9504,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Google DeepMindは日本に拠点を持ち、国内企業と連携してAIモデル開発や基礎研究を進めており、ウェザーニューズとの協業で台風の進路予測精度向上に寄与…</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9227,10 +9583,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Google DeepMindはヒューマノイドロボットを操るAIモデル「VLA(Vision-Language-Action)」を外部に提供している。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9303,10 +9662,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Google DeepMindのAI「AlphaFold」がタンパク質の立体構造を短時間で予測できるようにした。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9381,10 +9743,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">株式会社オプティムは2月13日にDX・AXサービスプラットフォーム「OPTiM AIR(OPTiM AI IoT Robotics Platform)」を発表し…</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9457,10 +9822,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">社会の仕組みを情報システムとして捉え、AI時代でも人間中心に考えるべきだと主張した。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=75 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9533,10 +9901,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">米グーグルはAI競争で劣勢だったが、Google DeepMind(GDM)の活躍により再び勢いを取り戻した。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9611,10 +9982,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">IDOMがSalesforce上で顧客接点システムを開発し、年数十万件の商談を一元管理して成約率向上を目指す。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9687,10 +10061,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">田中慎司氏は4社でCTOを務め、現在弁護士ドットコムのCTOとして法律家向けAI実装とシステム開発プロセスへのAI適用に取り組んでいる。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9763,10 +10140,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">前週に閲覧数の多かった記事を、カテゴリーごとに上位5位までレポートする。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=45 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9841,10 +10221,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">日本シーゲイト株式会社は、2026年2月24日に東京国際フォーラムでSeagate Solution Day 2026を開催し、13時から17時までの無料イベン…</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9917,10 +10300,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">オプテージのeo光コンタクトセンターは、怒りの心理研修とサポート技術競技会を実施し、国内最高クラスの満足度を達成している。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -9997,10 +10383,11 @@
             
           </div>
 
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:中 / カテゴリ重み:中 / 関連:3タグ</div>
 
@@ -10042,10 +10429,11 @@
             
           </div>
 
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:中 / カテゴリ重み:中 / 関連:3タグ</div>
 
@@ -10087,10 +10475,11 @@
             
           </div>
 
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:中 / カテゴリ重み:中 / 関連:3タグ</div>
 
@@ -10132,10 +10521,11 @@
             
           </div>
 
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:中 / カテゴリ重み:中 / 関連:3タグ</div>
 
@@ -10177,10 +10567,11 @@
             
           </div>
 
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:中 / カテゴリ重み:中 / 関連:3タグ</div>
 
@@ -10222,10 +10613,11 @@
             
           </div>
 
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:中 / カテゴリ重み:中 / 関連:3タグ</div>
 
@@ -10267,10 +10659,11 @@
             
           </div>
 
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:中 / カテゴリ重み:中 / 関連:3タグ</div>
 
@@ -10312,10 +10705,11 @@
             
           </div>
 
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:中 / カテゴリ重み:中 / 関連:3タグ</div>
 
@@ -10353,10 +10747,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">日立製作所がストレージ事業の売却を検討していると米ブルームバーグが報じ、同社株は前日比6%上昇した。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -10429,10 +10826,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">半導体産業への投資や研究開発が重要視され、スピントロニクス・ダイヤモンド半導体・AI活用半導体設計が注目を集めている。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=78 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -10505,10 +10905,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">記事ではサイバー攻撃の予兆と痕跡を表す用語IoC(Indicator of Compromise)とIoA(Indicator of Attack)の違いについ…</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -10581,10 +10984,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">AMDは米国時間2026年2月4日に、TSMCの16nmプロセスで製造されるミッドレンジFPGAを発表した。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -10657,10 +11063,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">e-Taxで確定申告を行い税金還付を受ける際は、まずマイナンバーカードの有効期限を確認する必要がある。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -10733,10 +11142,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">パソコンやスマートフォンを紛失すると、悪用やデータ流出のリスクがある。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -10809,10 +11221,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">AI開発チームを立ち上げる際、最初に整備すべきは情報収集の仕組みである。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -10885,10 +11300,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Qualcommは、6G時代において次世代MIMO技術とSBFD(サブバンド全二重)が重要であると述べている。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -10961,10 +11379,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ルノーは韓国で新型クロスオーバー車「Filante」を発表し、HEVを採用した高級Eセグメント車として欧州以外の市場向けに生産することを示した。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11037,10 +11458,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">日本ブランドの人型ロボットが建築現場や工場への導入を目指し、騒音環境でもジェスチャーで指令できるように設計されている。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11113,10 +11537,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ラピダス小池社長が600mm角基板を披露し、『これを見せたかった』と語った記事が20代以下会員向けランキングの4位に入った。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11189,10 +11616,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">防衛省が車両搭載型10kW級と電気駆動型100kW級の高出力レーザーを開発中で、ドローン迎撃に転換点となりつつある。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11267,10 +11697,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">AIサーバーの容量増加に伴い、電力供給を支える電子部品の技術動向が重要である。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11343,10 +11776,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ルネサスエレクトロニクスが出資するインドの半導体後工程工場で2026年9月に商用生産が開始される。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11419,10 +11855,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ナスタは、複数個の荷物を受け取れる戸建て住宅向けの宅配ボックス「Nasta Box +」を2025年12月に発売した。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11495,10 +11934,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ヨルダン中央銀行が、将来の量子コンピュータによるサイバーリスクに備えて、国内の銀行と金融機関を対象に耐量子暗号への移行ロードマップを策定した。</div>
+          
           <div class="mini">NIKKEI TECH</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:中 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11573,10 +12015,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ASAHIネットは2025年12月からフレッツ光クロス/Biz向けにIPv4 over IPv6接続(IPIP)を利用した固定IPアドレスオプションサービスを開…</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11649,10 +12094,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">マネーフォワードが実施した確定申告とAI活用に関する意識調査では、20代以上1071人の回答者のうち約60%がAIを活用すれば精神的負担を軽減できると期待してい…</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11725,10 +12173,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Amazon.comで期間限定にKindle Oasisが再入荷され、即完売した。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11803,10 +12254,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">iPhone 11 Proの内蔵バッテリーを10000 mAhに換装する動画が海外掲示板で話題になっている。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11879,10 +12333,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Amazon.co.jpのAGFストアでスティックタイプのインスタントコーヒーがセール中です。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -11955,10 +12412,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">日本医科大学武蔵小杉病院が2月13日にランサムウェア攻撃を受け、医療情報システムの一部で障害が発生し、約1万人分の患者個人情報が漏えいしたと発表した。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -12031,10 +12491,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">JVCケンウッドのワイヤレスイヤホン「HA‐NP35T」がAmazonで6980円にセール中です。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -12107,10 +12570,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">弥生株式会社が2026年版個人事業主向け確定申告課題調査を実施し、回答者の多くが「面倒」「難しい」「不安」と感じていることが明らかになった。</div>
+          
           <div class="mini">INTERNET Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:中 / 関連:1タグ</div>
 
@@ -12183,10 +12649,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">WindowsからOpenWrtを搭載したルーターへ接続できる「OpenWrt Connect」v1.0.0がリリースされた。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12259,10 +12728,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Google マップにGeminiが店舗の詳細情報を調査・要約し、レビュー専用のプロフィール設定も可能になった。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12335,10 +12807,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Microsoft が Rufus をブロックし、Windows の ISO イメージダウンロード機能でエラーが発生したという報告がある。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12411,10 +12886,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Thunderbird に1件の脆弱性が報告され、修正版 v147.0.2 が公開された。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12487,10 +12965,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">東芝のアルカリ乾電池、充電池、ボタン/コイン電池がAmazonで安く販売されており、単1〜単4常備セットは15%OFFとなっている。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12563,10 +13044,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Vim 9.2 がリリースされ、Vim9 スクリプトの言語機能が拡充され、補完・ハイライトが改善された。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12639,10 +13123,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Firefox 147.0.4 が公開され、libvpx のヒープバッファーオーバーフローと新規タブページが空になる問題を修正した。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12715,10 +13202,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">IBM Plexフォントファミリーにセリフ体のバリアブル(可変)フォント版が登場し、重み軸は100から700まで設定可能である。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12791,10 +13281,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">AIが外部データと直接つながる『MCP』という技術について紹介されている。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12867,10 +13360,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">高速リモートデスクトップソフト「Brynhildr Free」の最新版v3.4.0が2月11日に公開され、Webブラウザ接続の通信難読化と画質低下廃止により初回…</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -12943,10 +13439,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Excelシート・ファイルを比較して差分を抽出できる「ii-exsh-diff-pro」v1.00がリリースされた。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13019,10 +13518,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Microsoftが新たに「Microsoft Store CLI」を公開し、ターミナルからストアのアプリを検索・導入・更新できるようになった。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13095,10 +13597,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">クラシック版Outlookで送信メールの一部非ASCII記号が「?」に置き換わる不具合が報告され、Microsoftは回避策を案内した。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13171,10 +13676,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">定番の圧縮・解凍ツール「Explzh」の開発者である鬼束裕之氏が亡くなった。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13247,10 +13755,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">『婚活迷宮をさまよっていたら、真実の愛にたどりつけました』というコミックエッセイが発売された。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13323,10 +13834,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Minecraftが26.0バージョンをリリースし、バージョン番号の表記がわかりやすくなった。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13399,10 +13913,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Google ドライブの仕様変更により、WordやExcelファイルを編集モードで開くとパスワードが外れる可能性がある。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13475,10 +13992,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">UGREENのタブレット・ノートPCスタンドがAmazonでセール中で、価格が安く販売されている。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13551,10 +14071,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">レトルトカレーの定番「ボンカレー」がAmazonでセール中です。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13627,10 +14150,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Android 17のベータ版が初リリースされ、パフォーマンス向上やVVC(H.266)サポート、大画面デバイス対応などが追加された。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13703,10 +14229,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">窓の杜が2月16日からGIMP、Zoom、Control Panel for Twitterなどを収録ソフトに追加した。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=65 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13779,10 +14308,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Excelで判定結果を画像化し、資料の視覚的な印象を向上させるテクニックが紹介されている。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13855,10 +14387,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">Google Chrome 145にゼロデイ脆弱性が発見され、緊急修正版が公開された。</div>
+          
           <div class="mini">Forest Watch</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -13915,13 +14450,13 @@
     </div>
   </section>
   
-  <section class="category-section" id="cat-global">
+  <section class="category-section" id="cat-global" role="region" aria-label="🌍 世界ニュース">
     <div class="category-header">
       <h2>
         🌍 世界ニュース
         <span class="badge">30</span>
         
-          <span class="badge">+44/48h</span>
+          <span class="badge">+43/48h</span>
         
       </h2>
       <button class="btn" type="button" onclick="toggleCat('global')">表示切替</button>
@@ -13951,10 +14486,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ロシアとウクライナの代表団が戦争終結を目指し第三回交渉に臨む。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14027,10 +14565,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">トランプ大統領はイランが合意を望んでいると考えており、テヘラン側は米国がより現実的な姿勢に移行していると見ている。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14105,10 +14646,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">スペインのアパートで上階にて火災が発生し、若者5人が死亡した。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14181,10 +14725,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">キングの弟子が米国再形成に貢献し、彼の影響力は深い南部の教会からホワイトハウスまで広がった。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14257,10 +14804,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">元NRL選手マット・ウタイがシドニー郊外で自宅の外を撃たれ、重体に転落した。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14333,10 +14883,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">世界中で数百万人が旧正月の始まりを祝っている。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14409,10 +14962,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ヒラリー・クリントン氏はBBCインタビューで、トランプ政権がエプスタイン被告に関するファイルを隠蔽していると非難した。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:高 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14485,10 +15041,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ハイアットホテルの会長がジェフリー・エプスタインとの関係を理由に辞任した。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14563,10 +15122,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">FBI は収集した証拠を引き渡さないとミネソタ州の刑事捜査局が語った。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14643,10 +15205,11 @@
             
           </div>
 
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=0 / 速報性:中 / カテゴリ重み:低 / 関連:3タグ</div>
 
@@ -14684,10 +15247,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ウクライナでは、人口減少に対処するため、兵士が卵子または精子を凍結できるよう法律で費用を支払う制度が設けられている。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14762,10 +15328,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">FBIは、ガスリー容疑者のビデオに一致すると考えられるDNAサンプルを、ガースリー家から数マイル離れたフィールドで発見された手袋から回収した。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14840,10 +15409,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">中国は、パンダの返還と観光客向け航空便のキャンセルを実施し、高市首相が台湾に関して発言したことへの報復として行動している。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14916,10 +15488,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ダークウェブエージェントが被害少女の寝室壁に残された手がかりを解析し、12歳の少女を救出した。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=85 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -14992,10 +15567,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">イスラム国に家族関係を持つ34人の女性と子どもが、ロイジャムキャンプで約7年間拘束されていた。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15070,10 +15648,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">『ゴッドファーザー』主演の俳優ロバート・デュバル氏が、95歳でヴァージニア州ミドルバーグにある自宅で静かに亡くなった。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15146,10 +15727,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ロバート・デュバルは『Apocalypse Now』と『The Godfather』を含む多くの映画に出演した俳優である。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15224,10 +15808,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">米国の航空母艦USS Abraham Lincolnがイラン付近に位置していることをBBC Verifyが確認した。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15301,10 +15888,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">古代の骨が、ハンニバル将軍が戦闘で象を使用したという最初の確固たる証拠となり得る。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15377,10 +15967,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">イタリア北部の町で、カーニバルの一環として毎年オレンジを投げ合う「Battle of the Oranges」が開催されている。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15453,10 +16046,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">列車が脱線し、乗客の一人が病院に搬送された。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15530,12 +16126,15 @@
             
           </div>
 
+          
+            <div class="summary-preview">ナワリヌイ氏の母親、リュドミラ・ナヴァルニャヤは息子が刑務所で単に死亡したわけではないと語った。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
-                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
+                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
                 <div><strong>要約</strong>：ナワリヌイ氏の母親、リュドミラ・ナヴァルニャヤは息子が刑務所で単に死亡したわけではないと語った。</div>
 
@@ -15606,12 +16205,15 @@
             
           </div>
 
+          
+            <div class="summary-preview">NGOは米国の圧力にもかかわらず、ベネズエラで何百人もの政治犯がまだ投獄されていると主張している。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
-                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:中 / カテゴリ重み:低 / 関連:1タグ</div>
+                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
                 <div><strong>要約</strong>：NGOは米国の圧力にもかかわらず、ベネズエラで何百人もの政治犯がまだ投獄されていると主張している。</div>
 
@@ -15683,10 +16285,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ケニアの労働争議により国際空港でフライトが遅延し、当局は対策を講じた。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15759,10 +16364,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">リオのカーニバルパレードが、貧困から権力へ上り詰めたブラジル大統領ルラへの追悼で始まった。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=75 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15836,10 +16444,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">バイトダンスのAIビデオアプリSeedanceが、ディズニーの知的財産を使用した動画で法的脅迫を受けた。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15912,10 +16523,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">ナイジェリア政府は、ウクライナで死亡した市民を含む海外戦闘への違法な募集が増加していると警告した。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=70 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -15988,10 +16602,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">米国大統領はベネズエラの原油採掘をアメリカ企業に開始させたいと考えているが、企業は消極的である。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=60 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -16066,10 +16683,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">アレクセイ・ナワリヌイ氏の殺害に使用されたとされるヤドクガエルの毒は、エピバチジンである。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 
@@ -16142,10 +16762,13 @@
             
           </div>
 
+          
+            <div class="summary-preview">24歳の被告が、15件の殺人罪と1件のテロ攻撃罪を含む59件の起訴状に直面している。</div>
+          
           <div class="mini">BBC World (Global)</div>
 
            
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：importance=80 / 速報性:低 / カテゴリ重み:低 / 関連:1タグ</div>
 

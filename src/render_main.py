@@ -440,17 +440,20 @@ HTML = r"""
     <div class="small" style="margin-top:10px">
       <span class="badge">Tags</span>
 
-      <div id="tagBar" class="tag-bar collapsed" style="margin-top:6px">
+      <div id="tagBar" class="tag-bar collapsed" role="toolbar" aria-label="タグフィルタ" style="margin-top:6px">
         <button class="btn btn-reset" type="button" onclick="clearTagFilter()">🔄 リセット</button>
 
         <label class="small tag-mode">
           <input type="checkbox" id="tagModeOr"> OR（どれか）
         </label>
 
-        {% for tg, cnt in tag_list %}
-          <button class="btn" type="button" data-tag-btn="{{ tg }}" onclick="toggleTag('{{ tg }}')">
-            {{ tg }} ({{ cnt }})
-          </button>
+        {% for group_name, group_tags in tag_groups %}
+          <span class="tag-group-label">{{ group_name }}</span>
+          {% for tg, cnt in group_tags %}
+            <button class="btn" type="button" data-tag-btn="{{ tg }}" onclick="toggleTag('{{ tg }}')">
+              {{ tg }} ({{ cnt }})
+            </button>
+          {% endfor %}
         {% endfor %}
       </div>
 
@@ -465,6 +468,7 @@ HTML = r"""
         <select id="sortKey">
           <option value="date">日付</option>
           <option value="importance">重要度</option>
+          <option value="composite">重要度×新着</option>
         </select>
       </label>
 
@@ -475,7 +479,7 @@ HTML = r"""
         </select>
       </label>
 
-      <button class="btn" type="button" onclick="applySort()">適用</button>
+      <button class="btn" type="button" onclick="applySort()" aria-label="ソートを適用">適用</button>
 
     </div>
     <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
@@ -567,9 +571,14 @@ HTML = r"""
 
     <div class="layout-with-sidebar-content">
     {% for cat in categories %}
-  <section class="category-section" id="cat-{{ cat.id }}">
+  <section class="category-section" id="cat-{{ cat.id }}" role="region" aria-label="{{ cat.name }}">
     <div class="category-header">
       <h2 style="margin:0">{{ cat.name }} <span class="tag">{{ cat.id }}</span></h2>
+      {% if cat.id in news_link_map %}
+        <a class="btn small" href="./news/index.html#cat-{{ news_link_map[cat.id][0] }}" style="font-size:12px;">
+          → {{ news_link_map[cat.id][1] }}
+        </a>
+      {% endif %}
       <button class="btn" type="button" onclick="toggleCat('{{ cat.id }}')">表示切替</button>
     </div>
 
@@ -638,8 +647,13 @@ HTML = r"""
               {% endif %}
             </div>
 
+            {% if t.summary %}
+              <div class="summary-preview">{{ t.summary[:80] }}{% if t.summary|length > 80 %}…{% endif %}</div>
+            {% endif %}
+            {% if t.source %}<div class="mini">{{ t.source }}</div>{% endif %}
+
             {% if t.summary or (t.key_points and t.key_points|length>0) or (t.perspectives) or (t.evidence_urls and t.evidence_urls|length>0) %}
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
 
                 {% if t.summary %}
@@ -708,10 +722,10 @@ HTML = r"""
                 {% endif %}
 
                 {% if t.evidence_urls and t.evidence_urls|length>0 %}
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
+                  <div class="evidence-urls" style="margin-top:6px;">
+                    <strong>根拠</strong>：
                     {% for u in t.evidence_urls %}
-                      <a href="{{ u }}" target="_blank" rel="noopener">{{ u }}</a>{% if not loop.last %}, {% endif %}
+                      <a href="{{ u }}" target="_blank" rel="noopener">{{ u|truncate(60, True) }}</a>{% if not loop.last %} | {% endif %}
                     {% endfor %}
                   </div>
                 {% endif %}
@@ -834,6 +848,7 @@ NEWS_HTML = r"""
         <select id="sortKey">
           <option value="date">日付</option>
           <option value="importance">重要度</option>
+          <option value="composite">重要度×新着</option>
         </select>
       </label>
 
@@ -844,7 +859,7 @@ NEWS_HTML = r"""
         </select>
       </label>
 
-      <button class="btn" type="button" onclick="applySort()">適用</button>
+      <button class="btn" type="button" onclick="applySort()" aria-label="ソートを適用">適用</button>
 
     </div>
     <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
@@ -853,7 +868,7 @@ NEWS_HTML = r"""
 
   <!-- techと同じ：カテゴリ（折りたたみ） -->
  {% for sec in sections %}
-  <section class="category-section" id="cat-{{ sec.anchor }}">
+  <section class="category-section" id="cat-{{ sec.anchor }}" role="region" aria-label="{{ sec.title }}">
     <div class="category-header">
       <h2>
         {{ sec.title }}
@@ -889,10 +904,13 @@ NEWS_HTML = r"""
             {% endif %}
           </div>
 
+          {% if it.summary %}
+            <div class="summary-preview">{{ it.summary[:80] }}{% if it.summary|length > 80 %}…{% endif %}</div>
+          {% endif %}
           {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
 
            {% if it.importance_basis or it.summary or (it.key_points and it.key_points|length>0) or (it.perspectives and (it.perspectives.engineer or it.perspectives.management or it.perspectives.consumer)) %}
-              <details class="insight">
+              <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
 
@@ -957,7 +975,10 @@ NEWS_HTML = r"""
                       <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
                       <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a>
                       <span class="date">{{ it.dt_jst }}</span>
-                      <details class="insight">
+                      {% if it.summary %}
+                        <div class="summary-preview">{{ it.summary[:80] }}{% if it.summary|length > 80 %}…{% endif %}</div>
+                      {% endif %}
+                      <details class="insight" role="group">
                         <summary class="small">要約・解説を表示</summary>
                         {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
                         <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
@@ -2628,7 +2649,7 @@ def main():
     # 48h cutoff（UTCでSQLite互換の "YYYY-MM-DD HH:MM:SS"）
     cutoff_48h = (datetime.now(timezone.utc) - timedelta(hours=48)).strftime("%Y-%m-%d %H:%M:%S")
 
-    LIMIT_PER_CAT = 20
+    LIMIT_PER_CAT = 15
     HOT_TOP_N = 5
 
     for cat in tech_categories:
@@ -2786,6 +2807,18 @@ def main():
                       JOIN articles a3 ON a3.id = ta3.article_id
                       WHERE ta3.topic_id = t.id
                     ) AS recent,
+                  (
+                      SELECT a2.source
+                      FROM topic_articles ta2
+                      JOIN articles a2 ON a2.id = ta2.article_id
+                      WHERE ta2.topic_id = t.id
+                      ORDER BY
+                          CASE WHEN COALESCE(NULLIF(a2.content,''), '') != '' THEN 0 ELSE 1 END,
+                          datetime(a2.fetched_at) DESC,
+                          datetime(COALESCE(NULLIF(a2.published_at,''), a2.fetched_at)) DESC,
+                          a2.url ASC
+                      LIMIT 1
+                    ) AS source,
                   i.importance,
                   i.summary,
                   i.key_points,
@@ -2865,6 +2898,18 @@ def main():
                       JOIN articles a3 ON a3.id = ta3.article_id
                       WHERE ta3.topic_id = t.id
                     ) AS recent,
+                  (
+                      SELECT a2.source
+                      FROM topic_articles ta2
+                      JOIN articles a2 ON a2.id = ta2.article_id
+                      WHERE ta2.topic_id = t.id
+                      ORDER BY
+                          CASE WHEN COALESCE(NULLIF(a2.content,''), '') != '' THEN 0 ELSE 1 END,
+                          datetime(a2.fetched_at) DESC,
+                          datetime(COALESCE(NULLIF(a2.published_at,''), a2.fetched_at)) DESC,
+                          a2.url ASC
+                      LIMIT 1
+                    ) AS source,
 
                   i.importance,
                   i.summary,
@@ -2896,7 +2941,7 @@ def main():
         rows = cur.fetchall()
         items: List[Dict[str, Any]] = []
         for r in rows:
-            tid, title, url, article_date, recent, importance, summary, key_points, evidence_urls, tags, perspectives = r
+            tid, title, url, article_date, recent, source, importance, summary, key_points, evidence_urls, tags, perspectives = r
             items.append(
                 {
                     "id": tid,
@@ -2904,6 +2949,7 @@ def main():
                     "url": url or "#",
                     "date": article_date,
                     "recent": int(recent or 0),
+                    "source": source or "",
                     "importance": int(importance) if importance is not None else None,
                     "summary": summary or "",
                     "key_points": _safe_json_list(key_points),
@@ -2986,6 +3032,18 @@ def main():
                       JOIN articles a3 ON a3.id = ta3.article_id
                       WHERE ta3.topic_id = t.id
                     ) AS recent,
+                  (
+                      SELECT a2.source
+                      FROM topic_articles ta2
+                      JOIN articles a2 ON a2.id = ta2.article_id
+                      WHERE ta2.topic_id = t.id
+                      ORDER BY
+                          CASE WHEN COALESCE(NULLIF(a2.content,''), '') != '' THEN 0 ELSE 1 END,
+                          datetime(a2.fetched_at) DESC,
+                          datetime(COALESCE(NULLIF(a2.published_at,''), a2.fetched_at)) DESC,
+                          a2.url ASC
+                      LIMIT 1
+                    ) AS source,
                   i.importance,
                   i.summary,
                   i.key_points,
@@ -3060,6 +3118,18 @@ def main():
                       JOIN articles a3 ON a3.id = ta3.article_id
                       WHERE ta3.topic_id = t.id
                     ) AS recent,
+                  (
+                      SELECT a2.source
+                      FROM topic_articles ta2
+                      JOIN articles a2 ON a2.id = ta2.article_id
+                      WHERE ta2.topic_id = t.id
+                      ORDER BY
+                          CASE WHEN COALESCE(NULLIF(a2.content,''), '') != '' THEN 0 ELSE 1 END,
+                          datetime(a2.fetched_at) DESC,
+                          datetime(COALESCE(NULLIF(a2.published_at,''), a2.fetched_at)) DESC,
+                          a2.url ASC
+                      LIMIT 1
+                    ) AS source,
                   i.importance,
                   i.summary,
                   i.key_points,
@@ -3083,7 +3153,7 @@ def main():
 
             cur.execute(sql_missing, params)
             for r in cur.fetchall():
-                tid, title, url, article_date, recent, importance, summary, key_points, evidence_urls, tags, perspectives = r
+                tid, title, url, article_date, recent, source, importance, summary, key_points, evidence_urls, tags, perspectives = r
                 items.append(
                     {
                         "id": tid,
@@ -3091,6 +3161,7 @@ def main():
                         "url": url or "#",
                         "date": article_date,
                         "recent": int(recent or 0),
+                        "source": source or "",
                         "importance": int(importance) if importance is not None else None,
                         "summary": summary or "",
                         "key_points": _safe_json_list(key_points),
@@ -3121,6 +3192,13 @@ def main():
         # ===== A: 確実対応ここまで =====
 
 
+        # 改善3: importance が None かつ recent=0 の記事を除外（ファイルサイズ最適化）
+        hot_set_for_filter = {x["id"] for x in hot_by_cat.get(cat_id, [])}
+        items = [
+            it for it in items
+            if it["importance"] is not None or it["recent"] > 0 or it["id"] in hot_set_for_filter
+        ]
+
         topics_by_cat[cat_id] = items
 
     all_tags = {}
@@ -3129,6 +3207,30 @@ def main():
             for tg in (t.get("tags") or []):
                 all_tags[tg] = all_tags.get(tg, 0) + 1
     tag_list = sorted(all_tags.items(), key=lambda x: (-x[1], x[0]))[:50]  # 上位50など
+
+    # 改善4: タグをグループに分類
+    TAG_GROUPS = {
+        "技術": {"ai", "ml", "llm", "cloud", "api", "docker", "kubernetes", "devops", "cicd",
+                 "database", "network", "linux", "python", "rust", "go", "java", "typescript",
+                 "frontend", "backend", "performance", "compute", "gpu", "semiconductor", "hardware"},
+        "セキュリティ": {"security", "vulnerability", "patch", "patch_window", "ransomware",
+                         "authentication", "encryption", "privacy", "zero-day", "malware", "firewall"},
+        "ビジネス": {"market", "investment", "regulation", "supply_chain", "price", "earnings",
+                     "partnership", "strategy", "governance", "compliance"},
+    }
+    tag_dict = dict(tag_list)
+    grouped: dict = {g: [] for g in TAG_GROUPS}
+    grouped["その他"] = []
+    for tg, cnt in tag_list:
+        placed = False
+        for g, members in TAG_GROUPS.items():
+            if tg in members:
+                grouped[g].append((tg, cnt))
+                placed = True
+                break
+        if not placed:
+            grouped["その他"].append((tg, cnt))
+    tag_groups = [(g, tags) for g, tags in grouped.items() if tags]
     # --- UX改善①: 上部サマリー用meta ---
     runtime_sec = int(os.environ.get("RUNTIME_SEC", "0") or "0")
 
@@ -3793,7 +3895,14 @@ def main():
             "date": article_date,
         })
 
-    
+    # 改善5: テック→ニュース相互リンク用マップ
+    NEWS_LINK_MAP = {
+        "manufacturing": ("manufacturing", "製造業ニュース"),
+        "security": ("security", "セキュリティニュース"),
+        "system": ("policy", "政策・規制ニュース"),
+        "dev": ("company", "企業動向ニュース"),
+    }
+
     # 生成日時（JST）
     generated_at = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M:%S JST")
     meta["generated_at_jst"] = generated_at
@@ -3822,6 +3931,8 @@ def main():
         market_top=market_top,
         market_trending_top=market_trending_top,
         tag_list=tag_list,
+        tag_groups=tag_groups,
+        news_link_map=NEWS_LINK_MAP,
         source_exposure=source_exposure,
         primary_ratio_by_category=primary_ratio_by_category,
         primary_ratio_threshold=primary_ratio_threshold,
@@ -3846,6 +3957,8 @@ def main():
         market_top=market_top,
         market_trending_top=market_trending_top,
         tag_list=tag_list,
+        tag_groups=tag_groups,
+        news_link_map=NEWS_LINK_MAP,
         source_exposure=source_exposure,
         primary_ratio_by_category=primary_ratio_by_category,
         primary_ratio_threshold=primary_ratio_threshold,

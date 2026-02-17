@@ -106,8 +106,17 @@
     for (const list of lists){
       const items = [...list.querySelectorAll(':scope > li.topic-row')];
       items.sort((a,b) => {
-        const av = key === 'importance' ? (parseInt(a.dataset.imp || '0', 10) || 0) : parseDateValue(a.dataset.date);
-        const bv = key === 'importance' ? (parseInt(b.dataset.imp || '0', 10) || 0) : parseDateValue(b.dataset.date);
+        let av, bv;
+        if (key === 'composite') {
+          av = (parseInt(a.dataset.imp || '0', 10) || 0) + (parseInt(a.dataset.recent || '0', 10) || 0) * 10;
+          bv = (parseInt(b.dataset.imp || '0', 10) || 0) + (parseInt(b.dataset.recent || '0', 10) || 0) * 10;
+        } else if (key === 'importance') {
+          av = parseInt(a.dataset.imp || '0', 10) || 0;
+          bv = parseInt(b.dataset.imp || '0', 10) || 0;
+        } else {
+          av = parseDateValue(a.dataset.date);
+          bv = parseDateValue(b.dataset.date);
+        }
         if (av !== bv) return (av - bv) * sign;
         return (a.dataset.title || '').localeCompare(b.dataset.title || '');
       });
