@@ -462,7 +462,7 @@ HTML = r"""
     </div>
     <div id="tag-active" class="small" style="margin-top:6px; display:none;"></div>
     <div class="quick-controls">
-      <input id="q" type="search" placeholder="タイトル・要約を検索" />
+      <input id="q" type="search" placeholder="タイトル・要約を検索" aria-label="タイトル・要約を検索" />
       <button class="btn" type="button" data-toggle-all-cats onclick="toggleAllCats()">すべて閉じる</button>
       <label class="small">並び替え
         <select id="sortKey">
@@ -722,7 +722,7 @@ HTML = r"""
                 {% endif %}
 
                 {% if t.evidence_urls and t.evidence_urls|length>0 %}
-                  <div class="evidence-urls" style="margin-top:6px;">
+                  <div class="evidence-urls">
                     <strong>根拠</strong>：
                     {% for u in t.evidence_urls %}
                       <a href="{{ u }}" target="_blank" rel="noopener">{{ u|truncate(60, True) }}</a>{% if not loop.last %} | {% endif %}
@@ -824,7 +824,7 @@ NEWS_HTML = r"""
     <!-- techと同じ：タグバー -->
     <div class="small" style="margin-top:10px">
       <span class="badge">Tags</span>
-      <div id="tagBar" class="tag-bar collapsed" style="margin-top:6px">
+      <div id="tagBar" class="tag-bar collapsed" role="toolbar" aria-label="タグフィルタ" style="margin-top:6px">
         <button class="btn btn-reset" type="button" onclick="clearTagFilter()">🔄 リセット</button>
         <label class="small tag-mode">
           <input type="checkbox" id="tagModeOr"> OR（どれか）
@@ -842,7 +842,7 @@ NEWS_HTML = r"""
 
     <!-- techと同じ：検索（imp/recentはnewsでは使わないので固定） -->
     <div class="quick-controls">
-      <input id="q" type="search" placeholder="タイトル・要約を検索" />
+      <input id="q" type="search" placeholder="タイトル・要約を検索" aria-label="タイトル・要約を検索" />
       <button class="btn" type="button" data-toggle-all-cats onclick="toggleAllCats()">すべて閉じる</button>
       <label class="small">並び替え
         <select id="sortKey">
@@ -945,10 +945,10 @@ NEWS_HTML = r"""
                   </div>
                 {% endif %}
                 {% if it.evidence_urls and it.evidence_urls|length>0 %}
-                  <div class="small" style="margin-top:6px;">
-                    根拠：
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
                     {% for u in it.evidence_urls %}
-                      <a href="{{ u }}" target="_blank" rel="noopener">{{ u }}</a>{% if not loop.last %}, {% endif %}
+                      <a href="{{ u }}" target="_blank" rel="noopener">{{ u|truncate(60, True) }}</a>{% if not loop.last %} | {% endif %}
                     {% endfor %}
                   </div>
                 {% endif %}
