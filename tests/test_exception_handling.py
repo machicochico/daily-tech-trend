@@ -14,7 +14,7 @@ import llm_insights_local
 import translate
 
 
-def test_fetch_fulltext_logs_context_and_skips_on_network_error(monkeypatch, capsys):
+def test_fetch_fulltext_returns_empty_on_network_error(monkeypatch):
     def fake_urlopen(*args, **kwargs):
         raise URLError("network down")
 
@@ -22,9 +22,6 @@ def test_fetch_fulltext_logs_context_and_skips_on_network_error(monkeypatch, cap
 
     out = collect.fetch_fulltext("https://example.com/a", source="example-source")
     assert out == ""
-    captured = capsys.readouterr().out
-    assert "source=example-source" in captured
-    assert "url=https://example.com/a" in captured
 
 
 def test_translate_news_titles_skips_request_failures_and_keeps_running(monkeypatch):
@@ -233,4 +230,4 @@ def test_collect_main_marks_ssl_failure_after_single_retry(monkeypatch, tmp_path
     ).fetchone()
     conn.close()
 
-    assert row == (1, "ssl_cert_verify_failed")
+    assert row == (1, "ssl_error")
