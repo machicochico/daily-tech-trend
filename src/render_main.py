@@ -1529,6 +1529,74 @@ ROLE_PROFILES = {
     },
 }
 
+CATEGORY_CLAIM_TEMPLATES = {
+    "engineer": {
+        "security": "脆弱性の影響範囲特定と緩和策の即時適用を最優先すべきだ",
+        "ai": "モデル精度の検証環境と本番切替のロールバック手順を先に整備すべきだ",
+        "dev": "CI/CDパイプラインの安定性と依存ライブラリの互換性検証を先行すべきだ",
+        "manufacturing": "制御系ソフトウェアの変更管理と設備連携テストの自動化を先に確立すべきだ",
+        "system": "システム可用性のSLO定義と障害検知閾値の先行固定を優先すべきだ",
+        "quality": "品質基準の定量化と自動回帰テストのカバレッジ拡大を先に進めるべきだ",
+        "maintenance": "保守手順の標準化と予防保全データの収集基盤を先に構築すべきだ",
+        "cloud": "マルチクラウド環境の権限境界と通信経路の可視化を先に設計すべきだ",
+        "_default": "機能拡張よりも先に監視指標と切り戻し手順を前提にした仕様確定を優先すべきだ",
+    },
+    "management": {
+        "security": "セキュリティ投資のROIと事業継続計画への影響を定量評価すべきだ",
+        "ai": "POC段階でのKPI設定と撤退基準の事前合意を経営判断に組み込むべきだ",
+        "industry": "市場構造の変化に対応した事業ポートフォリオの再評価を四半期内に実施すべきだ",
+        "policy": "規制変更の事業インパクトを法務・経営で共同評価し対応優先度を決定すべきだ",
+        "company": "競合動向と自社ポジションのギャップ分析を意思決定に反映すべきだ",
+        "manufacturing": "生産ラインの投資回収期間と需給変動リスクを同時に評価すべきだ",
+        "_default": "投資対効果と事業継続リスクを同じ判断基準で評価し、短期の話題性より実行可能性を優先すべきだ",
+    },
+    "consumer": {
+        "security": "対象サービスのパスワード変更と二段階認証の設定状況を確認すべきだ",
+        "ai": "AI生成コンテンツの信頼性を自分で検証する習慣を身につけるべきだ",
+        "policy": "規制変更による料金・契約条件の変化を事前に把握し備えるべきだ",
+        "news": "報道の一次情報源を確認し、自分の生活への影響範囲を具体的に見極めるべきだ",
+        "company": "サービス提供元の方針変更が利用条件に与える影響を確認すべきだ",
+        "_default": "価格・使い勝手・個人情報の条件を比較して、自分の利用環境を見直すべきだ",
+    },
+}
+
+CATEGORY_EVIDENCE_AXES = {
+    "security": ["脅威の影響範囲と攻撃経路", "パッチ適用と依存ライブラリの更新状況", "インシデント検知と復旧手順の整備"],
+    "ai": ["モデル精度と推論コストのトレードオフ", "学習データの品質とバイアス管理", "本番環境での監視指標と異常検知"],
+    "dev": ["ビルド・デプロイの安定性と速度", "コードレビューとテストカバレッジ", "依存関係の更新頻度と互換性"],
+    "manufacturing": ["設備稼働率と予防保全の効果", "品質管理プロセスの自動化度", "サプライチェーンの可視性と応答速度"],
+    "system": ["可用性SLOと障害検知の閾値設定", "外部連携の責務分離と認可境界", "運用手順の自動化と整合性検証"],
+    "cloud": ["マルチクラウドの権限管理と通信経路", "コスト最適化とリソース自動スケーリング", "データ配置とレイテンシ要件"],
+    "quality": ["品質基準の定量化と計測方法", "回帰テストの自動化と網羅性", "不具合の根本原因分析プロセス"],
+    "maintenance": ["保守手順の標準化と属人性排除", "予防保全データの収集と活用", "緊急対応の手順と連絡体制"],
+    "_default": ["可観測性とSLO設計の妥当性", "依存関係と権限境界の整理", "運用品質とデータ整合性の確保"],
+}
+
+CATEGORY_ACTION_TEMPLATES = {
+    "engineer": {
+        "security": "脆弱性の影響範囲を即日トリアージし、パッチ適用とWAFルール更新の実行計画を24時間以内に確定する。",
+        "ai": "モデル切替のカナリアリリース手順とロールバック条件を今スプリントで実装計画に落とし込む。",
+        "dev": "CI/CDパイプラインの失敗率を計測し、不安定テストの修正を次スプリントの最優先タスクに設定する。",
+        "manufacturing": "設備連携テストの自動化スクリプトを整備し、変更管理プロセスに組み込む。",
+        "system": "SLO・更新手順・ロールバック条件を明文化し、設計レビューで可観測性と障害波及範囲を重点確認する。",
+        "_default": "影響範囲をサービス別に切り分け、次スプリントで監視指標と切り戻し条件を実装計画へ落とし込む。",
+    },
+    "management": {
+        "security": "セキュリティ対策費用の追加予算を緊急稟議し、事業継続計画の更新を1週間以内に完了する。",
+        "ai": "AI導入PoCの成功基準を数値化し、撤退ラインを含めた判断フレームワークを経営会議で合意する。",
+        "industry": "競合ベンチマークと市場シェア推移を更新し、四半期事業計画の修正を即日判断する。",
+        "policy": "法規制変更の影響評価を法務と共同で実施し、コンプライアンス対応の優先順位を確定する。",
+        "_default": "投資優先順位・規制対応・供給リスクを同じ会議体で決裁し、四半期計画の修正を即日判断する。",
+    },
+    "consumer": {
+        "security": "対象サービスのパスワード変更と二段階認証の設定状況を今週中に確認・更新する。",
+        "ai": "AI生成情報を鵜呑みにせず、公式発表と照合してから判断・行動する習慣を今日から実践する。",
+        "policy": "規制変更に伴う料金改定や契約条件の変化を調べ、必要に応じてプラン変更を今月中に完了する。",
+        "news": "報道内容の一次情報を確認し、自分の生活への影響有無を具体的に判断して必要な手続きを進める。",
+        "_default": "価格・使い勝手・個人情報の条件を比較して、契約見直しや利用設定の変更を今週中に実行する。",
+    },
+}
+
 ROLE_SOURCE_RULES = {
     "engineer": {
         "allow_categories": {"ai", "dev", "security", "manufacturing", "system", "quality", "maintenance", "industry"},
@@ -1695,6 +1763,46 @@ def _select_role_articles(items: list[dict], roles: list[str], max_items: int = 
     return selected
 
 
+def _dominant_category(picked_articles: list[dict]) -> str:
+    """picked記事の最頻カテゴリを返す。テンプレート選択のキーに使用。"""
+    counts: dict[str, int] = {}
+    for a in picked_articles:
+        cat = str(a.get("category") or "").strip().lower()
+        if cat:
+            counts[cat] = counts.get(cat, 0) + 1
+    if not counts:
+        return "_default"
+    return max(counts, key=lambda c: counts[c])
+
+
+def _extract_role_perspective(article: dict, role: str, max_len: int = 60) -> str:
+    """記事のperspectives[role]を優先的に取得。fallback: key_points[0] → _extract_clear_point(title)。"""
+    perspectives = article.get("perspectives") or {}
+    text = str(perspectives.get(role) or "").strip()
+    # 「推測:」プレフィックスを除去
+    if text.startswith("推測:"):
+        text = text[len("推測:"):].strip()
+    if text.startswith("推測："):
+        text = text[len("推測："):].strip()
+    if text:
+        if len(text) > max_len:
+            text = text[:max_len].rstrip("、。 ") + "…"
+        return text
+
+    key_points = article.get("key_points") or []
+    if key_points and isinstance(key_points[0], str) and key_points[0].strip():
+        kp = key_points[0].strip()
+        if kp.startswith("推測:"):
+            kp = kp[len("推測:"):].strip()
+        if kp.startswith("推測："):
+            kp = kp[len("推測："):].strip()
+        if len(kp) > max_len:
+            kp = kp[:max_len].rstrip("、。 ") + "…"
+        return kp
+
+    return _extract_clear_point(article)
+
+
 def _extract_clear_point(article: dict) -> str:
     title = str(article.get("title") or "").strip()
     summary = str(article.get("summary") or "").strip()
@@ -1742,46 +1850,45 @@ def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
             )
         return f"主張: 本日は{role_label}の判断に直結する記事が少ないため、結論は保留する。根拠: 立場条件を満たす一次情報が不足しており、無関係な記事は採用しない。影響: 次回更新で市場・規制・製品情報を追加確認し、判断を再提示する。"
 
-    points = [_extract_clear_point(a) for a in picked_articles[:3]]
-    evidence_points = []
-    for article in picked_articles[:2]:
-        source = str(article.get("source") or "出典未記載").strip()
-        evidence_points.append(f"{_extract_clear_point(article)}（{source}）")
+    dominant_cat = _dominant_category(picked_articles)
+    claim_templates = CATEGORY_CLAIM_TEMPLATES.get(role, CATEGORY_CLAIM_TEMPLATES["engineer"])
+    action_templates = CATEGORY_ACTION_TEMPLATES.get(role, CATEGORY_ACTION_TEMPLATES["engineer"])
 
-    while len(evidence_points) < 2:
-        evidence_points.append("関連一次情報の追加確認が必要（出典精査中）")
-
-    action_map = {
-        "engineer": "影響範囲をサービス別に切り分け、次スプリントで監視指標と切り戻し条件を実装計画へ落とし込む。",
-        "management": "投資優先順位・規制対応・供給リスクを同じ会議体で決裁し、四半期計画の修正を即日判断する。",
-        "consumer": "価格・使い勝手・個人情報の条件を比較して、契約見直しや利用設定の変更を今週中に実行する。",
-    }
+    claim_text = claim_templates.get(dominant_cat, claim_templates["_default"])
+    action_text = action_templates.get(dominant_cat, action_templates["_default"])
 
     if role == "engineer":
         article_a = picked_articles[0]
         article_b = picked_articles[1] if len(picked_articles) > 1 else picked_articles[0]
         article_c = picked_articles[2] if len(picked_articles) > 2 else article_b
-        point_a = _sanitize_engineer_phrase(_extract_clear_point(article_a))
-        point_b = _sanitize_engineer_phrase(_extract_clear_point(article_b))
-        point_c = _sanitize_engineer_phrase(_extract_clear_point(article_c))
+        point_a = _sanitize_engineer_phrase(_extract_role_perspective(article_a, "engineer"))
+        point_b = _sanitize_engineer_phrase(_extract_role_perspective(article_b, "engineer"))
+        point_c = _sanitize_engineer_phrase(_extract_role_perspective(article_c, "engineer"))
 
-        claim = (
-            "主張: 技術者としては、機能拡張よりも先に『監視指標と切り戻し手順を前提にした仕様確定』を優先すべきだ。"
-        )
+        axes = CATEGORY_EVIDENCE_AXES.get(dominant_cat, CATEGORY_EVIDENCE_AXES["_default"])
+
+        claim = f"主張: 技術者としては、『{claim_text}』。"
         evidence = (
-            f"根拠: 可観測性の評価軸では、{point_a}を根拠にSLOと障害検知閾値を先に固定する必要がある。"
-            f"根拠: 依存関係と権限境界の評価軸では、{point_b}を根拠に外部連携の責務分離と認可境界の先行定義が必須になる。"
-            f"根拠: 運用品質とデータ整合性の評価軸では、{point_c}を根拠に更新手順と整合性検証の自動化要件を同時に設計すべきだ。"
+            f"根拠: {axes[0]}の評価軸では、{point_a}を根拠に優先対応が必要である。"
+            f"根拠: {axes[1]}の評価軸では、{point_b}を根拠に先行整備が必須になる。"
+            f"根拠: {axes[2]}の評価軸では、{point_c}を根拠に同時設計すべきだ。"
         )
-        impact = (
-            "影響: したがって初期段階でSLO・更新手順・ロールバック条件を明文化し、設計レビューでは可観測性と障害波及範囲を重点確認する。"
-        )
+        impact = f"影響: {action_text}"
         text = f"{claim}{evidence}{impact}"
         return _fit_text_length(text, target=330, min_len=260, max_len=420)
 
-    claim = f"主張: {role_label}の判断軸は『{ROLE_PROFILES.get(role, {}).get('opinion_focus', '影響の見極め')}』であり、短期の話題性より実行可能性を優先すべきだ。"
+    # management / consumer
+    evidence_points = []
+    for article in picked_articles[:2]:
+        source = str(article.get("source") or "出典未記載").strip()
+        point = _extract_role_perspective(article, role)
+        evidence_points.append(f"{point}（{source}）")
+    while len(evidence_points) < 2:
+        evidence_points.append("関連一次情報の追加確認が必要（出典精査中）")
+
+    claim = f"主張: {role_label}としては、『{claim_text}』。"
     evidence = f"根拠: {evidence_points[0]}。さらに、{evidence_points[1]}。"
-    impact = f"影響: {action_map.get(role, action_map['consumer'])}"
+    impact = f"影響: {action_text}"
     text = f"{claim}{evidence}{impact}"
     return _fit_text_length(text, target=330, min_len=260, max_len=420)
 
@@ -1804,6 +1911,25 @@ def _extract_recommended_action_line(opinion: str, fallback: str = "関係者合
     if sentences:
         return sentences[-1]
     return fallback
+
+
+DISCUSSION_QUESTION_TEMPLATES = {
+    ("engineer", "management"): "技術的なリスク評価と実装コストの見積もりを先に共有しないと、投資判断の精度が下がりませんか。",
+    ("engineer", "consumer"): "実装上の制約やセキュリティ要件を利用者目線で説明しないと、機能への期待値がずれませんか。",
+    ("management", "engineer"): "事業目標と撤退基準を先に明示しないと、技術選定の優先順位が定まらないのではないですか。",
+    ("management", "consumer"): "価格改定や契約条件の変更を利用者視点で検証しないと、解約リスクを見誤りませんか。",
+    ("consumer", "engineer"): "利用者が実際に困る場面を起点にして優先順位を決めた方が、実効性が高くないですか。",
+    ("consumer", "management"): "利用者の負担増やサービス品質低下を経営指標に組み込まないと、長期的な信頼を失いませんか。",
+}
+
+DISCUSSION_ANSWER_TEMPLATES = {
+    ("engineer", "management"): "技術負債の可視化とリスク定量化を先行し、経営判断に必要なデータを揃える進め方が現実的です。",
+    ("engineer", "consumer"): "利用者フィードバックを設計段階で取り込み、段階リリースで体験品質を検証する方法が有効です。",
+    ("management", "engineer"): "事業KPIと技術KPIの対応表を作成し、四半期ごとに優先度を再評価する枠組みが必要です。",
+    ("management", "consumer"): "料金変更前に利用者影響のシミュレーションを実施し、緩和策とセットで意思決定すべきです。",
+    ("consumer", "engineer"): "ユーザビリティテストの結果を技術要件に反映し、改善効果を定量的に追跡する仕組みが求められます。",
+    ("consumer", "management"): "顧客満足度と解約率を経営ダッシュボードに組み込み、サービス品質を定期的にレビューすべきです。",
+}
 
 
 def _build_role_discussion(role_sections: list[dict]) -> dict[str, list[dict[str, str]]]:
@@ -1830,13 +1956,22 @@ def _build_role_discussion(role_sections: list[dict]) -> dict[str, list[dict[str
             other_summary = str(role_map.get(other_role, {}).get("summary") or default_summary)
             other_reco = str(role_map.get(other_role, {}).get("recommendation") or default_reco)
 
+            question_template = DISCUSSION_QUESTION_TEMPLATES.get(
+                (focus_role, other_role),
+                "仕様の確定タイミングと受け入れ条件を先に合意しないと実行リスクが残りませんか。",
+            )
+            answer_template = DISCUSSION_ANSWER_TEMPLATES.get(
+                (other_role, focus_role),
+                f"まずは『{focus_reco}』を小さく試し、運用データで仕様妥当性を確認する進め方が現実的です。",
+            )
+
             focus_discussions.append(
                 {
                     "from": role_labels[focus_role],
                     "to": role_labels[other_role],
                     "text": (
                         f"あなたは『{other_reco}』と述べています。"
-                        f"{focus_summary}の観点では、仕様の確定タイミングと受け入れ条件を先に合意しないと実行リスクが残りませんか。"
+                        f"{focus_summary}の観点では、{question_template}"
                     ),
                 }
             )
@@ -1846,7 +1981,7 @@ def _build_role_discussion(role_sections: list[dict]) -> dict[str, list[dict[str
                     "to": role_labels[focus_role],
                     "text": (
                         f"その懸念は理解します。{other_summary}を踏まえると、"
-                        f"まずは『{focus_reco}』を小さく試し、運用データで仕様妥当性を確認する進め方が現実的です。"
+                        f"{answer_template}"
                     ),
                 }
             )

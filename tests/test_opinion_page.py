@@ -52,9 +52,15 @@ def test_pick_role_articles_returns_requested_count() -> None:
 
 def test_build_combined_opinion_length_range() -> None:
     picked = [
-        {"summary": "クラウド移行で認証基盤の再設計が必要になった。"},
-        {"summary": "障害対応の手順を標準化し、運用負荷を下げる検討が進む。"},
-        {"summary": "利用者向け通知の改善が継続率と信頼性に影響している。"},
+        {"summary": "クラウド移行で認証基盤の再設計が必要になった。", "category": "cloud",
+         "perspectives": {"engineer": "権限境界とネットワーク設計を先行整備する"},
+         "key_points": ["マルチクラウド対応が課題", "移行期間は6ヶ月"]},
+        {"summary": "障害対応の手順を標準化し、運用負荷を下げる検討が進む。", "category": "system",
+         "perspectives": {"engineer": "障害検知閾値の自動チューニングを導入する"},
+         "key_points": ["SLO違反の早期検知", "手順の自動化率向上"]},
+        {"summary": "利用者向け通知の改善が継続率と信頼性に影響している。", "category": "dev",
+         "perspectives": {"engineer": "通知基盤のリトライ設計とエラーハンドリング強化"},
+         "key_points": ["配信遅延の削減", "テンプレート管理の改善"]},
     ]
 
     text = render_main._build_combined_opinion("engineer", picked)
@@ -182,7 +188,7 @@ def test_build_role_discussion_generates_cross_role_pairs() -> None:
     assert len(discussions["engineer"]) == 4
     assert discussions["engineer"][0]["from"] == "技術者"
     assert discussions["engineer"][0]["to"] == "経営者"
-    assert "仕様の確定タイミングと受け入れ条件" in discussions["engineer"][0]["text"]
+    assert "技術的なリスク評価と実装コストの見積もり" in discussions["engineer"][0]["text"]
     assert discussions["management"][0]["from"] == "経営者"
 
 
@@ -196,3 +202,116 @@ def test_build_opinion_body_sections_splits_labels() -> None:
 def test_build_opinion_body_sections_fallback_for_unlabelled_text() -> None:
     sections = render_main._build_opinion_body_sections("ラベルのない文章です。")
     assert sections == [{"label": "本文", "text": "ラベルのない文章です。"}]
+
+
+def test_extract_role_perspective_prefers_perspectives() -> None:
+    article = {
+        "title": "タイトル",
+        "perspectives": {"engineer": "段階移行計画と切り戻し条件を先に定義する"},
+        "key_points": ["対象ユーザーは段階的に移行"],
+    }
+    result = render_main._extract_role_perspective(article, "engineer")
+    assert result == "段階移行計画と切り戻し条件を先に定義する"
+
+
+def test_extract_role_perspective_falls_back_to_key_points() -> None:
+    article = {
+        "title": "タイトル",
+        "perspectives": {"engineer": ""},
+        "key_points": ["対象ユーザーは段階的に移行", "旧認証は併用"],
+    }
+    result = render_main._extract_role_perspective(article, "engineer")
+    assert result == "対象ユーザーは段階的に移行"
+
+
+def test_extract_role_perspective_falls_back_to_clear_point() -> None:
+    article = {"title": "認証基盤のリニューアル", "perspectives": {}, "key_points": []}
+    result = render_main._extract_role_perspective(article, "engineer")
+    assert "認証基盤" in result
+
+
+def test_extract_role_perspective_strips_guess_prefix() -> None:
+    article = {
+        "title": "タイトル",
+        "perspectives": {"engineer": "推測: 影響範囲は限定的"},
+        "key_points": [],
+    }
+    result = render_main._extract_role_perspective(article, "engineer")
+    assert not result.startswith("推測")
+    assert "影響範囲は限定的" in result
+
+
+def test_extract_role_perspective_truncates_long_text() -> None:
+    article = {
+        "title": "タイトル",
+        "perspectives": {"engineer": "あ" * 100},
+        "key_points": [],
+    }
+    result = render_main._extract_role_perspective(article, "engineer", max_len=60)
+    assert len(result) <= 62  # 60文字 + "…"
+
+
+def test_dominant_category_returns_most_frequent() -> None:
+    articles = [
+        {"category": "security"},
+        {"category": "security"},
+        {"category": "ai"},
+    ]
+    assert render_main._dominant_category(articles) == "security"
+
+
+def test_dominant_category_returns_default_for_empty() -> None:
+    assert render_main._dominant_category([]) == "_default"
+    assert render_main._dominant_category([{"category": ""}]) == "_default"
+
+
+def test_build_combined_opinion_uses_category_templates() -> None:
+    picked = [
+        {"summary": "重大な脆弱性が発見された。", "category": "security",
+         "perspectives": {"engineer": "影響範囲のトリアージとパッチ適用を最優先する"},
+         "key_points": ["CVSSスコア9.8", "リモートコード実行の可能性"]},
+        {"summary": "関連する攻撃が観測されている。", "category": "security",
+         "perspectives": {"engineer": "WAFルールの緊急更新が必要"},
+         "key_points": ["攻撃経路の特定が進行中"]},
+    ]
+    text = render_main._build_combined_opinion("engineer", picked)
+    # security カテゴリのテンプレートが使われることを確認
+    assert "脅威の影響範囲と攻撃経路" in text
+    assert "主張:" in text
+    assert "根拠:" in text
+    assert "影響:" in text
+
+
+def test_build_combined_opinion_management_uses_category() -> None:
+    picked = [
+        {"summary": "新しいAIサービスの導入を検討。", "category": "ai",
+         "perspectives": {"management": "POC段階での成功基準を設定する"},
+         "key_points": ["投資回収期間の見積もりが必要"], "source": "日経"},
+        {"summary": "競合他社もAI導入を加速。", "category": "ai",
+         "perspectives": {"management": "市場での差別化ポイントを明確にする"},
+         "key_points": ["先行者利益の確保"], "source": "Bloomberg"},
+    ]
+    text = render_main._build_combined_opinion("management", picked)
+    assert "POC段階" in text or "KPI" in text
+    assert "主張:" in text
+
+
+def test_build_role_discussion_uses_pair_specific_templates() -> None:
+    sections = [
+        {"role": "engineer", "summary": "監視設計を先に固定する。", "recommendation": "段階導入する。"},
+        {"role": "management", "summary": "投資優先順位を整理する。", "recommendation": "四半期計画を更新する。"},
+        {"role": "consumer", "summary": "利用条件を比較する。", "recommendation": "設定変更を今週中に実行する。"},
+    ]
+    discussions = render_main._build_role_discussion(sections)
+
+    # engineer → management のペアは固有テンプレートを使う
+    eng_to_mgmt = discussions["engineer"][0]
+    assert "技術的なリスク評価と実装コスト" in eng_to_mgmt["text"]
+
+    # consumer → engineer のペアは固有テンプレートを使う
+    con_to_eng = discussions["consumer"][0]
+    assert "利用者が実際に困る場面" in con_to_eng["text"]
+
+    # management → consumer のペアは固有テンプレートを使う
+    mgmt_to_con = discussions["management"][2]
+    assert "価格改定や契約条件" in mgmt_to_con["text"]
