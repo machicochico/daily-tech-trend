@@ -1034,10 +1034,13 @@ OPINION_HTML = r"""
     .opinion-toc ul{margin:8px 0 0;padding-left:18px;display:flex;gap:10px;flex-wrap:wrap}
     .opinion-toc a{font-size:13px}
     .role-vertical h2{margin:0 0 14px}
-    .role-vertical .section-heading{margin:18px 0 8px;font-size:16px}
+    .role-vertical .section-heading{margin:22px 0 10px;font-size:18px;font-weight:800}
     .role-vertical .news-source-list{margin:0;padding-left:20px}
     .role-vertical .news-source-list li{margin:14px 0}
-    .role-vertical .opinion-body{margin-top:10px;line-height:1.8}
+    .role-vertical .opinion-body{margin-top:10px;line-height:1.8;color:var(--text-main);font-size:15px}
+    .role-vertical .opinion-paragraph{margin:12px 0;padding:10px 12px;border-left:3px solid var(--accent-soft);background:#f8fbff;border-radius:8px}
+    .role-vertical .opinion-label{display:inline-block;margin-bottom:4px;font-size:12px;font-weight:700;color:#1f4fbf}
+    .role-vertical .opinion-text{display:block;line-height:1.9;color:var(--text-main)}
     .role-discussion{margin:12px 0 8px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft)}
     .role-discussion ul{margin:8px 0 0;padding-left:18px}
     .role-discussion li{margin:8px 0}
@@ -1079,6 +1082,8 @@ OPINION_HTML = r"""
       <div class="summary-item"><div class="k">立場</div><div class="v">技術者 / 経営者 / 消費者</div></div>
     </div>
   </div>
+
+  <p class="small" style="margin:6px 0 10px;">まずは「比較表示」で結論を見比べ、気になる立場だけ「縦スクロール表示」の詳細を読むのがおすすめです。</p>
 
   <nav class="opinion-toc" aria-label="立場別目次">
     <strong>目次</strong>
@@ -1189,7 +1194,11 @@ OPINION_HTML = r"""
     <details class="insight">
       <summary class="small">詳細を読む（{{ role.label }}の意見約{{ role.full_text_len }}文字・ニュースソース）</summary>
       <h3 class="section-heading">意見本文</h3>
-      <div class="small opinion-body">{{ role.full_text }}</div>
+      <div class="opinion-body">
+        {% for block in role.full_text_sections %}
+        <p class="opinion-paragraph"><span class="opinion-label">{{ block.label }}</span><span class="opinion-text">{{ block.text }}</span></p>
+        {% endfor %}
+      </div>
       <h3 class="section-heading">ニュースソース</h3>
       <ul class="news-source-list">
         {% for art in role.articles %}
@@ -1826,8 +1835,8 @@ def _build_role_discussion(role_sections: list[dict]) -> dict[str, list[dict[str
                     "from": role_labels[focus_role],
                     "to": role_labels[other_role],
                     "text": (
-                        f"あなたは『{other_reco}』と述べていますが、{focus_summary}の観点では"
-                        "仕様の確定タイミングと受け入れ条件を先に合意しないと実行リスクが残りませんか。"
+                        f"あなたは『{other_reco}』と述べています。"
+                        f"{focus_summary}の観点では、仕様の確定タイミングと受け入れ条件を先に合意しないと実行リスクが残りませんか。"
                     ),
                 }
             )
@@ -1836,8 +1845,8 @@ def _build_role_discussion(role_sections: list[dict]) -> dict[str, list[dict[str
                     "from": role_labels[other_role],
                     "to": role_labels[focus_role],
                     "text": (
-                        f"その懸念は理解します。とはいえ{other_summary}を踏まえると、"
-                        f"まずは『{focus_reco}』を段階的に適用し、運用データで仕様妥当性を確認する進め方が現実的です。"
+                        f"その懸念は理解します。{other_summary}を踏まえると、"
+                        f"まずは『{focus_reco}』を小さく試し、運用データで仕様妥当性を確認する進め方が現実的です。"
                     ),
                 }
             )
@@ -1869,6 +1878,24 @@ def _build_opinion_preview_lines(opinion: str, min_lines: int = 2, max_lines: in
                 break
 
     return lines[:max_lines]
+
+
+def _build_opinion_body_sections(opinion: str) -> list[dict[str, str]]:
+    labelled = list(re.finditer(r"(主張|根拠|影響):\s*([^。]+。)", opinion or ""))
+    if not labelled:
+        raw = " ".join((opinion or "").split())
+        return [{"label": "本文", "text": raw}] if raw else []
+
+    counts = {"主張": 0, "根拠": 0, "影響": 0}
+    sections: list[dict[str, str]] = []
+    for m in labelled:
+        label = m.group(1)
+        counts[label] += 1
+        display_label = label
+        if label == "根拠" and counts[label] >= 2:
+            display_label = f"根拠 {counts[label]}"
+        sections.append({"label": display_label, "text": m.group(2).strip()})
+    return sections
 
 
 def _build_primary_evidence_line(picked_articles: list[dict]) -> str:
@@ -2064,6 +2091,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
             "summary": summary,
             "full_text": full_text,
             "full_text_len": len(full_text),
+            "full_text_sections": _build_opinion_body_sections(full_text),
             "preview_lines": _build_opinion_preview_lines(full_text),
             "primary_evidence": _build_primary_evidence_line(picked),
             "top_evidence_tags": _build_top_evidence_tags(picked, limit=2),

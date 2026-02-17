@@ -184,3 +184,15 @@ def test_build_role_discussion_generates_cross_role_pairs() -> None:
     assert discussions["engineer"][0]["to"] == "経営者"
     assert "仕様の確定タイミングと受け入れ条件" in discussions["engineer"][0]["text"]
     assert discussions["management"][0]["from"] == "経営者"
+
+
+def test_build_opinion_body_sections_splits_labels() -> None:
+    opinion = "主張: 結論。根拠: 事実A。根拠: 事実B。影響: 次の一手。"
+    sections = render_main._build_opinion_body_sections(opinion)
+    assert [sec["label"] for sec in sections] == ["主張", "根拠", "根拠 2", "影響"]
+    assert sections[0]["text"] == "結論。"
+
+
+def test_build_opinion_body_sections_fallback_for_unlabelled_text() -> None:
+    sections = render_main._build_opinion_body_sections("ラベルのない文章です。")
+    assert sections == [{"label": "本文", "text": "ラベルのない文章です。"}]
