@@ -1210,12 +1210,14 @@ OPINION_HTML = r"""
     <div class="small">{{ role.focus }}</div>
     {% if role.discussion_pairs %}
     <div class="role-discussion">
-      <div class="small"><strong>立場間ディスカッション（仕様検討）</strong></div>
-      <ul class="small">
-        {% for pair in role.discussion_pairs %}
-        <li><strong>{{ pair.from }}＞{{ pair.to }}</strong> {{ pair.text }}</li>
-        {% endfor %}
-      </ul>
+      <div class="small"><strong>他の立場からの問いかけ</strong></div>
+      {% for pair in role.discussion_pairs %}
+      {% if pair.type == 'question' %}
+      <div class="small disc-q" style="margin:10px 0 2px;"><strong>{{ pair.from }}からの質問:</strong> {{ pair.text }}</div>
+      {% else %}
+      <div class="small disc-a" style="margin:2px 0 10px; padding-left:16px; border-left:2px solid var(--accent-soft);"><strong>{{ pair.from }}の回答:</strong> {{ pair.text }}</div>
+      {% endif %}
+      {% endfor %}
     </div>
     {% endif %}
     {% if role.selection_note %}
@@ -1964,35 +1966,34 @@ def _build_role_discussion(role_sections: list[dict]) -> dict[str, list[dict[str
                 continue
 
             other_summary = str(role_map.get(other_role, {}).get("summary") or default_summary)
-            other_reco = str(role_map.get(other_role, {}).get("recommendation") or default_reco)
 
+            # 他の立場から自分への質問
             question_template = DISCUSSION_QUESTION_TEMPLATES.get(
-                (focus_role, other_role),
+                (other_role, focus_role),
                 "仕様の確定タイミングと受け入れ条件を先に合意しないと実行リスクが残りませんか。",
             )
+            # 自分の立場からの回答
             answer_template = DISCUSSION_ANSWER_TEMPLATES.get(
-                (other_role, focus_role),
+                (focus_role, other_role),
                 f"まずは『{focus_reco}』を小さく試し、運用データで仕様妥当性を確認する進め方が現実的です。",
             )
 
             focus_discussions.append(
                 {
-                    "from": role_labels[focus_role],
-                    "to": role_labels[other_role],
+                    "from": role_labels[other_role],
+                    "to": role_labels[focus_role],
+                    "type": "question",
                     "text": (
-                        f"あなたは『{other_reco}』と述べています。"
-                        f"{focus_summary}の観点では、{question_template}"
+                        f"{other_summary}の観点では、{question_template}"
                     ),
                 }
             )
             focus_discussions.append(
                 {
-                    "from": role_labels[other_role],
-                    "to": role_labels[focus_role],
-                    "text": (
-                        f"その懸念は理解します。{other_summary}を踏まえると、"
-                        f"{answer_template}"
-                    ),
+                    "from": role_labels[focus_role],
+                    "to": role_labels[other_role],
+                    "type": "answer",
+                    "text": answer_template,
                 }
             )
 

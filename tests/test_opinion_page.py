@@ -172,8 +172,8 @@ def test_opinion_news_sources_show_timestamps_and_reason() -> None:
 
 def test_opinion_template_has_role_discussion_block() -> None:
     source = _read("src/render_main.py")
-    assert "立場間ディスカッション（仕様検討）" in source
-    assert "{{ pair.from }}＞{{ pair.to }}" in source
+    assert "他の立場からの問いかけ" in source
+    assert "pair.type" in source
     assert '"discussion_pairs"' in source
 
 
@@ -188,10 +188,13 @@ def test_build_role_discussion_generates_cross_role_pairs() -> None:
 
     assert set(discussions.keys()) == {"engineer", "management", "consumer"}
     assert len(discussions["engineer"]) == 4
-    assert discussions["engineer"][0]["from"] == "技術者"
-    assert discussions["engineer"][0]["to"] == "経営者"
-    assert "技術的なリスク評価と実装コストの見積もり" in discussions["engineer"][0]["text"]
-    assert discussions["management"][0]["from"] == "経営者"
+    # engineerセクションは他の立場からの質問を受ける形式
+    assert discussions["engineer"][0]["from"] == "経営者"
+    assert discussions["engineer"][0]["to"] == "技術者"
+    assert discussions["engineer"][0]["type"] == "question"
+    assert discussions["engineer"][1]["from"] == "技術者"
+    assert discussions["engineer"][1]["type"] == "answer"
+    assert discussions["management"][0]["from"] == "技術者"
 
 
 def test_build_opinion_body_sections_splits_labels() -> None:
@@ -306,14 +309,22 @@ def test_build_role_discussion_uses_pair_specific_templates() -> None:
     ]
     discussions = render_main._build_role_discussion(sections)
 
-    # engineer → management のペアは固有テンプレートを使う
-    eng_to_mgmt = discussions["engineer"][0]
-    assert "技術的なリスク評価と実装コスト" in eng_to_mgmt["text"]
+    # engineerセクション: management→engineer の質問テンプレート
+    eng_q_from_mgmt = discussions["engineer"][0]
+    assert eng_q_from_mgmt["type"] == "question"
+    assert "事業目標と撤退基準" in eng_q_from_mgmt["text"]
 
-    # consumer → engineer のペアは固有テンプレートを使う
-    con_to_eng = discussions["consumer"][0]
-    assert "利用者が実際に困る場面" in con_to_eng["text"]
+    # engineerセクション: engineer→management の回答テンプレート
+    eng_a_to_mgmt = discussions["engineer"][1]
+    assert eng_a_to_mgmt["type"] == "answer"
+    assert "技術負債の可視化とリスク定量化" in eng_a_to_mgmt["text"]
 
-    # management → consumer のペアは固有テンプレートを使う
-    mgmt_to_con = discussions["management"][2]
-    assert "価格改定や契約条件" in mgmt_to_con["text"]
+    # consumerセクション: engineer→consumer の質問テンプレート
+    con_q_from_eng = discussions["consumer"][0]
+    assert con_q_from_eng["type"] == "question"
+    assert "実装上の制約やセキュリティ要件" in con_q_from_eng["text"]
+
+    # managementセクション: consumer→management の質問テンプレート
+    mgmt_q_from_con = discussions["management"][2]
+    assert mgmt_q_from_con["type"] == "question"
+    assert "利用者の負担増やサービス品質低下" in mgmt_q_from_con["text"]
