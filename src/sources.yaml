@@ -436,7 +436,7 @@ sources:
   - name: NHKニュース
     kind: news
     region: jp
-    category: policy
+    category: news
     vendor: NHK
     weekly_new_limit: 10
     rss:

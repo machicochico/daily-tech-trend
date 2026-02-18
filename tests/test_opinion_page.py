@@ -18,19 +18,21 @@ def test_render_source_contains_opinion_page_links() -> None:
 
 
 def test_opinion_length_is_around_400_chars() -> None:
-    item = {
-        "summary": "新しい認証基盤の導入計画が公開された。",
-        "perspectives": {
-            "engineer": "段階移行計画と切り戻し条件を先に定義する",
-            "management": "移行コストと停止リスクを比較し意思決定する",
-            "consumer": "アカウント影響の告知とFAQ整備を優先する",
-        },
-        "key_points": ["対象ユーザーは段階的に移行", "旧認証は一定期間併用"],
-        "url": "https://example.com/post",
-    }
+    """_build_combined_opinion が目標文字数範囲内で生成されることを確認"""
+    picked = [
+        {"summary": "新しい認証基盤の導入計画が公開された。", "category": "security",
+         "perspectives": {"engineer": "段階移行計画と切り戻し条件を先に定義する"},
+         "key_points": ["対象ユーザーは段階的に移行", "旧認証は一定期間併用"]},
+        {"summary": "障害対応の手順を標準化し、運用負荷を下げる検討が進む。", "category": "system",
+         "perspectives": {"engineer": "障害検知閾値の自動チューニングを導入する"},
+         "key_points": ["SLO違反の早期検知", "手順の自動化率向上"]},
+        {"summary": "利用者向け通知の改善が継続率と信頼性に影響している。", "category": "dev",
+         "perspectives": {"engineer": "通知基盤のリトライ設計とエラーハンドリング強化"},
+         "key_points": ["配信遅延の削減", "テンプレート管理の改善"]},
+    ]
 
-    got = render_main._build_trial_opinion(item, "engineer")
-    assert 360 <= len(got) <= 440
+    got = render_main._build_combined_opinion("engineer", picked)
+    assert 260 <= len(got) <= 420
 
 
 def test_opinion_page_exists() -> None:
@@ -150,7 +152,7 @@ def test_opinion_template_has_anchor_toc_and_scroll_helpers() -> None:
     source = _read("src/render_main.py")
     assert 'aria-label="立場別目次"' in source
     assert 'href="#{{ role.anchor_id }}"' in source
-    assert '"management": "executive"' in source
+    assert '"management": "management"' in source
     assert 'class="sticky-mini-nav"' in source
     assert "window.scrollTo({ top: 0, behavior: 'smooth' });" in source
 

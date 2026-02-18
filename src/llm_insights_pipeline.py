@@ -158,6 +158,17 @@ def compute_src_hash(title: str, url: str, body: str) -> str:
     return hashlib.sha256(seed.encode("utf-8", errors="ignore")).hexdigest()
 
 
+_PROMPT_SAMPLE_TEXTS = [
+    "技術者目線のコメント（50字以内）",
+    "経営者目線のコメント（50字以内）",
+    "消費者目線のコメント（50字以内）",
+    "技術/セキュリティ/運用の観点（必要なら推測: で）",
+    "経営/法務/レピュテーションの観点（必要なら推測: で）",
+    "利用者/生活者の観点（必要なら推測: で）",
+    "利用者/生活者の観点(必要なら推測: で)",
+]
+
+
 def postprocess_insight(ins: dict, row: dict) -> dict:
     ins = dict(ins or {})
     is_news = ((_row_get(row, "category", "") or "").lower() == "news") or ((_row_get(row, "kind", "") or "").lower() == "news")
@@ -213,7 +224,12 @@ def postprocess_insight(ins: dict, row: dict) -> dict:
     }
     fb = news_fb if is_news else tech_fb
     for k in ("engineer", "management", "consumer"):
-        if not isinstance(p.get(k), str) or not p.get(k).strip():
+        val = p.get(k)
+        # サンプルテキストがそのまま出力された場合はフォールバックに差し替え
+        if isinstance(val, str) and any(sample in val for sample in _PROMPT_SAMPLE_TEXTS):
+            val = ""
+            p[k] = val
+        if not isinstance(val, str) or not val.strip():
             p[k] = fb[k]
     ins["perspectives"] = p
     return ins

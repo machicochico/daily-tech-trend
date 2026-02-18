@@ -266,6 +266,17 @@ def _repair_json_with_llm(bad_text: str) -> dict:
     return json.loads(candidate)
 
 
+_PROMPT_SAMPLE_TEXTS = [
+    "技術者目線のコメント（50字以内）",
+    "経営者目線のコメント（50字以内）",
+    "消費者目線のコメント（50字以内）",
+    "技術/セキュリティ/運用の観点（必要なら推測: で）",
+    "経営/法務/レピュテーションの観点（必要なら推測: で）",
+    "利用者/生活者の観点（必要なら推測: で）",
+    "利用者/生活者の観点(必要なら推測: で)",
+]
+
+
 def _normalize_perspectives(raw) -> dict:
     """Normalize perspective keys/values from unstable LLM outputs."""
     normalized = {"engineer": "", "management": "", "consumer": ""}
@@ -294,6 +305,9 @@ def _normalize_perspectives(raw) -> dict:
             continue
         text = v.strip() if isinstance(v, str) else ""
         if text:
+            # プロンプトのサンプルテキストがそのまま出力された場合は空にする
+            if any(sample in text for sample in _PROMPT_SAMPLE_TEXTS):
+                text = ""
             normalized[canonical] = text
     return normalized
 
@@ -447,8 +461,13 @@ def call_llm(topic_title, category, url, body, kind: str | None = None):
     text = _get_lm_content(r)
     candidate = _extract_json_object(text)
     if not candidate:
-        return _repair_json_with_llm(text)
-    try:
-        return json.loads(candidate)
-    except Exception:
-        return _repair_json_with_llm(candidate)
+        result = _repair_json_with_llm(text)
+    else:
+        try:
+            result = json.loads(candidate)
+        except Exception:
+            result = _repair_json_with_llm(candidate)
+    # perspectives キーがあれば正規化を通す
+    if isinstance(result, dict) and "perspectives" in result:
+        result["perspectives"] = _normalize_perspectives(result.get("perspectives") or {})
+    return result

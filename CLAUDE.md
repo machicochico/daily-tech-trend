@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 言語設定
+- 常に日本語で会話する
+- コメントも日本語で記述する
+- エラーメッセージの説明も日本語で行う
+- ドキュメントも日本語で生成する
+
 ## プロジェクト概要
 
 製造業（鉄鋼）・IT技術系のRSSフィードを日次で収集し、重複排除・トピック統合・LLM分析を行い、GitHub Pages上に静的HTMLとして公開する技術トレンドサイト。言語は日本語中心。

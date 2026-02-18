@@ -1021,6 +1021,15 @@ OPINION_HTML = r"""
   <title>意見（お試し版）</title>
   <meta name="description" content="技術者・経営者・消費者の3つの立場で、直近記事を400文字前後の意見として整理した試験ページ。">
   <link rel="canonical" href="/daily-tech-trend/opinion/">
+  <meta property="og:title" content="意見（お試し版）| Daily Tech Trend">
+  <meta property="og:description" content="技術者・経営者・消費者の3つの立場で、直近記事を400文字前後の意見として整理した試験ページ。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dachshund-github.github.io/daily-tech-trend/opinion/">
+  <meta property="og:site_name" content="Daily Tech Trend">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="意見（お試し版）| Daily Tech Trend">
+  <meta name="twitter:description" content="技術者・経営者・消費者の3つの立場で、直近記事を400文字前後の意見として整理した試験ページ。">
   <link rel="stylesheet" href="{{ common_css_href }}">
   <style>
     .view-mode-switch{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
@@ -1050,7 +1059,7 @@ OPINION_HTML = r"""
       .comparison-tabs{display:none}
     }
 
-    .opinion-toc{margin:8px 0 16px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft)}
+    .opinion-toc{margin:8px 0 16px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--panel)}
     .opinion-toc strong{font-size:13px}
     .opinion-toc ul{margin:8px 0 0;padding-left:18px;display:flex;gap:10px;flex-wrap:wrap}
     .opinion-toc a{font-size:13px}
@@ -1059,10 +1068,10 @@ OPINION_HTML = r"""
     .role-vertical .news-source-list{margin:0;padding-left:20px}
     .role-vertical .news-source-list li{margin:14px 0}
     .role-vertical .opinion-body{margin-top:10px;line-height:1.8;color:var(--text-main);font-size:15px}
-    .role-vertical .opinion-paragraph{margin:12px 0;padding:10px 12px;border-left:3px solid var(--accent-soft);background:#f8fbff;border-radius:8px}
-    .role-vertical .opinion-label{display:inline-block;margin-bottom:4px;font-size:12px;font-weight:700;color:#1f4fbf}
+    .role-vertical .opinion-paragraph{margin:12px 0;padding:10px 12px;border-left:3px solid var(--accent-soft);background:var(--panel);border-radius:8px}
+    .role-vertical .opinion-label{display:inline-block;margin-bottom:4px;font-size:12px;font-weight:700;color:var(--accent)}
     .role-vertical .opinion-text{display:block;line-height:1.9;color:var(--text-main)}
-    .role-discussion{margin:12px 0 8px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-soft)}
+    .role-discussion{margin:12px 0 8px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--panel)}
     .role-discussion ul{margin:8px 0 0;padding-left:18px}
     .role-discussion li{margin:8px 0}
     .role-vertical details.insight[open]{padding:10px 14px}
@@ -1104,7 +1113,7 @@ OPINION_HTML = r"""
     </div>
   </div>
 
-  <p class="small" style="margin:6px 0 10px;">まずは「比較表示」で結論を見比べ、気になる立場だけ「縦スクロール表示」の詳細を読むのがおすすめです。</p>
+  <p class="small" style="margin:6px 0 10px;">各立場の詳細を縦スクロールで確認し、結論だけを比較したい場合は「比較表示」に切り替えてご覧ください。</p>
 
   <nav class="opinion-toc" aria-label="立場別目次">
     <strong>目次</strong>
@@ -1245,6 +1254,7 @@ OPINION_HTML = r"""
 
   <script src="{{ common_js_src }}"></script>
   <script>
+    window.DTTCommon.setupCommon('opinion');
     (function(){
       const modeButtons = [...document.querySelectorAll('.mode-btn')];
       const setMode = (mode) => {
@@ -1506,32 +1516,6 @@ def _fit_text_length(text: str, target: int = 400, min_len: int = 360, max_len: 
     return body
 
 
-def _build_trial_opinion(item: dict, role: str) -> str:
-    role_map = {
-        "engineer": "技術者",
-        "management": "経営者",
-        "consumer": "消費者",
-    }
-    role_label = role_map.get(role, role)
-    perspectives = item.get("perspectives") or {}
-    perspective_text = (perspectives.get(role) or "").strip()
-    summary = (item.get("summary") or "").strip()
-    key_points = [kp for kp in (item.get("key_points") or []) if isinstance(kp, str) and kp.strip()]
-    key_points_text = " / ".join(key_points[:2]) if key_points else "主要ポイントは本文確認が必要"
-    url = (item.get("url") or "").strip()
-
-    text = (
-        f"{role_label}としての考え方は、まず『{summary or '事実関係'}』を起点に、"
-        f"優先順位と影響範囲を切り分けること。"
-        f"行動としては、{perspective_text or '関係者と現状を共有し、対応方針を具体化する'}。"
-        f"加えて、{key_points_text}を確認し、当日中に実行計画へ落とし込む。"
-        f"注意点は、断片情報で結論を急がず、推測と事実を明確に分離すること。"
-        f"コスト・品質・信頼への副作用を先に洗い出し、説明可能な判断を維持する。"
-        f"参考記事: {url or 'URL未取得'}"
-    )
-    return _fit_text_length(text)
-
-
 ROLE_PROFILES = {
     "engineer": {
         "keywords": ["ai", "security", "cloud", "半導体", "開発", "障害", "データ", "api", "モデル", "ソフト", "運用", "品質"],
@@ -1643,6 +1627,8 @@ DEFAULT_EXCLUDE_KEYWORDS = [
     "天気", "大雨", "台風", "地震速報", "積雪", "熱中症", "洪水",
     "殺人", "逮捕", "強盗", "刺傷", "暴行", "窃盗", "詐欺事件", "放火",
     "芸能", "ゴシップ", "結婚発表", "熱愛", "スポーツ", "勝敗", "ドラフト",
+    "野球", "サッカー", "テニス", "ゴルフ", "相撲", "甲子園",
+    "Jリーグ", "プロ野球", "五輪", "優勝", "決勝", "試合結果",
 ]
 
 
@@ -1882,9 +1868,10 @@ def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
         article_a = picked_articles[0]
         article_b = picked_articles[1] if len(picked_articles) > 1 else picked_articles[0]
         article_c = picked_articles[2] if len(picked_articles) > 2 else article_b
-        point_a = _sanitize_engineer_phrase(_extract_role_perspective(article_a, "engineer"))
-        point_b = _sanitize_engineer_phrase(_extract_role_perspective(article_b, "engineer"))
-        point_c = _sanitize_engineer_phrase(_extract_role_perspective(article_c, "engineer"))
+        _empty_eng_fb = "一次情報の追加確認が必要であり"
+        point_a = _sanitize_engineer_phrase(_extract_role_perspective(article_a, "engineer")) or _empty_eng_fb
+        point_b = _sanitize_engineer_phrase(_extract_role_perspective(article_b, "engineer")) or _empty_eng_fb
+        point_c = _sanitize_engineer_phrase(_extract_role_perspective(article_c, "engineer")) or _empty_eng_fb
 
         axes = CATEGORY_EVIDENCE_AXES.get(dominant_cat, CATEGORY_EVIDENCE_AXES["_default"])
 
@@ -1902,7 +1889,7 @@ def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
     evidence_points = []
     for article in picked_articles[:2]:
         source = str(article.get("source") or "出典未記載").strip()
-        point = _extract_role_perspective(article, role)
+        point = _extract_role_perspective(article, role) or "関連情報の精査が必要"
         evidence_points.append(f"{point}（{source}）")
     while len(evidence_points) < 2:
         evidence_points.append("関連一次情報の追加確認が必要（出典精査中）")
@@ -1925,10 +1912,12 @@ def _extract_conclusion_line(opinion: str) -> str:
 
 
 def _extract_recommended_action_line(opinion: str, fallback: str = "関係者合意のもとで段階導入を進める。") -> str:
-    m = re.search(r"影響:\s*([^。]+。)", opinion or "")
-    if m:
+    if not (opinion or "").strip():
+        return fallback
+    m = re.search(r"影響:\s*([^。]+。)", opinion)
+    if m and len(m.group(1).strip()) >= 5:
         return m.group(1).strip()
-    sentences = [s.strip() + "。" for s in re.findall(r"([^。]+)。", opinion or "") if s.strip()]
+    sentences = [s.strip() + "。" for s in re.findall(r"([^。]+)。", opinion) if len(s.strip()) >= 5]
     if sentences:
         return sentences[-1]
     return fallback
@@ -2231,7 +2220,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     role_sections = []
     anchor_ids = {
         "engineer": "engineer",
-        "management": "executive",
+        "management": "management",
         "consumer": "consumer",
     }
     for role in roles:
