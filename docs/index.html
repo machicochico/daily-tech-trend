@@ -35,15 +35,15 @@
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2026-02-27 21:07:48 JST</div>
+        <div class="v">2026-02-27 23:05:27 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">464 sec</div>
+        <div class="v">479 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
-        <div class="v">6701 <span class="small">(new48h 566)</span></div>
+        <div class="v">6268 <span class="small">(new48h 532)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">RSS Sources</div>
@@ -67,15 +67,19 @@
               ai (10)
             </button>
           
+            <button class="btn" type="button" data-tag-btn="performance" onclick="toggleTag('performance')">
+              performance (2)
+            </button>
+          
         
           <span class="tag-group-label">セキュリティ</span>
           
             <button class="btn" type="button" data-tag-btn="patch_window" onclick="toggleTag('patch_window')">
-              patch_window (23)
+              patch_window (22)
             </button>
           
             <button class="btn" type="button" data-tag-btn="security" onclick="toggleTag('security')">
-              security (17)
+              security (18)
             </button>
           
             <button class="btn" type="button" data-tag-btn="vulnerability" onclick="toggleTag('vulnerability')">
@@ -86,7 +90,7 @@
           <span class="tag-group-label">ビジネス</span>
           
             <button class="btn" type="button" data-tag-btn="market" onclick="toggleTag('market')">
-              market (6)
+              market (7)
             </button>
           
             <button class="btn" type="button" data-tag-btn="investment" onclick="toggleTag('investment')">
@@ -101,19 +105,19 @@
           <span class="tag-group-label">その他</span>
           
             <button class="btn" type="button" data-tag-btn="safety_impact" onclick="toggleTag('safety_impact')">
-              safety_impact (18)
-            </button>
-          
-            <button class="btn" type="button" data-tag-btn="sbom" onclick="toggleTag('sbom')">
-              sbom (15)
+              safety_impact (17)
             </button>
           
             <button class="btn" type="button" data-tag-btn="AI" onclick="toggleTag('AI')">
               AI (14)
             </button>
           
+            <button class="btn" type="button" data-tag-btn="sbom" onclick="toggleTag('sbom')">
+              sbom (14)
+            </button>
+          
             <button class="btn" type="button" data-tag-btn="manufacturing" onclick="toggleTag('manufacturing')">
-              manufacturing (10)
+              manufacturing (9)
             </button>
           
             <button class="btn" type="button" data-tag-btn="research" onclick="toggleTag('research')">
@@ -125,15 +129,23 @@
             </button>
           
             <button class="btn" type="button" data-tag-btn="policy" onclick="toggleTag('policy')">
-              policy (6)
+              policy (7)
+            </button>
+          
+            <button class="btn" type="button" data-tag-btn="OT/セキュリティ関連" onclick="toggleTag('OT/セキュリティ関連')">
+              OT/セキュリティ関連 (6)
+            </button>
+          
+            <button class="btn" type="button" data-tag-btn="OT/セキュリティ関連では sbom, patch_window, safety_impact を含める" onclick="toggleTag('OT/セキュリティ関連では sbom, patch_window, safety_impact を含める')">
+              OT/セキュリティ関連では sbom, patch_window, safety_impact を含める (6)
             </button>
           
             <button class="btn" type="button" data-tag-btn="sustainability" onclick="toggleTag('sustainability')">
               sustainability (6)
             </button>
           
-            <button class="btn" type="button" data-tag-btn="OT/セキュリティ関連では sbom, patch_window, safety_impact を含める" onclick="toggleTag('OT/セキュリティ関連では sbom, patch_window, safety_impact を含める')">
-              OT/セキュリティ関連では sbom, patch_window, safety_impact を含める (5)
+            <button class="btn" type="button" data-tag-btn="energy" onclick="toggleTag('energy')">
+              energy (5)
             </button>
           
             <button class="btn" type="button" data-tag-btn="metrology" onclick="toggleTag('metrology')">
@@ -160,20 +172,12 @@
               EU規制 (3)
             </button>
           
-            <button class="btn" type="button" data-tag-btn="OT/セキュリティ関連" onclick="toggleTag('OT/セキュリティ関連')">
-              OT/セキュリティ関連 (3)
-            </button>
-          
             <button class="btn" type="button" data-tag-btn="azure" onclick="toggleTag('azure')">
               azure (3)
             </button>
           
             <button class="btn" type="button" data-tag-btn="biz" onclick="toggleTag('biz')">
               biz (3)
-            </button>
-          
-            <button class="btn" type="button" data-tag-btn="energy" onclick="toggleTag('energy')">
-              energy (3)
             </button>
           
             <button class="btn" type="button" data-tag-btn="infrastructure" onclick="toggleTag('infrastructure')">
@@ -220,10 +224,6 @@
               MCP (2)
             </button>
           
-            <button class="btn" type="button" data-tag-btn="S3" onclick="toggleTag('S3')">
-              S3 (2)
-            </button>
-          
             <button class="btn" type="button" data-tag-btn="SDK" onclick="toggleTag('SDK')">
               SDK (2)
             </button>
@@ -242,10 +242,6 @@
           
             <button class="btn" type="button" data-tag-btn="decarbonization" onclick="toggleTag('decarbonization')">
               decarbonization (2)
-            </button>
-          
-            <button class="btn" type="button" data-tag-btn="decarbonization_ops" onclick="toggleTag('decarbonization_ops')">
-              decarbonization_ops (2)
             </button>
           
             <button class="btn" type="button" data-tag-btn="finance" onclick="toggleTag('finance')">
@@ -270,6 +266,10 @@
           
             <button class="btn" type="button" data-tag-btn="observability" onclick="toggleTag('observability')">
               observability (2)
+            </button>
+          
+            <button class="btn" type="button" data-tag-btn="precision" onclick="toggleTag('precision')">
+              precision (2)
             </button>
           
         
@@ -364,24 +364,6 @@
           </li>
         
           <li class="topic-row"
-              data-title="中国の需要低迷でオーストラリアのガス輸出業者が新たな買い手を模索"
-              data-summary="オーストラリアのガス輸出業者が中国需要低迷を受け、東カナダへ初めてLNG貨物を輸送し、新たな買い手探索に踏み切った。"
-              data-imp="80"
-              data-recent="1"
-              data-date="2026-02-25T12:30:00+00:00"
-              data-tags="market,LNG">
-            <span class="badge imp">重要度 80</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-8634">中国の需要低迷でオーストラリアのガス輸出業者が新たな買い手を模索</a>
-            <span class="date">2026/02/25 21:30</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
               data-title="電力需要の急増でガスタービン不足に対応"
               data-summary="AI需要急増でガスタービン不足が発生し、電力供給の安定性が脅かされる。"
               data-imp="80"
@@ -418,6 +400,24 @@
           </li>
         
           <li class="topic-row"
+              data-title="CMB.TECH が 2025 年第 4 四半期の結果を発表 – 8 つの VLCC が破格の価格で販売"
+              data-summary="CMB.TECH NV, Euronext Brussels:CMBT and Euronext Oslo Børs:CMBTO reported its unaudited financial results today for the fourth quarter ended 31 December 2025. HIGHLIGHTS Financial highlights: Profit for the period of USD 90.1 million in Q4 2025. EBITDA for the same period was USD 322 million."
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-02-26T22:00:47+00:00"
+              data-tags="">
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-9099">CMB.TECH が 2025 年第 4 四半期の結果を発表 – 8 つの VLCC が破格の価格で販売</a>
+            <span class="date">2026/02/27 07:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
+        
+          <li class="topic-row"
               data-title="ベネズエラ、19の石油生産契約を停止"
               data-summary="ベネズエラ政府が19件の石油生産契約を停止し、米国・ベネズエラ当局で再検討へ。"
               data-imp="80"
@@ -432,6 +432,24 @@
             
             <a href="#topic-9239">ベネズエラ、19の石油生産契約を停止</a>
             <span class="date">2026/02/27 17:30</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
+        
+          <li class="topic-row"
+              data-title="米国とイランの対立が2026年の予測上昇を引き起こし、原油価格が3%上昇"
+              data-summary="米国とイランの対立が2026年の原油価格を3%上昇させ、$60/バレル超へ推移。"
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-02-27T13:57:22+00:00"
+              data-tags="energy,price,geopolitics">
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-9328">米国とイランの対立が2026年の予測上昇を引き起こし、原油価格が3%上昇</a>
+            <span class="date">2026/02/27 22:57</span>
             <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
           </li>
         
@@ -491,26 +509,30 @@
             <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
           </li>
         
-          <li class="topic-row"
-              data-title="石炭が1年ぶりの高値に"
-              data-summary="石炭価格が1年ぶりの高値に達し、中国の規制当局はシェンハワエネルギーの資産取得を承認した。"
-              data-imp="80"
-              data-recent="0"
-              data-date="2026-02-13T11:00:35+00:00"
-              data-tags="market,coal,price">
-            <span class="badge imp">重要度 80</span>
-            
-            <a href="#topic-5578">石炭が1年ぶりの高値に</a>
-            <span class="date">2026/02/13 20:00</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
       </ol>
     </div>
 
     <div class="top-col">
       <h3>📊Market Trending（48h増分）</h3>
       <ol class="top-list">
+        
+          <li class="topic-row"
+              data-title="中国の生産抑制で鉄鋼景気が緩和"
+              data-summary="（要約を生成できませんでした）"
+              data-imp="20"
+              data-recent="2"
+              data-date="2026-02-26T11:00:37+00:00"
+              data-tags="OT/セキュリティ関連では sbom, patch_window, safety_impact を含める">
+            <span class="badge imp">重要度 20</span>
+            
+              <span class="badge recent ">
+                48h +2
+              </span>
+            
+            <a href="#topic-8936">中国の生産抑制で鉄鋼景気が緩和</a>
+            <span class="date">2026/02/26 20:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
         
           <li class="topic-row"
               data-title="週間乾水時間チャーター見積もり、2026 年 2 月 25 日"
@@ -531,24 +553,6 @@
           </li>
         
           <li class="topic-row"
-              data-title="中国の生産抑制で鉄鋼景気が緩和"
-              data-summary=""
-              data-imp="0"
-              data-recent="2"
-              data-date="2026-02-26T11:00:37+00:00"
-              data-tags="">
-            <span class="badge imp">重要度 0</span>
-            
-              <span class="badge recent ">
-                48h +2
-              </span>
-            
-            <a href="#topic-8936">中国の生産抑制で鉄鋼景気が緩和</a>
-            <span class="date">2026/02/26 20:00</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
               data-title="オマーン:アシャド海運の純利益は2025年に9%増加"
               data-summary="Asyad Shipping, Oman&#39;s national maritime transportation company, reported a solid financial performance for the year ended December 31, 2025, with a 9 per cent year-on-year increase in net profit alongside strong operating margins and high fleet utilisation. The results were filed with the Muscat Stock Exchange (MSX) on Wednesday, underscoring the company&#39;s resilience amidst continued challenges."
               data-imp="100"
@@ -563,24 +567,6 @@
             
             <a href="#topic-9288">オマーン:アシャド海運の純利益は2025年に9%増加</a>
             <span class="date">2026/02/27 20:00</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
-              data-title="中国の需要低迷でオーストラリアのガス輸出業者が新たな買い手を模索"
-              data-summary="オーストラリアのガス輸出業者が中国需要低迷を受け、東カナダへ初めてLNG貨物を輸送し、新たな買い手探索に踏み切った。"
-              data-imp="80"
-              data-recent="1"
-              data-date="2026-02-25T12:30:00+00:00"
-              data-tags="market,LNG">
-            <span class="badge imp">重要度 80</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-8634">中国の需要低迷でオーストラリアのガス輸出業者が新たな買い手を模索</a>
-            <span class="date">2026/02/25 21:30</span>
             <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
           </li>
         
@@ -621,6 +607,24 @@
           </li>
         
           <li class="topic-row"
+              data-title="CMB.TECH が 2025 年第 4 四半期の結果を発表 – 8 つの VLCC が破格の価格で販売"
+              data-summary="CMB.TECH NV, Euronext Brussels:CMBT and Euronext Oslo Børs:CMBTO reported its unaudited financial results today for the fourth quarter ended 31 December 2025. HIGHLIGHTS Financial highlights: Profit for the period of USD 90.1 million in Q4 2025. EBITDA for the same period was USD 322 million."
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-02-26T22:00:47+00:00"
+              data-tags="">
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-9099">CMB.TECH が 2025 年第 4 四半期の結果を発表 – 8 つの VLCC が破格の価格で販売</a>
+            <span class="date">2026/02/27 07:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
+        
+          <li class="topic-row"
               data-title="ベネズエラ、19の石油生産契約を停止"
               data-summary="ベネズエラ政府が19件の石油生産契約を停止し、米国・ベネズエラ当局で再検討へ。"
               data-imp="80"
@@ -639,6 +643,42 @@
           </li>
         
           <li class="topic-row"
+              data-title="米国とイランの対立が2026年の予測上昇を引き起こし、原油価格が3%上昇"
+              data-summary="米国とイランの対立が2026年の原油価格を3%上昇させ、$60/バレル超へ推移。"
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-02-27T13:57:22+00:00"
+              data-tags="energy,price,geopolitics">
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-9328">米国とイランの対立が2026年の予測上昇を引き起こし、原油価格が3%上昇</a>
+            <span class="date">2026/02/27 22:57</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
+        
+          <li class="topic-row"
+              data-title="Vopakは2025年の過去最高の財務結果を報告し、2030年末まで約17億ユーロの株主配当プログラムを発表"
+              data-summary="Vopakは過去最高の財務結果を報告し、2030年まで約17億ユーロの株主配当プログラムを発表。"
+              data-imp="75"
+              data-recent="1"
+              data-date="2026-02-25T22:00:58+00:00"
+              data-tags="">
+            <span class="badge imp">重要度 75</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-8770">Vopakは2025年の過去最高の財務結果を報告し、2030年末まで約17億ユーロの株主配当プログラムを発表</a>
+            <span class="date">2026/02/26 07:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
+        
+          <li class="topic-row"
               data-title="2月の空航船数は122%増加 – 荷主にとって十分な輸送能力はあるだろうか?"
               data-summary="2月の空航船数が122%増加し、輸送能力に影響。Drewryがデータで評価を提示。"
               data-imp="70"
@@ -653,42 +693,6 @@
             
             <a href="#topic-6425">2月の空航船数は122%増加 – 荷主にとって十分な輸送能力はあるだろうか?</a>
             <span class="date">2026/02/26 07:00</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
-              data-title="ロシアとイランは中国の市場シェアを確保するために原油価格を引き下げる"
-              data-summary="ロシアとイランが原油価格を引き下げ、中国市場でのシェア確保を図る。中国独立精製業者は制裁対象サプライを買い続けているため、両国にとって唯一の安全な取引先となっている。"
-              data-imp="70"
-              data-recent="1"
-              data-date="2026-02-25T13:30:00+00:00"
-              data-tags="oil_price,sanctions,market_share">
-            <span class="badge imp">重要度 70</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-8650">ロシアとイランは中国の市場シェアを確保するために原油価格を引き下げる</a>
-            <span class="date">2026/02/25 22:30</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
-              data-title="シェルの重さは240億ドル オーストラリアLNGプロジェクトの株式売却"
-              data-summary="Shellがオーストラリア北西棚のLNGプロジェクトで16.67%持分を売却検討中。"
-              data-imp="60"
-              data-recent="1"
-              data-date="2026-02-26T08:45:00+00:00"
-              data-tags="market,LNG">
-            <span class="badge imp">重要度 60</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-8905">シェルの重さは240億ドル オーストラリアLNGプロジェクトの株式売却</a>
-            <span class="date">2026/02/26 17:45</span>
             <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
           </li>
         
@@ -804,6 +808,115 @@
 
     
       <ul>
+        
+           <li id="topic-9068" class="topic-row"
+              data-title="AWS Security Hub Extended は、厳選されたパートナーソリューションを使用してフルスタックのエンタープライズセキュリティを提供します"
+              data-summary="AWS Security Hub Extendedは、パートナーソリューションを統合しフルスタックのエンタープライズセキュリティを提供することで、企業全体の保護を強化します。"
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-02-26T18:52:06+00:00"
+              data-tags="security,partner_solutions">
+            <div>
+              
+                <span class="badge imp">重要度 80</span>
+              
+              
+                <a href="https://aws.amazon.com/blogs/aws/aws-security-hub-extended-offers-full-stack-enterprise-security-with-curated-partner-solutions/" target="_blank" rel="noopener">AWS Security Hub Extended は、厳選されたパートナーソリューションを使用してフルスタックのエンタープライズセキュリティを提供します</a>
+              
+              
+                <span class="small">（2026/02/27 03:52）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">security</span>
+                  
+                    <span class="badge">partner_solutions</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <div class="summary-preview">AWS Security Hub Extendedは、パートナーソリューションを統合しフルスタックのエンタープライズセキュリティを提供することで、企業全体の保護…</div>
+            
+            <div class="mini">AWS Blog</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：AWS Security Hub Extendedは、パートナーソリューションを統合しフルスタックのエンタープライズセキュリティを提供することで、企業全体の保護を強化します。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>AWS Security Hub ExtendedがEndpoint・Identity・Email・Network・Data・Browser・Cloud・AI・Security Operationsを網羅した統合ソリューションを提供</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>パートナー製品として7AI、Britive、CrowdStrikeなどが選定されている</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>AWSが販売者となり、ペイアズユーロー料金と単一請求書で長期契約不要</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 統合された分析により脅威優先度を自動化できる点が魅力。</div>
+                  <div><b>経営者目線</b>: 追加費用なしでエンタープライズ全体のセキュリティを拡張でき、コスト管理が容易。</div>
+                  <div><b>消費者目線</b>: 一括請求とサポート統合により運用負担が軽減される。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://aws.amazon.com/blogs/aws/aws-security-hub-extended-offers-full-stack-enterprise-security-with-curated-partner-solutions/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/aws/aws-security-hub-extende...</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
         
            <li id="topic-6385" class="topic-row"
               data-title="AWS ウィークリーまとめ: Amazon EC2 M8azn インスタンス、Amazon Bedrock の新しいオープンウェイトモデルなど (2026 年 2 月 16 日)"
@@ -1118,117 +1231,6 @@
                     <strong>根拠</strong>：
                     
                       <a href="https://aws.amazon.com/blogs/aws/amazon-ec2-hpc8a-instances-powered-by-5th-gen-amd-epyc-processors-are-now-available/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/aws/amazon-ec2-hpc8a-instanc...</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-264" class="topic-row"
-              data-title="Amazon S3 Storage Lens は、パフォーマンスメトリクス、数十億のプレフィックスのサポート、S3 テーブルへのエクスポートを追加します。"
-              data-summary="Amazon S3 Storage Lensがパフォーマンスメトリクスと数十億プレフィックスをサポートし、S3テーブルへのエクスポート機能を追加した。"
-              data-imp="45"
-              data-recent="0"
-              data-date="2025-12-02T16:15:12+00:00"
-              data-tags="S3,StorageLens,パフォーマンス,プレフィックス,エクスポート">
-            <div>
-              
-                <span class="badge imp">重要度 45</span>
-              
-              
-                <a href="https://aws.amazon.com/blogs/aws/amazon-s3-storage-lens-adds-performance-metrics-support-for-billions-of-prefixes-and-export-to-s3-tables/" target="_blank" rel="noopener">Amazon S3 Storage Lens は、パフォーマンスメトリクス、数十億のプレフィックスのサポート、S3 テーブルへのエクスポートを追加します。</a>
-              
-              
-                <span class="small">（2025/12/03 01:15）</span>
-              
-
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">S3</span>
-                  
-                    <span class="badge">StorageLens</span>
-                  
-                    <span class="badge">パフォーマンス</span>
-                  
-                    <span class="badge">プレフィックス</span>
-                  
-                    <span class="badge">エクスポート</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <div class="summary-preview">Amazon S3 Storage Lensがパフォーマンスメトリクスと数十億プレフィックスをサポートし、S3テーブルへのエクスポート機能を追加した。</div>
-            
-            <div class="mini">AWS Blog</div>
-
-            
-              <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：Amazon S3 Storage Lensがパフォーマンスメトリクスと数十億プレフィックスをサポートし、S3テーブルへのエクスポート機能を追加した。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>S3 Storage Lensにパフォーマンスメトリクスが追加された</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>数十億のプレフィックスをサポートするようになった</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>データはS3テーブルへエクスポートできる</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 既存の監視設定を更新し、エクスポート先を検討する必要あり。</div>
-                  <div><b>経営者目線</b>: 運用コストと可観測性向上が期待できる。</div>
-                  <div><b>消費者目線</b>: データ分析が容易になり、業務効率化に寄与する。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    
-                      <a href="https://aws.amazon.com/blogs/aws/amazon-s3-storage-lens-adds-performance-metrics-support-for-billions-of-prefixes-and-export-to-s3-tables/" target="_blank" rel="noopener">https://aws.amazon.com/blogs/aws/amazon-s3-storage-lens-a...</a>
                     
                   </div>
                 
@@ -2398,37 +2400,6 @@
 
           </li>
         
-           <li id="topic-9068" class="topic-row"
-              data-title="AWS Security Hub Extended は、厳選されたパートナーソリューションを使用してフルスタックのエンタープライズセキュリティを提供します"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-02-26T18:52:06+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://aws.amazon.com/blogs/aws/aws-security-hub-extended-offers-full-stack-enterprise-security-with-curated-partner-solutions/" target="_blank" rel="noopener">AWS Security Hub Extended は、厳選されたパートナーソリューションを使用してフルスタックのエンタープライズセキュリティを提供します</a>
-              
-              
-                <span class="small">（2026/02/27 03:52）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-            <div class="mini">AWS Blog</div>
-
-            
-
-          </li>
-        
       </ul>
     
       </div>
@@ -2514,6 +2485,118 @@
 
     
       <ul>
+        
+           <li id="topic-8818" class="topic-row"
+              data-title="全製鉄所・製造所の基幹システムがオープン環境へ完全移行
+~『2025年の崖』の克服~"
+              data-summary="全製鉄所・製造所の基幹システムがオープン環境へ完全移行
+～『2025年の崖』の乗り越え～"
+              data-imp="100"
+              data-recent="1"
+              data-date="2026-02-26T01:00:00+00:00"
+              data-tags="OT/セキュリティ関連では sbom, patch_window, safety_impact を含める">
+            <div>
+              
+                <span class="badge imp">重要度 100</span>
+              
+              
+                <a href="https://www.jfe-steel.co.jp/release/2026/02/260226.html" target="_blank" rel="noopener">全製鉄所・製造所の基幹システムがオープン環境へ完全移行
+~『2025年の崖』の克服~</a>
+              
+              
+                <span class="small">（2026/02/26 10:00）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">OT/セキュリティ関連では sbom, patch_window, safety_impact を含める</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <div class="summary-preview">全製鉄所・製造所の基幹システムがオープン環境へ完全移行
+～『2025年の崖』の乗り越え～</div>
+            
+            <div class="mini">JFEホールディングス</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：全製鉄所・製造所の基幹システムがオープン環境へ完全移行
+～『2025年の崖』の乗り越え～</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>全製鉄所・製造所の基幹システムがオープン環境へ完全移行</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>『2025年の崖』の克服</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>全製鉄所・製造所の基幹システムがオープン環境へ完全移行</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://www.jfe-steel.co.jp/release/2026/02/260226.html" target="_blank" rel="noopener">https://www.jfe-steel.co.jp/release/2026/02/260226.html</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
         
            <li id="topic-5414" class="topic-row"
               data-title="SOEC共電解とFT合成による一貫プロセスによる液体合成燃料の製造実証に成功"
@@ -3149,111 +3232,6 @@
                     <strong>根拠</strong>：
                     
                       <a href="https://www.jfe-steel.co.jp/release/2026/02/260218.html" target="_blank" rel="noopener">https://www.jfe-steel.co.jp/release/2026/02/260218.html</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-5562" class="topic-row"
-              data-title="スイートスポット: 今も将来もニーズに応えます"
-              data-summary="Solution Suitesはニーズに合わせて進化し、Ignitionのコア機能を初日から提供する戦略的出発点です。"
-              data-imp="50"
-              data-recent="0"
-              data-date="2025-11-19T17:00:00+00:00"
-              data-tags="manufacturing,solution_suite">
-            <div>
-              
-                <span class="badge imp">重要度 50</span>
-              
-              
-                <a href="https://inductiveautomation.com/blog/the-suite-spot-meeting-your-needs-now-and-later" target="_blank" rel="noopener">スイートスポット: 今も将来もニーズに応えます</a>
-              
-              
-                <span class="small">（2025/11/20 02:00）</span>
-              
-
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">manufacturing</span>
-                  
-                    <span class="badge">solution_suite</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <div class="summary-preview">Solution Suitesはニーズに合わせて進化し、Ignitionのコア機能を初日から提供する戦略的出発点です。</div>
-            
-            <div class="mini">Inductive Automation</div>
-
-            
-              <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：Solution Suitesはニーズに合わせて進化し、Ignitionのコア機能を初日から提供する戦略的出発点です。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>Solution Suitesはシステムがニーズに応じて進化できる起点となる</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>コア機能と機能性を最初から提供することでIgnitionの潜在能力を実現できる</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>日一からIgnitionのフルポテンシャルを活用できる</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: システム拡張が容易で、初期設定が簡素化される点が魅力的。</div>
-                  <div><b>経営者目線</b>: 投資回収期間が短縮され、将来のアップグレードコストも抑えられる。</div>
-                  <div><b>消費者目線</b>: 導入後すぐに機能を利用でき、業務効率が向上する。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    
-                      <a href="https://inductiveautomation.com/blog/the-suite-spot-meeting-your-needs-now-and-later" target="_blank" rel="noopener">https://inductiveautomation.com/blog/the-suite-spot-meeti...</a>
                     
                   </div>
                 
@@ -4102,6 +4080,99 @@
 
           </li>
         
+           <li id="topic-8927" class="topic-row"
+              data-title="2026年1月粗鋼生産量"
+              data-summary="（要約を生成できませんでした）"
+              data-imp="20"
+              data-recent="1"
+              data-date="2026-02-26T07:17:49+00:00"
+              data-tags="">
+            <div>
+              
+                <span class="badge imp">重要度 20</span>
+              
+              
+                <a href="https://worldsteel.org/media/press-releases/2026/january-2026-crude-steel-production/" target="_blank" rel="noopener">2026年1月粗鋼生産量</a>
+              
+              
+                <span class="small">（2026/02/26 16:17）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+              <div class="summary-preview">（要約を生成できませんでした）</div>
+            
+            <div class="mini">worldsteel (World Steel Association)</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：（要約を生成できませんでした）</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://worldsteel.org/media/press-releases/2026/january-2026-crude-steel-production/" target="_blank" rel="noopener">https://worldsteel.org/media/press-releases/2026/january-...</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
            <li id="topic-9200" class="topic-row"
               data-title="三菱重工コンプレッサー、スイスの回転機器メンテナンス会社AST Turbo AGを買収&lt;br /&gt; ~国際市場におけるワールドクラスのフィールドサービス能力を強化~"
               data-summary="三菱重工がスイスのAST Turbo AGを買収し、回転機器メンテナンスのフィールドサービス能力を強化した。"
@@ -4322,70 +4393,6 @@
                   </div>
                 
               </details>
-            
-
-          </li>
-        
-           <li id="topic-8818" class="topic-row"
-              data-title="全製鉄所・製造所の基幹システムがオープン環境へ完全移行
-~『2025年の崖』の克服~"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-02-26T01:00:00+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://www.jfe-steel.co.jp/release/2026/02/260226.html" target="_blank" rel="noopener">全製鉄所・製造所の基幹システムがオープン環境へ完全移行
-~『2025年の崖』の克服~</a>
-              
-              
-                <span class="small">（2026/02/26 10:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-            <div class="mini">JFEホールディングス</div>
-
-            
-
-          </li>
-        
-           <li id="topic-8927" class="topic-row"
-              data-title="2026年1月粗鋼生産量"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-02-26T07:17:49+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://worldsteel.org/media/press-releases/2026/january-2026-crude-steel-production/" target="_blank" rel="noopener">2026年1月粗鋼生産量</a>
-              
-              
-                <span class="small">（2026/02/26 16:17）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-            <div class="mini">worldsteel (World Steel Association)</div>
-
             
 
           </li>
@@ -6047,9 +6054,9 @@
             </li>
           
             <li>
-              <a href="#topic-9295">アルバータ州、原油価格低迷による3年間の赤字に備える予算案を発表</a>
+              <a href="#topic-9326">米司法省、180億ドル規模のYPF訴訟でアルゼンチン側に味方</a>
               <span class="date">
-                2026/02/27 10:00
+                2026/02/27 12:30
               </span>
               
                 <span class="badge recent ">
@@ -6060,9 +6067,9 @@
             </li>
           
             <li>
-              <a href="#topic-9296">磁石戦争: 米国はレアアースに対する中国の支配をどのように打破するつもりなのか</a>
+              <a href="#topic-9327">クロアチア、ハンガリーとスロバキアに原油を供給する準備が整った</a>
               <span class="date">
-                2026/02/27 10:00
+                2026/02/27 13:30
               </span>
               
                 <span class="badge recent ">
@@ -6073,9 +6080,9 @@
             </li>
           
             <li>
-              <a href="#topic-9297">インド、今年一般炭輸入量30%削減を計画</a>
+              <a href="#topic-9328">米国とイランの対立が2026年の予測上昇を引き起こし、原油価格が3%上昇</a>
               <span class="date">
-                2026/02/27 11:30
+                2026/02/27 13:57
               </span>
               
                 <span class="badge recent ">
@@ -6191,115 +6198,6 @@
                     <strong>根拠</strong>：
                     
                       <a href="https://www.hellenicshippingnews.com/oman-asyad-shipping-net-profit-rises-9-in-2025/" target="_blank" rel="noopener">https://www.hellenicshippingnews.com/oman-asyad-shipping-...</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-8634" class="topic-row"
-              data-title="中国の需要低迷でオーストラリアのガス輸出業者が新たな買い手を模索"
-              data-summary="オーストラリアのガス輸出業者が中国需要低迷を受け、東カナダへ初めてLNG貨物を輸送し、新たな買い手探索に踏み切った。"
-              data-imp="80"
-              data-recent="1"
-              data-date="2026-02-25T12:30:00+00:00"
-              data-tags="market,LNG">
-            <div>
-              
-                <span class="badge imp">重要度 80</span>
-              
-              
-                <a href="https://oilprice.com/Latest-Energy-News/World-News/Weak-China-Demand-Pushes-Australian-Gas-Exporters-to-Seek-New-Buyers.html" target="_blank" rel="noopener">中国の需要低迷でオーストラリアのガス輸出業者が新たな買い手を模索</a>
-              
-              
-                <span class="small">（2026/02/25 21:30）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">market</span>
-                  
-                    <span class="badge">LNG</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <div class="summary-preview">オーストラリアのガス輸出業者が中国需要低迷を受け、東カナダへ初めてLNG貨物を輸送し、新たな買い手探索に踏み切った。</div>
-            
-            <div class="mini">OilPrice.com (Commodities)</div>
-
-            
-              <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：オーストラリアのガス輸出業者が中国需要低迷を受け、東カナダへ初めてLNG貨物を輸送し、新たな買い手探索に踏み切った。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>オーストラリアから東カナダへの16,000マイルのLNG航路を取ったこと</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>Maran Gas Hectorが1か月以上前に出発したこと</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>これはオーストラリア初の東カナダ向けLNG輸送である</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 船舶追跡データから航路と時間を把握できる点は運用最適化に有益。</div>
-                  <div><b>経営者目線</b>: 新規市場開拓が売上拡大につながり、リスク分散にもなる。</div>
-                  <div><b>消費者目線</b>: 輸送コスト増で価格が上昇する可能性がある。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    
-                      <a href="https://oilprice.com/Latest-Energy-News/World-News/Weak-China-Demand-Pushes-Australian-Gas-Exporters-to-Seek-New-Buyers.html" target="_blank" rel="noopener">https://oilprice.com/Latest-Energy-News/World-News/Weak-C...</a>
                     
                   </div>
                 
@@ -6530,6 +6428,107 @@
 
           </li>
         
+           <li id="topic-9099" class="topic-row"
+              data-title="CMB.TECH が 2025 年第 4 四半期の結果を発表 – 8 つの VLCC が破格の価格で販売"
+              data-summary="CMB.TECH NV, Euronext Brussels:CMBT and Euronext Oslo Børs:CMBTO reported its unaudited financial results today for the fourth quarter ended 31 December 2025. HIGHLIGHTS Financial highlights: Profit for the period of USD 90.1 million in Q4 2025. EBITDA for the same period was USD 322 million."
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-02-26T22:00:47+00:00"
+              data-tags="">
+            <div>
+              
+                <span class="badge imp">重要度 80</span>
+              
+              
+                <a href="https://www.hellenicshippingnews.com/cmb-tech-announces-q4-2025-results-eight-vlccs-sold-at-stellar-prices/" target="_blank" rel="noopener">CMB.TECH が 2025 年第 4 四半期の結果を発表 – 8 つの VLCC が破格の価格で販売</a>
+              
+              
+                <span class="small">（2026/02/27 07:00）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+              <div class="summary-preview">CMB.TECH NV, Euronext Brussels:CMBT and Euronext Oslo Børs:CMBTO reported its un…</div>
+            
+            <div class="mini">Hellenic Shipping News</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：CMB.TECH NV, Euronext Brussels:CMBT and Euronext Oslo Børs:CMBTO reported its unaudited financial results today for the fourth quarter ended 31 December 2025. HIGHLIGHTS Financial highlights: Profit for the period of USD 90.1 million in Q4 2025. EBITDA for the same period was USD 322 million.</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CMB.TECH NV, Euronext Brussels:CMBT and Euronext Oslo Børs:CMBTO reported its unaudited financial results today for the fourth quarter ended 31 December 2025. HIGHLIGHTS Financial highlights: Profit for the period of USD 90.1 million in Q4 2025. EBITDA for the same period was USD 322 million.</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CMB.TECH NV, Euronext Brussels:CMBT and Euronext Oslo Børs:CMBTO reported its unaudited financial results today for the fourth quarter ended 31 December 2025. HIGHLIGHTS Financial highlights: Profit for the period of USD 90.1 million in Q4 2025. EBITDA for the same period was USD 322 million.</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CMB.TECH NV, Euronext Brussels:CMBT and Euronext Oslo Børs:CMBTO reported its unaudited financial results today for the fourth quarter ended 31 December 2025. HIGHLIGHTS Financial highlights: Profit for the period of USD 90.1 million in Q4 2025. EBITDA for the same period was USD 322 million.</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://www.hellenicshippingnews.com/cmb-tech-announces-q4-2025-results-eight-vlccs-sold-at-stellar-prices/" target="_blank" rel="noopener">https://www.hellenicshippingnews.com/cmb-tech-announces-q...</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
            <li id="topic-9239" class="topic-row"
               data-title="ベネズエラ、19の石油生産契約を停止"
               data-summary="ベネズエラ政府が19件の石油生産契約を停止し、米国・ベネズエラ当局で再検討へ。"
@@ -6637,40 +6636,44 @@
 
           </li>
         
-           <li id="topic-7711" class="topic-row"
-              data-title="キルギスのエネルギー危機がロシアの核影響への扉を開く"
-              data-summary="ロシアがキルギスに小型モジュラー原子炉を建設する意向を表明し、エネルギー不足解消と戦略インフラ拡大を図る。"
+           <li id="topic-9328" class="topic-row"
+              data-title="米国とイランの対立が2026年の予測上昇を引き起こし、原油価格が3%上昇"
+              data-summary="米国とイランの対立が2026年の原油価格を3%上昇させ、$60/バレル超へ推移。"
               data-imp="80"
-              data-recent="0"
-              data-date="2026-02-20T17:00:00+00:00"
-              data-tags="nuclear,SMR,energy_infrastructure">
+              data-recent="1"
+              data-date="2026-02-27T13:57:22+00:00"
+              data-tags="energy,price,geopolitics">
             <div>
               
                 <span class="badge imp">重要度 80</span>
               
               
-                <a href="https://oilprice.com/Geopolitics/Asia/Kyrgyzstans-Energy-Emergency-Opens-the-Door-to-Russian-Nuclear-Influence.html" target="_blank" rel="noopener">キルギスのエネルギー危機がロシアの核影響への扉を開く</a>
+                <a href="https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Surge-3-as-US-Iran-Standoff-Triggers-Higher-2026-Forecasts.html" target="_blank" rel="noopener">米国とイランの対立が2026年の予測上昇を引き起こし、原油価格が3%上昇</a>
               
               
-                <span class="small">（2026/02/21 02:00）</span>
+                <span class="small">（2026/02/27 22:57）</span>
               
 
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
                   
-                    <span class="badge">nuclear</span>
+                    <span class="badge">energy</span>
                   
-                    <span class="badge">SMR</span>
+                    <span class="badge">price</span>
                   
-                    <span class="badge">energy_infrastructure</span>
+                    <span class="badge">geopolitics</span>
                   
                 </span>
               
             </div>
 
             
-              <div class="summary-preview">ロシアがキルギスに小型モジュラー原子炉を建設する意向を表明し、エネルギー不足解消と戦略インフラ拡大を図る。</div>
+              <div class="summary-preview">米国とイランの対立が2026年の原油価格を3%上昇させ、$60/バレル超へ推移。</div>
             
             <div class="mini">OilPrice.com (Commodities)</div>
 
@@ -6679,7 +6682,7 @@
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：ロシアがキルギスに小型モジュラー原子炉を建設する意向を表明し、エネルギー不足解消と戦略インフラ拡大を図る。</div>
+                  <div><strong>要約</strong>：米国とイランの対立が2026年の原油価格を3%上昇させ、$60/バレル超へ推移。</div>
                 
 
                 
@@ -6692,7 +6695,7 @@
                       
                         
                         
-                          <li>ロシアのプーチン大統領が2025年末にキルギスタン訪問中、小型モジュラー原子炉(SMR)建設への意思表示を行った。</li>
+                          <li>米国とイランの対立により地政学的緊張が高まった</li>
                           
                         
                       
@@ -6702,7 +6705,7 @@
                       
                         
                         
-                          <li>ロシアは従来の貿易関係から長期的な戦略インフラプロジェクトへ移行する意図を示した。</li>
+                          <li>オイル市場は過剰供給懸念があるものの、2026年予測価格を上方修正</li>
                           
                         
                       
@@ -6712,112 +6715,7 @@
                       
                         
                         
-                          <li>キルギスタンのエネルギー不足は消費増加、老朽化したインフラ、過度に水力発電への依存が原因である。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: SMR導入には設計・安全性評価が不可欠だが、既存インフラとの統合も課題となる。</div>
-                  <div><b>経営者目線</b>: 戦略的インフラ投資は長期的利益を生む一方、政治リスクとコスト管理が重要である。</div>
-                  <div><b>消費者目線</b>: エネルギー安定化により生活の質向上が期待できるが、安全性への懸念も残る。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    
-                      <a href="https://oilprice.com/Geopolitics/Asia/Kyrgyzstans-Energy-Emergency-Opens-the-Door-to-Russian-Nuclear-Influence.html" target="_blank" rel="noopener">https://oilprice.com/Geopolitics/Asia/Kyrgyzstans-Energy-...</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-7714" class="topic-row"
-              data-title="デンマーク、イランの影の艦隊と結びついたブラックリストに載ったコンテナ船を拿捕"
-              data-summary="デンマークがイランの影の艦隊と結びついたブラックリスト入りコンテナ船を拘束し、偽旗運航疑惑で調査中。"
-              data-imp="80"
-              data-recent="0"
-              data-date="2026-02-20T20:00:00+00:00"
-              data-tags="incident,safety_impact">
-            <div>
-              
-                <span class="badge imp">重要度 80</span>
-              
-              
-                <a href="https://oilprice.com/Geopolitics/International/Denmark-Seizes-Blacklisted-Container-Ship-Tied-to-Irans-Shadow-Fleet.html" target="_blank" rel="noopener">デンマーク、イランの影の艦隊と結びついたブラックリストに載ったコンテナ船を拿捕</a>
-              
-              
-                <span class="small">（2026/02/21 05:00）</span>
-              
-
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">incident</span>
-                  
-                    <span class="badge">safety_impact</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <div class="summary-preview">デンマークがイランの影の艦隊と結びついたブラックリスト入りコンテナ船を拘束し、偽旗運航疑惑で調査中。</div>
-            
-            <div class="mini">OilPrice.com (Commodities)</div>
-
-            
-              <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：デンマークがイランの影の艦隊と結びついたブラックリスト入りコンテナ船を拘束し、偽旗運航疑惑で調査中。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>デンマークはNoraというコンテナ船を拘束した</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>船はComoros国旗を無許可で使用していたと判断された</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>船はイランの影の艦隊に関連するブラックリスト入りだった</li>
+                          <li>Reuters調査で34人のアナリストが$1.50/バレル上昇を見込んだ</li>
                           
                         
                       
@@ -6828,9 +6726,9 @@
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 偽旗検知システムの強化が必要。</div>
-                  <div><b>経営者目線</b>: 国際規制遵守の重要性を再確認すべき。</div>
-                  <div><b>消費者目線</b>: 輸送業界への信頼回復が課題。</div>
+                  <div><b>技術者目線</b>: 需給モデルに影響し、システム負荷増大の可能性。</div>
+                  <div><b>経営者目線</b>: 収益機会とリスク管理の両面で戦略再検討が必要。</div>
+                  <div><b>消費者目線</b>: 価格上昇は燃料費や輸送コストに直結する懸念。</div>
                 </div>
                 
 
@@ -6840,7 +6738,7 @@
                   <div class="evidence-urls">
                     <strong>根拠</strong>：
                     
-                      <a href="https://oilprice.com/Geopolitics/International/Denmark-Seizes-Blacklisted-Container-Ship-Tied-to-Irans-Shadow-Fleet.html" target="_blank" rel="noopener">https://oilprice.com/Geopolitics/International/Denmark-Se...</a>
+                      <a href="https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Surge-3-as-US-Iran-Standoff-Triggers-Higher-2026-Forecasts.html" target="_blank" rel="noopener">https://oilprice.com/Latest-Energy-News/World-News/Oil-Pr...</a>
                     
                   </div>
                 
@@ -7691,34 +7589,38 @@
 
           </li>
         
-           <li id="topic-9295" class="topic-row"
-              data-title="アルバータ州、原油価格低迷による3年間の赤字に備える予算案を発表"
-              data-summary="（要約を生成できませんでした）"
-              data-imp="20"
-              data-recent="1"
-              data-date="2026-02-27T10:00:00+00:00"
-              data-tags="">
+           <li id="topic-8634" class="topic-row"
+              data-title="中国の需要低迷でオーストラリアのガス輸出業者が新たな買い手を模索"
+              data-summary="オーストラリアのガス輸出業者が中国需要低迷を受け、東カナダへ初めてLNG貨物を輸送し、新たな買い手探索に踏み切った。"
+              data-imp="80"
+              data-recent="0"
+              data-date="2026-02-25T12:30:00+00:00"
+              data-tags="market,LNG">
             <div>
               
-                <span class="badge imp">重要度 20</span>
+                <span class="badge imp">重要度 80</span>
               
               
-                <a href="https://oilprice.com/Latest-Energy-News/World-News/Alberta-Budgets-for-Three-Years-of-Deficit-on-Low-Oil-Prices.html" target="_blank" rel="noopener">アルバータ州、原油価格低迷による3年間の赤字に備える予算案を発表</a>
+                <a href="https://oilprice.com/Latest-Energy-News/World-News/Weak-China-Demand-Pushes-Australian-Gas-Exporters-to-Seek-New-Buyers.html" target="_blank" rel="noopener">中国の需要低迷でオーストラリアのガス輸出業者が新たな買い手を模索</a>
               
               
-                <span class="small">（2026/02/27 19:00）</span>
+                <span class="small">（2026/02/25 21:30）</span>
               
 
               
-                <span class="badge recent ">
-                  48h +1
-                </span>
               
+                <span class="small">
+                  
+                    <span class="badge">market</span>
+                  
+                    <span class="badge">LNG</span>
+                  
+                </span>
               
             </div>
 
             
-              <div class="summary-preview">（要約を生成できませんでした）</div>
+              <div class="summary-preview">オーストラリアのガス輸出業者が中国需要低迷を受け、東カナダへ初めてLNG貨物を輸送し、新たな買い手探索に踏み切った。</div>
             
             <div class="mini">OilPrice.com (Commodities)</div>
 
@@ -7727,7 +7629,7 @@
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：（要約を生成できませんでした）</div>
+                  <div><strong>要約</strong>：オーストラリアのガス輸出業者が中国需要低迷を受け、東カナダへ初めてLNG貨物を輸送し、新たな買い手探索に踏み切った。</div>
                 
 
                 
@@ -7740,7 +7642,7 @@
                       
                         
                         
-                          <li>Alberta will end fiscal 2025/26 with a deficit</li>
+                          <li>オーストラリアから東カナダへの16,000マイルのLNG航路を取ったこと</li>
                           
                         
                       
@@ -7750,7 +7652,7 @@
                       
                         
                         
-                          <li>Alberta will run a deficit for the next three fiscal years</li>
+                          <li>Maran Gas Hectorが1か月以上前に出発したこと</li>
                           
                         
                       
@@ -7760,7 +7662,7 @@
                       
                         
                         
-                          <li>The deficit for fiscal 2025/26 is calculated at C$4.1 billion ($3 billion)</li>
+                          <li>これはオーストラリア初の東カナダ向けLNG輸送である</li>
                           
                         
                       
@@ -7771,9 +7673,9 @@
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
-                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
-                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                  <div><b>技術者目線</b>: 船舶追跡データから航路と時間を把握できる点は運用最適化に有益。</div>
+                  <div><b>経営者目線</b>: 新規市場開拓が売上拡大につながり、リスク分散にもなる。</div>
+                  <div><b>消費者目線</b>: 輸送コスト増で価格が上昇する可能性がある。</div>
                 </div>
                 
 
@@ -7783,7 +7685,7 @@
                   <div class="evidence-urls">
                     <strong>根拠</strong>：
                     
-                      <a href="https://oilprice.com/Latest-Energy-News/World-News/Alberta-Budgets-for-Three-Years-of-Deficit-on-Low-Oil-Prices.html" target="_blank" rel="noopener">https://oilprice.com/Latest-Energy-News/World-News/Albert...</a>
+                      <a href="https://oilprice.com/Latest-Energy-News/World-News/Weak-China-Demand-Pushes-Australian-Gas-Exporters-to-Seek-New-Buyers.html" target="_blank" rel="noopener">https://oilprice.com/Latest-Energy-News/World-News/Weak-C...</a>
                     
                   </div>
                 
@@ -7792,22 +7694,22 @@
 
           </li>
         
-           <li id="topic-9296" class="topic-row"
-              data-title="磁石戦争: 米国はレアアースに対する中国の支配をどのように打破するつもりなのか"
-              data-summary="（要約を生成できませんでした）"
-              data-imp="20"
+           <li id="topic-9327" class="topic-row"
+              data-title="クロアチア、ハンガリーとスロバキアに原油を供給する準備が整った"
+              data-summary="クロアチアがハンガリー・スロバキアへ原油供給を準備し、ロシア石油の不足に対処する。"
+              data-imp="50"
               data-recent="1"
-              data-date="2026-02-27T10:00:00+00:00"
-              data-tags="">
+              data-date="2026-02-27T13:30:00+00:00"
+              data-tags="market,energy_security,supply_chain">
             <div>
               
-                <span class="badge imp">重要度 20</span>
+                <span class="badge imp">重要度 50</span>
               
               
-                <a href="https://oilprice.com/Energy/Energy-General/Magnet-Wars-How-the-US-Plans-to-Break-Chinas-Grip-on-Rare-Earths.html" target="_blank" rel="noopener">磁石戦争: 米国はレアアースに対する中国の支配をどのように打破するつもりなのか</a>
+                <a href="https://oilprice.com/Latest-Energy-News/World-News/Croatia-Ready-to-Supply-Crude-to-Hungary-and-Slovakia.html" target="_blank" rel="noopener">クロアチア、ハンガリーとスロバキアに原油を供給する準備が整った</a>
               
               
-                <span class="small">（2026/02/27 19:00）</span>
+                <span class="small">（2026/02/27 22:30）</span>
               
 
               
@@ -7816,10 +7718,20 @@
                 </span>
               
               
+                <span class="small">
+                  
+                    <span class="badge">market</span>
+                  
+                    <span class="badge">energy_security</span>
+                  
+                    <span class="badge">supply_chain</span>
+                  
+                </span>
+              
             </div>
 
             
-              <div class="summary-preview">（要約を生成できませんでした）</div>
+              <div class="summary-preview">クロアチアがハンガリー・スロバキアへ原油供給を準備し、ロシア石油の不足に対処する。</div>
             
             <div class="mini">OilPrice.com (Commodities)</div>
 
@@ -7828,7 +7740,7 @@
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：（要約を生成できませんでした）</div>
+                  <div><strong>要約</strong>：クロアチアがハンガリー・スロバキアへ原油供給を準備し、ロシア石油の不足に対処する。</div>
                 
 
                 
@@ -7841,7 +7753,7 @@
                       
                         
                         
-                          <li>磁石戦争は、レアアースに対する中国の支配を打破するための重要な資源である磁石が中心に位置している。</li>
+                          <li>クロアチアはハンガリーとスロバキアへの原油供給を確保できる</li>
                           
                         
                       
@@ -7851,7 +7763,7 @@
                       
                         
                         
-                          <li>磁石は軍事用機器の製造、武器の交換速度、産業の競争力など、国際的な競争力を決定的に影響を与える重要な要素であり、米国の勝利はその能力を高めるための唯一の困難な能力である。</li>
+                          <li>ハンガリーとスロバキアは1か月間ロシア石油を受け取っていない</li>
                           
                         
                       
@@ -7861,7 +7773,7 @@
                       
                         
                         
-                          <li>レアアース磁石の国内生産が米国にとって重要で、それは軍事用機器の製造、武器の交換速度、産業競争力など、国際的な競争力を決定的に影響を与える重要な要素であり、米国の勝利はその能力を高めるための唯一の困難な能力である。</li>
+                          <li>両国は戦略備蓄からオイルを放出している</li>
                           
                         
                       
@@ -7872,9 +7784,9 @@
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 技術者目線のコメント</div>
-                  <div><b>経営者目線</b>: 経営者目線のコメント</div>
-                  <div><b>消費者目線</b>: 消費者目線のコメント</div>
+                  <div><b>技術者目線</b>: 物流・パイプラインの再構築が必要だ。</div>
+                  <div><b>経営者目線</b>: エネルギー安全保障と経済安定に貢献する。</div>
+                  <div><b>消費者目線</b>: 石油価格への影響は限定的だが安心感は増す。</div>
                 </div>
                 
 
@@ -7884,7 +7796,7 @@
                   <div class="evidence-urls">
                     <strong>根拠</strong>：
                     
-                      <a href="https://oilprice.com/Energy/Energy-General/Magnet-Wars-How-the-US-Plans-to-Break-Chinas-Grip-on-Rare-Earths.html" target="_blank" rel="noopener">https://oilprice.com/Energy/Energy-General/Magnet-Wars-Ho...</a>
+                      <a href="https://oilprice.com/Latest-Energy-News/World-News/Croatia-Ready-to-Supply-Crude-to-Hungary-and-Slovakia.html" target="_blank" rel="noopener">https://oilprice.com/Latest-Energy-News/World-News/Croati...</a>
                     
                   </div>
                 
@@ -7893,27 +7805,27 @@
 
           </li>
         
-           <li id="topic-9297" class="topic-row"
-              data-title="インド、今年一般炭輸入量30%削減を計画"
+           <li id="topic-8936" class="topic-row"
+              data-title="中国の生産抑制で鉄鋼景気が緩和"
               data-summary="（要約を生成できませんでした）"
               data-imp="20"
-              data-recent="1"
-              data-date="2026-02-27T11:30:00+00:00"
+              data-recent="2"
+              data-date="2026-02-26T11:00:37+00:00"
               data-tags="OT/セキュリティ関連では sbom, patch_window, safety_impact を含める">
             <div>
               
                 <span class="badge imp">重要度 20</span>
               
               
-                <a href="https://oilprice.com/Latest-Energy-News/World-News/India-Plans-30-Slash-in-Thermal-Coal-Imports-This-Year.html" target="_blank" rel="noopener">インド、今年一般炭輸入量30%削減を計画</a>
+                <a href="https://www.hellenicshippingnews.com/iron-ore-slips-as-china-curbs-steel-output/" target="_blank" rel="noopener">中国の生産抑制で鉄鋼景気が緩和</a>
               
               
-                <span class="small">（2026/02/27 20:30）</span>
+                <span class="small">（2026/02/26 20:00）</span>
               
 
               
                 <span class="badge recent ">
-                  48h +1
+                  48h +2
                 </span>
               
               
@@ -7928,7 +7840,7 @@
             
               <div class="summary-preview">（要約を生成できませんでした）</div>
             
-            <div class="mini">OilPrice.com (Commodities)</div>
+            <div class="mini">Hellenic Shipping News</div>
 
             
               <details class="insight" role="group">
@@ -7948,7 +7860,7 @@
                       
                         
                         
-                          <li>India seeks to reduce thermal coal imports</li>
+                          <li>中国当局命令北方钢铁厂暂时减少产量以限制污染</li>
                           
                         
                       
@@ -7958,7 +7870,7 @@
                       
                         
                         
-                          <li>India will use more domestic coal supply</li>
+                          <li>铁矿石期货价格下跌至每吨CNY 750以下,这是之前会议期间价格上涨的部分回撤。</li>
                           
                         
                       
@@ -7968,7 +7880,7 @@
                       
                         
                         
-                          <li>India plans to slash thermal coal imports by 30%</li>
+                          <li>中国当局下令北方钢铁厂暂时减少产量以限制污染</li>
                           
                         
                       
@@ -7991,7 +7903,9 @@
                   <div class="evidence-urls">
                     <strong>根拠</strong>：
                     
-                      <a href="https://oilprice.com/Latest-Energy-News/World-News/India-Plans-30-Slash-in-Thermal-Coal-Imports-This-Year.html" target="_blank" rel="noopener">https://oilprice.com/Latest-Energy-News/World-News/India-...</a>
+                      <a href="根拠URL(最低1つ)" target="_blank" rel="noopener">根拠URL(最低1つ)</a> | 
+                    
+                      <a href="https://www.hellenicshippingnews.com/iron-ore-slips-as-china-curbs-steel-output/" target="_blank" rel="noopener">https://www.hellenicshippingnews.com/iron-ore-slips-as-ch...</a>
                     
                   </div>
                 
@@ -8031,32 +7945,32 @@
 
           </li>
         
-           <li id="topic-8936" class="topic-row"
-              data-title="中国の生産抑制で鉄鋼景気が緩和"
+           <li id="topic-9326" class="topic-row"
+              data-title="米司法省、180億ドル規模のYPF訴訟でアルゼンチン側に味方"
               data-summary=""
               data-imp="0"
-              data-recent="2"
-              data-date="2026-02-26T11:00:37+00:00"
+              data-recent="1"
+              data-date="2026-02-27T12:30:00+00:00"
               data-tags="">
             <div>
               
               
-                <a href="https://www.hellenicshippingnews.com/iron-ore-slips-as-china-curbs-steel-output/" target="_blank" rel="noopener">中国の生産抑制で鉄鋼景気が緩和</a>
+                <a href="https://oilprice.com/Latest-Energy-News/World-News/US-Department-of-Justice-Sides-With-Argentina-in-18-Billion-YPF-Lawsuit.html" target="_blank" rel="noopener">米司法省、180億ドル規模のYPF訴訟でアルゼンチン側に味方</a>
               
               
-                <span class="small">（2026/02/26 20:00）</span>
+                <span class="small">（2026/02/27 21:30）</span>
               
 
               
                 <span class="badge recent ">
-                  48h +2
+                  48h +1
                 </span>
               
               
             </div>
 
             
-            <div class="mini">Hellenic Shipping News</div>
+            <div class="mini">OilPrice.com (Commodities)</div>
 
             
 
@@ -11503,6 +11417,99 @@
 
           </li>
         
+           <li id="topic-8901" class="topic-row"
+              data-title="ニコン、Trener Roboticsへの投資でビジョンロボティクス戦略を拡大"
+              data-summary="（要約を生成できませんでした）"
+              data-imp="20"
+              data-recent="1"
+              data-date="2026-02-26T05:58:34+00:00"
+              data-tags="">
+            <div>
+              
+                <span class="badge imp">重要度 20</span>
+              
+              
+                <a href="https://metrology.news/nikon-expands-vision-robotics-strategy-with-investment-in-trener-robotics/" target="_blank" rel="noopener">ニコン、Trener Roboticsへの投資でビジョンロボティクス戦略を拡大</a>
+              
+              
+                <span class="small">（2026/02/26 14:58）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+              <div class="summary-preview">（要約を生成できませんでした）</div>
+            
+            <div class="mini">Metrology and Quality News</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：（要約を生成できませんでした）</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://metrology.news/nikon-expands-vision-robotics-strategy-with-investment-in-trener-robotics/" target="_blank" rel="noopener">https://metrology.news/nikon-expands-vision-robotics-stra...</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
            <li id="topic-9236" class="topic-row"
               data-title="自動化された確率計測学が上位 5 位のデバイス メーカーの生産決定を推進"
               data-summary="（要約を生成できませんでした）"
@@ -11612,45 +11619,16 @@
 
           </li>
         
-           <li id="topic-8901" class="topic-row"
-              data-title="ニコン、Trener Roboticsへの投資でビジョンロボティクス戦略を拡大"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-02-26T05:58:34+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://metrology.news/nikon-expands-vision-robotics-strategy-with-investment-in-trener-robotics/" target="_blank" rel="noopener">ニコン、Trener Roboticsへの投資でビジョンロボティクス戦略を拡大</a>
-              
-              
-                <span class="small">（2026/02/26 14:58）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-            <div class="mini">Metrology and Quality News</div>
-
-            
-
-          </li>
-        
            <li id="topic-8902" class="topic-row"
               data-title="適応型プロセス制御による深穴加工の標準化"
-              data-summary=""
-              data-imp="0"
+              data-summary="DMG MORI推出适应性钻削控制（ADC），一种新的技术周期，旨在提高通用加工中心上钻削应用的可靠性、质量以及使用便利性。"
+              data-imp="10"
               data-recent="1"
               data-date="2026-02-26T06:00:44+00:00"
-              data-tags="">
+              data-tags="OT/セキュリティ関連では sbom, patch_window, safety_impact を含める">
             <div>
+              
+                <span class="badge imp">重要度 10</span>
               
               
                 <a href="https://metrology.news/standardising-deep-hole-drilling-through-adaptive-process-control/" target="_blank" rel="noopener">適応型プロセス制御による深穴加工の標準化</a>
@@ -11665,11 +11643,85 @@
                 </span>
               
               
+                <span class="small">
+                  
+                    <span class="badge">OT/セキュリティ関連では sbom, patch_window, safety_impact を含める</span>
+                  
+                </span>
+              
             </div>
 
             
+              <div class="summary-preview">DMG MORI推出适应性钻削控制（ADC），一种新的技术周期，旨在提高通用加工中心上钻削应用的可靠性、质量以及使用便利性。</div>
+            
             <div class="mini">Metrology and Quality News</div>
 
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：DMG MORI推出适应性钻削控制（ADC），一种新的技术周期，旨在提高通用加工中心上钻削应用的可靠性、质量以及使用便利性。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>DMG MORI推出适应性钻削控制(ADC)</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>新技术周期旨在提高钻削应用的可靠性、质量及使用便利性</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://metrology.news/standardising-deep-hole-drilling-through-adaptive-process-control/" target="_blank" rel="noopener">https://metrology.news/standardising-deep-hole-drilling-t...</a>
+                    
+                  </div>
+                
+              </details>
             
 
           </li>
@@ -11724,7 +11776,22 @@
     <div class="topbox">
       <h3>⭐注目TOP5（48h増分）</h3>
       
-        <div class="small">該当なし</div>
+        <ul>
+          
+            <li>
+              <a href="#topic-9318">メンテナンスプロセスを文書化するためのベストプラクティス</a>
+              <span class="date">
+                2026/02/27 12:12
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+        </ul>
       
     </div>
 
@@ -12155,6 +12222,37 @@
 
           </li>
         
+           <li id="topic-9318" class="topic-row"
+              data-title="メンテナンスプロセスを文書化するためのベストプラクティス"
+              data-summary=""
+              data-imp="0"
+              data-recent="1"
+              data-date="2026-02-27T12:12:00+00:00"
+              data-tags="">
+            <div>
+              
+              
+                <a href="https://worktrek.com/blog/maintenance-process-documenting-best-practices/" target="_blank" rel="noopener">メンテナンスプロセスを文書化するためのベストプラクティス</a>
+              
+              
+                <span class="small">（2026/02/27 21:12）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+            <div class="mini">WorkTrek CMMS Blog</div>
+
+            
+
+          </li>
+        
       </ul>
     
       </div>
@@ -12247,6 +12345,121 @@
 
     
       <ul>
+        
+           <li id="topic-9156" class="topic-row"
+              data-title="PR: 「Windows Server 2016のEOS」間近──「スロット」が命取りとなる時代のサーバー移行戦略"
+              data-summary="Windows Server 2016のEOSが迫り、サポート終了は攻撃者の目標となる。今こそサーバー移行に踏み切るべき。"
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-02-27T01:00:00+00:00"
+              data-tags="OT/セキュリティ関連,Windows Server 2016のEOS,ランサムウェアの脅威,サポート終了,移行戦略">
+            <div>
+              
+                <span class="badge imp">重要度 80</span>
+              
+              
+                <a href="https://atmarkit.itmedia.co.jp/ait/articles/2602/27/news008.html" target="_blank" rel="noopener">PR: 「Windows Server 2016のEOS」間近──「スロット」が命取りとなる時代のサーバー移行戦略</a>
+              
+              
+                <span class="small">（2026/02/27 10:00）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">OT/セキュリティ関連</span>
+                  
+                    <span class="badge">Windows Server 2016のEOS</span>
+                  
+                    <span class="badge">ランサムウェアの脅威</span>
+                  
+                    <span class="badge">サポート終了</span>
+                  
+                    <span class="badge">移行戦略</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <div class="summary-preview">Windows Server 2016のEOSが迫り、サポート終了は攻撃者の目標となる。今こそサーバー移行に踏み切るべき。</div>
+            
+            <div class="mini">@IT</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：Windows Server 2016のEOSが迫り、サポート終了は攻撃者の目標となる。今こそサーバー移行に踏み切るべき。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>Windows Server 2016の延長サポート終了</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>ランサムウェアの脅威が高まる中</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 技術者目線</div>
+                  <div><b>経営者目線</b>: 経営者目線</div>
+                  <div><b>消費者目線</b>: 消費者目線</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://atmarkit.itmedia.co.jp/ait/articles/2602/27/news008.html" target="_blank" rel="noopener">https://atmarkit.itmedia.co.jp/ait/articles/2602/27/news008.html</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
         
            <li id="topic-6661" class="topic-row"
               data-title="本番環境でのKubernetesの利用率が82%に到達 「AI基盤の標準に」"
@@ -13736,111 +13949,6 @@
 
           </li>
         
-           <li id="topic-7562" class="topic-row"
-              data-title="「Linuxの安全性が揺らいでいる」 高化する手口への対抗策、HashiCorpが解説"
-              data-summary="Linuxの安全性が揺らいでいる中、HashiCorpは従来の境界型防御から脱却した新たな防御戦略を解説した。"
-              data-imp="70"
-              data-recent="0"
-              data-date="2026-02-20T04:00:00+00:00"
-              data-tags="linux,defense_strategy">
-            <div>
-              
-                <span class="badge imp">重要度 70</span>
-              
-              
-                <a href="https://atmarkit.itmedia.co.jp/ait/articles/2602/20/news058.html" target="_blank" rel="noopener">「Linuxの安全性が揺らいでいる」 高化する手口への対抗策、HashiCorpが解説</a>
-              
-              
-                <span class="small">（2026/02/20 13:00）</span>
-              
-
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">linux</span>
-                  
-                    <span class="badge">defense_strategy</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <div class="summary-preview">Linuxの安全性が揺らいでいる中、HashiCorpは従来の境界型防御から脱却した新たな防御戦略を解説した。</div>
-            
-            <div class="mini">@IT</div>
-
-            
-              <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：Linuxの安全性が揺らいでいる中、HashiCorpは従来の境界型防御から脱却した新たな防御戦略を解説した。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>LinuxはクラウドやAI基盤を支える中核として広く利用されている。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>攻撃手法が巧妙化しており、従来の境界型防御では不十分になってきている。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>HashiCorpが新たな防御戦略について解説した。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 境界型防御から脱却する必要性を示し、新手法への移行を促す。</div>
-                  <div><b>経営者目線</b>: クラウド・AI基盤の安全確保に向けて投資と方針転換が不可欠であることを指摘。</div>
-                  <div><b>消費者目線</b>: Linuxベースサービス利用者はセキュリティ対策の進化を期待できる。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    
-                      <a href="https://atmarkit.itmedia.co.jp/ait/articles/2602/20/news058.html" target="_blank" rel="noopener">https://atmarkit.itmedia.co.jp/ait/articles/2602/20/news058.html</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
            <li id="topic-9196" class="topic-row"
               data-title="JetBrains、IDEに組み込まれた「OpenAI Codex」統合 開発タスクを委託可能に"
               data-summary="（要約を生成できませんでした）"
@@ -14263,37 +14371,6 @@
 
           </li>
         
-           <li id="topic-9156" class="topic-row"
-              data-title="PR: 「Windows Server 2016のEOS」間近──「スロット」が命取りとなる時代のサーバー移行戦略"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-02-27T01:00:00+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://atmarkit.itmedia.co.jp/ait/articles/2602/27/news008.html" target="_blank" rel="noopener">PR: 「Windows Server 2016のEOS」間近──「スロット」が命取りとなる時代のサーバー移行戦略</a>
-              
-              
-                <span class="small">（2026/02/27 10:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-            <div class="mini">@IT</div>
-
-            
-
-          </li>
-        
       </ul>
     
       </div>
@@ -14314,32 +14391,6 @@
       <h3>⭐注目TOP5（48h増分）</h3>
       
         <ul>
-          
-            <li>
-              <a href="#topic-8988">粘土と木材の熱電池と 3D プリントされた太陽光発電: 2026 年 2 月の最高のグリーン イノベーション</a>
-              <span class="date">
-                2026/02/27 08:25
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-8989">事実とフィクション: 再生可能エネルギーはトランプ大統領の「化石優位」計画に勝利するのか?</a>
-              <span class="date">
-                2026/02/26 16:55
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
           
             <li>
               <a href="#topic-9271">New edie Extra ポッドキャスト: 2026 年のスコープ 3 排出量の測定と削減に関する重要なヒント</a>
@@ -14380,12 +14431,149 @@
               <span class="small">（累計 1）</span>
             </li>
           
+            <li>
+              <a href="#topic-9315">分析:改革会議の気候変動懐疑論者のリチャード・タイス氏が5,500万ポンドの洪水資金を獲得</a>
+              <span class="date">
+                2026/02/27 12:06
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-9316">2026 年 2 月 27 日の報告書: トランプ大統領の化石燃料に関する話 |モディ・ルラ希土類協定 |イギリスに「グリーンラッシュ」はありますか?</a>
+              <span class="date">
+                2026/02/27 13:32
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
         </ul>
       
     </div>
 
     
       <ul>
+        
+           <li id="topic-9316" class="topic-row"
+              data-title="2026 年 2 月 27 日の報告書: トランプ大統領の化石燃料に関する話 |モディ・ルラ希土類協定 |イギリスに「グリーンラッシュ」はありますか?"
+              data-summary="トランプ大統領が石油・石炭産業を支持し、電気料金の安さに注力した一方で、最高裁は石油会社訴訟を審理することを決定。"
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-02-27T13:32:25+00:00"
+              data-tags="fossil_fuel,policy,energy">
+            <div>
+              
+                <span class="badge imp">重要度 80</span>
+              
+              
+                <a href="https://www.carbonbrief.org/debriefed-27-february-2026-trumps-fossil-fuel-talk-modi-lula-rare-earth-pact-is-there-a-uk-greenlash/" target="_blank" rel="noopener">2026 年 2 月 27 日の報告書: トランプ大統領の化石燃料に関する話 |モディ・ルラ希土類協定 |イギリスに「グリーンラッシュ」はありますか?</a>
+              
+              
+                <span class="small">（2026/02/27 22:32）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">fossil_fuel</span>
+                  
+                    <span class="badge">policy</span>
+                  
+                    <span class="badge">energy</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <div class="summary-preview">トランプ大統領が石油・石炭産業を支持し、電気料金の安さに注力した一方で、最高裁は石油会社訴訟を審理することを決定。</div>
+            
+            <div class="mini">Carbon Brief</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：トランプ大統領が石油・石炭産業を支持し、電気料金の安さに注力した一方で、最高裁は石油会社訴訟を審理することを決定。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>トランプ大統領がSOTUで『ドリル・ベビー』政策を再度強調し、化石燃料産業と電気料金の安さを支持した</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>米国行政は石炭火力発電所からの水銀排出制限を緩和した</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>最高裁判所が石油会社による連邦訴訟の審理を承諾した</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 化石燃料への依存が技術的課題を増大させ、再生可能エネルギー導入遅延に繋がる恐れ。</div>
+                  <div><b>経営者目線</b>: 経営戦略は環境規制の変動に柔軟に対応し、リスク管理体制を強化する必要がある。</div>
+                  <div><b>消費者目線</b>: 消費者は電気料金安定と環境負荷低減の両立を期待しているが、政策変更で不確実性が増す。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://www.carbonbrief.org/debriefed-27-february-2026-trumps-fossil-fuel-talk-modi-lula-rare-earth-pact-is-there-a-uk-greenlash/" target="_blank" rel="noopener">https://www.carbonbrief.org/debriefed-27-february-2026-tr...</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
         
            <li id="topic-6623" class="topic-row"
               data-title="DESNZの人員削減によってクリーン電力計画が損なわれることはないとエド・ミリバンド氏は語る"
@@ -15869,218 +16057,6 @@
 
           </li>
         
-           <li id="topic-6968" class="topic-row"
-              data-title="他者に力を与えることが企業の持続可能性にとって次のステップであるべき理由"
-              data-summary="企業の持続可能性は、他者を支援することが新たなステップとなるべき。"
-              data-imp="75"
-              data-recent="0"
-              data-date="2026-02-18T08:11:50+00:00"
-              data-tags="decarbonization_ops">
-            <div>
-              
-                <span class="badge imp">重要度 75</span>
-              
-              
-                <a href="https://www.edie.net/why-empowering-others-should-be-the-next-step-forward-for-corporate-sustainability/" target="_blank" rel="noopener">他者に力を与えることが企業の持続可能性にとって次のステップであるべき理由</a>
-              
-              
-                <span class="small">（2026/02/18 17:11）</span>
-              
-
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">decarbonization_ops</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <div class="summary-preview">企業の持続可能性は、他者を支援することが新たなステップとなるべき。</div>
-            
-            <div class="mini">edie (Sustainability)</div>
-
-            
-              <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：企業の持続可能性は、他者を支援することが新たなステップとなるべき。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>企業の持続可能性は他者を支援することに進化するべき</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>これはPeter Braggが指摘している</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
-                          
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 技術的な視点からも、他の組織や個人をサポートすることは重要である。</div>
-                  <div><b>経営者目線</b>: 経営層としては、協力体制の強化と他者への支援が企業の持続可能性向上に貢献する。</div>
-                  <div><b>消費者目線</b>: 消費者目線では、企業が他者を支援することで、全体としての環境負荷軽減に貢献できる</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    
-                      <a href="https://www.edie.net/why-empowering-others-should-be-the-next-step-forward-for-corporate-sustainability/" target="_blank" rel="noopener">https://www.edie.net/why-empowering-others-should-be-the-...</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-8988" class="topic-row"
-              data-title="粘土と木材の熱電池と 3D プリントされた太陽光発電: 2026 年 2 月の最高のグリーン イノベーション"
-              data-summary="（要約を生成できませんでした）"
-              data-imp="20"
-              data-recent="1"
-              data-date="2026-02-27T08:25:45+00:00"
-              data-tags="OT/セキュリティ関連では sbom, patch_window, safety_impact を含める,3D プリントされた太陽光発電">
-            <div>
-              
-                <span class="badge imp">重要度 20</span>
-              
-              
-                <a href="https://www.edie.net/clay-and-wood-thermal-batteries-and-3d-printed-solar-the-best-green-innovations-of-february-2026/" target="_blank" rel="noopener">粘土と木材の熱電池と 3D プリントされた太陽光発電: 2026 年 2 月の最高のグリーン イノベーション</a>
-              
-              
-                <span class="small">（2026/02/27 17:25）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">OT/セキュリティ関連では sbom, patch_window, safety_impact を含める</span>
-                  
-                    <span class="badge">3D プリントされた太陽光発電</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <div class="summary-preview">（要約を生成できませんでした）</div>
-            
-            <div class="mini">edie (Sustainability)</div>
-
-            
-              <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：（要約を生成できませんでした）</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>粘土と木材の熱電池</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>3D プリントされた太陽光発電</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>2026 年 2 月の最高のグリーン イノベーション</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 技術者目線のコメント(50 字以内)</div>
-                  <div><b>経営者目線</b>: 経営者目線のコメント(50 字以内)</div>
-                  <div><b>消費者目線</b>: 消費者目線のコメント(50 字以内)</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    
-                      <a href="根拠URL(最低1つ)" target="_blank" rel="noopener">根拠URL(最低1つ)</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
            <li id="topic-9271" class="topic-row"
               data-title="New edie Extra ポッドキャスト: 2026 年のスコープ 3 排出量の測定と削減に関する重要なヒント"
               data-summary="（要約を生成できませんでした）"
@@ -16380,20 +16356,20 @@
 
           </li>
         
-           <li id="topic-8989" class="topic-row"
-              data-title="事実とフィクション: 再生可能エネルギーはトランプ大統領の「化石優位」計画に勝利するのか?"
+           <li id="topic-9315" class="topic-row"
+              data-title="分析:改革会議の気候変動懐疑論者のリチャード・タイス氏が5,500万ポンドの洪水資金を獲得"
               data-summary=""
               data-imp="0"
               data-recent="1"
-              data-date="2026-02-26T16:55:37+00:00"
+              data-date="2026-02-27T12:06:09+00:00"
               data-tags="">
             <div>
               
               
-                <a href="https://www.edie.net/fact-vs-fiction-are-renewables-triumphing-over-trumps-fossil-dominance-plans/" target="_blank" rel="noopener">事実とフィクション: 再生可能エネルギーはトランプ大統領の「化石優位」計画に勝利するのか?</a>
+                <a href="https://www.carbonbrief.org/analysis-constituency-of-reforms-climate-sceptic-richard-tice-gets-55m-flood-funding/" target="_blank" rel="noopener">分析:改革会議の気候変動懐疑論者のリチャード・タイス氏が5,500万ポンドの洪水資金を獲得</a>
               
               
-                <span class="small">（2026/02/27 01:55）</span>
+                <span class="small">（2026/02/27 21:06）</span>
               
 
               
@@ -16405,7 +16381,7 @@
             </div>
 
             
-            <div class="mini">edie (Sustainability)</div>
+            <div class="mini">Carbon Brief</div>
 
             
 
@@ -16435,19 +16411,6 @@
       <h3>⭐注目TOP5（48h増分）</h3>
       
         <ul>
-          
-            <li>
-              <a href="#topic-9064">コープランド XWEB および XWEB Pro</a>
-              <span class="date">
-                2026/02/26 12:00
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
           
             <li>
               <a href="#topic-9065">Pelco, Inc. Sarix Pro 3 シリーズ IP カメラ</a>
@@ -16501,6 +16464,19 @@
               <span class="small">（累計 1）</span>
             </li>
           
+            <li>
+              <a href="#topic-9166">お知らせ:JPCERT/CC Eyes「JSAC2026 開催レポート~DAY 2~」</a>
+              <span class="date">
+                2026/02/27 02:05
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
         </ul>
       
     </div>
@@ -16508,45 +16484,55 @@
     
       <ul>
         
-           <li id="topic-5674" class="topic-row"
-              data-title="JVN: シーメンス製品に対するアップデート(2026年1月)"
-              data-summary="Siemensが2026年1月に製品向けアップデートを公開。"
-              data-imp="80"
-              data-recent="0"
-              data-date="None"
-              data-tags="sbom,patch_window">
+           <li id="topic-9059" class="topic-row"
+              data-title="スイッチEV swtchenergy.com"
+              data-summary="スイッチEV swtchenergy.comは、電力システムや交通系の重要な基盤施設であるため、脆弱性が発見され、攻撃者による無効化を防止するための対策が必要です。"
+              data-imp="100"
+              data-recent="1"
+              data-date="2026-02-26T12:00:00+00:00"
+              data-tags="OT/セキュリティ関連,s bom,patch window,safety impact">
             <div>
               
-                <span class="badge imp">重要度 80</span>
+                <span class="badge imp">重要度 100</span>
               
               
-                JVN: シーメンス製品に対するアップデート(2026年1月)
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-06" target="_blank" rel="noopener">スイッチEV swtchenergy.com</a>
               
+              
+                <span class="small">（2026/02/26 21:00）</span>
               
 
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
                   
-                    <span class="badge">sbom</span>
+                    <span class="badge">OT/セキュリティ関連</span>
                   
-                    <span class="badge">patch_window</span>
+                    <span class="badge">s bom</span>
+                  
+                    <span class="badge">patch window</span>
+                  
+                    <span class="badge">safety impact</span>
                   
                 </span>
               
             </div>
 
             
-              <div class="summary-preview">Siemensが2026年1月に製品向けアップデートを公開。</div>
+              <div class="summary-preview">スイッチEV swtchenergy.comは、電力システムや交通系の重要な基盤施設であるため、脆弱性が発見され、攻撃者による無効化を防止するための対策が必要で…</div>
             
-            
+            <div class="mini">CISA ICS Advisories</div>
 
             
               <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：Siemensが2026年1月に製品向けアップデートを公開。</div>
+                  <div><strong>要約</strong>：スイッチEV swtchenergy.comは、電力システムや交通系の重要な基盤施設であるため、脆弱性が発見され、攻撃者による無効化を防止するための対策が必要です。</div>
                 
 
                 
@@ -16559,7 +16545,7 @@
                       
                         
                         
-                          <li>Siemensから各製品向けのアップデートが公開された</li>
+                          <li>スイッチEV swtchenergy.comは、電力システムや交通系の重要な基盤施設であり、攻撃者による無効化を防止するための対策が必要である。</li>
                           
                         
                       
@@ -16569,7 +16555,7 @@
                       
                         
                         
-                          <li>アップデートは2026年1月にリリースされた</li>
+                          <li>スイッチEV swtchenergy.comは、電力システムや交通系の重要な基盤施設であり、攻撃者による無効化を防止するための対策が必要である。</li>
                           
                         
                       
@@ -16579,7 +16565,7 @@
                       
                         
                         
-                          <li>提供元URLはhttps://jvn.jp/vu/JVNVU94456756/</li>
+                          <li>スイッチEV swtchenergy.comは、電力システムや交通系の重要な基盤施設であり、攻撃者による無効化を防止するための対策が必要である。</li>
                           
                         
                       
@@ -16590,9 +16576,9 @@
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 更新内容を確認し、適用計画を立てる必要があります。</div>
-                  <div><b>経営者目線</b>: 顧客への影響を最小化するためのスケジュール調整が重要です。</div>
-                  <div><b>消費者目線</b>: 製品の安全性向上に期待できるアップデートです。</div>
+                  <div><b>技術者目線</b>: 技術者目線</div>
+                  <div><b>経営者目線</b>: 経営者目線</div>
+                  <div><b>消費者目線</b>: 消費者目線</div>
                 </div>
                 
 
@@ -16602,7 +16588,7 @@
                   <div class="evidence-urls">
                     <strong>根拠</strong>：
                     
-                      <a href="https://jvn.jp/vu/JVNVU94456756/" target="_blank" rel="noopener">https://jvn.jp/vu/JVNVU94456756/</a>
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-06" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-06</a>
                     
                   </div>
                 
@@ -16721,17 +16707,15 @@
               data-summary="Siemens SINEC NMSに対しローカル権限昇格脆弱性が報告され、最新バージョンへ更新推奨。"
               data-imp="80"
               data-recent="0"
-              data-date="2026-02-12T12:00:00+00:00"
+              data-date="None"
               data-tags="security,patch_window">
             <div>
               
                 <span class="badge imp">重要度 80</span>
               
               
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-043-01" target="_blank" rel="noopener">シーメンス SINEC NMS</a>
+                シーメンス SINEC NMS
               
-              
-                <span class="small">（2026/02/12 21:00）</span>
               
 
               
@@ -16749,7 +16733,7 @@
             
               <div class="summary-preview">Siemens SINEC NMSに対しローカル権限昇格脆弱性が報告され、最新バージョンへ更新推奨。</div>
             
-            <div class="mini">CISA ICS Advisories</div>
+            
 
             
               <details class="insight" role="group">
@@ -16822,15 +16806,17 @@
               data-summary="SINEC OS 3.3未満に多数の脆弱性が存在し、Siemensは最新版への更新を推奨している。"
               data-imp="80"
               data-recent="0"
-              data-date="None"
+              data-date="2026-02-12T12:00:00+00:00"
               data-tags="sbom,patch_window">
             <div>
               
                 <span class="badge imp">重要度 80</span>
               
               
-                シーメンス SINEC OS
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-043-06" target="_blank" rel="noopener">シーメンス SINEC OS</a>
               
+              
+                <span class="small">（2026/02/12 21:00）</span>
               
 
               
@@ -16848,7 +16834,7 @@
             
               <div class="summary-preview">SINEC OS 3.3未満に多数の脆弱性が存在し、Siemensは最新版への更新を推奨している。</div>
             
-            
+            <div class="mini">CISA ICS Advisories</div>
 
             
               <details class="insight" role="group">
@@ -18077,45 +18063,16 @@
 
           </li>
         
-           <li id="topic-9064" class="topic-row"
-              data-title="コープランド XWEB および XWEB Pro"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-02-26T12:00:00+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-10" target="_blank" rel="noopener">コープランド XWEB および XWEB Pro</a>
-              
-              
-                <span class="small">（2026/02/26 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-            <div class="mini">CISA ICS Advisories</div>
-
-            
-
-          </li>
-        
            <li id="topic-9065" class="topic-row"
               data-title="Pelco, Inc. Sarix Pro 3 シリーズ IP カメラ"
-              data-summary=""
-              data-imp="0"
+              data-summary="（要約を生成できませんでした）"
+              data-imp="20"
               data-recent="1"
               data-date="2026-02-26T12:00:00+00:00"
               data-tags="">
             <div>
+              
+                <span class="badge imp">重要度 20</span>
               
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-02" target="_blank" rel="noopener">Pelco, Inc. Sarix Pro 3 シリーズ IP カメラ</a>
@@ -18133,51 +18090,90 @@
             </div>
 
             
-            <div class="mini">CISA ICS Advisories</div>
-
-            
-
-          </li>
-        
-           <li id="topic-9066" class="topic-row"
-              data-title="横河電機 CENTUM VP R6、R7"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-02-26T12:00:00+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-09" target="_blank" rel="noopener">横河電機 CENTUM VP R6、R7</a>
-              
-              
-                <span class="small">（2026/02/26 21:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
+              <div class="summary-preview">（要約を生成できませんでした）</div>
             
             <div class="mini">CISA ICS Advisories</div>
 
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：（要約を生成できませんでした）</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>Pelco, Inc. Sarix Pro 3 Series IP Cameras are vulnerable to an authentication bypass issue in their web management</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>The vulnerability can allow attackers to gain unauthorized access to sensitive device data and expose facilities to privacy breaches, operational risks, and regulatory compliance issues</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-02" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-02</a>
+                    
+                  </div>
+                
+              </details>
             
 
           </li>
         
            <li id="topic-9067" class="topic-row"
               data-title="チャージマップchargemap.com"
-              data-summary=""
-              data-imp="0"
+              data-summary="（要約を生成できませんでした）"
+              data-imp="20"
               data-recent="1"
               data-date="2026-02-26T12:00:00+00:00"
               data-tags="">
             <div>
+              
+                <span class="badge imp">重要度 20</span>
               
               
                 <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-05" target="_blank" rel="noopener">チャージマップchargemap.com</a>
@@ -18195,26 +18191,286 @@
             </div>
 
             
+              <div class="summary-preview">（要約を生成できませんでした）</div>
+            
             <div class="mini">CISA ICS Advisories</div>
 
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：（要約を生成できませんでした）</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-05" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-05</a>
+                    
+                  </div>
+                
+              </details>
             
 
           </li>
         
            <li id="topic-9164" class="topic-row"
               data-title="JVN: FinalCode Clientのインストーラーにおける複数の脆弱性"
-              data-summary=""
-              data-imp="0"
+              data-summary="（要約を生成できませんでした）"
+              data-imp="20"
               data-recent="1"
               data-date="2026-02-26T05:00:00+00:00"
               data-tags="">
             <div>
+              
+                <span class="badge imp">重要度 20</span>
               
               
                 <a href="https://jvn.jp/jp/JVN48498976/" target="_blank" rel="noopener">JVN: FinalCode Clientのインストーラーにおける複数の脆弱性</a>
               
               
                 <span class="small">（2026/02/26 14:00）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+              <div class="summary-preview">（要約を生成できませんでした）</div>
+            
+            <div class="mini">JPCERT/CC</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：（要約を生成できませんでした）</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://jvn.jp/jp/JVN48498976/" target="_blank" rel="noopener">https://jvn.jp/jp/JVN48498976/</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-9066" class="topic-row"
+              data-title="横河電機 CENTUM VP R6、R7"
+              data-summary="横河電機 CENTUM VP R6、R7の脆弱性を分析"
+              data-imp="8"
+              data-recent="1"
+              data-date="2026-02-26T12:00:00+00:00"
+              data-tags="OT/セキュリティ関連">
+            <div>
+              
+                <span class="badge imp">重要度 8</span>
+              
+              
+                <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-09" target="_blank" rel="noopener">横河電機 CENTUM VP R6、R7</a>
+              
+              
+                <span class="small">（2026/02/26 21:00）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">OT/セキュリティ関連</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <div class="summary-preview">横河電機 CENTUM VP R6、R7の脆弱性を分析</div>
+            
+            <div class="mini">CISA ICS Advisories</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：横河電機 CENTUM VP R6、R7の脆弱性を分析</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CVE-2025-1924: Vnet/IP Interface Package for CENTUM VP R6 (VP6C3300) <=R1.07.00</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>CVE-2025-48019: Vnet/IP Interface Package for CENTUM VP R7 (VP7C3300) <=R1.07.00</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-09" target="_blank" rel="noopener">https://www.cisa.gov/news-events/ics-advisories/icsa-26-057-09</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-9166" class="topic-row"
+              data-title="お知らせ:JPCERT/CC Eyes「JSAC2026 開催レポート~DAY 2~」"
+              data-summary=""
+              data-imp="0"
+              data-recent="1"
+              data-date="2026-02-27T02:05:00+00:00"
+              data-tags="">
+            <div>
+              
+              
+                <a href="https://blogs.jpcert.or.jp/ja/2026/02/jsac2026day2.html" target="_blank" rel="noopener">お知らせ:JPCERT/CC Eyes「JSAC2026 開催レポート~DAY 2~」</a>
+              
+              
+                <span class="small">（2026/02/27 11:05）</span>
               
 
               
@@ -19871,61 +20127,61 @@
         <ul>
           
             <li>
-              <a href="#topic-9019">Amazon Nova の強化微調整: フィードバックを通じて AI を教える</a>
-              <span class="date">
-                2026/02/26 17:48
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-9020">現実世界での COBOL モダナイゼーションから学んだこと</a>
-              <span class="date">
-                2026/02/26 18:16
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-9021">Nano Banana 2: Pro の機能と超高速のスピードを組み合わせます</a>
-              <span class="date">
-                2026/02/26 16:01
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
-              <a href="#topic-9023">OpenAI Codex と Figma がシームレスなコードから設計までのエクスペリエンスを開始</a>
-              <span class="date">
-                2026/02/26 06:00
-              </span>
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              <span class="small">（累計 1）</span>
-            </li>
-          
-            <li>
               <a href="#topic-9024">パシフィック・ノースウェスト国立研究所と OpenAI が提携して連邦政府の許可を加速</a>
               <span class="date">
                 2026/02/26 10:00
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-9320">AI を誰もが利用できるように拡張する</a>
+              <span class="date">
+                2026/02/27 05:30
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-9321">OpenAI と Microsoft の共同声明</a>
+              <span class="date">
+                2026/02/27 05:30
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-9322">Amazon Bedrock のエージェント向けステートフル ランタイム環境の紹介</a>
+              <span class="date">
+                2026/02/27 05:30
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-9323">OpenAIとAmazonが戦略的提携を発表</a>
+              <span class="date">
+                2026/02/27 05:30
               </span>
               
                 <span class="badge recent ">
@@ -20379,15 +20635,17 @@
               data-summary="ChatGPT Proユーザー向け研究プレビューで提供される、15倍高速生成と128kコンテキストを備えたリアルタイムコーディングモデル GPT-5.3-Codex-Spark を紹介。"
               data-imp="80"
               data-recent="0"
-              data-date="None"
+              data-date="2026-02-12T10:00:00+00:00"
               data-tags="ai,model,real-time coding,performance">
             <div>
               
                 <span class="badge imp">重要度 80</span>
               
               
-                GPT-5.3-Codex-Spark の紹介
+                <a href="https://openai.com/index/introducing-gpt-5-3-codex-spark" target="_blank" rel="noopener">GPT-5.3-Codex-Spark の紹介</a>
               
+              
+                <span class="small">（2026/02/12 19:00）</span>
               
 
               
@@ -20409,7 +20667,7 @@
             
               <div class="summary-preview">ChatGPT Proユーザー向け研究プレビューで提供される、15倍高速生成と128kコンテキストを備えたリアルタイムコーディングモデル GPT-5.3-Cod…</div>
             
-            
+            <div class="mini">OpenAI News</div>
 
             
               <details class="insight" role="group">
@@ -21559,20 +21817,22 @@
 
           </li>
         
-           <li id="topic-9019" class="topic-row"
-              data-title="Amazon Nova の強化微調整: フィードバックを通じて AI を教える"
-              data-summary=""
-              data-imp="0"
+           <li id="topic-9024" class="topic-row"
+              data-title="パシフィック・ノースウェスト国立研究所と OpenAI が提携して連邦政府の許可を加速"
+              data-summary="（要約を生成できませんでした）"
+              data-imp="20"
               data-recent="1"
-              data-date="2026-02-26T17:48:37+00:00"
+              data-date="2026-02-26T10:00:00+00:00"
               data-tags="">
             <div>
               
+                <span class="badge imp">重要度 20</span>
               
-                <a href="https://aws.amazon.com/blogs/machine-learning/reinforcement-fine-tuning-for-amazon-nova-teaching-ai-through-feedback/" target="_blank" rel="noopener">Amazon Nova の強化微調整: フィードバックを通じて AI を教える</a>
+              
+                <a href="https://openai.com/index/pacific-northwest-national-laboratory" target="_blank" rel="noopener">パシフィック・ノースウェスト国立研究所と OpenAI が提携して連邦政府の許可を加速</a>
               
               
-                <span class="small">（2026/02/27 02:48）</span>
+                <span class="small">（2026/02/26 19:00）</span>
               
 
               
@@ -21584,88 +21844,86 @@
             </div>
 
             
-            <div class="mini">AWS Machine Learning Blog</div>
+              <div class="summary-preview">（要約を生成できませんでした）</div>
+            
+            <div class="mini">OpenAI News</div>
 
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：（要約を生成できませんでした）</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                          <li>推測：本文情報が限られるため、影響範囲・当事者・時系列をリンク先で要確認</li>
+                          
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: (技術観点のコメントを生成できませんでした)</div>
+                  <div><b>経営者目線</b>: (経営観点のコメントを生成できませんでした)</div>
+                  <div><b>消費者目線</b>: (利用者観点のコメントを生成できませんでした)</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://openai.com/index/pacific-northwest-national-laboratory" target="_blank" rel="noopener">https://openai.com/index/pacific-northwest-national-laboratory</a>
+                    
+                  </div>
+                
+              </details>
             
 
           </li>
         
-           <li id="topic-9020" class="topic-row"
-              data-title="現実世界での COBOL モダナイゼーションから学んだこと"
+           <li id="topic-9320" class="topic-row"
+              data-title="AI を誰もが利用できるように拡張する"
               data-summary=""
               data-imp="0"
               data-recent="1"
-              data-date="2026-02-26T18:16:43+00:00"
+              data-date="2026-02-27T05:30:00+00:00"
               data-tags="">
             <div>
               
               
-                <a href="https://aws.amazon.com/blogs/machine-learning/learnings-from-cobol-modernization-in-the-real-world/" target="_blank" rel="noopener">現実世界での COBOL モダナイゼーションから学んだこと</a>
+                <a href="https://openai.com/index/scaling-ai-for-everyone" target="_blank" rel="noopener">AI を誰もが利用できるように拡張する</a>
               
               
-                <span class="small">（2026/02/27 03:16）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-            <div class="mini">AWS Machine Learning Blog</div>
-
-            
-
-          </li>
-        
-           <li id="topic-9021" class="topic-row"
-              data-title="Nano Banana 2: Pro の機能と超高速のスピードを組み合わせます"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-02-26T16:01:50+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://deepmind.google/blog/nano-banana-2-combining-pro-capabilities-with-lightning-fast-speed/" target="_blank" rel="noopener">Nano Banana 2: Pro の機能と超高速のスピードを組み合わせます</a>
-              
-              
-                <span class="small">（2026/02/27 01:01）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-            <div class="mini">Google DeepMind Blog</div>
-
-            
-
-          </li>
-        
-           <li id="topic-9023" class="topic-row"
-              data-title="OpenAI Codex と Figma がシームレスなコードから設計までのエクスペリエンスを開始"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-02-26T06:00:00+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://openai.com/index/figma-partnership" target="_blank" rel="noopener">OpenAI Codex と Figma がシームレスなコードから設計までのエクスペリエンスを開始</a>
-              
-              
-                <span class="small">（2026/02/26 15:00）</span>
+                <span class="small">（2026/02/27 14:30）</span>
               
 
               
@@ -21683,20 +21941,82 @@
 
           </li>
         
-           <li id="topic-9024" class="topic-row"
-              data-title="パシフィック・ノースウェスト国立研究所と OpenAI が提携して連邦政府の許可を加速"
+           <li id="topic-9321" class="topic-row"
+              data-title="OpenAI と Microsoft の共同声明"
               data-summary=""
               data-imp="0"
               data-recent="1"
-              data-date="2026-02-26T10:00:00+00:00"
+              data-date="2026-02-27T05:30:00+00:00"
               data-tags="">
             <div>
               
               
-                <a href="https://openai.com/index/pacific-northwest-national-laboratory" target="_blank" rel="noopener">パシフィック・ノースウェスト国立研究所と OpenAI が提携して連邦政府の許可を加速</a>
+                <a href="https://openai.com/index/continuing-microsoft-partnership" target="_blank" rel="noopener">OpenAI と Microsoft の共同声明</a>
               
               
-                <span class="small">（2026/02/26 19:00）</span>
+                <span class="small">（2026/02/27 14:30）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+            <div class="mini">OpenAI News</div>
+
+            
+
+          </li>
+        
+           <li id="topic-9322" class="topic-row"
+              data-title="Amazon Bedrock のエージェント向けステートフル ランタイム環境の紹介"
+              data-summary=""
+              data-imp="0"
+              data-recent="1"
+              data-date="2026-02-27T05:30:00+00:00"
+              data-tags="">
+            <div>
+              
+              
+                <a href="https://openai.com/index/introducing-the-stateful-runtime-environment-for-agents-in-amazon-bedrock" target="_blank" rel="noopener">Amazon Bedrock のエージェント向けステートフル ランタイム環境の紹介</a>
+              
+              
+                <span class="small">（2026/02/27 14:30）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+            <div class="mini">OpenAI News</div>
+
+            
+
+          </li>
+        
+           <li id="topic-9323" class="topic-row"
+              data-title="OpenAIとAmazonが戦略的提携を発表"
+              data-summary=""
+              data-imp="0"
+              data-recent="1"
+              data-date="2026-02-27T05:30:00+00:00"
+              data-tags="">
+            <div>
+              
+              
+                <a href="https://openai.com/index/amazon-partnership" target="_blank" rel="noopener">OpenAIとAmazonが戦略的提携を発表</a>
+              
+              
+                <span class="small">（2026/02/27 14:30）</span>
               
 
               
