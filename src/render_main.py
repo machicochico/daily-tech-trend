@@ -1063,6 +1063,13 @@ OPINION_HTML = r"""
     .opinion-toc strong{font-size:13px}
     .opinion-toc ul{margin:8px 0 0;padding-left:18px;display:flex;gap:10px;flex-wrap:wrap}
     .opinion-toc a{font-size:13px}
+    .exec-brief{margin:8px 0 16px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--panel)}
+    .exec-brief h2{margin:0 0 10px;font-size:18px}
+    .exec-brief .exec-grid{display:grid;gap:12px}
+    .exec-brief .exec-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px}
+    .exec-brief .exec-card h3{margin:0 0 8px;font-size:14px}
+    .exec-brief ul{margin:0;padding-left:18px}
+    .exec-brief li{margin:6px 0}
     .role-vertical h2{margin:0 0 14px}
     .role-vertical .section-heading{margin:22px 0 10px;font-size:18px;font-weight:800}
     .role-vertical .news-source-list{margin:0;padding-left:20px}
@@ -1090,6 +1097,7 @@ OPINION_HTML = r"""
       .role-vertical .section-heading{margin:20px 0 10px}
     }
     @media (min-width: 821px){
+      .exec-brief .exec-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
       .sticky-mini-nav .mini-toc{display:inline-block}
     }
   </style>
@@ -1114,6 +1122,34 @@ OPINION_HTML = r"""
   </div>
 
   <p class="small" style="margin:6px 0 10px;">各立場の詳細を縦スクロールで確認し、結論だけを比較したい場合は「比較表示」に切り替えてご覧ください。</p>
+
+  {% set management_section = (role_sections | selectattr('role', 'equalto', 'management') | list | first) %}
+  {% if management_section %}
+  <section class="exec-brief" aria-label="経営者向けクイック確認">
+    <h2>経営者に見せる時の不足点と是正ポイント</h2>
+    <div class="small" style="margin-bottom:10px;">現状の経営者視点の結論「{{ management_section.summary }}」を、意思決定に必要な粒度へ補強するための最低限チェックです。</div>
+    <div class="exec-grid">
+      <article class="exec-card">
+        <h3>不足しがちな情報</h3>
+        <ul class="small">
+          <li>売上・利益・キャッシュへの影響額（上振れ/下振れの幅）が見えない。</li>
+          <li>今四半期で判断すべき期限と、先送り時の機会損失が明示されていない。</li>
+          <li>法務・セキュリティ・現場オペレーションの責任分担が曖昧。</li>
+          <li>根拠がニュース中心で、社内KPIや既存施策との接続が弱い。</li>
+        </ul>
+      </article>
+      <article class="exec-card">
+        <h3>是正アクション（経営会議用）</h3>
+        <ul class="small">
+          <li>「24時間以内」「今週中」「四半期内」の3段階で意思決定項目を分ける。</li>
+          <li>各論点に対して投資額・回収見込み・未対応リスクを1行で併記する。</li>
+          <li>推奨アクション「{{ management_section.recommendation }}」に担当部門と期限を付与する。</li>
+          <li>承認に必要な追加データ（法規制解釈、顧客影響、代替案）を明記する。</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+  {% endif %}
 
   <nav class="opinion-toc" aria-label="立場別目次">
     <strong>目次</strong>
