@@ -177,6 +177,13 @@ def test_opinion_template_has_role_discussion_block() -> None:
     assert '"discussion_pairs"' in source
 
 
+def test_opinion_template_has_executive_gap_section() -> None:
+    source = _read("src/render_main.py")
+    assert "経営者に見せる時の不足点と是正ポイント" in source
+    assert "不足しがちな情報" in source
+    assert "是正アクション（経営会議用）" in source
+
+
 def test_build_role_discussion_generates_cross_role_pairs() -> None:
     sections = [
         {"role": "engineer", "summary": "監視設計を先に固定する。", "recommendation": "段階導入する。"},
