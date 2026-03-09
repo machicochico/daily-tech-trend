@@ -35,15 +35,15 @@
     <div class="summary-grid">
       <div class="summary-item">
         <div class="k">Generated (JST)</div>
-        <div class="v">2026-03-09 18:07:33 JST</div>
+        <div class="v">2026-03-09 21:08:11 JST</div>
       </div>
       <div class="summary-item">
         <div class="k">Runtime</div>
-        <div class="v">450 sec</div>
+        <div class="v">489 sec</div>
       </div>
       <div class="summary-item">
         <div class="k">Articles</div>
-        <div class="v">5350 <span class="small">(new48h 218)</span></div>
+        <div class="v">5389 <span class="small">(new48h 258)</span></div>
       </div>
       <div class="summary-item">
         <div class="k">RSS Sources</div>
@@ -79,18 +79,22 @@
             </button>
           
             <button class="btn" type="button" data-tag-btn="security" onclick="toggleTag('security')">
-              security (16)
+              security (17)
+            </button>
+          
+            <button class="btn" type="button" data-tag-btn="vulnerability" onclick="toggleTag('vulnerability')">
+              vulnerability (2)
             </button>
           
         
           <span class="tag-group-label">ビジネス</span>
           
-            <button class="btn" type="button" data-tag-btn="investment" onclick="toggleTag('investment')">
-              investment (4)
+            <button class="btn" type="button" data-tag-btn="market" onclick="toggleTag('market')">
+              market (5)
             </button>
           
-            <button class="btn" type="button" data-tag-btn="market" onclick="toggleTag('market')">
-              market (3)
+            <button class="btn" type="button" data-tag-btn="investment" onclick="toggleTag('investment')">
+              investment (4)
             </button>
           
             <button class="btn" type="button" data-tag-btn="partnership" onclick="toggleTag('partnership')">
@@ -129,7 +133,7 @@
             </button>
           
             <button class="btn" type="button" data-tag-btn="policy" onclick="toggleTag('policy')">
-              policy (6)
+              policy (5)
             </button>
           
             <button class="btn" type="button" data-tag-btn="Copilot" onclick="toggleTag('Copilot')">
@@ -162,10 +166,6 @@
           
             <button class="btn" type="button" data-tag-btn="innovation" onclick="toggleTag('innovation')">
               innovation (3)
-            </button>
-          
-            <button class="btn" type="button" data-tag-btn="oil" onclick="toggleTag('oil')">
-              oil (3)
             </button>
           
             <button class="btn" type="button" data-tag-btn="AWS" onclick="toggleTag('AWS')">
@@ -210,10 +210,6 @@
           
             <button class="btn" type="button" data-tag-btn="copilot" onclick="toggleTag('copilot')">
               copilot (2)
-            </button>
-          
-            <button class="btn" type="button" data-tag-btn="cost" onclick="toggleTag('cost')">
-              cost (2)
             </button>
           
             <button class="btn" type="button" data-tag-btn="design" onclick="toggleTag('design')">
@@ -268,8 +264,12 @@
               reference_material (2)
             </button>
           
-            <button class="btn" type="button" data-tag-btn="shipping" onclick="toggleTag('shipping')">
-              shipping (2)
+            <button class="btn" type="button" data-tag-btn="standards" onclick="toggleTag('standards')">
+              standards (2)
+            </button>
+          
+            <button class="btn" type="button" data-tag-btn="training" onclick="toggleTag('training')">
+              training (2)
             </button>
           
         
@@ -344,6 +344,42 @@
     <div class="top-col" id="market-card">
       <h3>📈Market Top 10（importance × recent）</h3>
       <ol class="top-list">
+        
+          <li class="topic-row"
+              data-title="HTW 12: IMO が船員訓練を推進し、新たな疲労管理イニシアチブを開始"
+              data-summary="IMOが船員訓練と疲労管理を推進し、STCW改訂・代替燃料研修を実施した。"
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-03-09T11:00:51+00:00"
+              data-tags="training,fatigue_management,STCW">
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-7562">HTW 12: IMO が船員訓練を推進し、新たな疲労管理イニシアチブを開始</a>
+            <span class="date">2026/03/09 20:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
+        
+          <li class="topic-row"
+              data-title="IMO事務総長「ホルムズ海峡での船員死亡は容認できない」"
+              data-summary="IMO事務総長がホルムズ海峡での船員死亡を容認できないと発表し、攻撃事件に対する懸念を示した。"
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-03-09T11:00:55+00:00"
+              data-tags="incident,security">
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-7565">IMO事務総長「ホルムズ海峡での船員死亡は容認できない」</a>
+            <span class="date">2026/03/09 20:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
         
           <li class="topic-row"
               data-title="海洋強国がIMarEST議長に立候補"
@@ -457,40 +493,48 @@
             <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
           </li>
         
-          <li class="topic-row"
-              data-title="インド、ピーク時間帯の送電網安定化のためガス発電の増強を検討"
-              data-summary="インドは再生可能発電増加に伴うピーク時の送電網安定化を図るため、ガス火力発電所の夕方稼働時間を拡大検討中。"
-              data-imp="80"
-              data-recent="0"
-              data-date="2026-02-13T14:00:00+00:00"
-              data-tags="grid_stability,renewable_integration,gas_power">
-            <span class="badge imp">重要度 80</span>
-            
-            <a href="#topic-5603">インド、ピーク時間帯の送電網安定化のためガス発電の増強を検討</a>
-            <span class="date">2026/02/13 23:00</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
-              data-title="ベネズエラの新しい炭化水素法は石油産業を復活させることができるのか?"
-              data-summary="ベネズエラの新炭化水素法は民間企業に運営権を拡大し、米国が実績に応じた制裁緩和を検討することで石油産業復活へ寄与できる可能性がある。"
-              data-imp="80"
-              data-recent="0"
-              data-date="2026-02-13T14:30:00+00:00"
-              data-tags="oil_industry,policy_change,sanctions">
-            <span class="badge imp">重要度 80</span>
-            
-            <a href="#topic-5605">ベネズエラの新しい炭化水素法は石油産業を復活させることができるのか?</a>
-            <span class="date">2026/02/13 23:30</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
       </ol>
     </div>
 
     <div class="top-col">
       <h3>📊Market Trending（48h増分）</h3>
       <ol class="top-list">
+        
+          <li class="topic-row"
+              data-title="HTW 12: IMO が船員訓練を推進し、新たな疲労管理イニシアチブを開始"
+              data-summary="IMOが船員訓練と疲労管理を推進し、STCW改訂・代替燃料研修を実施した。"
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-03-09T11:00:51+00:00"
+              data-tags="training,fatigue_management,STCW">
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-7562">HTW 12: IMO が船員訓練を推進し、新たな疲労管理イニシアチブを開始</a>
+            <span class="date">2026/03/09 20:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
+        
+          <li class="topic-row"
+              data-title="IMO事務総長「ホルムズ海峡での船員死亡は容認できない」"
+              data-summary="IMO事務総長がホルムズ海峡での船員死亡を容認できないと発表し、攻撃事件に対する懸念を示した。"
+              data-imp="80"
+              data-recent="1"
+              data-date="2026-03-09T11:00:55+00:00"
+              data-tags="incident,security">
+            <span class="badge imp">重要度 80</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-7565">IMO事務総長「ホルムズ海峡での船員死亡は容認できない」</a>
+            <span class="date">2026/03/09 20:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
         
           <li class="topic-row"
               data-title="仮想発電所はアメリカのエネルギー転換を解く鍵となる"
@@ -583,6 +627,42 @@
           </li>
         
           <li class="topic-row"
+              data-title="世界的な商業的混乱:米国、イスラエル、イランの紛争が海運、航空、観光、貿易、インフラにわたる不可抗力、サプライチェーン、国境を越えた契約をどのように再構築しているか"
+              data-summary="米国・イスラエル・イラン紛争が海運・航空・観光など多業種に波及し、サプライチェーンと契約を再構築させた。"
+              data-imp="70"
+              data-recent="1"
+              data-date="2026-03-09T11:00:47+00:00"
+              data-tags="supply_chain,contract_crisis,global_disruption">
+            <span class="badge imp">重要度 70</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-7560">世界的な商業的混乱:米国、イスラエル、イランの紛争が海運、航空、観光、貿易、インフラにわたる不可抗力、サプライチェーン、国境を越えた契約をどのように再構築しているか</a>
+            <span class="date">2026/03/09 20:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
+        
+          <li class="topic-row"
+              data-title="アウィルコLNG、ALNG取引開始のための私募を通じて2,600万ユーロを確保"
+              data-summary="アウィルコLNGがNOK251.3m（約USD26m）を私募で確保し、ALNG取引開始に向けた資金調達を進める。"
+              data-imp="70"
+              data-recent="1"
+              data-date="2026-03-09T11:00:49+00:00"
+              data-tags="private_placement,funding,trading">
+            <span class="badge imp">重要度 70</span>
+            
+              <span class="badge recent ">
+                48h +1
+              </span>
+            
+            <a href="#topic-7561">アウィルコLNG、ALNG取引開始のための私募を通じて2,600万ユーロを確保</a>
+            <span class="date">2026/03/09 20:00</span>
+            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
+          </li>
+        
+          <li class="topic-row"
               data-title="イラン紛争で中東の供給が脅かされ、原油価格が29%高騰"
               data-summary="イスラエルがイランとレバノンのインフラを攻撃し、紛争拡大に伴い原油価格が29％上昇した。"
               data-imp="60"
@@ -597,78 +677,6 @@
             
             <a href="#topic-7456">イラン紛争で中東の供給が脅かされ、原油価格が29%高騰</a>
             <span class="date">2026/03/09 11:37</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
-              data-title="米国ブローカー、ベネズエラ国営鉱山会社と大規模な金取引を締結"
-              data-summary="米国ブローカーがベネズエラ国営鉱山会社と金取引を締結し、650〜1,000kgのdoréバーを米国リファイナリーへ輸出することで、同国の資源輸出先をアメリカにシフトさせた。"
-              data-imp="50"
-              data-recent="1"
-              data-date="2026-03-07T16:00:00+00:00"
-              data-tags="trade,gold,export,US-Venezuela">
-            <span class="badge imp">重要度 50</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-7074">米国ブローカー、ベネズエラ国営鉱山会社と大規模な金取引を締結</a>
-            <span class="date">2026/03/08 01:00</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
-              data-title="G7が最大4億バレルの放出を検討中、原油価格が下落"
-              data-summary="G7が最大4億バレルの原油放出を検討し、価格下落を招く。"
-              data-imp="50"
-              data-recent="1"
-              data-date="2026-03-09T08:30:00+00:00"
-              data-tags="oil,G7,price_drop">
-            <span class="badge imp">重要度 50</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-7522">G7が最大4億バレルの放出を検討中、原油価格が下落</a>
-            <span class="date">2026/03/09 17:30</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
-              data-title="新たなガス危機がヨーロッパに迫る"
-              data-summary="EUガス在庫が30％未満で価格高騰、QatarEnergyのLNG施設停止により危機拡大。"
-              data-imp="20"
-              data-recent="1"
-              data-date="2026-03-08T21:00:00+00:00"
-              data-tags="gas,price,storage">
-            <span class="badge imp">重要度 20</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-7359">新たなガス危機がヨーロッパに迫る</a>
-            <span class="date">2026/03/09 06:00</span>
-            <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
-          </li>
-        
-          <li class="topic-row"
-              data-title="イラン戦争が新興国のソブリンにどのような影響を与えているか"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-03-08T18:00:36+00:00"
-              data-tags="">
-            <span class="badge imp">重要度 0</span>
-            
-              <span class="badge recent ">
-                48h +1
-              </span>
-            
-            <a href="#topic-7341">イラン戦争が新興国のソブリンにどのような影響を与えているか</a>
-            <span class="date">2026/03/09 03:00</span>
             <span class="badge"><a href="#cat-market">市況（コモディティ・海運・スクラップ）</a></span>
           </li>
         
@@ -5711,9 +5719,9 @@
         <ul>
           
             <li>
-              <a href="#topic-7413">イランが新たな最高指導者を指名、原油価格が100ドルを超えて急騰</a>
+              <a href="#topic-7565">IMO事務総長「ホルムズ海峡での船員死亡は容認できない」</a>
               <span class="date">
-                2026/03/08 23:33
+                2026/03/09 11:00
               </span>
               
                 <span class="badge recent ">
@@ -5724,9 +5732,9 @@
             </li>
           
             <li>
-              <a href="#topic-7456">イラン紛争で中東の供給が脅かされ、原油価格が29%高騰</a>
+              <a href="#topic-7566">海洋株式と中東紛争</a>
               <span class="date">
-                2026/03/09 02:37
+                2026/03/09 11:00
               </span>
               
                 <span class="badge recent ">
@@ -5737,9 +5745,9 @@
             </li>
           
             <li>
-              <a href="#topic-7520">湾岸海運危機の深刻化でイラクの石油生産量が70%減少</a>
+              <a href="#topic-7567">LNG輸送料金の高騰</a>
               <span class="date">
-                2026/03/09 06:12
+                2026/03/09 11:00
               </span>
               
                 <span class="badge recent ">
@@ -5750,9 +5758,9 @@
             </li>
           
             <li>
-              <a href="#topic-7521">ホルムズ海峡交通崩壊でサウジアラビアが希少スポット原油を提供</a>
+              <a href="#topic-7568">サウジアラビア、大手シャイバ油田を狙ったドローンを撃墜</a>
               <span class="date">
-                2026/03/09 07:33
+                2026/03/09 10:20
               </span>
               
                 <span class="badge recent ">
@@ -5763,9 +5771,9 @@
             </li>
           
             <li>
-              <a href="#topic-7522">G7が最大4億バレルの放出を検討中、原油価格が下落</a>
+              <a href="#topic-7569">バーレーンのバプコ・エネルギー社、戦争激化で不可抗力を宣言</a>
               <span class="date">
-                2026/03/09 08:30
+                2026/03/09 11:30
               </span>
               
                 <span class="badge recent ">
@@ -5782,40 +5790,44 @@
     
       <ul>
         
-           <li id="topic-6570" class="topic-row"
-              data-title="新しい石炭火力発電所建設の鍵となる政策の安定性とコストの確実性: フォーラム"
-              data-summary="米国の石炭火力発電所建設には規制安定性・価格一貫性・拡張可能技術が不可欠で、トランプ政権は経済改善策を提示した。"
+           <li id="topic-7562" class="topic-row"
+              data-title="HTW 12: IMO が船員訓練を推進し、新たな疲労管理イニシアチブを開始"
+              data-summary="IMOが船員訓練と疲労管理を推進し、STCW改訂・代替燃料研修を実施した。"
               data-imp="80"
-              data-recent="0"
-              data-date="2026-02-17T11:00:37+00:00"
-              data-tags="policy,cost,technology">
+              data-recent="1"
+              data-date="2026-03-09T11:00:51+00:00"
+              data-tags="training,fatigue_management,STCW">
             <div>
               
                 <span class="badge imp">重要度 80</span>
               
               
-                <a href="https://www.hellenicshippingnews.com/policy-stability-cost-certainty-key-to-building-new-coal-plants-forum/" target="_blank" rel="noopener">新しい石炭火力発電所建設の鍵となる政策の安定性とコストの確実性: フォーラム</a>
+                <a href="https://www.hellenicshippingnews.com/htw-12-imo-advances-seafarer-training-and-launches-new-fatigue-management-initiative/" target="_blank" rel="noopener">HTW 12: IMO が船員訓練を推進し、新たな疲労管理イニシアチブを開始</a>
               
               
-                <span class="small">（2026/02/17 20:00）</span>
+                <span class="small">（2026/03/09 20:00）</span>
               
 
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
                   
-                    <span class="badge">policy</span>
+                    <span class="badge">training</span>
                   
-                    <span class="badge">cost</span>
+                    <span class="badge">fatigue_management</span>
                   
-                    <span class="badge">technology</span>
+                    <span class="badge">STCW</span>
                   
                 </span>
               
             </div>
 
             
-              <div class="summary-preview">米国の石炭火力発電所建設には規制安定性・価格一貫性・拡張可能技術が不可欠で、トランプ政権は経済改善策を提示した。</div>
+              <div class="summary-preview">IMOが船員訓練と疲労管理を推進し、STCW改訂・代替燃料研修を実施した。</div>
             
             <div class="mini">Hellenic Shipping News</div>
 
@@ -5824,7 +5836,7 @@
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：米国の石炭火力発電所建設には規制安定性・価格一貫性・拡張可能技術が不可欠で、トランプ政権は経済改善策を提示した。</div>
+                  <div><strong>要約</strong>：IMOが船員訓練と疲労管理を推進し、STCW改訂・代替燃料研修を実施した。</div>
                 
 
                 
@@ -5837,7 +5849,7 @@
                       
                         
                         
-                          <li>規制安定性が新規建設に必要とされた</li>
+                          <li>HTW 12は2026年2月23-27日に開催された</li>
                           
                         
                       
@@ -5847,7 +5859,7 @@
                       
                         
                         
-                          <li>価格の一貫性が重要視された</li>
+                          <li>STCW条約とコードの包括的レビューを行った</li>
                           
                         
                       
@@ -5857,7 +5869,7 @@
                       
                         
                         
-                          <li>スケーラブルな技術が要件として挙げられた</li>
+                          <li>新たな疲労管理イニシアチブが開始された</li>
                           
                         
                       
@@ -5868,9 +5880,9 @@
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 技術的拡張性を確保するため、既存設備との互換性検証が必須。</div>
-                  <div><b>経営者目線</b>: 投資リスク低減のため、政策安定化と価格予測が鍵となる。</div>
-                  <div><b>消費者目線</b>: 電力料金に影響しやすく、長期的な価格安定を期待したい。</div>
+                  <div><b>技術者目線</b>: 技術的には代替燃料研修が船舶設計に影響。</div>
+                  <div><b>経営者目線</b>: 訓練拡充で人材確保と安全性向上を図る。</div>
+                  <div><b>消費者目線</b>: 乗客は安全対策の強化を期待できる。</div>
                 </div>
                 
 
@@ -5880,7 +5892,7 @@
                   <div class="evidence-urls">
                     <strong>根拠</strong>：
                     
-                      <a href="https://www.hellenicshippingnews.com/policy-stability-cost-certainty-key-to-building-new-coal-plants-forum/" target="_blank" rel="noopener">https://www.hellenicshippingnews.com/policy-stability-cos...</a>
+                      <a href="https://www.hellenicshippingnews.com/htw-12-imo-advances-seafarer-training-and-launches-new-fatigue-management-initiative/" target="_blank" rel="noopener">https://www.hellenicshippingnews.com/htw-12-imo-advances-...</a>
                     
                   </div>
                 
@@ -5889,38 +5901,42 @@
 
           </li>
         
-           <li id="topic-6574" class="topic-row"
-              data-title="新しいダミエッタ・アライアンス・コンテナ・ターミナル(DACT)が商業運転を開始"
-              data-summary="ダミエッタ・アライアンス・コンテナ・ターミナルが商業運転を開始し、ハパグ＝ロイッドの船舶が初乗り。"
+           <li id="topic-7565" class="topic-row"
+              data-title="IMO事務総長「ホルムズ海峡での船員死亡は容認できない」"
+              data-summary="IMO事務総長がホルムズ海峡での船員死亡を容認できないと発表し、攻撃事件に対する懸念を示した。"
               data-imp="80"
-              data-recent="0"
-              data-date="2026-02-17T11:00:45+00:00"
-              data-tags="terminal,shipping">
+              data-recent="1"
+              data-date="2026-03-09T11:00:55+00:00"
+              data-tags="incident,security">
             <div>
               
                 <span class="badge imp">重要度 80</span>
               
               
-                <a href="https://www.hellenicshippingnews.com/new-damietta-alliance-container-terminals-dact-launches-commercial-operations/" target="_blank" rel="noopener">新しいダミエッタ・アライアンス・コンテナ・ターミナル(DACT)が商業運転を開始</a>
+                <a href="https://www.hellenicshippingnews.com/imo-secretary-general-seafarer-deaths-in-strait-of-hormuz-unacceptable/" target="_blank" rel="noopener">IMO事務総長「ホルムズ海峡での船員死亡は容認できない」</a>
               
               
-                <span class="small">（2026/02/17 20:00）</span>
+                <span class="small">（2026/03/09 20:00）</span>
               
 
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
               
               
                 <span class="small">
                   
-                    <span class="badge">terminal</span>
+                    <span class="badge">incident</span>
                   
-                    <span class="badge">shipping</span>
+                    <span class="badge">security</span>
                   
                 </span>
               
             </div>
 
             
-              <div class="summary-preview">ダミエッタ・アライアンス・コンテナ・ターミナルが商業運転を開始し、ハパグ＝ロイッドの船舶が初乗り。</div>
+              <div class="summary-preview">IMO事務総長がホルムズ海峡での船員死亡を容認できないと発表し、攻撃事件に対する懸念を示した。</div>
             
             <div class="mini">Hellenic Shipping News</div>
 
@@ -5929,7 +5945,7 @@
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：ダミエッタ・アライアンス・コンテナ・ターミナルが商業運転を開始し、ハパグ＝ロイッドの船舶が初乗り。</div>
+                  <div><strong>要約</strong>：IMO事務総長がホルムズ海峡での船員死亡を容認できないと発表し、攻撃事件に対する懸念を示した。</div>
                 
 
                 
@@ -5942,7 +5958,7 @@
                       
                         
                         
-                          <li>Essen Express(13,117 TEU)が2月14日にDACTに到港</li>
+                          <li>2026年3月6日にホルムズ海峡で船舶への致命的な攻撃が報告された</li>
                           
                         
                       
@@ -5952,7 +5968,7 @@
                       
                         
                         
-                          <li>DACTは新設エジプトターミナルで商業運転を開始</li>
+                          <li>IMO事務総長アレスニオ・ドミンゲス氏が船員の死亡を容認できないと表明した</li>
                           
                         
                       
@@ -5962,7 +5978,7 @@
                       
                         
                         
-                          <li>ハパグ=ロイッドは世界ネットワーク拡大と評価</li>
+                          <li>同氏は事件に対し深い悲しみと警戒感を示した</li>
                           
                         
                       
@@ -5973,9 +5989,9 @@
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: インフラ整備が完了し、船舶の乗降効率向上に期待。</div>
-                  <div><b>経営者目線</b>: 新規ターミナルで市場シェア拡大を狙う戦略的投資。</div>
-                  <div><b>消費者目線</b>: 輸送コスト低減と配送時間短縮が見込まれる。</div>
+                  <div><b>技術者目線</b>: 攻撃防御策の強化が急務である。</div>
+                  <div><b>経営者目線</b>: 安全確保への投資が必要不可欠だ。</div>
+                  <div><b>消費者目線</b>: 船員の命を守るための国際協力が重要だ。</div>
                 </div>
                 
 
@@ -5985,7 +6001,7 @@
                   <div class="evidence-urls">
                     <strong>根拠</strong>：
                     
-                      <a href="https://www.hellenicshippingnews.com/new-damietta-alliance-container-terminals-dact-launches-commercial-operations/" target="_blank" rel="noopener">https://www.hellenicshippingnews.com/new-damietta-allianc...</a>
+                      <a href="https://www.hellenicshippingnews.com/imo-secretary-general-seafarer-deaths-in-strait-of-hormuz-unacceptable/" target="_blank" rel="noopener">https://www.hellenicshippingnews.com/imo-secretary-genera...</a>
                     
                   </div>
                 
@@ -7385,242 +7401,22 @@
 
           </li>
         
-           <li id="topic-7413" class="topic-row"
-              data-title="イランが新たな最高指導者を指名、原油価格が100ドルを超えて急騰"
-              data-summary="原油価格が100ドルを超え急騰し、イランの最高指導者選任と米国・イスラエルとの衝突激化が要因。"
-              data-imp="70"
-              data-recent="1"
-              data-date="2026-03-08T23:33:00+00:00"
-              data-tags="oil,price,conflict">
-            <div>
-              
-                <span class="badge imp">重要度 70</span>
-              
-              
-                <a href="https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Surge-Past-100-as-Iran-Names-New-Supreme-Leader.html" target="_blank" rel="noopener">イランが新たな最高指導者を指名、原油価格が100ドルを超えて急騰</a>
-              
-              
-                <span class="small">（2026/03/09 08:33）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">oil</span>
-                  
-                    <span class="badge">price</span>
-                  
-                    <span class="badge">conflict</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <div class="summary-preview">原油価格が100ドルを超え急騰し、イランの最高指導者選任と米国・イスラエルとの衝突激化が要因。</div>
-            
-            <div class="mini">OilPrice.com (Commodities)</div>
-
-            
-              <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：原油価格が100ドルを超え急騰し、イランの最高指導者選任と米国・イスラエルとの衝突激化が要因。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>原油価格が$100/バレルを突破</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>WTIは108.66ドルで19.54%上昇</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>イラン・米国・イスラエル間の攻撃がエネルギーインフラに影響</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: 市場変動に備え、価格リスク管理システムを強化すべき。</div>
-                  <div><b>経営者目線</b>: 売上機会と供給不安定性を両立させる戦略策定が重要。</div>
-                  <div><b>消費者目線</b>: エネルギーコストの上昇は生活費への影響が懸念される。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    
-                      <a href="https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Surge-Past-100-as-Iran-Names-New-Supreme-Leader.html" target="_blank" rel="noopener">https://oilprice.com/Latest-Energy-News/World-News/Oil-Pr...</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-7456" class="topic-row"
-              data-title="イラン紛争で中東の供給が脅かされ、原油価格が29%高騰"
-              data-summary="イスラエルがイランとレバノンのインフラを攻撃し、紛争拡大に伴い原油価格が29％上昇した。"
-              data-imp="60"
-              data-recent="1"
-              data-date="2026-03-09T02:37:00+00:00"
-              data-tags="security,incident">
-            <div>
-              
-                <span class="badge imp">重要度 60</span>
-              
-              
-                <a href="https://oilprice.com/Energy/Energy-General/Oil-Prices-Soar-29-as-Iran-Conflict-Threatens-Middle-East-Supply.html" target="_blank" rel="noopener">イラン紛争で中東の供給が脅かされ、原油価格が29%高騰</a>
-              
-              
-                <span class="small">（2026/03/09 11:37）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-                <span class="small">
-                  
-                    <span class="badge">security</span>
-                  
-                    <span class="badge">incident</span>
-                  
-                </span>
-              
-            </div>
-
-            
-              <div class="summary-preview">イスラエルがイランとレバノンのインフラを攻撃し、紛争拡大に伴い原油価格が29％上昇した。</div>
-            
-            <div class="mini">OilPrice.com (Commodities)</div>
-
-            
-              <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
-
-                
-                  <div><strong>要約</strong>：イスラエルがイランとレバノンのインフラを攻撃し、紛争拡大に伴い原油価格が29％上昇した。</div>
-                
-
-                
-                  <ul class="kps">
-                    
-                    
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>イスラエルは中央イランのイラン政権関連インフラを標的に新たな一連の打撃を開始した。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>この打撃はイラン軍事・指揮インフラを狙う継続作戦の一部であると発表された。</li>
-                          
-                        
-                      
-                    
-                      
-                      
-                      
-                        
-                        
-                          <li>IDFはベイルートでもイラン支援武装勢力のインフラに攻撃を行った。</li>
-                          
-                        
-                      
-                    
-                    
-                  </ul>
-                
-
-                
-                <div class="perspectives">
-                  <div><b>技術者目線</b>: インフラへの攻撃がエネルギー供給網に与える影響を技術的観点で評価する必要がある。</div>
-                  <div><b>経営者目線</b>: 市場変動と原油価格上昇は事業リスク管理の重要性を示す。</div>
-                  <div><b>消費者目線</b>: 消費者は燃料価格高騰による生活コスト増加を懸念する。</div>
-                </div>
-                
-
-                
-
-                
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    
-                      <a href="https://oilprice.com/Energy/Energy-General/Oil-Prices-Soar-29-as-Iran-Conflict-Threatens-Middle-East-Supply.html" target="_blank" rel="noopener">https://oilprice.com/Energy/Energy-General/Oil-Prices-Soa...</a>
-                    
-                  </div>
-                
-              </details>
-            
-
-          </li>
-        
-           <li id="topic-7522" class="topic-row"
-              data-title="G7が最大4億バレルの放出を検討中、原油価格が下落"
-              data-summary="G7が最大4億バレルの原油放出を検討し、価格下落を招く。"
+           <li id="topic-7566" class="topic-row"
+              data-title="海洋株式と中東紛争"
+              data-summary="米伊ラン紛争が海運業に影響を与え、Drewryコンテナ船指数のみが対象となる。"
               data-imp="50"
               data-recent="1"
-              data-date="2026-03-09T08:30:00+00:00"
-              data-tags="oil,G7,price_drop">
+              data-date="2026-03-09T11:00:57+00:00"
+              data-tags="market,geopolitics">
             <div>
               
                 <span class="badge imp">重要度 50</span>
               
               
-                <a href="https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Drop-as-the-G7-Considers-Releasing-Up-to-400-Million-Barrels.html" target="_blank" rel="noopener">G7が最大4億バレルの放出を検討中、原油価格が下落</a>
+                <a href="https://www.hellenicshippingnews.com/maritime-equities-and-the-middle-east-conflict/" target="_blank" rel="noopener">海洋株式と中東紛争</a>
               
               
-                <span class="small">（2026/03/09 17:30）</span>
+                <span class="small">（2026/03/09 20:00）</span>
               
 
               
@@ -7631,27 +7427,25 @@
               
                 <span class="small">
                   
-                    <span class="badge">oil</span>
+                    <span class="badge">market</span>
                   
-                    <span class="badge">G7</span>
-                  
-                    <span class="badge">price_drop</span>
+                    <span class="badge">geopolitics</span>
                   
                 </span>
               
             </div>
 
             
-              <div class="summary-preview">G7が最大4億バレルの原油放出を検討し、価格下落を招く。</div>
+              <div class="summary-preview">米伊ラン紛争が海運業に影響を与え、Drewryコンテナ船指数のみが対象となる。</div>
             
-            <div class="mini">OilPrice.com (Commodities)</div>
+            <div class="mini">Hellenic Shipping News</div>
 
             
               <details class="insight" role="group">
                 <summary class="small">要約・解説を表示</summary>
 
                 
-                  <div><strong>要約</strong>：G7が最大4億バレルの原油放出を検討し、価格下落を招く。</div>
+                  <div><strong>要約</strong>：米伊ラン紛争が海運業に影響を与え、Drewryコンテナ船指数のみが対象となる。</div>
                 
 
                 
@@ -7664,7 +7458,7 @@
                       
                         
                         
-                          <li>G7財務大臣らが原油放出を議論中</li>
+                          <li>米伊ラン紛争の開始</li>
                           
                         
                       
@@ -7674,7 +7468,7 @@
                       
                         
                         
-                          <li>国際エネルギー機関(IEA)長も参加予定</li>
+                          <li>海運業への影響</li>
                           
                         
                       
@@ -7684,7 +7478,7 @@
                       
                         
                         
-                          <li>300〜400百万バレルの放出が検討されている</li>
+                          <li>Drewry Container Shipping Equity indicesは唯一のカバー対象</li>
                           
                         
                       
@@ -7695,9 +7489,9 @@
 
                 
                 <div class="perspectives">
-                  <div><b>技術者目線</b>: 技術的影響は限定的だが、供給過剰リスクに注意。</div>
-                  <div><b>経営者目線</b>: 市場変動を見越し、資産管理戦略を再評価する必要あり。</div>
-                  <div><b>消費者目線</b>: 価格下落で消費者負担軽減になる可能性が高い。</div>
+                  <div><b>技術者目線</b>: 技術的な航路計算に変化が生じる可能性あり。</div>
+                  <div><b>経営者目線</b>: 市場リスクを評価し、投資戦略を再検討する必要がある。</div>
+                  <div><b>消費者目線</b>: 消費者価格への影響は限定的だが注意が必要。</div>
                 </div>
                 
 
@@ -7707,7 +7501,7 @@
                   <div class="evidence-urls">
                     <strong>根拠</strong>：
                     
-                      <a href="https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Drop-as-the-G7-Considers-Releasing-Up-to-400-Million-Barrels.html" target="_blank" rel="noopener">https://oilprice.com/Latest-Energy-News/World-News/Oil-Pr...</a>
+                      <a href="https://www.hellenicshippingnews.com/maritime-equities-and-the-middle-east-conflict/" target="_blank" rel="noopener">https://www.hellenicshippingnews.com/maritime-equities-an...</a>
                     
                   </div>
                 
@@ -7716,20 +7510,22 @@
 
           </li>
         
-           <li id="topic-7520" class="topic-row"
-              data-title="湾岸海運危機の深刻化でイラクの石油生産量が70%減少"
-              data-summary=""
-              data-imp="0"
+           <li id="topic-7567" class="topic-row"
+              data-title="LNG輸送料金の高騰"
+              data-summary="LNG輸送料金がイラン情勢で急騰し、主要ルートの料金が大幅上昇。"
+              data-imp="50"
               data-recent="1"
-              data-date="2026-03-09T06:12:33+00:00"
-              data-tags="">
+              data-date="2026-03-09T11:00:59+00:00"
+              data-tags="market">
             <div>
               
+                <span class="badge imp">重要度 50</span>
               
-                <a href="https://oilprice.com/Latest-Energy-News/World-News/Iraqs-Oil-Output-Plunges-70-as-Gulf-Shipping-Crisis-Deepens.html" target="_blank" rel="noopener">湾岸海運危機の深刻化でイラクの石油生産量が70%減少</a>
+              
+                <a href="https://www.hellenicshippingnews.com/lng-shipping-rates-skyrocket/" target="_blank" rel="noopener">LNG輸送料金の高騰</a>
               
               
-                <span class="small">（2026/03/09 15:12）</span>
+                <span class="small">（2026/03/09 20:00）</span>
               
 
               
@@ -7738,29 +7534,214 @@
                 </span>
               
               
+                <span class="small">
+                  
+                    <span class="badge">market</span>
+                  
+                </span>
+              
             </div>
 
             
-            <div class="mini">OilPrice.com (Commodities)</div>
+              <div class="summary-preview">LNG輸送料金がイラン情勢で急騰し、主要ルートの料金が大幅上昇。</div>
+            
+            <div class="mini">Hellenic Shipping News</div>
 
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：LNG輸送料金がイラン情勢で急騰し、主要ルートの料金が大幅上昇。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>LNGスポット市場がイラン情勢により急騰した</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>BLNG1オーストラリア–日本ルートで$223,000/日まで上昇</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>BLNG2米国湾岸–本土ルートでも料金が上昇</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: 輸送コストの変動は物流計画に影響を与える。</div>
+                  <div><b>経営者目線</b>: 利益率低下リスクと価格転嫁戦略が必要。</div>
+                  <div><b>消費者目線</b>: 消費者への価格転嫁で負担増加が懸念される。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://www.hellenicshippingnews.com/lng-shipping-rates-skyrocket/" target="_blank" rel="noopener">https://www.hellenicshippingnews.com/lng-shipping-rates-s...</a>
+                    
+                  </div>
+                
+              </details>
             
 
           </li>
         
-           <li id="topic-7521" class="topic-row"
-              data-title="ホルムズ海峡交通崩壊でサウジアラビアが希少スポット原油を提供"
+           <li id="topic-7569" class="topic-row"
+              data-title="バーレーンのバプコ・エネルギー社、戦争激化で不可抗力を宣言"
+              data-summary="バプコ・エネルギー社が中東戦争の影響で不可抗力を宣言し、リファイナリー複合施設への攻撃を受けた。"
+              data-imp="50"
+              data-recent="1"
+              data-date="2026-03-09T11:30:00+00:00"
+              data-tags="force_majeure,refinery,war_impact">
+            <div>
+              
+                <span class="badge imp">重要度 50</span>
+              
+              
+                <a href="https://oilprice.com/Latest-Energy-News/World-News/Bahrains-Bapco-Energies-Declares-Force-Majeure-as-War-Escalates.html" target="_blank" rel="noopener">バーレーンのバプコ・エネルギー社、戦争激化で不可抗力を宣言</a>
+              
+              
+                <span class="small">（2026/03/09 20:30）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">force_majeure</span>
+                  
+                    <span class="badge">refinery</span>
+                  
+                    <span class="badge">war_impact</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <div class="summary-preview">バプコ・エネルギー社が中東戦争の影響で不可抗力を宣言し、リファイナリー複合施設への攻撃を受けた。</div>
+            
+            <div class="mini">OilPrice.com (Commodities)</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：バプコ・エネルギー社が中東戦争の影響で不可抗力を宣言し、リファイナリー複合施設への攻撃を受けた。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>Bapco Energiesは不可抗力を宣言した</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>不可抗力は中東地域紛争とリファイナリー複合施設への最近の攻撃によるもの</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>同社はグループ運営に影響があると述べた</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: システム停止や生産ラインの遅延が予測され、復旧計画を策定する必要がある。</div>
+                  <div><b>経営者目線</b>: 不可抗力宣言でリスク管理体制を再評価し、株主への説明責任を果たすべき。</div>
+                  <div><b>消費者目線</b>: 供給不安が続くと価格上昇や入手困難になる可能性がある。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://oilprice.com/Latest-Energy-News/World-News/Bahrains-Bapco-Energies-Declares-Force-Majeure-as-War-Escalates.html" target="_blank" rel="noopener">https://oilprice.com/Latest-Energy-News/World-News/Bahrai...</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
+           <li id="topic-7568" class="topic-row"
+              data-title="サウジアラビア、大手シャイバ油田を狙ったドローンを撃墜"
               data-summary=""
               data-imp="0"
               data-recent="1"
-              data-date="2026-03-09T07:33:01+00:00"
+              data-date="2026-03-09T10:20:00+00:00"
               data-tags="">
             <div>
               
               
-                <a href="https://oilprice.com/Latest-Energy-News/World-News/Saudi-Arabia-Offers-Rare-Spot-Crude-as-Strait-of-Hormuz-Traffic-Collapses.html" target="_blank" rel="noopener">ホルムズ海峡交通崩壊でサウジアラビアが希少スポット原油を提供</a>
+                <a href="https://oilprice.com/Latest-Energy-News/World-News/Saudi-Arabia-Shoots-Down-Drones-Targeting-Major-Shaybah-Oilfield.html" target="_blank" rel="noopener">サウジアラビア、大手シャイバ油田を狙ったドローンを撃墜</a>
               
               
-                <span class="small">（2026/03/09 16:33）</span>
+                <span class="small">（2026/03/09 19:20）</span>
               
 
               
@@ -12262,17 +12243,17 @@
               data-summary="12月23日、オンラインで開催された日米戦略的投資イニシアティブに関する協議委員会。"
               data-imp="50"
               data-recent="0"
-              data-date="2026-03-02T15:00:00+00:00"
+              data-date="2026-02-09T15:00:00+00:00"
               data-tags="policy">
             <div>
               
                 <span class="badge imp">重要度 50</span>
               
               
-                <a href="https://www.meti.go.jp/english/press/2026/0303_001.html" target="_blank" rel="noopener">日米戦略的投資イニシアティブに関する協議委員会</a>
+                <a href="https://www.meti.go.jp/english/press/2026/0210_001.html" target="_blank" rel="noopener">日米戦略的投資イニシアティブに関する協議委員会</a>
               
               
-                <span class="small">（2026/03/03 00:00）</span>
+                <span class="small">（2026/02/10 00:00）</span>
               
 
               
@@ -12969,9 +12950,61 @@
         <ul>
           
             <li>
+              <a href="#topic-6872">サントリーはCSRDの遅延を利用してサステナビリティ報告を強化している方法</a>
+              <span class="date">
+                2026/03/09 08:34
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
               <a href="#topic-7390">ウィルトシャー州のグリーン スキル イノベーション センターとヨーロッパ最大のパッシブハウス住宅プロジェクト: 今週の持続可能性の成功事例</a>
               <span class="date">
                 2026/03/08 23:51
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-7544">来週: edie と Kingspan がオンサイト太陽光発電に関する無料ウェビナーを開催</a>
+              <span class="date">
+                2026/03/09 09:00
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-7545">英国のタクシー車両の脱炭素化: さらなる支援を求める声</a>
+              <span class="date">
+                2026/03/09 09:05
+              </span>
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              <span class="small">（累計 1）</span>
+            </li>
+          
+            <li>
+              <a href="#topic-7546">炭素クレジットスキャンダル:ブラジルから「問題のある」オフセットを調達した企業を非難</a>
+              <span class="date">
+                2026/03/09 10:57
               </span>
               
                 <span class="badge recent ">
@@ -14571,6 +14604,130 @@
 
           </li>
         
+           <li id="topic-6872" class="topic-row"
+              data-title="サントリーはCSRDの遅延を利用してサステナビリティ報告を強化している方法"
+              data-summary=""
+              data-imp="0"
+              data-recent="1"
+              data-date="2026-03-09T08:34:30+00:00"
+              data-tags="">
+            <div>
+              
+              
+                <a href="https://www.edie.net/how-suntory-is-using-the-csrd-delay-to-enhance-its-sustainability-reporting/" target="_blank" rel="noopener">サントリーはCSRDの遅延を利用してサステナビリティ報告を強化している方法</a>
+              
+              
+                <span class="small">（2026/03/09 17:34）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+            <div class="mini">edie (Sustainability)</div>
+
+            
+
+          </li>
+        
+           <li id="topic-7544" class="topic-row"
+              data-title="来週: edie と Kingspan がオンサイト太陽光発電に関する無料ウェビナーを開催"
+              data-summary=""
+              data-imp="0"
+              data-recent="1"
+              data-date="2026-03-09T09:00:28+00:00"
+              data-tags="">
+            <div>
+              
+              
+                <a href="https://www.edie.net/registration-now-open-edie-and-kingspan-launch-free-webinar-on-on-site-solar/" target="_blank" rel="noopener">来週: edie と Kingspan がオンサイト太陽光発電に関する無料ウェビナーを開催</a>
+              
+              
+                <span class="small">（2026/03/09 18:00）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+            <div class="mini">edie (Sustainability)</div>
+
+            
+
+          </li>
+        
+           <li id="topic-7545" class="topic-row"
+              data-title="英国のタクシー車両の脱炭素化: さらなる支援を求める声"
+              data-summary=""
+              data-imp="0"
+              data-recent="1"
+              data-date="2026-03-09T09:05:07+00:00"
+              data-tags="">
+            <div>
+              
+              
+                <a href="https://www.edie.net/decarbonising-the-uks-taxi-fleet-a-call-for-more-support/" target="_blank" rel="noopener">英国のタクシー車両の脱炭素化: さらなる支援を求める声</a>
+              
+              
+                <span class="small">（2026/03/09 18:05）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+            <div class="mini">edie (Sustainability)</div>
+
+            
+
+          </li>
+        
+           <li id="topic-7546" class="topic-row"
+              data-title="炭素クレジットスキャンダル:ブラジルから「問題のある」オフセットを調達した企業を非難"
+              data-summary=""
+              data-imp="0"
+              data-recent="1"
+              data-date="2026-03-09T10:57:29+00:00"
+              data-tags="">
+            <div>
+              
+              
+                <a href="https://www.edie.net/carbon-credits-scandal-companies-slammed-for-sourcing-problematic-offsets-from-brazil/" target="_blank" rel="noopener">炭素クレジットスキャンダル:ブラジルから「問題のある」オフセットを調達した企業を非難</a>
+              
+              
+                <span class="small">（2026/03/09 19:57）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+            </div>
+
+            
+            <div class="mini">edie (Sustainability)</div>
+
+            
+
+          </li>
+        
       </ul>
     
       </div>
@@ -14636,7 +14793,7 @@
             </li>
           
             <li>
-              <a href="#topic-7526">お知らせ:JPCERT/CC インターネット定点観測レポート[2025年10月1日~2025年12月31日]</a>
+              <a href="#topic-7493">お知らせ:JPCERT/CC インターネット定点観測レポート[2025年7月1日~2025年9月30日]</a>
               <span class="date">
                 2026/03/09 05:10
               </span>
@@ -15193,15 +15350,17 @@
               data-summary="CISAが2件の既知脆弱性をKEVカタログに追加し、FCEB機関は期限内対策義務。"
               data-imp="80"
               data-recent="0"
-              data-date="None"
+              data-date="2026-02-20T12:00:00+00:00"
               data-tags="kev,cve,federal,remediation">
             <div>
               
                 <span class="badge imp">重要度 80</span>
               
               
-                CISA、悪用された既知の脆弱性 2 件をカタログに追加
+                <a href="https://www.cisa.gov/news-events/alerts/2026/02/20/cisa-adds-two-known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">CISA、悪用された既知の脆弱性 2 件をカタログに追加</a>
               
+              
+                <span class="small">（2026/02/20 21:00）</span>
               
 
               
@@ -15223,7 +15382,7 @@
             
               <div class="summary-preview">CISAが2件の既知脆弱性をKEVカタログに追加し、FCEB機関は期限内対策義務。</div>
             
-            
+            <div class="mini">CISA Cybersecurity Advisories</div>
 
             
               <details class="insight" role="group">
@@ -16240,6 +16399,115 @@
 
           </li>
         
+           <li id="topic-7493" class="topic-row"
+              data-title="お知らせ:JPCERT/CC インターネット定点観測レポート[2025年7月1日~2025年9月30日]"
+              data-summary="JPCERT/CCが2025年7月1日～9月30日のインターネット定点観測レポートを公開。"
+              data-imp="20"
+              data-recent="1"
+              data-date="2026-03-09T05:10:00+00:00"
+              data-tags="security,internet_observation">
+            <div>
+              
+                <span class="badge imp">重要度 20</span>
+              
+              
+                <a href="https://www.jpcert.or.jp/tsubame/report/report202507-09.html" target="_blank" rel="noopener">お知らせ:JPCERT/CC インターネット定点観測レポート[2025年7月1日~2025年9月30日]</a>
+              
+              
+                <span class="small">（2026/03/09 14:10）</span>
+              
+
+              
+                <span class="badge recent ">
+                  48h +1
+                </span>
+              
+              
+                <span class="small">
+                  
+                    <span class="badge">security</span>
+                  
+                    <span class="badge">internet_observation</span>
+                  
+                </span>
+              
+            </div>
+
+            
+              <div class="summary-preview">JPCERT/CCが2025年7月1日～9月30日のインターネット定点観測レポートを公開。</div>
+            
+            <div class="mini">JPCERT/CC</div>
+
+            
+              <details class="insight" role="group">
+                <summary class="small">要約・解説を表示</summary>
+
+                
+                  <div><strong>要約</strong>：JPCERT/CCが2025年7月1日～9月30日のインターネット定点観測レポートを公開。</div>
+                
+
+                
+                  <ul class="kps">
+                    
+                    
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>報告期間は2025年7月1日から9月30日まで。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>レポートはJPCERT/CCによるインターネット定点観測に関するもの。</li>
+                          
+                        
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                          <li>カテゴリはセキュリティ関連の情報提供である。</li>
+                          
+                        
+                      
+                    
+                    
+                  </ul>
+                
+
+                
+                <div class="perspectives">
+                  <div><b>技術者目線</b>: データ収集と解析手法が公開されているか確認すべき。</div>
+                  <div><b>経営者目線</b>: レポート内容を業務改善に活用できる可能性あり。</div>
+                  <div><b>消費者目線</b>: 一般ユーザーはインターネット安全情報として参考になる。</div>
+                </div>
+                
+
+                
+
+                
+                  <div class="evidence-urls">
+                    <strong>根拠</strong>：
+                    
+                      <a href="https://www.jpcert.or.jp/tsubame/report/report202507-09.html" target="_blank" rel="noopener">https://www.jpcert.or.jp/tsubame/report/report202507-09.html</a>
+                    
+                  </div>
+                
+              </details>
+            
+
+          </li>
+        
            <li id="topic-7489" class="topic-row"
               data-title="JVN:Rakuten ViberにおけるTLSハンドシェイクの実装不備の脆弱性"
               data-summary=""
@@ -16285,37 +16553,6 @@
               
               
                 <span class="small">（2026/03/09 12:00）</span>
-              
-
-              
-                <span class="badge recent ">
-                  48h +1
-                </span>
-              
-              
-            </div>
-
-            
-            <div class="mini">JPCERT/CC</div>
-
-            
-
-          </li>
-        
-           <li id="topic-7526" class="topic-row"
-              data-title="お知らせ:JPCERT/CC インターネット定点観測レポート[2025年10月1日~2025年12月31日]"
-              data-summary=""
-              data-imp="0"
-              data-recent="1"
-              data-date="2026-03-09T05:10:00+00:00"
-              data-tags="">
-            <div>
-              
-              
-                <a href="https://www.jpcert.or.jp/tsubame/report/report202510-12.html" target="_blank" rel="noopener">お知らせ:JPCERT/CC インターネット定点観測レポート[2025年10月1日~2025年12月31日]</a>
-              
-              
-                <span class="small">（2026/03/09 14:10）</span>
               
 
               
