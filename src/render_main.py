@@ -21,8 +21,11 @@ import time
 def fmt_date(s):
     if not s:
         return ""
-    dt = datetime.fromisoformat(s.replace("Z",""))
-    return dt.astimezone(timezone(timedelta(hours=9))).strftime("%Y/%m/%d %H:%M")
+    try:
+        dt = datetime.fromisoformat(s.replace("Z",""))
+        return dt.astimezone(timezone(timedelta(hours=9))).strftime("%Y/%m/%d %H:%M")
+    except (ValueError, TypeError, OSError):
+        return str(s)[:16]
 
 def _now_sec():
     return time.perf_counter()
@@ -364,9 +367,15 @@ PORTAL_HTML = r"""
   </div>
 
   <div class="card">
-    <h2 style="margin:0 0 6px">意見（お試し版）</h2>
+    <h2 style="margin:0 0 6px">立場別意見</h2>
     <div class="small">3つの立場で、記事を400文字前後の意見として整理</div>
     <a class="btn" href="./opinion/index.html">意見ページを見る →</a>
+  </div>
+
+  <div class="card">
+    <h2 style="margin:0 0 6px">未来予測レポート</h2>
+    <div class="small">多視点ニュース分析に基づく未来予測（1週間〜1年）</div>
+    <a class="btn" href="./forecast/index.html">未来予測を見る →</a>
   </div>
 
   <div class="card">
@@ -412,7 +421,8 @@ HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">意見（お試し版）</a>
+    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
+    <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
@@ -611,7 +621,7 @@ HTML = r"""
     </div>
 
     {% if topics_by_cat.get(cat.id) %}
-      <ul>
+      <ul style="list-style:none;padding:0">
         {% for t in topics_by_cat[cat.id] %}
            <li id="topic-{{ t.id }}" class="topic-row"
               data-title="{{ t.title|e }}"
@@ -620,44 +630,43 @@ HTML = r"""
               data-recent="{{ t.recent or 0 }}"
               data-date="{{ t.date }}"
               data-tags="{{ t.tags|default([])|join(',') }}">
-            <div>
+            <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px">
+              {% if t.url and t.url != "#" %}
+                <a href="{{ t.url }}" target="_blank" rel="noopener" style="font-weight:500">{{ t.title }}</a>
+              {% else %}
+                <span style="font-weight:500">{{ t.title }}</span>
+              {% endif %}
+              {% if t.date %}
+                <span class="date">{{ fmt_date(t.date) }}</span>
+              {% endif %}
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
               {% if t.importance is not none %}
                 <span class="badge imp">重要度 {{ t.importance }}</span>
               {% endif %}
-              {% if t.url and t.url != "#" %}
-                <a href="{{ t.url }}" target="_blank" rel="noopener">{{ t.title }}</a>
-              {% else %}
-                {{ t.title }}
-              {% endif %}
-              {% if t.date %}
-                <span class="small">（{{ fmt_date(t.date) }}）</span>
-              {% endif %}
-
               {% if t.recent > 0 %}
                 <span class="badge recent {% if (t.recent or 0) >= 5 %}hot{% endif %}">
                   48h +{{ t.recent }}
                 </span>
               {% endif %}
               {% if t.tags and t.tags|length>0 %}
-                <span class="small">
-                  {% for tg in t.tags %}
-                    <span class="badge">{{ tg }}</span>
-                  {% endfor %}
-                </span>
+                {% for tg in t.tags %}
+                  <span class="badge">{{ tg }}</span>
+                {% endfor %}
               {% endif %}
             </div>
 
             {% if t.summary %}
-              <div class="summary-preview">{{ t.summary[:80] }}{% if t.summary|length > 80 %}…{% endif %}</div>
+              <div class="summary-preview">{{ t.summary[:100] }}{% if t.summary|length > 100 %}…{% endif %}</div>
             {% endif %}
             {% if t.source %}<div class="mini">{{ t.source }}</div>{% endif %}
 
             {% if t.summary or (t.key_points and t.key_points|length>0) or (t.perspectives) or (t.evidence_urls and t.evidence_urls|length>0) %}
               <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
+                <summary>要約・解説を表示</summary>
 
                 {% if t.summary %}
-                  <div><strong>要約</strong>：{{ t.summary }}</div>
+                  <div style="font-size:13px;line-height:1.6"><strong>要約</strong>：{{ t.summary }}</div>
                 {% endif %}
 
                 {% if t.key_points and t.key_points|length>0 %}
@@ -702,7 +711,7 @@ HTML = r"""
                 {% endif %}
 
                 {% if t.next_actions and t.next_actions|length>0 %}
-                  <div style="margin-top:6px;"><strong>次アクション</strong></div>
+                  <div style="margin-top:10px;font-size:13px"><strong>次アクション</strong></div>
                   <ul class="nas">
                     {% for na in t.next_actions %}
                       {% if na is mapping %}
@@ -793,7 +802,8 @@ NEWS_HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">意見（お試し版）</a>
+    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
+    <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
@@ -881,7 +891,7 @@ NEWS_HTML = r"""
     </div>
 
     <div class="category-body">
-      <ul>
+      <ul style="list-style:none;padding:0">
         {% for it in sec.rows %}
           <li id="news-{{ it.id }}" class="topic-row"
             data-title="{{ it.title|e }}"
@@ -890,28 +900,28 @@ NEWS_HTML = r"""
             data-date="{{ it.dt }}"
             data-tags="{{ it.tags|default([])|join(',') }}">
 
-           <div>
-            <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
+           <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px">
             {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}
-            <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a>
+            <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener" style="font-weight:500">{{ it.title }}</a>
             <span class="date">{{ it.dt_jst }}</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
+            <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
             {% if it.tags and it.tags|length>0 %}
-              <span class="small">
-                {% for tg in it.tags %}
-                  <span class="badge">{{ tg }}</span>
-                {% endfor %}
-              </span>
+              {% for tg in it.tags %}
+                <span class="badge">{{ tg }}</span>
+              {% endfor %}
             {% endif %}
           </div>
 
           {% if it.summary %}
-            <div class="summary-preview">{{ it.summary[:80] }}{% if it.summary|length > 80 %}…{% endif %}</div>
+            <div class="summary-preview">{{ it.summary[:100] }}{% if it.summary|length > 100 %}…{% endif %}</div>
           {% endif %}
           {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
 
            {% if it.importance_basis or it.summary or (it.key_points and it.key_points|length>0) or (it.perspectives and (it.perspectives.engineer or it.perspectives.management or it.perspectives.consumer)) %}
               <details class="insight" role="group">
-                <summary class="small">要約・解説を表示</summary>
+                <summary>要約・解説を表示</summary>
                 <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
 
                 {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
@@ -1018,18 +1028,18 @@ OPINION_HTML = r"""
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>意見（お試し版）</title>
-  <meta name="description" content="技術者・経営者・消費者の3つの立場で、直近記事を400文字前後の意見として整理した試験ページ。">
+  <title>立場別意見 | Daily Tech Trend</title>
+  <meta name="description" content="技術者・経営者・消費者の3つの立場で、直近記事を分析し意見として整理したページ。">
   <link rel="canonical" href="/daily-tech-trend/opinion/">
-  <meta property="og:title" content="意見（お試し版）| Daily Tech Trend">
-  <meta property="og:description" content="技術者・経営者・消費者の3つの立場で、直近記事を400文字前後の意見として整理した試験ページ。">
+  <meta property="og:title" content="立場別意見 | Daily Tech Trend">
+  <meta property="og:description" content="技術者・経営者・消費者の3つの立場で、直近記事を分析し意見として整理したページ。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dachshund-github.github.io/daily-tech-trend/opinion/">
   <meta property="og:site_name" content="Daily Tech Trend">
   <meta property="og:locale" content="ja_JP">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="意見（お試し版）| Daily Tech Trend">
-  <meta name="twitter:description" content="技術者・経営者・消費者の3つの立場で、直近記事を400文字前後の意見として整理した試験ページ。">
+  <meta name="twitter:title" content="立場別意見 | Daily Tech Trend">
+  <meta name="twitter:description" content="技術者・経営者・消費者の3つの立場で、直近記事を分析し意見として整理したページ。">
   <link rel="stylesheet" href="{{ common_css_href }}">
   <style>
     .view-mode-switch{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
@@ -1084,9 +1094,14 @@ OPINION_HTML = r"""
     .role-vertical details.insight[open]{padding:10px 14px}
     .role-vertical details.insight[open] > *:not(summary){margin-top:10px}
     .role-vertical details.insight[open] .opinion-body + .section-heading{margin-top:18px}
+    .imp-badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;line-height:1.4}
+    .imp-high{background:#fee2e2;color:#dc2626;border:1px solid #fca5a5}
+    .imp-mid{background:#fef3c7;color:#b45309;border:1px solid #fcd34d}
+    .imp-low{background:#e0e7ff;color:#4338ca;border:1px solid #a5b4fc}
     .sticky-mini-nav{position:fixed;right:12px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:20}
     .sticky-mini-nav a,.sticky-mini-nav button{padding:8px 10px;border-radius:999px;border:1px solid var(--border);background:var(--bg);font-size:12px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     .sticky-mini-nav .mini-toc{display:none}
+    .role-nav-fixed{display:none}
     @media (max-width: 640px){
       .role-vertical{line-height:1.75}
       .role-vertical .small{line-height:1.8}
@@ -1095,6 +1110,10 @@ OPINION_HTML = r"""
       .role-vertical .opinion-body{padding:0 2px;line-height:1.9}
       .role-vertical .news-source-list li{margin:16px 0}
       .role-vertical .section-heading{margin:20px 0 10px}
+      .role-nav-fixed{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:30;background:var(--bg);border-top:1px solid var(--border);padding:8px;gap:6px;justify-content:center}
+      .role-nav-fixed a{padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:12px;text-decoration:none;color:var(--text-main)}
+      .role-nav-fixed a.active{border-color:var(--accent);color:var(--accent);font-weight:700}
+      .sticky-mini-nav{bottom:60px}
     }
     @media (min-width: 821px){
       .exec-brief .exec-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -1103,16 +1122,17 @@ OPINION_HTML = r"""
   </style>
 </head>
 <body id="top">
-  <h1>意見（お試し版）</h1>
+  <h1>立場別意見</h1>
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">意見（お試し版）</a>
+    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
+    <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
   <div class="summary-card">
-    <div class="summary-title">今日の要点（意見・お試し版）</div>
+    <div class="summary-title">今日の要点（立場別意見）</div>
     <div class="summary-grid">
       <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">{{ generated_at }}</div></div>
       <div class="summary-item"><div class="k">対象記事数</div><div class="v">{{ source_item_count }}</div></div>
@@ -1123,28 +1143,33 @@ OPINION_HTML = r"""
 
   <p class="small" style="margin:6px 0 10px;">各立場の詳細を縦スクロールで確認し、結論だけを比較したい場合は「比較表示」に切り替えてご覧ください。</p>
 
-  {% set management_section = (role_sections | selectattr('role', 'equalto', 'management') | list | first) %}
-  {% if management_section %}
+  {% if exec_brief and exec_brief.gaps %}
   <section class="exec-brief" aria-label="経営者向けクイック確認">
-    <h2>経営者に見せる時の不足点と是正ポイント</h2>
-    <div class="small" style="margin-bottom:10px;">現状の経営者視点の結論「{{ management_section.summary }}」を、意思決定に必要な粒度へ補強するための最低限チェックです。</div>
+    <h2>経営者向け: 不足情報と是正ポイント</h2>
+    <div class="small" style="margin-bottom:10px;">
+      経営者視点の結論「{{ exec_brief.summary }}」を意思決定に必要な粒度へ補強するためのチェックです。
+      {% if exec_brief.categories %}
+      <br>本日の主要カテゴリ: {{ exec_brief.categories | join(', ') }}
+      {% endif %}
+    </div>
     <div class="exec-grid">
       <article class="exec-card">
         <h3>不足しがちな情報</h3>
         <ul class="small">
-          <li>売上・利益・キャッシュへの影響額（上振れ/下振れの幅）が見えない。</li>
-          <li>今四半期で判断すべき期限と、先送り時の機会損失が明示されていない。</li>
-          <li>法務・セキュリティ・現場オペレーションの責任分担が曖昧。</li>
-          <li>根拠がニュース中心で、社内KPIや既存施策との接続が弱い。</li>
+          {% for gap in exec_brief.gaps %}
+          <li>{{ gap }}</li>
+          {% endfor %}
         </ul>
       </article>
       <article class="exec-card">
-        <h3>是正アクション（経営会議用）</h3>
+        <h3>是正アクション</h3>
         <ul class="small">
-          <li>「24時間以内」「今週中」「四半期内」の3段階で意思決定項目を分ける。</li>
-          <li>各論点に対して投資額・回収見込み・未対応リスクを1行で併記する。</li>
-          <li>推奨アクション「{{ management_section.recommendation }}」に担当部門と期限を付与する。</li>
-          <li>承認に必要な追加データ（法規制解釈、顧客影響、代替案）を明記する。</li>
+          {% for action in exec_brief.actions %}
+          <li>{{ action }}</li>
+          {% endfor %}
+          {% if exec_brief.recommendation %}
+          <li>推奨:「{{ exec_brief.recommendation }}」に担当部門と期限を付与する。</li>
+          {% endif %}
         </ul>
       </article>
     </div>
@@ -1235,15 +1260,14 @@ OPINION_HTML = r"""
   <section id="{{ role.anchor_id }}" class="top-col role-vertical" style="margin:8px 0 16px; scroll-margin-top: 20px;">
     <h2>{{ role.label }}視点</h2>
     <div class="small"><strong>結論</strong>: {{ role.summary }}</div>
-    <div class="small"><strong>要約（2〜3行）</strong></div>
-    <ul class="small" style="margin:6px 0 8px;">
+    <div class="small" style="margin:6px 0"><strong>要約</strong></div>
+    <ul class="small" style="margin:4px 0 8px;">
       {% for line in role.preview_lines %}
       <li>{{ line }}</li>
       {% endfor %}
     </ul>
     <div class="small"><strong>主要根拠</strong>: {{ role.primary_evidence }}</div>
     <div class="small"><strong>推奨アクション</strong>: {{ role.recommendation }}</div>
-    <div class="small">{{ role.focus }}</div>
     {% if role.discussion_pairs %}
     <div class="role-discussion">
       <div class="small"><strong>他の立場からの問いかけ</strong></div>
@@ -1259,8 +1283,8 @@ OPINION_HTML = r"""
     {% if role.selection_note %}
     <div class="small" style="color:#b45309; margin-top:6px;">{{ role.selection_note }}</div>
     {% endif %}
-    <details class="insight">
-      <summary class="small">詳細を読む（{{ role.label }}の意見約{{ role.full_text_len }}文字・ニュースソース）</summary>
+    <details class="insight" open>
+      <summary class="small">意見本文とニュースソース（{{ role.label }}の意見約{{ role.full_text_len }}文字）</summary>
       <h3 class="section-heading">意見本文</h3>
       <div class="opinion-body">
         {% for block in role.full_text_sections %}
@@ -1272,9 +1296,18 @@ OPINION_HTML = r"""
         {% for art in role.articles %}
         <li>
           <a href="{{ art.url }}" target="_blank" rel="noopener">{{ art.title }}</a>
-          <div class="small">{{ art.source }} / 重要度 {{ art.importance }}</div>
-          <div class="small">公開日時: {{ art.published_at_jst or '不明' }} / 取得元時刻: {{ art.fetched_at_jst or '不明' }}</div>
-          <div class="small">重要度理由: {{ art.importance_basis or '重要語・カテゴリ一致・鮮度から総合判定' }}</div>
+          <div class="small" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:4px 0;">
+            {{ art.source }}
+            {% set imp = art.importance|default(0)|int %}
+            {% if imp >= 60 %}
+            <span class="imp-badge imp-high">重要度 {{ imp }}</span>
+            {% elif imp >= 30 %}
+            <span class="imp-badge imp-mid">重要度 {{ imp }}</span>
+            {% else %}
+            <span class="imp-badge imp-low">重要度 {{ imp }}</span>
+            {% endif %}
+          </div>
+          <div class="small">{{ fmt_date(art.published_at or art.get('dt','')) or '日時不明' }}</div>
         </li>
         {% endfor %}
       </ul>
@@ -1282,8 +1315,19 @@ OPINION_HTML = r"""
       <div class="small">本日は該当する記事が少ないため、無関係なニュースは採用していません。</div>
       {% endif %}
     </details>
+    {% if not loop.last %}
+    <div style="text-align:center;margin:12px 0;">
+      <a href="#{{ role_sections[loop.index].anchor_id }}" class="small" style="color:var(--accent);">次の立場（{{ role_sections[loop.index].label }}視点）へ</a>
+    </div>
+    {% endif %}
   </section>
   {% endfor %}
+
+  <nav class="role-nav-fixed" aria-label="立場ナビ">
+    {% for role in role_sections %}
+    <a href="#{{ role.anchor_id }}">{{ role.label }}</a>
+    {% endfor %}
+  </nav>
 
   <div class="sticky-mini-nav" aria-label="スクロール補助">
     <a class="mini-toc" href="#top">目次へ戻る</a>
@@ -1318,6 +1362,23 @@ OPINION_HTML = r"""
         backToTopButton.addEventListener('click', () => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+      }
+
+      /* モバイル固定タブのアクティブ状態をスクロールで更新 */
+      const fixedNav = document.querySelector('.role-nav-fixed');
+      if (fixedNav) {
+        const sections = [...document.querySelectorAll('.role-vertical[id]')];
+        const navLinks = [...fixedNav.querySelectorAll('a')];
+        let ticking = false;
+        const updateActive = () => {
+          let current = '';
+          for (const sec of sections) {
+            if (sec.getBoundingClientRect().top <= 100) current = sec.id;
+          }
+          navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+          ticking = false;
+        };
+        window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(updateActive); } }, {passive:true});
       }
     })();
   </script>
@@ -1376,7 +1437,8 @@ OPS_HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">意見（お試し版）</a>
+    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
+    <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
@@ -1883,58 +1945,83 @@ def _sanitize_engineer_phrase(text: str) -> str:
 
 
 def _build_combined_opinion(role: str, picked_articles: list[dict]) -> str:
+    """立場別の意見を記事のperspectivesから動的に構成する。"""
     role_map = {"engineer": "技術者", "management": "経営者", "consumer": "消費者"}
     role_label = role_map.get(role, role)
+
     if not picked_articles:
-        if role == "engineer":
-            return (
-                "主張: 技術者としては、機能拡張より先に監視指標と切り戻し手順を前提にした仕様確定を優先する。"
-                "根拠: 可観測性軸では、立場条件を満たす一次情報が不足しているため監視設計の妥当性を検証できない。"
-                "根拠: 依存関係・権限境界軸では、無関係な記事を採用すると責務分離の前提を誤る。"
-                "影響: SLO・更新手順・ロールバック条件を先に明文化し、追加情報が揃い次第に実装判断を再提示する。"
-            )
-        return f"主張: 本日は{role_label}の判断に直結する記事が少ないため、結論は保留する。根拠: 立場条件を満たす一次情報が不足しており、無関係な記事は採用しない。影響: 次回更新で市場・規制・製品情報を追加確認し、判断を再提示する。"
-
-    dominant_cat = _dominant_category(picked_articles)
-    claim_templates = CATEGORY_CLAIM_TEMPLATES.get(role, CATEGORY_CLAIM_TEMPLATES["engineer"])
-    action_templates = CATEGORY_ACTION_TEMPLATES.get(role, CATEGORY_ACTION_TEMPLATES["engineer"])
-
-    claim_text = claim_templates.get(dominant_cat, claim_templates["_default"])
-    action_text = action_templates.get(dominant_cat, action_templates["_default"])
-
-    if role == "engineer":
-        article_a = picked_articles[0]
-        article_b = picked_articles[1] if len(picked_articles) > 1 else picked_articles[0]
-        article_c = picked_articles[2] if len(picked_articles) > 2 else article_b
-        _empty_eng_fb = "一次情報の追加確認が必要であり"
-        point_a = _sanitize_engineer_phrase(_extract_role_perspective(article_a, "engineer")) or _empty_eng_fb
-        point_b = _sanitize_engineer_phrase(_extract_role_perspective(article_b, "engineer")) or _empty_eng_fb
-        point_c = _sanitize_engineer_phrase(_extract_role_perspective(article_c, "engineer")) or _empty_eng_fb
-
-        axes = CATEGORY_EVIDENCE_AXES.get(dominant_cat, CATEGORY_EVIDENCE_AXES["_default"])
-
-        claim = f"主張: 技術者としては、『{claim_text}』。"
-        evidence = (
-            f"根拠: {axes[0]}の評価軸では、{point_a}を根拠に優先対応が必要である。"
-            f"根拠: {axes[1]}の評価軸では、{point_b}を根拠に先行整備が必須になる。"
-            f"根拠: {axes[2]}の評価軸では、{point_c}を根拠に同時設計すべきだ。"
+        return (
+            f"主張: 本日は{role_label}の判断に直結する記事が不足している。"
+            f"根拠: 立場条件を満たす一次情報が見つからなかった。"
+            f"影響: 次回更新で追加情報を確認し、判断を再提示する。"
         )
-        impact = f"影響: {action_text}"
-        text = f"{claim}{evidence}{impact}"
-        return _fit_text_length(text, target=330, min_len=260, max_len=420)
 
-    # management / consumer
-    evidence_points = []
-    for article in picked_articles[:2]:
-        source = str(article.get("source") or "出典未記載").strip()
-        point = _extract_role_perspective(article, role) or "関連情報の精査が必要"
-        evidence_points.append(f"{point}（{source}）")
-    while len(evidence_points) < 2:
-        evidence_points.append("関連一次情報の追加確認が必要（出典精査中）")
+    def _strip_guess(text: str) -> str:
+        for prefix in ("推測:", "推測："):
+            if text.startswith(prefix):
+                text = text[len(prefix):].strip()
+        return text
 
-    claim = f"主張: {role_label}としては、『{claim_text}』。"
-    evidence = f"根拠: {evidence_points[0]}。さらに、{evidence_points[1]}。"
-    impact = f"影響: {action_text}"
+    def _get_persp(art, r):
+        return _strip_guess(((art.get("perspectives") or {}).get(r) or "").strip())
+
+    def _get_summary(art):
+        s = (art.get("summary") or "").strip()
+        return s if s and s != "（要約を生成できませんでした）" else ""
+
+    def _first_kp(art):
+        for kp in (art.get("key_points") or []):
+            if isinstance(kp, str) and kp.strip() and not kp.strip().startswith("推測"):
+                return kp.strip()
+        return ""
+
+    # --- 主張: 先頭記事の perspective を最優先 ---
+    lead = picked_articles[0]
+    lead_persp = _get_persp(lead, role)
+    lead_summary = _get_summary(lead)
+
+    if lead_persp:
+        claim_core = lead_persp
+    elif lead_summary:
+        claim_core = lead_summary
+        if len(claim_core) > 80:
+            claim_core = claim_core[:80].rstrip("、。 ") + "…"
+    else:
+        dominant_cat = _dominant_category(picked_articles)
+        templates = CATEGORY_CLAIM_TEMPLATES.get(role, CATEGORY_CLAIM_TEMPLATES["engineer"])
+        claim_core = templates.get(dominant_cat, templates["_default"])
+
+    claim = f"主張: {role_label}としては、{claim_core}。"
+
+    # --- 根拠: 2・3番目の記事から perspectives/key_points ---
+    evidence_parts = []
+    for art in picked_articles[1:3]:
+        persp = _get_persp(art, role)
+        kp = _first_kp(art)
+        summary = _get_summary(art)
+        source = (art.get("source") or "").strip()
+        substance = persp or kp or summary
+        if substance:
+            src_note = f"（{source}）" if source else ""
+            evidence_parts.append(f"根拠: {substance}{src_note}。")
+
+    if not evidence_parts:
+        lead_kp = _first_kp(lead)
+        if lead_kp:
+            evidence_parts.append(f"根拠: {lead_kp}。")
+        elif lead_summary and lead_summary != claim_core:
+            evidence_parts.append(f"根拠: {lead_summary}。")
+        else:
+            evidence_parts.append("根拠: 一次情報の追加確認が必要。")
+
+    evidence = "".join(evidence_parts)
+
+    # --- 影響: カテゴリ別アクション ---
+    dominant_cat = _dominant_category(picked_articles)
+    action_templates = CATEGORY_ACTION_TEMPLATES.get(role, CATEGORY_ACTION_TEMPLATES["engineer"])
+    action = action_templates.get(dominant_cat, action_templates["_default"])
+    impact = f"影響: {action}"
+
     text = f"{claim}{evidence}{impact}"
     return _fit_text_length(text, target=330, min_len=260, max_len=420)
 
@@ -1981,61 +2068,162 @@ DISCUSSION_ANSWER_TEMPLATES = {
 
 
 def _build_role_discussion(role_sections: list[dict]) -> dict[str, list[dict[str, str]]]:
+    """立場間ディスカッションを記事の perspectives から動的に生成する。"""
     role_map = {str(section.get("role") or ""): section for section in role_sections}
     role_order = ["engineer", "management", "consumer"]
-    role_labels = {
-        "engineer": "技術者",
-        "management": "経営者",
-        "consumer": "消費者",
-    }
-    default_summary = "判断に直結する情報が不足しているため、仕様の前提条件を整理する。"
+    role_labels = {"engineer": "技術者", "management": "経営者", "consumer": "消費者"}
     default_reco = "関係者レビューを実施し、リスクと優先順位を更新する。"
+
+    def _lead_perspective(section, role):
+        """セクションの先頭記事から perspective[role] を取得する。"""
+        for art in (section.get("articles") or [])[:1]:
+            text = ((art.get("perspectives") or {}).get(role) or "").strip()
+            for prefix in ("推測:", "推測："):
+                if text.startswith(prefix):
+                    text = text[len(prefix):].strip()
+            if text:
+                return text
+        return ""
 
     discussions_by_role: dict[str, list[dict[str, str]]] = {}
     for focus_role in role_order:
-        focus_summary = str(role_map.get(focus_role, {}).get("summary") or default_summary)
-        focus_reco = str(role_map.get(focus_role, {}).get("recommendation") or default_reco)
+        focus_sec = role_map.get(focus_role, {})
+        focus_summary = str(focus_sec.get("summary") or "")
+        focus_reco = str(focus_sec.get("recommendation") or default_reco)
+        focus_persp = _lead_perspective(focus_sec, focus_role)
         focus_discussions: list[dict[str, str]] = []
 
         for other_role in role_order:
             if other_role == focus_role:
                 continue
+            other_sec = role_map.get(other_role, {})
+            other_persp = _lead_perspective(other_sec, other_role)
 
-            other_summary = str(role_map.get(other_role, {}).get("summary") or default_summary)
+            # 質問: 相手の perspective から動的生成、なければテンプレート
+            if other_persp:
+                question = f"『{other_persp}』の観点からすると、{focus_summary}だけでは判断材料が不十分ではないですか。"
+            else:
+                q_tmpl = DISCUSSION_QUESTION_TEMPLATES.get(
+                    (other_role, focus_role),
+                    "前提条件と受け入れ基準を先に合意しないと実行リスクが残りませんか。",
+                )
+                other_summary = str(other_sec.get("summary") or "")
+                question = f"{other_summary}の観点では、{q_tmpl}" if other_summary else q_tmpl
 
-            # 他の立場から自分への質問
-            question_template = DISCUSSION_QUESTION_TEMPLATES.get(
-                (other_role, focus_role),
-                "仕様の確定タイミングと受け入れ条件を先に合意しないと実行リスクが残りませんか。",
-            )
-            # 自分の立場からの回答
-            answer_template = DISCUSSION_ANSWER_TEMPLATES.get(
-                (focus_role, other_role),
-                f"まずは『{focus_reco}』を小さく試し、運用データで仕様妥当性を確認する進め方が現実的です。",
-            )
+            # 回答: 自分の perspective から動的生成、なければテンプレート
+            if focus_persp:
+                answer = f"{focus_persp}を踏まえ、まずは『{focus_reco}』を小さく試して検証する進め方が現実的です。"
+            else:
+                answer = DISCUSSION_ANSWER_TEMPLATES.get(
+                    (focus_role, other_role),
+                    f"まずは『{focus_reco}』を小さく試し、運用データで妥当性を確認する進め方が現実的です。",
+                )
 
-            focus_discussions.append(
-                {
-                    "from": role_labels[other_role],
-                    "to": role_labels[focus_role],
-                    "type": "question",
-                    "text": (
-                        f"{other_summary}の観点では、{question_template}"
-                    ),
-                }
-            )
-            focus_discussions.append(
-                {
-                    "from": role_labels[focus_role],
-                    "to": role_labels[other_role],
-                    "type": "answer",
-                    "text": answer_template,
-                }
-            )
+            focus_discussions.append({
+                "from": role_labels[other_role],
+                "to": role_labels[focus_role],
+                "type": "question",
+                "text": question,
+            })
+            focus_discussions.append({
+                "from": role_labels[focus_role],
+                "to": role_labels[other_role],
+                "type": "answer",
+                "text": answer,
+            })
 
         discussions_by_role[focus_role] = focus_discussions
-
     return discussions_by_role
+
+
+EXEC_GAPS_BY_CAT = {
+    "security": [
+        "インシデントの影響範囲（顧客数・データ量）が未定量。",
+        "対策費用と事業継続への影響額の試算が不足。",
+    ],
+    "ai": [
+        "AI導入のROI試算と撤退基準が未定義。",
+        "モデル精度の事業KPIへの影響が未接続。",
+    ],
+    "manufacturing": [
+        "設備投資の回収期間と需給変動リスクの同時評価が不足。",
+        "生産ラインへの影響範囲と代替手段が未検討。",
+    ],
+    "policy": [
+        "規制変更の事業インパクト（コスト増・参入障壁）が未定量。",
+        "対応期限と未対応時のペナルティが未整理。",
+    ],
+    "industry": [
+        "競合動向に対する自社ポジションのギャップが未分析。",
+        "市場構造変化の中期シナリオ（楽観/悲観）が未作成。",
+    ],
+    "_default": [
+        "売上・利益・キャッシュへの影響額の幅が見えない。",
+        "今四半期で判断すべき期限と先送りリスクが未明示。",
+    ],
+}
+
+EXEC_ACTIONS_BY_CAT = {
+    "security": [
+        "インシデント対応の追加予算を緊急稟議し、24時間以内に初動方針を確定する。",
+        "事業継続計画の更新と関係者への説明資料を1週間以内に準備する。",
+    ],
+    "ai": [
+        "POCの成功基準を数値化し、撤退ラインを経営会議で合意する。",
+        "AI投資額と回収見込みを事業計画に明記し、四半期レビューに組み込む。",
+    ],
+    "manufacturing": [
+        "設備投資の優先順位を需給予測と連動させて即日再評価する。",
+        "現場影響のシミュレーションを実施し、代替計画とセットで稟議する。",
+    ],
+    "policy": [
+        "法規制変更の影響評価を法務と共同で実施し、対応優先度を確定する。",
+        "コンプライアンス対応の費用と期限を経営会議の議題に追加する。",
+    ],
+    "industry": [
+        "競合ベンチマークと市場シェアを更新し、戦略見直しの要否を判断する。",
+        "サプライチェーンリスクの定量評価を調達部門と共同で実施する。",
+    ],
+    "_default": [
+        "各論点に投資額・回収見込み・未対応リスクを1行で併記する。",
+        "「24時間以内」「今週中」「四半期内」の3段階で意思決定項目を分ける。",
+    ],
+}
+
+
+def _build_dynamic_exec_brief(role_sections: list[dict], opinion_items: list[dict]) -> dict:
+    """当日のトピック構成に基づく動的な経営者向けチェック項目を生成する。"""
+    management = next((s for s in role_sections if s.get("role") == "management"), None)
+    if not management:
+        return {"summary": "", "recommendation": "", "gaps": [], "actions": [], "categories": []}
+
+    # カテゴリ分布を分析
+    cat_counts: dict[str, int] = {}
+    for item in opinion_items[:15]:
+        cat = (item.get("category") or "other").lower()
+        cat_counts[cat] = cat_counts.get(cat, 0) + 1
+    dominant_cats = [c for c, _ in sorted(cat_counts.items(), key=lambda x: -x[1])[:3]]
+
+    # カテゴリ別の不足情報と是正アクションを集約
+    gaps: list[str] = []
+    actions: list[str] = []
+    for cat in dominant_cats:
+        gaps.extend(EXEC_GAPS_BY_CAT.get(cat, EXEC_GAPS_BY_CAT["_default"]))
+        actions.extend(EXEC_ACTIONS_BY_CAT.get(cat, EXEC_ACTIONS_BY_CAT["_default"]))
+
+    # 重複除去して上限4件
+    seen = set()
+    unique_gaps = [g for g in gaps if g not in seen and not seen.add(g)][:4]
+    seen.clear()
+    unique_actions = [a for a in actions if a not in seen and not seen.add(a)][:4]
+
+    return {
+        "summary": management.get("summary", ""),
+        "recommendation": management.get("recommendation", ""),
+        "gaps": unique_gaps,
+        "actions": unique_actions,
+        "categories": dominant_cats,
+    }
 
 
 def _extract_labelled_sentences(opinion: str, label: str) -> list[str]:
@@ -2286,6 +2474,8 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     for section in role_sections:
         section["discussion_pairs"] = role_discussions.get(section["role"], [])
 
+    exec_brief = _build_dynamic_exec_brief(role_sections, opinion_items)
+
     opinion_assets = build_asset_paths()
     opinion_html = Template(OPINION_HTML).render(
         common_css_href=opinion_assets["common_css_href"],
@@ -2294,6 +2484,8 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
         generated_at=generated_at,
         role_sections=role_sections,
         source_item_count=len(opinion_seed_items),
+        exec_brief=exec_brief,
+        fmt_date=fmt_date,
     )
     (opinion_dir / "index.html").write_text(opinion_html, encoding="utf-8")
 
@@ -2395,6 +2587,9 @@ def render_news_region_page(cur, region, limit_each=30, cutoff_dt=None, min_per_
                     llm_tags,
                 ),
             })
+
+        # 重要度0（LLM未分析）の記事を除外
+        items = [it for it in items if it.get("importance", 0) > 0]
 
         items.sort(key=lambda x: (x.get("is_representative", 0), x.get("dt") or "", x.get("id", 0)), reverse=True)
         representative_items = [it for it in items if it.get("is_representative", 0) == 1]
@@ -2626,6 +2821,233 @@ def count_news_recent_48h(cur, region: str, category: str, cutoff_dt: str) -> in
         (region, category, cutoff_dt),
     )
     return int(cur.fetchone()[0] or 0)
+
+
+# ---------------------------------------------------------------------------
+# 未来予測ページ
+# ---------------------------------------------------------------------------
+
+FORECAST_HTML = r"""
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未来予測レポート | Daily Tech Trend</title>
+  <link rel="stylesheet" href="{{ common_css_href }}">
+  <style>
+    .forecast-tabs{display:flex;gap:4px;margin:12px 0 0;flex-wrap:wrap}
+    .forecast-tabs button{padding:6px 14px;border:1px solid var(--border);border-radius:6px 6px 0 0;
+      background:var(--panel);cursor:pointer;font-size:.85rem;color:var(--text-sub)}
+    .forecast-tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .forecast-panel{display:none;padding:16px;border:1px solid var(--border);border-radius:0 8px 8px 8px;
+      background:var(--panel);margin-bottom:20px}
+    .forecast-panel.active{display:block}
+    .forecast-panel h2,.forecast-panel h3{margin-top:16px}
+    .forecast-panel table{border-collapse:collapse;width:100%;margin:8px 0}
+    .forecast-panel th,.forecast-panel td{border:1px solid var(--border);padding:6px 10px;text-align:left;font-size:.85rem}
+    .forecast-panel th{background:var(--panel)}
+    .exec-summary{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid var(--border);
+      border-radius:10px;padding:16px 20px;margin:16px 0}
+    .exec-summary ol{margin:8px 0 0 18px;line-height:1.7}
+    details.appendix{margin:12px 0}
+    details.appendix summary{cursor:pointer;font-weight:600;color:var(--accent);padding:8px 0}
+    .no-report{text-align:center;color:var(--text-sub);padding:60px 20px}
+    .past-reports{margin-top:30px;border-top:1px solid var(--border);padding-top:16px}
+    .past-reports ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+    .past-reports li a{display:inline-block;padding:4px 12px;border:1px solid var(--border);
+      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main)}
+    .past-reports li a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  </style>
+</head>
+<body>
+  <h1>未来予測レポート</h1>
+  <div class="nav">
+    <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
+    <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
+    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
+    <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
+    <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
+  </div>
+
+  <div class="summary-card" style="margin:16px 0">
+    <div class="summary-grid">
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">{{ generated_at }}</div></div>
+      <div class="summary-item"><div class="k">レポート日付</div><div class="v">{{ report_date }}</div></div>
+    </div>
+  </div>
+
+  {% if has_report %}
+
+  <!-- エグゼクティブサマリー -->
+  <div class="exec-summary">
+    <h2 style="margin:0 0 8px">今週の最重要ポイント</h2>
+    {{ executive_summary_html }}
+  </div>
+
+  <!-- 未来予測（時間軸タブ） -->
+  <h2>未来予測</h2>
+  <div class="forecast-tabs" id="pred-tabs">
+    {% for horizon in prediction_keys %}
+    <button onclick="switchTab('pred', '{{ loop.index0 }}')" class="{{ 'active' if loop.first else '' }}"
+            id="pred-tab-{{ loop.index0 }}">{{ horizon }}</button>
+    {% endfor %}
+  </div>
+  {% for horizon in prediction_keys %}
+  <div class="forecast-panel {{ 'active' if loop.first else '' }}" id="pred-panel-{{ loop.index0 }}">
+    {{ prediction_htmls[horizon] }}
+  </div>
+  {% endfor %}
+
+  <!-- 検証済み予測レポート -->
+  {% if checked_report_html %}
+  <details class="appendix">
+    <summary>検証済み予測レポート（ファクトチェック反映版）</summary>
+    <div class="forecast-panel active">{{ checked_report_html }}</div>
+  </details>
+  {% endif %}
+
+  <!-- 3視点分析（タブ） -->
+  <h2>3視点分析</h2>
+  <div class="forecast-tabs" id="persp-tabs">
+    {% for name in perspective_keys %}
+    <button onclick="switchTab('persp', '{{ loop.index0 }}')" class="{{ 'active' if loop.first else '' }}"
+            id="persp-tab-{{ loop.index0 }}">{{ name }}視点</button>
+    {% endfor %}
+  </div>
+  {% for name in perspective_keys %}
+  <div class="forecast-panel {{ 'active' if loop.first else '' }}" id="persp-panel-{{ loop.index0 }}">
+    {{ perspective_htmls[name] }}
+  </div>
+  {% endfor %}
+
+  <!-- 付録 -->
+  {% if appendix_fc_html %}
+  <details class="appendix">
+    <summary>付録A: ファクトチェック詳細</summary>
+    <div class="forecast-panel active">{{ appendix_fc_html }}</div>
+  </details>
+  {% endif %}
+  {% if appendix_news_html %}
+  <details class="appendix">
+    <summary>付録B: 収集ニュース一覧</summary>
+    <div class="forecast-panel active">{{ appendix_news_html }}</div>
+  </details>
+  {% endif %}
+
+  <!-- 過去レポート一覧 -->
+  {% if past_reports %}
+  <div class="past-reports">
+    <h3>過去のレポート</h3>
+    <ul>
+      {% for pr in past_reports %}
+      <li><a href="?date={{ pr.date }}">{{ pr.date }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% else %}
+  <div class="no-report">
+    <p style="font-size:1.2rem">未来予測レポートはまだ生成されていません</p>
+    <p>ローカル環境で未来予測パイプラインを実行し、<br>
+       <code>python src/forecast_import.py &lt;レポート.md&gt;</code> でインポートしてください。</p>
+  </div>
+  {% endif %}
+
+  <script src="{{ common_js_src }}"></script>
+  <script>
+    function switchTab(group, idx) {
+      document.querySelectorAll('#' + group + '-tabs button').forEach(function(b, i) {
+        b.classList.toggle('active', i == idx);
+      });
+      document.querySelectorAll('[id^="' + group + '-panel-"]').forEach(function(p, i) {
+        p.classList.toggle('active', i == idx);
+      });
+    }
+    if (window.DTTCommon) window.DTTCommon.setupCommon('forecast');
+  </script>
+</body>
+</html>
+"""
+
+
+def render_forecast_page(out_dir, generated_at, cur):
+    """未来予測ページを生成する"""
+    from pathlib import Path
+    from forecast_parser import parse_forecast_markdown, ForecastReport
+
+    try:
+        import mistune
+        md_to_html = mistune.html
+    except ImportError:
+        import html as _html
+        def md_to_html(text):
+            return "<pre>" + _html.escape(text) + "</pre>"
+
+    # 最新レポートを取得
+    cur.execute("""
+        SELECT report_date, file_path, executive_summary
+        FROM forecast_reports
+        ORDER BY report_date DESC
+        LIMIT 1
+    """)
+    row = cur.fetchone()
+
+    # 過去レポート一覧
+    cur.execute("""
+        SELECT report_date FROM forecast_reports
+        ORDER BY report_date DESC
+    """)
+    past_reports = [{"date": r[0]} for r in cur.fetchall()]
+
+    has_report = False
+    report = ForecastReport()
+    report_date = "-"
+
+    if row:
+        report_date = row[0]
+        file_path = Path(row[1])
+        if file_path.exists():
+            md_text = file_path.read_text(encoding="utf-8")
+            report = parse_forecast_markdown(md_text)
+            has_report = True
+
+    # Markdown → HTML 変換
+    executive_summary_html = md_to_html(report.executive_summary) if report.executive_summary else ""
+    checked_report_html = md_to_html(report.checked_report) if report.checked_report else ""
+    appendix_fc_html = md_to_html(report.appendix_factcheck) if report.appendix_factcheck else ""
+    appendix_news_html = md_to_html(report.appendix_news) if report.appendix_news else ""
+
+    prediction_keys = list(report.predictions.keys())
+    prediction_htmls = {k: md_to_html(v) for k, v in report.predictions.items()}
+
+    perspective_keys = list(report.perspectives.keys())
+    perspective_htmls = {k: md_to_html(v) for k, v in report.perspectives.items()}
+
+    assets = build_asset_paths()
+    forecast_html = Template(FORECAST_HTML).render(
+        page="forecast",
+        common_css_href=assets["common_css_href"],
+        common_js_src=assets["common_js_src"],
+        generated_at=generated_at,
+        report_date=report_date,
+        has_report=has_report,
+        executive_summary_html=executive_summary_html,
+        prediction_keys=prediction_keys,
+        prediction_htmls=prediction_htmls,
+        checked_report_html=checked_report_html,
+        perspective_keys=perspective_keys,
+        perspective_htmls=perspective_htmls,
+        appendix_fc_html=appendix_fc_html,
+        appendix_news_html=appendix_news_html,
+        past_reports=past_reports[1:] if len(past_reports) > 1 else [],
+    )
+
+    forecast_dir = Path(out_dir) / "forecast"
+    forecast_dir.mkdir(exist_ok=True)
+    (forecast_dir / "index.html").write_text(forecast_html, encoding="utf-8")
+    print(f"  forecast page: {forecast_dir / 'index.html'}")
 
 
 def main():
@@ -3995,28 +4417,51 @@ def main():
         fmt_date=fmt_date,
     )
 
-    (tech_dir / "index.html").write_text(tech_html_sub, encoding="utf-8")
-    (out_dir / "index.html").write_text(tech_html_root, encoding="utf-8")
+    _render_errors = []
 
-    ops_dir = out_dir / "ops"
-    ops_dir.mkdir(exist_ok=True)
-    ops_assets = build_asset_paths()
-    ops_html = Template(OPS_HTML).render(
-        common_css_href=ops_assets["common_css_href"],
-        common_js_src=ops_assets["common_js_src"],
-        page="ops",
-        nav_prefix=ops_assets["nav_prefix"],
-        meta=meta,
-        cat_name=cat_name,
-        source_exposure=source_exposure,
-        primary_ratio_by_category=primary_ratio_by_category,
-        primary_ratio_threshold=primary_ratio_threshold,
-    )
-    (ops_dir / "index.html").write_text(ops_html, encoding="utf-8")
+    try:
+        (tech_dir / "index.html").write_text(tech_html_sub, encoding="utf-8")
+        (out_dir / "index.html").write_text(tech_html_root, encoding="utf-8")
+    except Exception as e:
+        print(f"[ERROR] render tech pages failed: {e}")
+        _render_errors.append(("tech", str(e)))
 
-    render_news_pages(out_dir, generated_at, cur)
+    try:
+        ops_dir = out_dir / "ops"
+        ops_dir.mkdir(exist_ok=True)
+        ops_assets = build_asset_paths()
+        ops_html = Template(OPS_HTML).render(
+            common_css_href=ops_assets["common_css_href"],
+            common_js_src=ops_assets["common_js_src"],
+            page="ops",
+            nav_prefix=ops_assets["nav_prefix"],
+            meta=meta,
+            cat_name=cat_name,
+            source_exposure=source_exposure,
+            primary_ratio_by_category=primary_ratio_by_category,
+            primary_ratio_threshold=primary_ratio_threshold,
+        )
+        (ops_dir / "index.html").write_text(ops_html, encoding="utf-8")
+    except Exception as e:
+        print(f"[ERROR] render ops page failed: {e}")
+        _render_errors.append(("ops", str(e)))
+
+    try:
+        render_news_pages(out_dir, generated_at, cur)
+    except Exception as e:
+        print(f"[ERROR] render news pages failed: {e}")
+        _render_errors.append(("news", str(e)))
+
+    try:
+        render_forecast_page(out_dir, generated_at, cur)
+    except Exception as e:
+        print(f"[ERROR] render forecast page failed: {e}")
+        _render_errors.append(("forecast", str(e)))
 
     conn.close()
+
+    if _render_errors:
+        print(f"[WARN] render completed with {len(_render_errors)} error(s): {_render_errors}")
     print(f"[TIME] step=render end sec={_now_sec() - t0:.1f}")
 
 if __name__ == "__main__":

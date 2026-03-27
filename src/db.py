@@ -176,6 +176,22 @@ def init_db():
     ensure_column(cur, "feed_health", "suspend_until", "TEXT")
 
 
+    # ---- forecast_reports (未来予測レポート) ----
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS forecast_reports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      report_date TEXT,
+      file_path TEXT,
+      executive_summary TEXT,
+      created_at TEXT
+    )
+    """)
+
+    cur.execute("""
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_forecast_date
+    ON forecast_reports(report_date)
+    """)
+
     conn.commit()
     conn.close()
 
