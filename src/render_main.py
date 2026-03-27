@@ -2836,28 +2836,52 @@ FORECAST_HTML = r"""
   <title>未来予測レポート | Daily Tech Trend</title>
   <link rel="stylesheet" href="{{ common_css_href }}">
   <style>
+    /* タブ */
     .forecast-tabs{display:flex;gap:4px;margin:12px 0 0;flex-wrap:wrap}
     .forecast-tabs button{padding:6px 14px;border:1px solid var(--border);border-radius:6px 6px 0 0;
-      background:var(--panel);cursor:pointer;font-size:.85rem;color:var(--text-sub)}
+      background:var(--panel);cursor:pointer;font-size:.85rem;color:var(--text-sub);line-height:1.4}
     .forecast-tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* パネル */
     .forecast-panel{display:none;padding:16px;border:1px solid var(--border);border-radius:0 8px 8px 8px;
-      background:var(--panel);margin-bottom:20px}
+      background:var(--panel);margin-bottom:20px;overflow-x:auto;word-wrap:break-word;overflow-wrap:break-word}
     .forecast-panel.active{display:block}
     .forecast-panel h2,.forecast-panel h3{margin-top:16px}
-    .forecast-panel table{border-collapse:collapse;width:100%;margin:8px 0}
-    .forecast-panel th,.forecast-panel td{border:1px solid var(--border);padding:6px 10px;text-align:left;font-size:.85rem}
+    .forecast-panel p{line-height:1.7;margin:8px 0}
+    .forecast-panel ul,.forecast-panel ol{margin:8px 0;padding-left:20px;line-height:1.7}
+    .forecast-panel hr{border:none;border-top:1px solid var(--border);margin:16px 0}
+    .forecast-panel strong{color:var(--text-main)}
+    /* テーブル */
+    .forecast-panel table{border-collapse:collapse;width:100%;margin:8px 0;display:block;overflow-x:auto}
+    .forecast-panel th,.forecast-panel td{border:1px solid var(--border);padding:6px 10px;text-align:left;font-size:.85rem;white-space:normal}
     .forecast-panel th{background:var(--panel)}
+    /* サマリー */
     .exec-summary{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid var(--border);
       border-radius:10px;padding:16px 20px;margin:16px 0}
     .exec-summary ol{margin:8px 0 0 18px;line-height:1.7}
+    .exec-summary p{margin:4px 0;line-height:1.6}
+    /* 付録 */
     details.appendix{margin:12px 0}
     details.appendix summary{cursor:pointer;font-weight:600;color:var(--accent);padding:8px 0}
+    details.appendix .forecast-panel{border-radius:8px}
     .no-report{text-align:center;color:var(--text-sub);padding:60px 20px}
+    /* 過去レポート */
     .past-reports{margin-top:30px;border-top:1px solid var(--border);padding-top:16px}
     .past-reports ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
     .past-reports li a{display:inline-block;padding:4px 12px;border:1px solid var(--border);
       border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main)}
     .past-reports li a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* === モバイル (640px以下) === */
+    @media(max-width:640px){
+      .forecast-tabs{gap:3px}
+      .forecast-tabs button{padding:5px 10px;font-size:.78rem}
+      .forecast-panel{padding:10px;border-radius:0 6px 6px 6px}
+      .forecast-panel table{font-size:.78rem}
+      .forecast-panel th,.forecast-panel td{padding:4px 6px}
+      .exec-summary{padding:12px 14px;border-radius:8px;margin:10px 0}
+      .exec-summary ol{margin:6px 0 0 16px;line-height:1.6}
+      .exec-summary h2{font-size:16px}
+      details.appendix summary{font-size:.9rem;padding:6px 0}
+    }
   </style>
 </head>
 <body>
