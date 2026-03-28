@@ -95,17 +95,73 @@
 
   <div class="summary-card" style="margin:16px 0">
     <div class="summary-grid">
-      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-03-28 12:44:27 JST</div></div>
-      <div class="summary-item"><div class="k">レポート日付</div><div class="v">-</div></div>
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-03-28 13:03:06 JST</div></div>
+      <div class="summary-item"><div class="k">レポート日付</div><div class="v">2026-03-28</div></div>
     </div>
   </div>
 
   
-  <div class="no-report">
-    <p style="font-size:1.2rem">未来予測レポートはまだ生成されていません</p>
-    <p>ローカル環境で未来予測パイプラインを実行し、<br>
-       <code>python src/forecast_import.py &lt;レポート.md&gt;</code> でインポートしてください。</p>
+
+  <!-- エグゼクティブサマリー -->
+  <div class="exec-summary">
+    <h2 style="margin:0 0 8px">今週の最重要ポイント</h2>
+    <p>1. <strong>AI技術の新たな進展と規制動向</strong></p>
+<p><em>あなたへの影響:</em> 生成AIの能力向上と関連する規制強化が、ビジネスプロセスや個人の情報管理に直結する変化をもたらす可能性があります。</p>
+
+<p>2. <strong>主要経済指標の予測と市場反応</strong></p>
+<p><em>あなたへの影響:</em> 金利政策や雇用統計などの指標が市場に与える影響を把握し、投資判断や消費計画の修正を考慮する必要があります。</p>
+
+<p>3. <strong>気候変動対策の新たな国際合意</strong></p>
+<p><em>あなたへの影響:</em> 環境規制の強化により、サプライチェーンやエネルギーコストに長期的な影響が及ぶ可能性が高まっています。</p>
+
+<hr>
   </div>
+
+  <!-- 未来予測（時間軸タブ） -->
+  <h2>未来予測</h2>
+  <div class="forecast-tabs" id="pred-tabs">
+    
+    <button onclick="switchTab('pred', '0')" class="active"
+            id="pred-tab-0">1週間後</button>
+    
+    <button onclick="switchTab('pred', '1')" class=""
+            id="pred-tab-1">1〜6ヶ月後</button>
+    
+    <button onclick="switchTab('pred', '2')" class=""
+            id="pred-tab-2">1年後</button>
+    
+  </div>
+  
+  <div class="forecast-panel active" id="pred-panel-0">
+    
+  </div>
+  
+  <div class="forecast-panel " id="pred-panel-1">
+    
+  </div>
+  
+  <div class="forecast-panel " id="pred-panel-2">
+    
+  </div>
+  
+
+  <!-- 検証済み予測レポート -->
+  
+
+  <!-- 3視点分析（タブ） -->
+  <h2>3視点分析</h2>
+  <div class="forecast-tabs" id="persp-tabs">
+    
+  </div>
+  
+
+  <!-- 付録 -->
+  
+  
+
+  <!-- 過去レポート一覧 -->
+  
+
   
 
   <script src="/daily-tech-trend/assets/js/common.js"></script>
