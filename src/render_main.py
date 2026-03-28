@@ -2838,16 +2838,21 @@ FORECAST_HTML = r"""
     .forecast-panel{display:none;padding:16px;border:1px solid var(--border);border-radius:0 8px 8px 8px;
       background:var(--panel);margin-bottom:20px;overflow-x:auto;word-wrap:break-word;overflow-wrap:break-word}
     /* 予測カード */
-    .pred-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px}
-    .pred-card-header{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
-    .pred-badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700}
-    .pred-badge.impact-大{background:#fee2e2;color:#dc2626}
-    .pred-badge.impact-中{background:#fef3c7;color:#d97706}
+    .pred-card{background:var(--bg);border:1px solid var(--border);border-left:4px solid var(--border);
+      border-radius:10px;padding:14px 16px;margin-bottom:12px;transition:box-shadow .2s}
+    .pred-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .pred-card.highlight{border-left-color:#dc2626;background:linear-gradient(135deg,#fff,#fef2f2)}
+    .pred-card.mid{border-left-color:#d97706;background:linear-gradient(135deg,#fff,#fffbeb)}
+    .pred-card-header{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+    .pred-badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.3px}
+    .pred-badge.impact-大{background:#dc2626;color:#fff}
+    .pred-badge.impact-中{background:#d97706;color:#fff}
     .pred-badge.impact-小{background:#e0f2fe;color:#0284c7}
-    .pred-badge.conf-高{background:#dcfce7;color:#16a34a}
-    .pred-badge.conf-中{background:#fef3c7;color:#d97706}
+    .pred-badge.conf-高{background:#16a34a;color:#fff}
+    .pred-badge.conf-中{background:#fef3c7;color:#92400e}
     .pred-badge.conf-低{background:#f3f4f6;color:#6b7280}
-    .pred-card-title{font-weight:700;font-size:15px;margin-bottom:8px;line-height:1.5;color:var(--text-main)}
+    .pred-card-title{font-weight:800;font-size:15px;margin-bottom:8px;line-height:1.5;color:var(--text-main)}
+    .highlight .pred-card-title{font-size:16px;color:#991b1b}
     .pred-card-body{font-size:14px;line-height:1.7;color:var(--text-main)}
     .pred-card-body p{margin:6px 0}
     .pred-card-body ul,.pred-card-body ol{margin:6px 0;padding-left:20px}
@@ -2862,10 +2867,19 @@ FORECAST_HTML = r"""
     .forecast-panel th,.forecast-panel td{border:1px solid var(--border);padding:6px 10px;text-align:left;font-size:.85rem;white-space:normal}
     .forecast-panel th{background:var(--panel)}
     /* サマリー */
-    .exec-summary{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid var(--border);
-      border-radius:10px;padding:16px 20px;margin:16px 0}
-    .exec-summary ol{margin:8px 0 0 18px;line-height:1.7}
-    .exec-summary p{margin:4px 0;line-height:1.6}
+    .exec-summary{background:linear-gradient(135deg,#1e3a5f,#1a365d);color:#fff;
+      border-radius:12px;padding:20px 24px;margin:16px 0;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+    .exec-summary h2{color:#fff;margin:0 0 12px;font-size:18px}
+    .exec-summary ol{margin:0;padding:0;list-style:none;counter-reset:ep}
+    .exec-summary li{counter-increment:ep;padding:12px 14px;margin-bottom:8px;
+      background:rgba(255,255,255,.1);border-radius:8px;border-left:3px solid #f59e0b;position:relative;padding-left:40px}
+    .exec-summary li::before{content:counter(ep);position:absolute;left:12px;top:12px;
+      width:22px;height:22px;background:#f59e0b;color:#1a365d;border-radius:50%;
+      font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+    .exec-summary li p{margin:2px 0;color:rgba(255,255,255,.92);line-height:1.6}
+    .exec-summary li strong{color:#fbbf24}
+    .exec-summary li em{color:rgba(255,255,255,.7);font-style:normal;font-size:13px}
+    .exec-summary hr{display:none}
     /* 付録 */
     details.appendix{margin:12px 0}
     details.appendix summary{cursor:pointer;font-weight:600;color:var(--accent);padding:8px 0}
@@ -2884,8 +2898,9 @@ FORECAST_HTML = r"""
       .forecast-panel{padding:10px;border-radius:0 6px 6px 6px}
       .forecast-panel table{font-size:.78rem}
       .forecast-panel th,.forecast-panel td{padding:4px 6px}
-      .exec-summary{padding:12px 14px;border-radius:8px;margin:10px 0}
-      .exec-summary ol{margin:6px 0 0 16px;line-height:1.6}
+      .exec-summary{padding:14px 16px;border-radius:10px;margin:10px 0}
+      .exec-summary li{padding:10px 12px 10px 36px}
+      .exec-summary li::before{left:8px;top:10px;width:20px;height:20px;font-size:12px}
       .exec-summary h2{font-size:16px}
       details.appendix summary{font-size:.9rem;padding:6px 0}
     }
@@ -2926,7 +2941,7 @@ FORECAST_HTML = r"""
   {% for horizon in prediction_keys %}
   <div class="forecast-panel {{ 'active' if loop.first else '' }}" id="pred-panel-{{ loop.index0 }}">
     {% for item in prediction_items[horizon] %}
-    <div class="pred-card">
+    <div class="pred-card{{ ' highlight' if item.impact=='大' and item.confidence=='高' else ' mid' if item.impact=='大' or item.confidence=='高' else '' }}">
       <div class="pred-card-header">
         {% if item.impact %}<span class="pred-badge impact-{{ item.impact }}">影響度: {{ item.impact }}</span>{% endif %}
         {% if item.confidence %}<span class="pred-badge conf-{{ item.confidence }}">確信度: {{ item.confidence }}</span>{% endif %}
