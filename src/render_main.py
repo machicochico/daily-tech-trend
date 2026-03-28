@@ -1425,10 +1425,10 @@ OPS_HTML = r"""
   <style>
     .ops-section{margin:16px 0;padding:14px 16px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
     .ops-section h2{margin:0 0 10px;font-size:16px}
-    .bar-chart{display:flex;align-items:flex-end;gap:3px;height:120px;padding:8px 0}
-    .bar-col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:0}
-    .bar-col .bar{background:var(--accent);border-radius:3px 3px 0 0;width:100%;min-height:2px;transition:height .3s}
-    .bar-col .bar-label{font-size:10px;color:var(--text-sub);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+    .bar-chart{display:flex;align-items:flex-end;gap:3px;height:140px;padding:0 0 28px}
+    .bar-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;min-width:0;height:100%;position:relative}
+    .bar-col .bar{background:var(--accent);border-radius:3px 3px 0 0;width:100%;transition:height .3s}
+    .bar-col .bar-label{font-size:10px;color:var(--text-sub);position:absolute;bottom:-22px;white-space:nowrap}
     .bar-col .bar-val{font-size:10px;color:var(--text-main);font-weight:600;margin-bottom:2px}
     .hbar-list{display:flex;flex-direction:column;gap:4px}
     .hbar-row{display:grid;grid-template-columns:160px 1fr 100px;align-items:center;gap:8px;font-size:13px}
@@ -1444,7 +1444,7 @@ OPS_HTML = r"""
     .status-chip.na{background:#f3f4f6;color:#9ca3af}
     @media(max-width:640px){
       .ops-section{padding:10px 12px}
-      .bar-chart{height:90px;gap:2px}
+      .bar-chart{height:130px;gap:2px}
       .hbar-row{grid-template-columns:100px 1fr 80px}
       .hbar-row .hbar-label{font-size:11px}
       .hbar-row .hbar-nums{font-size:11px}
@@ -1484,7 +1484,7 @@ OPS_HTML = r"""
       {% for d in daily_trend %}
       <div class="bar-col">
         <div class="bar-val">{{ d.cnt }}</div>
-        <div class="bar" style="height:{{ d.pct }}%"></div>
+        <div class="bar" style="height:{{ d.px }}px"></div>
         <div class="bar-label">{{ d.label }}</div>
       </div>
       {% endfor %}
@@ -3752,10 +3752,11 @@ def main():
     daily_raw = cur.fetchall()
     daily_max = max((r[1] for r in daily_raw), default=1)
     daily_trend = []
+    bar_max_px = 100  # バーの最大高さ(px)
     for d, cnt in daily_raw:
-        pct = round(cnt / daily_max * 100) if daily_max else 0
+        px = max(2, round(cnt / daily_max * bar_max_px)) if daily_max else 2
         label = d[5:] if d else ""  # MM-DD
-        daily_trend.append({"d": d, "cnt": cnt, "pct": pct, "label": label})
+        daily_trend.append({"d": d, "cnt": cnt, "px": px, "label": label})
 
     # カテゴリ別（全期間+7日）
     cur.execute("""

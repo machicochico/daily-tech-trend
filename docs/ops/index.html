@@ -11,10 +11,10 @@
   <style>
     .ops-section{margin:16px 0;padding:14px 16px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
     .ops-section h2{margin:0 0 10px;font-size:16px}
-    .bar-chart{display:flex;align-items:flex-end;gap:3px;height:120px;padding:8px 0}
-    .bar-col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:0}
-    .bar-col .bar{background:var(--accent);border-radius:3px 3px 0 0;width:100%;min-height:2px;transition:height .3s}
-    .bar-col .bar-label{font-size:10px;color:var(--text-sub);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+    .bar-chart{display:flex;align-items:flex-end;gap:3px;height:140px;padding:0 0 28px}
+    .bar-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;min-width:0;height:100%;position:relative}
+    .bar-col .bar{background:var(--accent);border-radius:3px 3px 0 0;width:100%;transition:height .3s}
+    .bar-col .bar-label{font-size:10px;color:var(--text-sub);position:absolute;bottom:-22px;white-space:nowrap}
     .bar-col .bar-val{font-size:10px;color:var(--text-main);font-weight:600;margin-bottom:2px}
     .hbar-list{display:flex;flex-direction:column;gap:4px}
     .hbar-row{display:grid;grid-template-columns:160px 1fr 100px;align-items:center;gap:8px;font-size:13px}
@@ -30,7 +30,7 @@
     .status-chip.na{background:#f3f4f6;color:#9ca3af}
     @media(max-width:640px){
       .ops-section{padding:10px 12px}
-      .bar-chart{height:90px;gap:2px}
+      .bar-chart{height:130px;gap:2px}
       .hbar-row{grid-template-columns:100px 1fr 80px}
       .hbar-row .hbar-label{font-size:11px}
       .hbar-row .hbar-nums{font-size:11px}
@@ -51,7 +51,7 @@
   <div class="summary-card">
     <div class="summary-title">パイプライン概況</div>
     <div class="summary-grid">
-      <div class="summary-item"><div class="k">最終更新</div><div class="v">2026-03-28 09:29:00 JST</div></div>
+      <div class="summary-item"><div class="k">最終更新</div><div class="v">2026-03-28 09:31:22 JST</div></div>
       <div class="summary-item"><div class="k">記事総数</div><div class="v">8951</div></div>
       <div class="summary-item"><div class="k">直近7日</div><div class="v">+1969</div></div>
       <div class="summary-item"><div class="k">直近48h</div><div class="v">+1104</div></div>
@@ -70,91 +70,91 @@
       
       <div class="bar-col">
         <div class="bar-val">46</div>
-        <div class="bar" style="height:7%"></div>
+        <div class="bar" style="height:7px"></div>
         <div class="bar-label">03-14</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">139</div>
-        <div class="bar" style="height:21%"></div>
+        <div class="bar" style="height:21px"></div>
         <div class="bar-label">03-15</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">223</div>
-        <div class="bar" style="height:34%"></div>
+        <div class="bar" style="height:34px"></div>
         <div class="bar-label">03-16</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">214</div>
-        <div class="bar" style="height:33%"></div>
+        <div class="bar" style="height:33px"></div>
         <div class="bar-label">03-17</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">223</div>
-        <div class="bar" style="height:34%"></div>
+        <div class="bar" style="height:34px"></div>
         <div class="bar-label">03-18</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">204</div>
-        <div class="bar" style="height:31%"></div>
+        <div class="bar" style="height:31px"></div>
         <div class="bar-label">03-19</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">112</div>
-        <div class="bar" style="height:17%"></div>
+        <div class="bar" style="height:17px"></div>
         <div class="bar-label">03-20</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">51</div>
-        <div class="bar" style="height:8%"></div>
+        <div class="bar" style="height:8px"></div>
         <div class="bar-label">03-21</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">133</div>
-        <div class="bar" style="height:20%"></div>
+        <div class="bar" style="height:20px"></div>
         <div class="bar-label">03-22</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">225</div>
-        <div class="bar" style="height:35%"></div>
+        <div class="bar" style="height:35px"></div>
         <div class="bar-label">03-23</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">249</div>
-        <div class="bar" style="height:38%"></div>
+        <div class="bar" style="height:38px"></div>
         <div class="bar-label">03-24</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">195</div>
-        <div class="bar" style="height:30%"></div>
+        <div class="bar" style="height:30px"></div>
         <div class="bar-label">03-25</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">245</div>
-        <div class="bar" style="height:38%"></div>
+        <div class="bar" style="height:38px"></div>
         <div class="bar-label">03-26</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">235</div>
-        <div class="bar" style="height:36%"></div>
+        <div class="bar" style="height:36px"></div>
         <div class="bar-label">03-27</div>
       </div>
       
       <div class="bar-col">
         <div class="bar-val">650</div>
-        <div class="bar" style="height:100%"></div>
+        <div class="bar" style="height:100px"></div>
         <div class="bar-label">03-28</div>
       </div>
       
@@ -280,7 +280,7 @@
         
           <tr><td>Hellenic Shipping News</td><td class="num">850</td><td class="num">190</td><td class="num">86</td><td>市況（コモディティ・海運・スクラップ）</td></tr>
         
-          <tr><td>Impress Watch (INTERNET Watch)</td><td class="num">811</td><td class="num">101</td><td class="num">39</td><td>news / セキュリティ</td></tr>
+          <tr><td>Impress Watch (INTERNET Watch)</td><td class="num">811</td><td class="num">100</td><td class="num">39</td><td>news / セキュリティ</td></tr>
         
           <tr><td>ITmedia NEWS</td><td class="num">646</td><td class="num">81</td><td class="num">27</td><td>news</td></tr>
         
