@@ -2993,14 +2993,58 @@ def render_forecast_page(out_dir, generated_at, cur):
     from pathlib import Path
     from forecast_parser import parse_forecast_markdown, ForecastReport
 
+    def _fix_markdown_tables(text):
+        """テーブル行間の空行を除去し、ヘッダー区切り行がなければ挿入する"""
+        lines = text.split("\n")
+        out = []
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            stripped = line.strip()
+            if stripped.startswith("|") and stripped.endswith("|"):
+                # テーブルブロックの開始 — 連続するテーブル行を収集
+                table_lines = [stripped]
+                i += 1
+                while i < len(lines):
+                    s = lines[i].strip()
+                    if s.startswith("|") and s.endswith("|"):
+                        table_lines.append(s)
+                        i += 1
+                    elif s == "":
+                        # 空行の次がテーブル行ならスキップして継続
+                        if i + 1 < len(lines) and lines[i + 1].strip().startswith("|"):
+                            i += 1
+                            continue
+                        break
+                    else:
+                        break
+                # 区切り行チェック（2行目が | --- | --- | 形式か）
+                has_sep = len(table_lines) > 1 and all(
+                    c in "-| :" for c in table_lines[1]
+                )
+                if not has_sep and len(table_lines) >= 1:
+                    # 1行目の列数に合わせて区切り行を挿入
+                    ncols = table_lines[0].count("|") - 1
+                    sep = "| " + " | ".join(["---"] * max(ncols, 1)) + " |"
+                    table_lines.insert(1, sep)
+                out.extend(table_lines)
+                out.append("")
+            else:
+                out.append(line)
+                i += 1
+        return "\n".join(out)
+
     try:
         import mistune
-        md_to_html = mistune.html
+        _md_renderer = mistune.create_markdown(plugins=["table"])
+        def md_to_html(text):
+            return _md_renderer(_fix_markdown_tables(text))
     except ImportError:
         import html as _html
 
         def md_to_html(text):
             """mistune未インストール時の簡易Markdown→HTML変換"""
+            text = _fix_markdown_tables(text)
             lines = _html.escape(text).split("\n")
             out = []
             in_list = False
