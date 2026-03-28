@@ -367,12 +367,6 @@ PORTAL_HTML = r"""
   </div>
 
   <div class="card">
-    <h2 style="margin:0 0 6px">立場別意見</h2>
-    <div class="small">3つの立場で、記事を400文字前後の意見として整理</div>
-    <a class="btn" href="./opinion/index.html">意見ページを見る →</a>
-  </div>
-
-  <div class="card">
     <h2 style="margin:0 0 6px">未来予測レポート</h2>
     <div class="small">多視点ニュース分析に基づく未来予測（1週間〜1年）</div>
     <a class="btn" href="./forecast/index.html">未来予測を見る →</a>
@@ -421,7 +415,6 @@ HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
@@ -802,7 +795,6 @@ NEWS_HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
@@ -1126,7 +1118,6 @@ OPINION_HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
@@ -1437,7 +1428,6 @@ OPS_HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
@@ -2297,9 +2287,6 @@ def _build_top_evidence_tags(picked_articles: list[dict], limit: int = 2) -> lis
 def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
     news_dir = out_dir / "news"
     news_dir.mkdir(exist_ok=True)
-    opinion_dir = out_dir / "opinion"
-    opinion_dir.mkdir(exist_ok=True)
-    
     now = datetime.now(timezone.utc)
     cutoff_48h_str = (now - timedelta(hours=48)).strftime("%Y-%m-%d %H:%M:%S")
 
@@ -2427,67 +2414,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
             encoding="utf-8",
         )
 
-    opinion_items = []
-    for sec in sections_all:
-        opinion_items.extend(sec.get("rows", []))
-
-    opinion_items.sort(key=lambda x: (x.get("dt") or "", x.get("importance") or 0), reverse=True)
-    opinion_seed_items = opinion_items[:15]
-
-    role_labels = {
-        "engineer": "技術者",
-        "management": "経営者",
-        "consumer": "消費者",
-    }
-    roles = ["engineer", "management", "consumer"]
-    selected_articles = _select_role_articles(opinion_items, roles, max_items=3)
-
-    role_sections = []
-    anchor_ids = {
-        "engineer": "engineer",
-        "management": "management",
-        "consumer": "consumer",
-    }
-    for role in roles:
-        picked = selected_articles.get(role, [])
-        full_text = _build_combined_opinion(role, picked)
-        summary = _extract_conclusion_line(full_text)
-        selection_note = "" if len(picked) >= 3 else "本日は立場条件に合う記事が少ないため、該当ソースのみで構成しています。"
-        role_sections.append({
-            "role": role,
-            "anchor_id": anchor_ids[role],
-            "label": role_labels[role],
-            "articles": picked,
-            "summary": summary,
-            "full_text": full_text,
-            "full_text_len": len(full_text),
-            "full_text_sections": _build_opinion_body_sections(full_text),
-            "preview_lines": _build_opinion_preview_lines(full_text),
-            "primary_evidence": _build_primary_evidence_line(picked),
-            "top_evidence_tags": _build_top_evidence_tags(picked, limit=2),
-            "selection_note": selection_note,
-            "focus": f"{role_labels[role]}視点: {ROLE_PROFILES.get(role, {}).get('opinion_focus', '重要記事（点）をつないで意見（線）を構成')}" ,
-            "recommendation": _extract_recommended_action_line(full_text),
-        })
-
-    role_discussions = _build_role_discussion(role_sections)
-    for section in role_sections:
-        section["discussion_pairs"] = role_discussions.get(section["role"], [])
-
-    exec_brief = _build_dynamic_exec_brief(role_sections, opinion_items)
-
-    opinion_assets = build_asset_paths()
-    opinion_html = Template(OPINION_HTML).render(
-        common_css_href=opinion_assets["common_css_href"],
-        common_js_src=opinion_assets["common_js_src"],
-        page="opinion",
-        generated_at=generated_at,
-        role_sections=role_sections,
-        source_item_count=len(opinion_seed_items),
-        exec_brief=exec_brief,
-        fmt_date=fmt_date,
-    )
-    (opinion_dir / "index.html").write_text(opinion_html, encoding="utf-8")
+    # 立場別意見ページは廃止済み（未来予測ページに統合）
 
 NEWS_SECTIONS = [
     ("news",          "一般ニュース（未分類）"),
@@ -2889,7 +2816,6 @@ FORECAST_HTML = r"""
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/opinion/" class="{{ 'active' if page=='opinion' else '' }}">立場別意見</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
