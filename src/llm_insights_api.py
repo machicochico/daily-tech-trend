@@ -190,7 +190,7 @@ def post_lmstudio(payload: dict, timeout: int, retries: int = 2, backoff_sec: fl
     body = dict(payload)
     last_err = None
 
-    # 呼び出し元がmodelを明示指定している場合はそのモデルのみ使用
+    # 呼び出し元がmodelを明示指定している場合はそのモデルを優先
     pinned_model = payload.get("model", "").strip()
 
     preferred = pinned_model or _model_settings()["primary"]
@@ -204,7 +204,12 @@ def post_lmstudio(payload: dict, timeout: int, retries: int = 2, backoff_sec: fl
             _FAILED_MODELS.discard(preferred)
 
     for i in range(retries + 1):
-        candidates = [pinned_model] if pinned_model else _pick_model_candidates()
+        if pinned_model:
+            # 指定モデルを先頭に、フォールバック候補も含める
+            others = [m for m in _pick_model_candidates() if m != pinned_model]
+            candidates = [pinned_model] + others
+        else:
+            candidates = _pick_model_candidates()
         for model in candidates:
             body["model"] = model
             try:
