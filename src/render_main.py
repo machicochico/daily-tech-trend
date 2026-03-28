@@ -2998,8 +2998,84 @@ def render_forecast_page(out_dir, generated_at, cur):
         md_to_html = mistune.html
     except ImportError:
         import html as _html
+
         def md_to_html(text):
-            return "<pre>" + _html.escape(text) + "</pre>"
+            """mistune未インストール時の簡易Markdown→HTML変換"""
+            lines = _html.escape(text).split("\n")
+            out = []
+            in_list = False
+            in_table = False
+            for line in lines:
+                stripped = line.strip()
+                # 空行
+                if not stripped:
+                    if in_list:
+                        out.append("</ul>")
+                        in_list = False
+                    if in_table:
+                        out.append("</tbody></table>")
+                        in_table = False
+                    out.append("")
+                    continue
+                # 見出し
+                if stripped.startswith("### "):
+                    out.append(f"<h3>{stripped[4:]}</h3>")
+                    continue
+                if stripped.startswith("## "):
+                    out.append(f"<h2>{stripped[3:]}</h2>")
+                    continue
+                if stripped.startswith("# "):
+                    out.append(f"<h1>{stripped[2:]}</h1>")
+                    continue
+                # 水平線
+                if stripped in ("---", "***", "___"):
+                    out.append("<hr>")
+                    continue
+                # テーブル区切り行
+                if stripped.startswith("|") and set(stripped.replace("|", "").replace("-", "").replace(" ", "")) == set():
+                    continue
+                # テーブル行
+                if stripped.startswith("|") and stripped.endswith("|"):
+                    cells = [c.strip() for c in stripped.strip("|").split("|")]
+                    if not in_table:
+                        in_table = True
+                        out.append('<table class="source-table"><tbody>')
+                    out.append("<tr>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
+                    continue
+                # リスト
+                if stripped.startswith("- ") or stripped.startswith("* "):
+                    if not in_list:
+                        in_list = True
+                        out.append("<ul>")
+                    content = stripped[2:]
+                    content = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", content)
+                    content = re.sub(r"\*(.+?)\*", r"<em>\1</em>", content)
+                    out.append(f"<li>{content}</li>")
+                    continue
+                # 番号付きリスト
+                m_ol = re.match(r"^(\d+)\.\s+(.+)", stripped)
+                if m_ol:
+                    content = m_ol.group(2)
+                    content = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", content)
+                    content = re.sub(r"\*(.+?)\*", r"<em>\1</em>", content)
+                    out.append(f"<p>{m_ol.group(1)}. {content}</p>")
+                    continue
+                # 通常段落（太字・斜体変換）
+                if in_list:
+                    out.append("</ul>")
+                    in_list = False
+                if in_table:
+                    out.append("</tbody></table>")
+                    in_table = False
+                p = stripped
+                p = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", p)
+                p = re.sub(r"\*(.+?)\*", r"<em>\1</em>", p)
+                out.append(f"<p>{p}</p>")
+            if in_list:
+                out.append("</ul>")
+            if in_table:
+                out.append("</tbody></table>")
+            return "\n".join(out)
 
     # 最新レポートを取得
     cur.execute("""
