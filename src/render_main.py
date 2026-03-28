@@ -2837,6 +2837,20 @@ FORECAST_HTML = r"""
     /* パネル */
     .forecast-panel{display:none;padding:16px;border:1px solid var(--border);border-radius:0 8px 8px 8px;
       background:var(--panel);margin-bottom:20px;overflow-x:auto;word-wrap:break-word;overflow-wrap:break-word}
+    /* 予測カード */
+    .pred-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px}
+    .pred-card-header{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+    .pred-badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700}
+    .pred-badge.impact-大{background:#fee2e2;color:#dc2626}
+    .pred-badge.impact-中{background:#fef3c7;color:#d97706}
+    .pred-badge.impact-小{background:#e0f2fe;color:#0284c7}
+    .pred-badge.conf-高{background:#dcfce7;color:#16a34a}
+    .pred-badge.conf-中{background:#fef3c7;color:#d97706}
+    .pred-badge.conf-低{background:#f3f4f6;color:#6b7280}
+    .pred-card-title{font-weight:700;font-size:15px;margin-bottom:8px;line-height:1.5;color:var(--text-main)}
+    .pred-card-body{font-size:14px;line-height:1.7;color:var(--text-main)}
+    .pred-card-body p{margin:6px 0}
+    .pred-card-body ul,.pred-card-body ol{margin:6px 0;padding-left:20px}
     .forecast-panel.active{display:block}
     .forecast-panel h2,.forecast-panel h3{margin-top:16px}
     .forecast-panel p{line-height:1.7;margin:8px 0}
@@ -2911,7 +2925,16 @@ FORECAST_HTML = r"""
   </div>
   {% for horizon in prediction_keys %}
   <div class="forecast-panel {{ 'active' if loop.first else '' }}" id="pred-panel-{{ loop.index0 }}">
-    {{ prediction_htmls[horizon] }}
+    {% for item in prediction_items[horizon] %}
+    <div class="pred-card">
+      <div class="pred-card-header">
+        {% if item.impact %}<span class="pred-badge impact-{{ item.impact }}">影響度: {{ item.impact }}</span>{% endif %}
+        {% if item.confidence %}<span class="pred-badge conf-{{ item.confidence }}">確信度: {{ item.confidence }}</span>{% endif %}
+      </div>
+      {% if item.title %}<div class="pred-card-title">{{ item.title }}</div>{% endif %}
+      <div class="pred-card-body">{{ item.body_html }}</div>
+    </div>
+    {% endfor %}
   </div>
   {% endfor %}
 
@@ -3155,8 +3178,21 @@ def render_forecast_page(out_dir, generated_at, cur):
     appendix_fc_html = md_to_html(report.appendix_factcheck) if report.appendix_factcheck else ""
     appendix_news_html = md_to_html(report.appendix_news) if report.appendix_news else ""
 
+    from forecast_parser import parse_prediction_items
+
     prediction_keys = list(report.predictions.keys())
-    prediction_htmls = {k: md_to_html(v) for k, v in report.predictions.items()}
+    prediction_items = {}
+    for k, v in report.predictions.items():
+        items = parse_prediction_items(v)
+        rendered = []
+        for item in items:
+            rendered.append({
+                "impact": item.impact,
+                "confidence": item.confidence,
+                "title": item.title,
+                "body_html": md_to_html(item.body),
+            })
+        prediction_items[k] = rendered
 
     perspective_keys = list(report.perspectives.keys())
     perspective_htmls = {k: md_to_html(v) for k, v in report.perspectives.items()}
@@ -3171,7 +3207,7 @@ def render_forecast_page(out_dir, generated_at, cur):
         has_report=has_report,
         executive_summary_html=executive_summary_html,
         prediction_keys=prediction_keys,
-        prediction_htmls=prediction_htmls,
+        prediction_items=prediction_items,
         checked_report_html=checked_report_html,
         perspective_keys=perspective_keys,
         perspective_htmls=perspective_htmls,

@@ -63,6 +63,82 @@ def _split_predictions(text: str) -> dict[str, str]:
     return result
 
 
+@dataclass
+class PredictionItem:
+    """個別の予測項目"""
+    impact: str = ""         # 影響度（大/中/小）
+    confidence: str = ""     # 確信度（高/中/低）
+    title: str = ""          # タイトル（あれば）
+    body: str = ""           # 本文（Markdown）
+
+
+_IMPACT_RE = re.compile(
+    r"\*{0,2}影響度[:：]\s*(\S+)\s*[/／]\s*確信度[:：]\s*(\S+)\*{0,2}"
+)
+
+
+def parse_prediction_items(md_text: str) -> list[PredictionItem]:
+    """時間軸1つ分のMarkdownを個別の予測項目に分割する
+
+    3つの形式に対応:
+    - 形式A (1週間後): **影響度: X / 確信度: Y** → 本文 → --- の繰り返し
+    - 形式B (1-6ヶ月後): ### N. タイトル → **影響度** → 本文
+    - 形式C (1年後): **影響度: X / 確信度: Y** → 本文 → - **根拠** リスト
+    """
+    items = []
+    # まず ### 見出しで分割を試みる（形式B）
+    h3_matches = list(re.finditer(r"^###\s+(.+)$", md_text, re.MULTILINE))
+    if h3_matches:
+        for i, m in enumerate(h3_matches):
+            title_raw = m.group(1).strip()
+            # 番号プレフィックスを除去
+            title = re.sub(r"^\d+\.\s*", "", title_raw)
+            start = m.end()
+            end = h3_matches[i + 1].start() if i + 1 < len(h3_matches) else len(md_text)
+            body = md_text[start:end].strip()
+            # 影響度・確信度を抽出
+            impact, confidence = "", ""
+            im = _IMPACT_RE.search(body)
+            if im:
+                impact = im.group(1).strip("*")
+                confidence = im.group(2).strip("*")
+            items.append(PredictionItem(
+                impact=impact, confidence=confidence,
+                title=title, body=body,
+            ))
+        return items
+
+    # --- または影響度行で分割（形式A/C）
+    blocks = re.split(r"\n---+\n", md_text)
+    for block in blocks:
+        block = block.strip()
+        if not block:
+            continue
+        impact, confidence = "", ""
+        im = _IMPACT_RE.search(block)
+        if im:
+            impact = im.group(1).strip("*")
+            confidence = im.group(2).strip("*")
+        # タイトルを推定: 影響度行の後の最初の非空行
+        lines = block.split("\n")
+        title = ""
+        for line in lines:
+            s = line.strip()
+            if not s or _IMPACT_RE.search(s):
+                continue
+            # 最初の実質行をタイトルとして使用（長すぎる場合は切り詰め）
+            title = re.sub(r"^[\-\*]\s*", "", s)
+            title = re.sub(r"\*\*(.+?)\*\*", r"\1", title)  # 太字除去
+            if len(title) > 80:
+                title = title[:77] + "..."
+            break
+        items.append(PredictionItem(
+            impact=impact, confidence=confidence,
+            title=title, body=block,
+        ))
+    return items
+
+
 def _split_perspectives(text: str) -> dict[str, str]:
     """3視点分析セクションを視点ごとに分割"""
     result = {}
