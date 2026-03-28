@@ -135,7 +135,7 @@ details.insight .kps li{margin:4px 0;line-height:1.5;font-size:13px}
 /* 要約プレビュー */
 .summary-preview{color:#555;font-size:13px;margin-top:4px;line-height:1.5}
 /* タググループラベル */
-.tag-group-label{font-size:10px;font-weight:700;color:#999;margin-left:6px;white-space:nowrap;text-transform:uppercase}
+.tag-group-label{font-size:10px;font-weight:700;color:#767676;margin-left:6px;white-space:nowrap;text-transform:uppercase}
 /* 根拠URL */
 .evidence-urls{font-size:13px;color:#444;padding:6px 10px;background:#f0f4ff;border-radius:8px;border:1px solid #dbe7ff;margin-top:8px}
 .evidence-urls a{color:var(--accent);text-decoration:underline}
@@ -169,6 +169,19 @@ details.insight>summary:focus-visible{outline:2px solid var(--accent);outline-of
   .nav a{padding:5px 10px;font-size:12px}
   .btn{padding:5px 8px;font-size:12px}
   .perspectives{padding:6px 8px}
+}
+
+/* === タブレット (641px〜819px) === */
+@media (min-width:641px) and (max-width:819px){
+  body{margin:16px;font-size:14px}
+  .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .top-zone{grid-template-columns:1fr 1fr}
+  .top-zone .top-col{max-height:300px}
+  .nav a{padding:6px 12px;font-size:13px}
+  .btn{padding:6px 10px;font-size:13px}
+  #q{width:100%;min-width:200px}
+  .topic-row{padding:10px 14px}
+  .perspectives{padding:8px 10px}
 }
 
 /* === デスクトップ (820px以上) === */

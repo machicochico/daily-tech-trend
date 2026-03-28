@@ -28,15 +28,26 @@
     .status-chip.ok{background:#dcfce7;color:#16a34a}
     .status-chip.warn{background:#fee2e2;color:#dc2626}
     .status-chip.na{background:#f3f4f6;color:#9ca3af}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -12px;padding:0 12px}
+    .source-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:auto}
+    .source-table th,.source-table td{white-space:normal;word-break:break-word}
+    .source-table .url-cell{max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     @media(max-width:640px){
-      .ops-section{padding:10px 12px}
-      .bar-chart{height:130px;gap:2px}
-      .hbar-row{grid-template-columns:100px 1fr 80px}
-      .hbar-row .hbar-label{font-size:11px}
-      .hbar-row .hbar-nums{font-size:11px}
+      .ops-section{padding:10px 8px}
+      .ops-section h2{font-size:14px}
+      .bar-chart{height:110px;gap:1px;padding:0 0 24px}
+      .bar-col .bar-label{font-size:8px;bottom:-18px}
+      .bar-col .bar-val{font-size:8px}
+      .hbar-row{grid-template-columns:1fr 2fr 70px;gap:4px;font-size:12px}
+      .hbar-row .hbar-label{font-size:11px;white-space:normal;word-break:break-all;text-align:left;line-height:1.3}
+      .hbar-row .hbar-nums{font-size:10px}
       .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .source-table{font-size:11px}
+      .source-table th,.source-table td{padding:4px 5px}
+      .source-table .url-cell{max-width:35vw;font-size:10px}
     }
   </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"運用ダッシュボード","description":"パイプライン稼働状況・記事収集トレンド・フィード健全性を確認する運用ダッシュボード。","url":"/daily-tech-trend/ops/","isPartOf":{"@type":"WebSite","name":"Daily Tech Trend","url":"/daily-tech-trend/"}}</script>
 </head>
 <body>
   <h1>運用ダッシュボード</h1>
@@ -51,13 +62,13 @@
   <div class="summary-card">
     <div class="summary-title">パイプライン概況</div>
     <div class="summary-grid">
-      <div class="summary-item"><div class="k">最終更新</div><div class="v">2026-03-28 14:22:35 JST</div></div>
-      <div class="summary-item"><div class="k">記事総数</div><div class="v">8966</div></div>
-      <div class="summary-item"><div class="k">直近7日</div><div class="v">+1984</div></div>
-      <div class="summary-item"><div class="k">直近48h</div><div class="v">+1075</div></div>
-      <div class="summary-item"><div class="k">トピック数</div><div class="v">10354</div></div>
-      <div class="summary-item"><div class="k">LLM分析済み</div><div class="v">7484</div></div>
-      <div class="summary-item"><div class="k">分析未生成</div><div class="v">2870</div></div>
+      <div class="summary-item"><div class="k">最終更新</div><div class="v">2026-03-28 15:12:26 JST</div></div>
+      <div class="summary-item"><div class="k">記事総数</div><div class="v">8967</div></div>
+      <div class="summary-item"><div class="k">直近7日</div><div class="v">+1985</div></div>
+      <div class="summary-item"><div class="k">直近48h</div><div class="v">+1076</div></div>
+      <div class="summary-item"><div class="k">トピック数</div><div class="v">10357</div></div>
+      <div class="summary-item"><div class="k">LLM分析済み</div><div class="v">7494</div></div>
+      <div class="summary-item"><div class="k">分析未生成</div><div class="v">2863</div></div>
       <div class="summary-item"><div class="k">RSSソース</div><div class="v">66</div></div>
     </div>
   </div>
@@ -153,7 +164,7 @@
       </div>
       
       <div class="bar-col">
-        <div class="bar-val">667</div>
+        <div class="bar-val">668</div>
         <div class="bar" style="height:100px"></div>
         <div class="bar-label">03-28</div>
       </div>
@@ -171,7 +182,7 @@
       <div class="hbar-row">
         <div class="hbar-label" title="news">news</div>
         <div class="hbar-track"><div class="hbar-fill" style="width:100%"></div></div>
-        <div class="hbar-nums">3903 <span class="small">(7d +452)</span></div>
+        <div class="hbar-nums">3905 <span class="small">(7d +454)</span></div>
       </div>
       
       <div class="hbar-row">
@@ -189,7 +200,7 @@
       <div class="hbar-row">
         <div class="hbar-label" title="セキュリティ">セキュリティ</div>
         <div class="hbar-track"><div class="hbar-fill" style="width:18%"></div></div>
-        <div class="hbar-nums">716 <span class="small">(7d +223)</span></div>
+        <div class="hbar-nums">715 <span class="small">(7d +222)</span></div>
       </div>
       
       <div class="hbar-row">
@@ -272,11 +283,12 @@
   <div class="ops-section">
     <h2>ソース別記事数 TOP15</h2>
     
+      <div class="table-wrap">
       <table class="source-table">
         <thead><tr><th>ソース</th><th class="num">全期間</th><th class="num">7日</th><th class="num">48h</th><th>主カテゴリ</th></tr></thead>
         <tbody>
         
-          <tr><td>BBC World (Global)</td><td class="num">1755</td><td class="num">165</td><td class="num">55</td><td>news</td></tr>
+          <tr><td>BBC World (Global)</td><td class="num">1755</td><td class="num">164</td><td class="num">54</td><td>news</td></tr>
         
           <tr><td>Hellenic Shipping News</td><td class="num">850</td><td class="num">190</td><td class="num">86</td><td>市況（コモディティ・海運・スクラップ）</td></tr>
         
@@ -286,9 +298,9 @@
         
           <tr><td>Forest Watch</td><td class="num">604</td><td class="num">70</td><td class="num">19</td><td>news / company</td></tr>
         
-          <tr><td>NIKKEI TECH</td><td class="num">588</td><td class="num">154</td><td class="num">39</td><td>industry</td></tr>
+          <tr><td>NIKKEI TECH</td><td class="num">588</td><td class="num">154</td><td class="num">38</td><td>industry</td></tr>
         
-          <tr><td>NHKニュース</td><td class="num">527</td><td class="num">147</td><td class="num">52</td><td>政策・規制（脱炭素） / news</td></tr>
+          <tr><td>NHKニュース</td><td class="num">529</td><td class="num">148</td><td class="num">54</td><td>政策・規制（脱炭素） / news</td></tr>
         
           <tr><td>INTERNET Watch</td><td class="num">506</td><td class="num">58</td><td class="num">14</td><td>news / industry</td></tr>
         
@@ -308,6 +320,7 @@
         
         </tbody>
       </table>
+      </div>
     
   </div>
 
@@ -316,334 +329,335 @@
     <h2>フィード健全性</h2>
     
       <div class="small" style="margin-bottom:8px">障害が発生しているフィード（failure_count > 0）</div>
+      <div class="table-wrap">
       <table class="source-table">
         <thead><tr><th>フィードURL</th><th class="num">障害回数</th><th>最終成功</th><th>エラー内容</th></tr></thead>
         <tbody>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://cloud.google.com/blog/rss">https://cloud.google.com/blog/rss</td>
+            <td class="url-cell" title="https://cloud.google.com/blog/rss">https://cloud.google.com/blog/rss</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.cisa.gov/cybersecurity-advisories/ics-recommended-practices.xml">https://www.cisa.gov/cybersecurity-advisories/i...</td>
+            <td class="url-cell" title="https://www.cisa.gov/cybersecurity-advisories/ics-recommended-practices.xml">https://www.cisa.gov/cybersecurity-advisories/i...</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.cisa.gov/sbom.xml">https://www.cisa.gov/sbom.xml</td>
+            <td class="url-cell" title="https://www.cisa.gov/sbom.xml">https://www.cisa.gov/sbom.xml</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.cisa.gov/known-exploited-vulnerabilities-catalog.xml">https://www.cisa.gov/known-exploited-vulnerabil...</td>
+            <td class="url-cell" title="https://www.cisa.gov/known-exploited-vulnerabilities-catalog.xml">https://www.cisa.gov/known-exploited-vulnerabil...</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.iso.org/contents/news/all.rss">https://www.iso.org/contents/news/all.rss</td>
+            <td class="url-cell" title="https://www.iso.org/contents/news/all.rss">https://www.iso.org/contents/news/all.rss</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.iec.ch/newsroom/rss.xml">https://www.iec.ch/newsroom/rss.xml</td>
+            <td class="url-cell" title="https://www.iec.ch/newsroom/rss.xml">https://www.iec.ch/newsroom/rss.xml</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.enisa.europa.eu/news/enisa-news/RSS">https://www.enisa.europa.eu/news/enisa-news/RSS</td>
+            <td class="url-cell" title="https://www.enisa.europa.eu/news/enisa-news/RSS">https://www.enisa.europa.eu/news/enisa-news/RSS</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.jisc.go.jp/newstopics/rss.xml">https://www.jisc.go.jp/newstopics/rss.xml</td>
+            <td class="url-cell" title="https://www.jisc.go.jp/newstopics/rss.xml">https://www.jisc.go.jp/newstopics/rss.xml</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.recyclingtoday.com/rss/topic/ferrous.aspx">https://www.recyclingtoday.com/rss/topic/ferrou...</td>
+            <td class="url-cell" title="https://www.recyclingtoday.com/rss/topic/ferrous.aspx">https://www.recyclingtoday.com/rss/topic/ferrou...</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://ai.googleblog.com/feeds/posts/default">https://ai.googleblog.com/feeds/posts/default</td>
+            <td class="url-cell" title="https://ai.googleblog.com/feeds/posts/default">https://ai.googleblog.com/feeds/posts/default</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://ai.facebook.com/blog/rss/">https://ai.facebook.com/blog/rss/</td>
+            <td class="url-cell" title="https://ai.facebook.com/blog/rss/">https://ai.facebook.com/blog/rss/</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="http://export.arxiv.org/rss/cs.AI">http://export.arxiv.org/rss/cs.AI</td>
+            <td class="url-cell" title="http://export.arxiv.org/rss/cs.AI">http://export.arxiv.org/rss/cs.AI</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="http://export.arxiv.org/rss/cs.LG">http://export.arxiv.org/rss/cs.LG</td>
+            <td class="url-cell" title="http://export.arxiv.org/rss/cs.LG">http://export.arxiv.org/rss/cs.LG</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://github.blog/category/machine-learning/feed/">https://github.blog/category/machine-learning/f...</td>
+            <td class="url-cell" title="https://github.blog/category/machine-learning/feed/">https://github.blog/category/machine-learning/f...</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.nipponsteel.com/news/rss.xml">https://www.nipponsteel.com/news/rss.xml</td>
+            <td class="url-cell" title="https://www.nipponsteel.com/news/rss.xml">https://www.nipponsteel.com/news/rss.xml</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.kobelco.co.jp/rss/news.xml">https://www.kobelco.co.jp/rss/news.xml</td>
+            <td class="url-cell" title="https://www.kobelco.co.jp/rss/news.xml">https://www.kobelco.co.jp/rss/news.xml</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.posco-inc.com:4451/poscoinc/v2/company/news_en/feed">https://www.posco-inc.com:4451/poscoinc/v2/comp...</td>
+            <td class="url-cell" title="https://www.posco-inc.com:4451/poscoinc/v2/company/news_en/feed">https://www.posco-inc.com:4451/poscoinc/v2/comp...</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://corporate.arcelormittal.com/media/news-articles/rss">https://corporate.arcelormittal.com/media/news-...</td>
+            <td class="url-cell" title="https://corporate.arcelormittal.com/media/news-articles/rss">https://corporate.arcelormittal.com/media/news-...</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://nucor.com/rss/news.xml">https://nucor.com/rss/news.xml</td>
+            <td class="url-cell" title="https://nucor.com/rss/news.xml">https://nucor.com/rss/news.xml</td>
             <td class="num"><span class="feed-warn">24</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.ussteel.com/rss/news.xml">https://www.ussteel.com/rss/news.xml</td>
+            <td class="url-cell" title="https://www.ussteel.com/rss/news.xml">https://www.ussteel.com/rss/news.xml</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.tatasteel.com/media/newsroom/press-releases/rss.xml">https://www.tatasteel.com/media/newsroom/press-...</td>
+            <td class="url-cell" title="https://www.tatasteel.com/media/newsroom/press-releases/rss.xml">https://www.tatasteel.com/media/newsroom/press-...</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.thyssenkrupp-steel.com/en/newsroom/rss.xml">https://www.thyssenkrupp-steel.com/en/newsroom/...</td>
+            <td class="url-cell" title="https://www.thyssenkrupp-steel.com/en/newsroom/rss.xml">https://www.thyssenkrupp-steel.com/en/newsroom/...</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.siemens.com/cert/rss/advisories.xml">https://www.siemens.com/cert/rss/advisories.xml</td>
+            <td class="url-cell" title="https://www.siemens.com/cert/rss/advisories.xml">https://www.siemens.com/cert/rss/advisories.xml</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.iiot-world.com/feed/">https://www.iiot-world.com/feed/</td>
+            <td class="url-cell" title="https://www.iiot-world.com/feed/">https://www.iiot-world.com/feed/</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.aveva.com/en/perspectives/blog/rss/">https://www.aveva.com/en/perspectives/blog/rss/</td>
+            <td class="url-cell" title="https://www.aveva.com/en/perspectives/blog/rss/">https://www.aveva.com/en/perspectives/blog/rss/</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.rockwellautomation.com/en-us/company/news/blogs.feed.xml">https://www.rockwellautomation.com/en-us/compan...</td>
+            <td class="url-cell" title="https://www.rockwellautomation.com/en-us/company/news/blogs.feed.xml">https://www.rockwellautomation.com/en-us/compan...</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.nttdata.com/global/en/-/media/nttdataglobal/feed.xml">https://www.nttdata.com/global/en/-/media/nttda...</td>
+            <td class="url-cell" title="https://www.nttdata.com/global/en/-/media/nttdataglobal/feed.xml">https://www.nttdata.com/global/en/-/media/nttda...</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://aws.amazon.com/blogs/industries/category/manufacturing/feed/">https://aws.amazon.com/blogs/industries/categor...</td>
+            <td class="url-cell" title="https://aws.amazon.com/blogs/industries/category/manufacturing/feed/">https://aws.amazon.com/blogs/industries/categor...</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.digital.go.jp/assets/contents/news/feed.xml">https://www.digital.go.jp/assets/contents/news/...</td>
+            <td class="url-cell" title="https://www.digital.go.jp/assets/contents/news/feed.xml">https://www.digital.go.jp/assets/contents/news/...</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.soumu.go.jp/menu_news/s-news/rss.xml">https://www.soumu.go.jp/menu_news/s-news/rss.xml</td>
+            <td class="url-cell" title="https://www.soumu.go.jp/menu_news/s-news/rss.xml">https://www.soumu.go.jp/menu_news/s-news/rss.xml</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.nedo.go.jp/rss/news.xml">https://www.nedo.go.jp/rss/news.xml</td>
+            <td class="url-cell" title="https://www.nedo.go.jp/rss/news.xml">https://www.nedo.go.jp/rss/news.xml</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.metro.tokyo.lg.jp/tosei/hodohappyo/rss.xml">https://www.metro.tokyo.lg.jp/tosei/hodohappyo/...</td>
+            <td class="url-cell" title="https://www.metro.tokyo.lg.jp/tosei/hodohappyo/rss.xml">https://www.metro.tokyo.lg.jp/tosei/hodohappyo/...</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://ec.europa.eu/newsroom/taxation_customs/feed?item_type_id=1536&lang=en&orderby=item_date">https://ec.europa.eu/newsroom/taxation_customs/...</td>
+            <td class="url-cell" title="https://ec.europa.eu/newsroom/taxation_customs/feed?item_type_id=1536&lang=en&orderby=item_date">https://ec.europa.eu/newsroom/taxation_customs/...</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.ipa.go.jp/security/rss/rss.rdf">https://www.ipa.go.jp/security/rss/rss.rdf</td>
+            <td class="url-cell" title="https://www.ipa.go.jp/security/rss/rss.rdf">https://www.ipa.go.jp/security/rss/rss.rdf</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://prtimes.jp/main/html/rss/it.rdf">https://prtimes.jp/main/html/rss/it.rdf</td>
+            <td class="url-cell" title="https://prtimes.jp/main/html/rss/it.rdf">https://prtimes.jp/main/html/rss/it.rdf</td>
             <td class="num"><span class="feed-warn">23</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.automationworld.com/rss.xml">https://www.automationworld.com/rss.xml</td>
+            <td class="url-cell" title="https://www.automationworld.com/rss.xml">https://www.automationworld.com/rss.xml</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.controlglobal.com/rss.xml">https://www.controlglobal.com/rss.xml</td>
+            <td class="url-cell" title="https://www.controlglobal.com/rss.xml">https://www.controlglobal.com/rss.xml</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.primetals.com/news-media/news/rss/">https://www.primetals.com/news-media/news/rss/</td>
+            <td class="url-cell" title="https://www.primetals.com/news-media/news/rss/">https://www.primetals.com/news-media/news/rss/</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.steeltimesint.com/feed/">https://www.steeltimesint.com/feed/</td>
+            <td class="url-cell" title="https://www.steeltimesint.com/feed/">https://www.steeltimesint.com/feed/</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.tenova.com/news/feed/">https://www.tenova.com/news/feed/</td>
+            <td class="url-cell" title="https://www.tenova.com/news/feed/">https://www.tenova.com/news/feed/</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.sms-group.com/company/newsroom/rss.xml">https://www.sms-group.com/company/newsroom/rss.xml</td>
+            <td class="url-cell" title="https://www.sms-group.com/company/newsroom/rss.xml">https://www.sms-group.com/company/newsroom/rss.xml</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.danieli.com/en/news/rss.xml">https://www.danieli.com/en/news/rss.xml</td>
+            <td class="url-cell" title="https://www.danieli.com/en/news/rss.xml">https://www.danieli.com/en/news/rss.xml</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.zeiss.com/metrology/en/news-events/newsroom/rss.xml">https://www.zeiss.com/metrology/en/news-events/...</td>
+            <td class="url-cell" title="https://www.zeiss.com/metrology/en/news-events/newsroom/rss.xml">https://www.zeiss.com/metrology/en/news-events/...</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://blog.skf.com/feed/">https://blog.skf.com/feed/</td>
+            <td class="url-cell" title="https://blog.skf.com/feed/">https://blog.skf.com/feed/</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://ghgprotocol.org/blog/feed">https://ghgprotocol.org/blog/feed</td>
+            <td class="url-cell" title="https://ghgprotocol.org/blog/feed">https://ghgprotocol.org/blog/feed</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://www.env.go.jp/press/rss.xml">https://www.env.go.jp/press/rss.xml</td>
+            <td class="url-cell" title="https://www.env.go.jp/press/rss.xml">https://www.env.go.jp/press/rss.xml</td>
             <td class="num"><span class="feed-warn">5</span></td>
             <td class="small">-</td>
             <td class="small">bozo_empty</td>
           </tr>
         
           <tr>
-            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="https://azure.microsoft.com/en-us/blog/topics/internet-of-things/feed/">https://azure.microsoft.com/en-us/blog/topics/i...</td>
+            <td class="url-cell" title="https://azure.microsoft.com/en-us/blog/topics/internet-of-things/feed/">https://azure.microsoft.com/en-us/blog/topics/i...</td>
             <td class="num"><span class="feed-warn">3</span></td>
             <td class="small">2026-03-27T14:51</td>
             <td class="small">bozo_empty</td>
@@ -651,10 +665,11 @@
         
         </tbody>
       </table>
+      </div>
     
   </div>
 
 
-  <script src="/daily-tech-trend/assets/js/common.js"></script>
+  <script src="/daily-tech-trend/assets/js/common.js" defer></script>
 </body>
 </html>
