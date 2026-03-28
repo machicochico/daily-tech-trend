@@ -1430,11 +1430,12 @@ OPS_HTML = r"""
     .bar-col .bar{background:var(--accent);border-radius:3px 3px 0 0;width:100%;min-height:2px;transition:height .3s}
     .bar-col .bar-label{font-size:10px;color:var(--text-sub);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
     .bar-col .bar-val{font-size:10px;color:var(--text-main);font-weight:600;margin-bottom:2px}
-    .hbar-row{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:13px}
-    .hbar-row .hbar-label{min-width:90px;color:var(--text-sub);text-align:right;flex-shrink:0}
-    .hbar-row .hbar-track{flex:1;height:18px;background:var(--bg);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+    .hbar-list{display:flex;flex-direction:column;gap:4px}
+    .hbar-row{display:grid;grid-template-columns:160px 1fr 100px;align-items:center;gap:8px;font-size:13px}
+    .hbar-row .hbar-label{color:var(--text-sub);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .hbar-row .hbar-track{height:18px;background:var(--bg);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
     .hbar-row .hbar-fill{height:100%;background:var(--accent);border-radius:4px 0 0 4px;min-width:2px}
-    .hbar-row .hbar-nums{min-width:100px;font-size:12px;color:var(--text-sub);white-space:nowrap}
+    .hbar-row .hbar-nums{font-size:12px;color:var(--text-sub);white-space:nowrap}
     .feed-ok{color:#16a34a;font-weight:600}
     .feed-warn{color:#dc2626}
     .status-chip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
@@ -1444,8 +1445,9 @@ OPS_HTML = r"""
     @media(max-width:640px){
       .ops-section{padding:10px 12px}
       .bar-chart{height:90px;gap:2px}
-      .hbar-row .hbar-label{min-width:70px;font-size:11px}
-      .hbar-row .hbar-nums{min-width:80px;font-size:11px}
+      .hbar-row{grid-template-columns:100px 1fr 80px}
+      .hbar-row .hbar-label{font-size:11px}
+      .hbar-row .hbar-nums{font-size:11px}
       .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     }
   </style>
@@ -1496,13 +1498,15 @@ OPS_HTML = r"""
   <div class="ops-section">
     <h2>カテゴリ別記事数</h2>
     {% if category_dist and category_dist|length > 0 %}
+    <div class="hbar-list">
       {% for c in category_dist %}
       <div class="hbar-row">
-        <div class="hbar-label">{{ c.name }}</div>
+        <div class="hbar-label" title="{{ c.name }}">{{ c.name }}</div>
         <div class="hbar-track"><div class="hbar-fill" style="width:{{ c.pct }}%"></div></div>
-        <div class="hbar-nums">{{ c.total }} <span class="small">(7d: +{{ c.week }})</span></div>
+        <div class="hbar-nums">{{ c.total }} <span class="small">(7d +{{ c.week }})</span></div>
       </div>
       {% endfor %}
+    </div>
     {% else %}
     <div class="meta">データなし</div>
     {% endif %}
@@ -1548,31 +1552,6 @@ OPS_HTML = r"""
     {% endif %}
   </div>
 
-  <!-- セクション6: 一次情報比率 -->
-  <div class="ops-section">
-    <h2>カテゴリ別 一次情報比率</h2>
-    <div class="small" style="margin-bottom:8px">一次情報率 = primary / 全記事。</div>
-    {% if primary_ratio_by_category and primary_ratio_by_category|length > 0 %}
-      <table class="source-table">
-        <thead>
-          <tr><th>カテゴリ</th><th class="num">一次情報率</th><th class="num">primary</th><th class="num">total</th><th>ステータス</th></tr>
-        </thead>
-        <tbody>
-          {% for r in primary_ratio_by_category %}
-            <tr>
-              <td>{{ cat_name.get(r.category, r.category) }}</td>
-              <td class="num">{{ r.ratio_pct }}%</td>
-              <td class="num">{{ r.primary_count }}</td>
-              <td class="num">{{ r.total_count }}</td>
-              <td>{% if r.status == 'ok' %}<span class="status-chip ok">OK</span>{% elif r.status == 'na' %}<span class="status-chip na">未設定</span>{% else %}<span class="status-chip warn">{{ r.warn_reason }}</span>{% endif %}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <div class="meta">カテゴリ集計対象なし</div>
-    {% endif %}
-  </div>
 
   <script src="{{ common_js_src }}"></script>
 </body>
