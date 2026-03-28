@@ -1418,13 +1418,40 @@ OPS_HTML = r"""
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>運用メトリクス | Daily Tech Trend</title>
-  <meta name="description" content="Source露出（競合比較）とカテゴリ別 一次情報比率を確認し、収集改善アクションに繋げる運用ページ。">
+  <title>運用ダッシュボード | Daily Tech Trend</title>
+  <meta name="description" content="パイプライン稼働状況・記事収集トレンド・フィード健全性を確認する運用ダッシュボード。">
   <link rel="canonical" href="/daily-tech-trend/ops/">
   <link rel="stylesheet" href="{{ common_css_href }}">
+  <style>
+    .ops-section{margin:16px 0;padding:14px 16px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
+    .ops-section h2{margin:0 0 10px;font-size:16px}
+    .bar-chart{display:flex;align-items:flex-end;gap:3px;height:120px;padding:8px 0}
+    .bar-col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:0}
+    .bar-col .bar{background:var(--accent);border-radius:3px 3px 0 0;width:100%;min-height:2px;transition:height .3s}
+    .bar-col .bar-label{font-size:10px;color:var(--text-sub);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+    .bar-col .bar-val{font-size:10px;color:var(--text-main);font-weight:600;margin-bottom:2px}
+    .hbar-row{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:13px}
+    .hbar-row .hbar-label{min-width:90px;color:var(--text-sub);text-align:right;flex-shrink:0}
+    .hbar-row .hbar-track{flex:1;height:18px;background:var(--bg);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+    .hbar-row .hbar-fill{height:100%;background:var(--accent);border-radius:4px 0 0 4px;min-width:2px}
+    .hbar-row .hbar-nums{min-width:100px;font-size:12px;color:var(--text-sub);white-space:nowrap}
+    .feed-ok{color:#16a34a;font-weight:600}
+    .feed-warn{color:#dc2626}
+    .status-chip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+    .status-chip.ok{background:#dcfce7;color:#16a34a}
+    .status-chip.warn{background:#fee2e2;color:#dc2626}
+    .status-chip.na{background:#f3f4f6;color:#9ca3af}
+    @media(max-width:640px){
+      .ops-section{padding:10px 12px}
+      .bar-chart{height:90px;gap:2px}
+      .hbar-row .hbar-label{min-width:70px;font-size:11px}
+      .hbar-row .hbar-nums{min-width:80px;font-size:11px}
+      .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+  </style>
 </head>
 <body>
-  <h1>運用メトリクス</h1>
+  <h1>運用ダッシュボード</h1>
   <div class="nav">
     <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
@@ -1432,39 +1459,99 @@ OPS_HTML = r"""
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
   </div>
 
+  <!-- セクション1: パイプライン概況 -->
   <div class="summary-card">
-    <div class="summary-title">今日の要点（運用）</div>
+    <div class="summary-title">パイプライン概況</div>
     <div class="summary-grid">
-      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">{{ meta.generated_at_jst }}</div></div>
-      <div class="summary-item"><div class="k">Articles</div><div class="v">{{ meta.total_articles }} <span class="small">(new48h {{ meta.new_articles_48h }})</span></div></div>
-      <div class="summary-item"><div class="k">RSS Sources</div><div class="v">{{ meta.rss_sources }}</div></div>
-      <div class="summary-item"><div class="k">Primary Threshold</div><div class="v">{{ (primary_ratio_threshold * 100)|round(0)|int }}%</div></div>
+      <div class="summary-item"><div class="k">最終更新</div><div class="v">{{ meta.generated_at_jst }}</div></div>
+      <div class="summary-item"><div class="k">記事総数</div><div class="v">{{ ops.article_total }}</div></div>
+      <div class="summary-item"><div class="k">直近7日</div><div class="v">+{{ ops.article_week }}</div></div>
+      <div class="summary-item"><div class="k">直近48h</div><div class="v">+{{ ops.article_48h }}</div></div>
+      <div class="summary-item"><div class="k">トピック数</div><div class="v">{{ ops.topic_total }}</div></div>
+      <div class="summary-item"><div class="k">LLM分析済み</div><div class="v">{{ ops.insight_count }}</div></div>
+      <div class="summary-item"><div class="k">分析未生成</div><div class="v">{{ ops.insight_pending }}</div></div>
+      <div class="summary-item"><div class="k">RSSソース</div><div class="v">{{ meta.rss_sources }}</div></div>
     </div>
   </div>
 
-  <section class="top-col" style="margin:8px 0 16px;">
-    <h2>🏭 Source露出（競合比較）</h2>
-    <div class="metric-note">
-      <div>露出が特定企業に偏っていないか、全期間と48hで確認します。</div>
-      <div>改善案: 上位3社への偏りが続く場合は、同カテゴリの一次ソースを追加して偏りを緩和。</div>
+  <!-- セクション2: 記事収集トレンド（14日） -->
+  <div class="ops-section">
+    <h2>記事収集トレンド（直近14日）</h2>
+    {% if daily_trend and daily_trend|length > 0 %}
+    <div class="bar-chart">
+      {% for d in daily_trend %}
+      <div class="bar-col">
+        <div class="bar-val">{{ d.cnt }}</div>
+        <div class="bar" style="height:{{ d.pct }}%"></div>
+        <div class="bar-label">{{ d.label }}</div>
+      </div>
+      {% endfor %}
     </div>
+    {% else %}
+    <div class="meta">データなし</div>
+    {% endif %}
+  </div>
+
+  <!-- セクション3: カテゴリ別記事分布 -->
+  <div class="ops-section">
+    <h2>カテゴリ別記事数</h2>
+    {% if category_dist and category_dist|length > 0 %}
+      {% for c in category_dist %}
+      <div class="hbar-row">
+        <div class="hbar-label">{{ c.name }}</div>
+        <div class="hbar-track"><div class="hbar-fill" style="width:{{ c.pct }}%"></div></div>
+        <div class="hbar-nums">{{ c.total }} <span class="small">(7d: +{{ c.week }})</span></div>
+      </div>
+      {% endfor %}
+    {% else %}
+    <div class="meta">データなし</div>
+    {% endif %}
+  </div>
+
+  <!-- セクション4: ソース別記事数TOP15 -->
+  <div class="ops-section">
+    <h2>ソース別記事数 TOP15</h2>
     {% if source_exposure and source_exposure|length > 0 %}
       <table class="source-table">
-        <thead><tr><th>企業</th><th class="num">露出</th><th class="num">48h</th><th>主カテゴリ</th></tr></thead>
+        <thead><tr><th>ソース</th><th class="num">全期間</th><th class="num">7日</th><th class="num">48h</th><th>主カテゴリ</th></tr></thead>
         <tbody>
         {% for s in source_exposure %}
-          <tr><td>{{ s.source }}</td><td class="num">{{ s.total }}</td><td class="num">{{ s.recent48 }}</td><td>{{ s.categories }}</td></tr>
+          <tr><td>{{ s.source }}</td><td class="num">{{ s.total }}</td><td class="num">{{ s.recent7d }}</td><td class="num">{{ s.recent48 }}</td><td>{{ s.categories }}</td></tr>
         {% endfor %}
         </tbody>
       </table>
     {% else %}
       <div class="meta">該当ソースなし</div>
     {% endif %}
-  </section>
+  </div>
 
-  <section class="top-col" style="margin:8px 0 16px;">
-    <h2>🧭 カテゴリ別 一次情報比率</h2>
-    <div class="small" style="margin-bottom:8px">一次情報率 = primary / 全記事（tech）。閾値 {{ (primary_ratio_threshold * 100)|round(0)|int }}% 未満は警告表示。</div>
+  <!-- セクション5: フィード健全性 -->
+  <div class="ops-section">
+    <h2>フィード健全性</h2>
+    {% if feed_issues and feed_issues|length > 0 %}
+      <div class="small" style="margin-bottom:8px">障害が発生しているフィード（failure_count > 0）</div>
+      <table class="source-table">
+        <thead><tr><th>フィードURL</th><th class="num">障害回数</th><th>最終成功</th><th>エラー内容</th></tr></thead>
+        <tbody>
+        {% for f in feed_issues %}
+          <tr>
+            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="{{ f.url }}">{{ f.url_short }}</td>
+            <td class="num"><span class="feed-warn">{{ f.failure_count }}</span></td>
+            <td class="small">{{ f.last_success or '-' }}</td>
+            <td class="small">{{ f.reason or '-' }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="feed-ok" style="padding:12px 0">全フィード正常稼働中</div>
+    {% endif %}
+  </div>
+
+  <!-- セクション6: 一次情報比率 -->
+  <div class="ops-section">
+    <h2>カテゴリ別 一次情報比率</h2>
+    <div class="small" style="margin-bottom:8px">一次情報率 = primary / 全記事。</div>
     {% if primary_ratio_by_category and primary_ratio_by_category|length > 0 %}
       <table class="source-table">
         <thead>
@@ -1477,7 +1564,7 @@ OPS_HTML = r"""
               <td class="num">{{ r.ratio_pct }}%</td>
               <td class="num">{{ r.primary_count }}</td>
               <td class="num">{{ r.total_count }}</td>
-              <td>{% if r.warn %}<span class="warn-text">⚠ 閾値未達（{{ r.warn_reason }}）</span>{% else %}OK{% endif %}</td>
+              <td>{% if r.status == 'ok' %}<span class="status-chip ok">OK</span>{% elif r.status == 'na' %}<span class="status-chip na">未設定</span>{% else %}<span class="status-chip warn">{{ r.warn_reason }}</span>{% endif %}</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -1485,7 +1572,7 @@ OPS_HTML = r"""
     {% else %}
       <div class="meta">カテゴリ集計対象なし</div>
     {% endif %}
-  </section>
+  </div>
 
   <script src="{{ common_js_src }}"></script>
 </body>
@@ -3651,77 +3738,146 @@ def main():
     )
     new_articles_48h = int(cur.fetchone()[0] or 0)
 
-    cur.execute(
-        """
+    # --- ops用データ取得 ---
+    cutoff_7d = (datetime.now(timezone.utc) - timedelta(days=7)).strftime("%Y-%m-%d %H:%M:%S")
+
+    # 記事統計
+    cur.execute("""
+        SELECT COUNT(*) as total,
+          SUM(CASE WHEN datetime(fetched_at) >= datetime(?) THEN 1 ELSE 0 END) as week,
+          SUM(CASE WHEN datetime(fetched_at) >= datetime(?) THEN 1 ELSE 0 END) as h48
+        FROM articles
+    """, (cutoff_7d, cutoff_48h))
+    row = cur.fetchone()
+    ops_stats = {
+        "article_total": int(row[0] or 0),
+        "article_week": int(row[1] or 0),
+        "article_48h": int(row[2] or 0),
+    }
+
+    # トピック・インサイト統計
+    cur.execute("SELECT COUNT(*) FROM topics")
+    ops_stats["topic_total"] = int(cur.fetchone()[0] or 0)
+    cur.execute("SELECT COUNT(*) FROM topic_insights")
+    ops_stats["insight_count"] = int(cur.fetchone()[0] or 0)
+    ops_stats["insight_pending"] = max(0, ops_stats["topic_total"] - ops_stats["insight_count"])
+
+    # 日別収集トレンド（14日）
+    cur.execute("""
+        SELECT DATE(fetched_at) as d, COUNT(*) as cnt
+        FROM articles
+        WHERE datetime(fetched_at) >= datetime('now','-14 days')
+        GROUP BY DATE(fetched_at)
+        ORDER BY d
+    """)
+    daily_raw = cur.fetchall()
+    daily_max = max((r[1] for r in daily_raw), default=1)
+    daily_trend = []
+    for d, cnt in daily_raw:
+        pct = round(cnt / daily_max * 100) if daily_max else 0
+        label = d[5:] if d else ""  # MM-DD
+        daily_trend.append({"d": d, "cnt": cnt, "pct": pct, "label": label})
+
+    # カテゴリ別（全期間+7日）
+    cur.execute("""
+        SELECT COALESCE(NULLIF(category,''), 'other') as cat, COUNT(*) as total,
+          SUM(CASE WHEN datetime(fetched_at) >= datetime(?) THEN 1 ELSE 0 END) as week
+        FROM articles
+        GROUP BY cat
+        ORDER BY total DESC
+    """, (cutoff_7d,))
+    cat_raw = cur.fetchall()
+    cat_max = max((r[1] for r in cat_raw), default=1)
+    category_dist = []
+    for cat, total, week in cat_raw:
+        pct = round(total / cat_max * 100) if cat_max else 0
+        category_dist.append({
+            "name": cat_name.get(cat, cat),
+            "total": int(total or 0),
+            "week": int(week or 0),
+            "pct": pct,
+        })
+
+    # ソース別記事数TOP15（7日列追加）
+    cur.execute("""
         SELECT
           COALESCE(NULLIF(source,''), '') AS source,
           COUNT(*) AS total,
-          SUM(
-            CASE
-              WHEN datetime(COALESCE(NULLIF(published_at,''), fetched_at)) >= datetime(?) THEN 1
-              ELSE 0
-            END
-          ) AS recent48,
+          SUM(CASE WHEN datetime(COALESCE(NULLIF(published_at,''), fetched_at)) >= datetime(?) THEN 1 ELSE 0 END) AS recent7d,
+          SUM(CASE WHEN datetime(COALESCE(NULLIF(published_at,''), fetched_at)) >= datetime(?) THEN 1 ELSE 0 END) AS recent48,
           GROUP_CONCAT(DISTINCT COALESCE(NULLIF(category,''), 'other')) AS categories
         FROM articles
-        WHERE kind='tech'
-          AND COALESCE(NULLIF(source,''), '') != ''
+        WHERE COALESCE(NULLIF(source,''), '') != ''
         GROUP BY source
         ORDER BY total DESC, recent48 DESC, source ASC
         LIMIT 15
-        """,
-        (cutoff_48h,),
-    )
+    """, (cutoff_7d, cutoff_48h))
     source_exposure = []
-    for source, total, recent48, categories_str in cur.fetchall():
+    for source, total, recent7d, recent48, categories_str in cur.fetchall():
         cat_ids = [c for c in (categories_str or "").split(",") if c]
         category_labels = [cat_name.get(c, c) for c in cat_ids[:3]]
-        source_exposure.append(
-            {
-                "source": clean_for_html(source),
-                "total": int(total or 0),
-                "recent48": int(recent48 or 0),
-                "categories": " / ".join(category_labels) if category_labels else "-",
-            }
-        )
+        source_exposure.append({
+            "source": clean_for_html(source),
+            "total": int(total or 0),
+            "recent7d": int(recent7d or 0),
+            "recent48": int(recent48 or 0),
+            "categories": " / ".join(category_labels) if category_labels else "-",
+        })
 
+    # フィード健全性
+    feed_issues = []
+    try:
+        cur.execute("""
+            SELECT feed_url, failure_count, last_success_at, last_failure_reason
+            FROM feed_health
+            WHERE failure_count > 0
+            ORDER BY failure_count DESC
+        """)
+        for url, fc, last_ok, reason in cur.fetchall():
+            url_short = url if len(url) <= 50 else url[:47] + "..."
+            feed_issues.append({
+                "url": url,
+                "url_short": url_short,
+                "failure_count": int(fc or 0),
+                "last_success": (last_ok or "")[:16],
+                "reason": clean_for_html(reason or ""),
+            })
+    except Exception:
+        pass  # feed_healthテーブルが無い場合
+
+    # 一次情報比率（kind制限なし）
     primary_ratio_threshold = float(os.environ.get("PRIMARY_RATIO_THRESHOLD", "0.5") or "0.5")
-
-    cur.execute(
-        """
+    cur.execute("""
         SELECT
           COALESCE(NULLIF(category,''), 'other') AS category,
           COUNT(*) AS total_count,
-          SUM(CASE WHEN COALESCE(NULLIF(source_tier,''), 'secondary') = 'primary' THEN 1 ELSE 0 END) AS primary_count
+          SUM(CASE WHEN source_tier = 'primary' THEN 1 ELSE 0 END) AS primary_count,
+          SUM(CASE WHEN source_tier IS NOT NULL AND source_tier != '' THEN 1 ELSE 0 END) AS tier_set_count
         FROM articles
-        WHERE kind='tech'
         GROUP BY COALESCE(NULLIF(category,''), 'other')
         ORDER BY total_count DESC, category ASC
-        """
-    )
+    """)
     primary_ratio_by_category = []
-    primary_ratio_min_sample = int(os.environ.get("PRIMARY_RATIO_MIN_SAMPLE", "5") or "5")
-    for category, total_count, primary_count in cur.fetchall():
+    for category, total_count, primary_count, tier_set_count in cur.fetchall():
         total_count = int(total_count or 0)
         primary_count = int(primary_count or 0)
-        ratio = (primary_count / total_count) if total_count else 0.0
-        warn = ratio < primary_ratio_threshold
-        warn_reason = ""
-        if warn:
-            if total_count < primary_ratio_min_sample:
-                warn_reason = "サンプル不足"
-            else:
-                warn_reason = "一次ソース追加候補"
-        primary_ratio_by_category.append(
-            {
-                "category": category,
-                "total_count": total_count,
+        tier_set_count = int(tier_set_count or 0)
+        if tier_set_count == 0:
+            primary_ratio_by_category.append({
+                "category": category, "total_count": total_count,
+                "primary_count": 0, "ratio_pct": "-",
+                "status": "na", "warn_reason": "",
+            })
+        else:
+            ratio = (primary_count / total_count) if total_count else 0.0
+            status = "ok" if ratio >= primary_ratio_threshold else "warn"
+            primary_ratio_by_category.append({
+                "category": category, "total_count": total_count,
                 "primary_count": primary_count,
                 "ratio_pct": round(ratio * 100, 1),
-                "warn": warn,
-                "warn_reason": warn_reason,
-            }
-        )
+                "status": status,
+                "warn_reason": "閾値未達" if status == "warn" else "",
+            })
 
     # RSS数（sources.yamlから拾える範囲でカウント。取れなければ0）
     rss_sources = 0
@@ -4387,7 +4543,11 @@ def main():
             nav_prefix=ops_assets["nav_prefix"],
             meta=meta,
             cat_name=cat_name,
+            ops=ops_stats,
+            daily_trend=daily_trend,
+            category_dist=category_dist,
             source_exposure=source_exposure,
+            feed_issues=feed_issues,
             primary_ratio_by_category=primary_ratio_by_category,
             primary_ratio_threshold=primary_ratio_threshold,
         )
