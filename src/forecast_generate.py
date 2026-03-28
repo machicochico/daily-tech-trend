@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import os
 import sys
 import time
 from datetime import datetime, timezone, timedelta
@@ -121,9 +122,13 @@ SUMMARY_USER_TMPL = """\
 ]"""
 
 
+FORECAST_MODEL = os.environ.get("FORECAST_MODEL", "openai/gpt-oss-20b")
+
+
 def _call_llm_json(system: str, user: str, max_tokens: int = 2000) -> list | dict:
     """LM Studioを呼び出してJSON結果を取得する"""
     payload = {
+        "model": FORECAST_MODEL,
         "messages": [
             {"role": "system", "content": system},
             {"role": "user", "content": user},
@@ -293,7 +298,7 @@ def main():
     args = parser.parse_args()
 
     t0 = time.time()
-    print("[forecast_generate] 開始")
+    print(f"[forecast_generate] 開始 (model={FORECAST_MODEL})")
 
     init_db()
     conn = connect()
