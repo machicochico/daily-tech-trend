@@ -24,9 +24,12 @@
     .hit-horizon-section > h2{margin:0 0 10px;font-size:1.1rem;padding-bottom:4px;border-bottom:2px solid var(--accent)}
     .hit-card{border:1px solid var(--border);border-left:4px solid #2ea043;border-radius:6px;
               padding:10px 14px;margin:8px 0;background:var(--panel)}
+    .hit-card.partial{border-left-color:#d29922}
     .hit-card-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:4px;font-size:.78rem;color:var(--text-sub)}
     .hit-card-head .badge{background:#2ea043;color:#fff;padding:2px 8px;border-radius:10px;font-weight:700}
+    .hit-card-head .badge.partial{background:#d29922}
     .hit-card-head .acc{color:#2ea043;font-weight:700}
+    .hit-card.partial .hit-card-head .acc{color:#d29922}
     .hit-card-title{font-weight:700;font-size:.98rem;margin:4px 0}
     .hit-card-reason{font-size:.88rem;line-height:1.6;color:var(--text-main)}
     .hit-empty{padding:24px;text-align:center;color:var(--text-sub)}
@@ -45,18 +48,34 @@
 
   <div class="hit-summary">
     <div class="summary-grid">
-      <div><div class="k">Generated (JST)</div><div class="v" style="font-size:.9rem;color:var(--text-main)">2026-04-15 21:38:58 JST</div></div>
-      <div><div class="k">的中した予測数</div><div class="v">0</div></div>
-      <div><div class="k">検証対象レポート数</div><div class="v">0</div></div>
+      <div><div class="k">Generated (JST)</div><div class="v" style="font-size:.9rem;color:var(--text-main)">2026-04-15 22:02:15 JST</div></div>
+      <div><div class="k">的中した予測数</div><div class="v">1</div></div>
+      <div><div class="k">検証対象レポート数</div><div class="v">1</div></div>
     </div>
     <p style="margin:10px 0 0;font-size:.82rem;color:var(--text-sub)">
-      過去の未来予測をその後のニュースで照合し、LLMが「的中」と判定した項目のみを抽出しています。
+      過去の未来予測をその後のニュースで照合し、LLMが「的中」または「部分的中」（的中度 &gt; 0）と判定した項目を抽出しています。
       各項目にはレポート日・時間軸・的中度スコアを表示します。
     </p>
   </div>
 
   
-  <div class="hit-empty">まだ的中と判定された予測はありません。</div>
+    
+    <section class="hit-horizon-section">
+      <h2>1週間後（1件）</h2>
+      
+      <div class="hit-card partial">
+        <div class="hit-card-head">
+          <span class="badge partial">部分的中</span>
+          <span>レポート日: 2026-04-08</span>
+          <span class="acc">的中度: 0.5</span>
+          <span>検証日: 2026-04-15</span>
+        </div>
+        <div class="hit-card-title">POSCO人型ロボ物流実証</div>
+        <div class="hit-card-reason">人型ロボット導入報道はあるが、実証・コスト削減は未確認</div>
+      </div>
+      
+    </section>
+    
   
 </body>
 </html>
