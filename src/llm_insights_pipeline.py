@@ -14,11 +14,29 @@ def _now():
     return datetime.now(timezone.utc).isoformat()
 
 
+def _articles_has_region(conn) -> bool:
+    """articles テーブルに region カラムがあるかを検査する（テスト DB 互換）。"""
+    try:
+        cur = conn.execute("PRAGMA table_info(articles)")
+        return any(row[1] == "region" for row in cur.fetchall())
+    except Exception:
+        return False
+
+
 def pick_topic_inputs(conn, limit=300, rescue=False):
+    """トピック別に LLM 入力を抽出する。
+
+    region (jp/global/other) × kind (news/tech) のバケット単位で
+    新しい順に番号を振り、バケット横断でラウンドロビンする。
+    これにより jp/news が大量にある日でも global/news が後回しにならない。
+    """
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
-    cur.execute(
-        """
+
+    # articles.region が無いテスト DB 互換のために式を切替える
+    region_expr = "COALESCE(a.region, '')" if _articles_has_region(conn) else "''"
+
+    sql = f"""
     WITH latest AS (
       SELECT
         ta.topic_id,
@@ -32,6 +50,15 @@ def pick_topic_inputs(conn, limit=300, rescue=False):
         a.category AS article_category,
         a.published_at,
         a.fetched_at,
+        {region_expr} AS region,
+        CASE
+          WHEN a.kind = 'news' AND {region_expr} = 'global' THEN 'global_news'
+          WHEN a.kind = 'news' AND {region_expr} = 'jp'     THEN 'jp_news'
+          WHEN a.kind = 'news'                              THEN 'other_news'
+          WHEN a.kind = 'tech' AND {region_expr} = 'global' THEN 'global_tech'
+          WHEN a.kind = 'tech'                              THEN 'jp_tech'
+          ELSE 'other'
+        END AS bucket,
         ROW_NUMBER() OVER (
           PARTITION BY ta.topic_id
           ORDER BY COALESCE(a.published_at, a.fetched_at) DESC, a.id DESC
@@ -39,44 +66,60 @@ def pick_topic_inputs(conn, limit=300, rescue=False):
       FROM topic_articles ta
       JOIN articles a ON a.id = ta.article_id
       WHERE a.kind IN ('tech','news')
+    ),
+    pending AS (
+      SELECT
+        t.id AS topic_id,
+        CASE
+          WHEN COALESCE(NULLIF(t.category,''),'') = 'news'
+            THEN COALESCE(NULLIF(l.title_ja,''), NULLIF(l.title,''), NULLIF(t.title_ja,''), NULLIF(t.title,''))
+          ELSE COALESCE(NULLIF(t.title_ja,''), NULLIF(t.title,''), NULLIF(l.title_ja,''), NULLIF(l.title,''))
+        END AS topic_title,
+        CASE
+          WHEN COALESCE(NULLIF(t.category,''),'') = 'news' THEN 'news'
+          ELSE COALESCE(NULLIF(l.article_category,''), NULLIF(t.category,''), 'other')
+        END AS category,
+        l.kind AS kind,
+        l.source AS source,
+        l.url AS url,
+        l.published_at AS published_at,
+        l.fetched_at AS fetched_at,
+        l.bucket AS bucket,
+        t.score_48h AS importance_hint,
+        COALESCE(NULLIF(l.content,''), NULLIF(l.title_ja,''), NULLIF(l.title,''), '') AS body,
+        l.article_id AS src_article_id,
+        ti.src_hash AS prev_src_hash
+      FROM topics t
+      JOIN latest l ON l.topic_id = t.id AND l.rn = 1
+      LEFT JOIN topic_insights ti ON ti.topic_id = t.id
+      WHERE (
+        ti.topic_id IS NULL
+        OR (? = 1 AND (
+              COALESCE(NULLIF(t.category,''), '') = 'news'
+           OR COALESCE(NULLIF(l.kind,''), '') = 'news'
+           OR COALESCE(ti.importance, 0) = 0
+           OR COALESCE(ti.summary, '') = ''
+           OR COALESCE(ti.src_hash, '') = ''
+        ))
+      )
     )
     SELECT
-      t.id AS topic_id,
-      CASE
-        WHEN COALESCE(NULLIF(t.category,''),'') = 'news'
-          THEN COALESCE(NULLIF(l.title_ja,''), NULLIF(l.title,''), NULLIF(t.title_ja,''), NULLIF(t.title,''))
-        ELSE COALESCE(NULLIF(t.title_ja,''), NULLIF(t.title,''), NULLIF(l.title_ja,''), NULLIF(l.title,''))
-      END AS topic_title,
-      CASE
-        WHEN COALESCE(NULLIF(t.category,''),'') = 'news' THEN 'news'
-        ELSE COALESCE(NULLIF(l.article_category,''), NULLIF(t.category,''), 'other')
-      END AS category,
-      l.kind AS kind,
-      l.source AS source,
-      l.url AS url,
-      l.published_at AS published_at,
-      t.score_48h AS importance_hint,
-      COALESCE(NULLIF(l.content,''), NULLIF(l.title_ja,''), NULLIF(l.title,''), '') AS body,
-      l.article_id AS src_article_id,
-      ti.src_hash AS prev_src_hash
-    FROM topics t
-    JOIN latest l ON l.topic_id = t.id AND l.rn = 1
-    LEFT JOIN topic_insights ti ON ti.topic_id = t.id
-    WHERE (
-      ti.topic_id IS NULL
-      OR (? = 1 AND (
-            COALESCE(NULLIF(t.category,''), '') = 'news'
-         OR COALESCE(NULLIF(l.kind,''), '') = 'news'
-         OR COALESCE(ti.importance, 0) = 0
-         OR COALESCE(ti.summary, '') = ''
-         OR COALESCE(ti.src_hash, '') = ''
-      ))
+      topic_id, topic_title, category, kind, source, url,
+      published_at, importance_hint, body, src_article_id, prev_src_hash
+    FROM (
+      SELECT
+        pending.*,
+        ROW_NUMBER() OVER (
+          PARTITION BY bucket
+          ORDER BY datetime(COALESCE(NULLIF(published_at,''), fetched_at)) DESC, topic_id DESC
+        ) AS bucket_rn
+      FROM pending
     )
-    ORDER BY COALESCE(l.published_at, l.fetched_at) DESC
+    -- bucket_rn ASC でバケット横断のラウンドロビン、同順位内は新しい順
+    ORDER BY bucket_rn ASC, datetime(COALESCE(NULLIF(published_at,''), fetched_at)) DESC, topic_id DESC
     LIMIT ?
-    """,
-        (1 if rescue else 0, limit),
-    )
+    """
+    cur.execute(sql, (1 if rescue else 0, limit))
     return cur.fetchall()
 
 
