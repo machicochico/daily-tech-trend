@@ -42,6 +42,7 @@
     .pred-badge.conf-高{background:#16a34a;color:#fff}
     .pred-badge.conf-中{background:#fef3c7;color:#92400e}
     .pred-badge.conf-低{background:#f3f4f6;color:#6b7280}
+    .accuracy-badge{display:inline-block;background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;margin-left:4px;vertical-align:middle}
     .pred-card-title{font-weight:800;font-size:15px;margin-bottom:8px;line-height:1.5;color:var(--text-main)}
     .highlight .pred-card-title{font-size:16px;color:#991b1b}
     .pred-card-body{font-size:14px;line-height:1.7;color:var(--text-main)}
@@ -82,9 +83,20 @@
     .no-report{text-align:center;color:var(--text-sub);padding:60px 20px}
     /* 過去レポート */
     .past-reports{margin-top:30px;border-top:1px solid var(--border);padding-top:16px}
-    .past-reports ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+    .past-reports h3{margin:0 0 12px;font-size:1rem;font-weight:700;color:var(--text-main)}
+    .past-reports details.past-month{margin-bottom:8px;border:1px solid var(--border);
+      border-radius:8px;background:var(--panel)}
+    .past-reports details.past-month > summary{cursor:pointer;font-weight:600;color:var(--text-main);
+      padding:10px 14px;list-style:none;display:flex;align-items:center;gap:8px}
+    .past-reports details.past-month > summary::-webkit-details-marker{display:none}
+    .past-reports details.past-month > summary::before{content:"\25B6";display:inline-block;
+      font-size:.7em;color:var(--accent);transition:transform .15s}
+    .past-reports details.past-month[open] > summary::before{transform:rotate(90deg)}
+    .past-reports details.past-month > summary .month-count{margin-left:auto;font-size:.8rem;
+      font-weight:500;color:var(--text-sub)}
+    .past-reports ul{list-style:none;margin:0;padding:0 14px 12px;display:flex;flex-wrap:wrap;gap:8px}
     .past-reports li a{display:inline-block;padding:4px 12px;border:1px solid var(--border);
-      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main)}
+      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main);background:var(--bg)}
     .past-reports li a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
     /* === モバイル (640px以下) === */
     @media(max-width:640px){
@@ -108,18 +120,17 @@
     <a href="/daily-tech-trend/" class="">技術</a>
     <a href="/daily-tech-trend/news/" class="">ニュース</a>
     <a href="/daily-tech-trend/forecast/" class="active">未来予測</a>
+    <a href="/daily-tech-trend/forecast/hits/" class="">予想的中</a>
     <a href="/daily-tech-trend/ops/" class="">運用</a>
   </div>
 
   <div class="summary-card" style="margin:16px 0">
     <div class="summary-grid">
-      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-04-10 15:14:36 JST</div></div>
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-05-07 06:18:51 JST</div></div>
       <div class="summary-item"><div class="k">レポート日付</div><div class="v">2026-04-01</div></div>
       
-      <div class="summary-item"><div class="k">このレポートの的中率</div><div class="v">0.0%</div></div>
       
-      
-      <div class="summary-item"><div class="k">過去平均的中率</div><div class="v">0.0%</div></div>
+      <div class="summary-item"><div class="k">過去平均的中率</div><div class="v">25.0%</div></div>
       
     </div>
   </div>
@@ -157,6 +168,7 @@
   </div>
   
   <div class="forecast-panel active" id="pred-panel-0">
+    
     
     <div class="pred-card highlight">
       <div class="pred-card-header">
@@ -210,9 +222,11 @@
 <blockquote><strong>根拠</strong>: QtがWindows10サポートを2031年まで継続すると発表したが、2026年に近づくにつれ互換性問題が顕在化。</blockquote></div>
     </div>
     
+    
   </div>
   
   <div class="forecast-panel " id="pred-panel-1">
+    
     
     <div class="pred-card mid">
       <div class="pred-card-header">
@@ -266,9 +280,11 @@
 <blockquote><strong>根拠</strong>: Qt 6.12 LTSがWindows10サポート終了となること。</blockquote></div>
     </div>
     
+    
   </div>
   
   <div class="forecast-panel " id="pred-panel-2">
+    
     
     <div class="pred-card highlight">
       <div class="pred-card-header">
@@ -325,6 +341,7 @@
 <hr></div>
     </div>
     
+    
   </div>
   
 
@@ -332,7 +349,7 @@
   
   <details class="appendix">
     <summary>検証済み予測レポート（ファクトチェック反映版）</summary>
-    <div class="forecast-panel active"><p><strong>検証日時:</strong> 2026-04-08 09:13:56</p>
+    <div class="forecast-panel active"><p><strong>検証日時:</strong> 2026-05-01 09:19:19</p>
 <p><strong>対象レポート:</strong> 2026-04-01</p>
 
 <h2>1週間後</h2>
@@ -340,78 +357,28 @@
 <h3>⏳ NTTの透過型メタサーフェスデバイス導入で通信費削減</h3>
 <p><strong>判定: 未確定</strong></p>
 <ul>
-<li>ニュースにNTTのメタサーフェス導入に関する情報が見当たらない。</li>
+<li>現在のニュースにNTTのメタサーフェス導入や通信費削減の報告は見当たらない。</li>
 </ul>
 
 <h3>⏳ Google翻訳ライブ機能拡大で多言語対応企業増加</h3>
 <p><strong>判定: 未確定</strong></p>
 <ul>
-<li>Google翻訳ライブ機能拡大に関する報道が確認できない。</li>
+<li>Google翻訳ライブ機能の拡大やコスト削減に関する報道は確認できない。</li>
 </ul>
 
 <h3>⏳ Microsoft Copilot Coworkの市場浸透拡大</h3>
 <p><strong>判定: 未確定</strong></p>
 <ul>
-<li>Copilot Coworkの導入拡大に関するニュースが見当たらない。</li>
+<li>Copilot Coworkの導入企業数や作業時間短縮に関するニュースは見つからない。</li>
 </ul>
 
 <h3>⏳ Qt Windows10サポート終了による開発遅延</h3>
 <p><strong>判定: 未確定</strong></p>
 <ul>
-<li>QtのWindows10サポート終了に関する報道が確認できない。</li>
+<li>QtのWindows10サポート終了や開発遅延に関する報道は確認できない。</li>
 </ul>
 
-<h2>1〜6ヶ月後</h2>
-
-<h3>⏳ NTT透過型メタサーフェスでスマートビル市場拡大</h3>
-<p><strong>判定: 未確定</strong></p>
-<ul>
-<li>現在のニュースにスマートビル導入件数や投資額の情報がない。</li>
-</ul>
-
-<h3>⏳ Microsoft Copilot CoworkによるSMB生産性向上</h3>
-<p><strong>判定: 未確定</strong></p>
-<ul>
-<li>Copilot Coworkの導入効果に関するデータが見当たらない。</li>
-</ul>
-
-<h3>⏳ Google翻訳ライブ機能拡大による多言語ECサイト増加</h3>
-<p><strong>判定: 未確定</strong></p>
-<ul>
-<li>ライブ翻訳導入率や売上伸びに関する報告がない。</li>
-</ul>
-
-<h3>⏳ Qt Windows10サポート終了後の開発言語選択シフト</h3>
-<p><strong>判定: 未確定</strong></p>
-<ul>
-<li>QtからFlutterへの移行率に関する情報が見つからない。</li>
-</ul>
-
-<h2>1年後</h2>
-
-<h3>⏳ NTT透過型メタサーフェスでスマートビル通信最適化</h3>
-<p><strong>判定: 未確定</strong></p>
-<ul>
-<li>現時点で該当するニュースが確認できないため未確定</li>
-</ul>
-
-<h3>⏳ Qt Windows10サポート終了で開発環境シフト加速</h3>
-<p><strong>判定: 未確定</strong></p>
-<ul>
-<li>現時点で該当するニュースが確認できないため未確定</li>
-</ul>
-
-<h3>⏳ Microsoft Copilot Coworkが製造業自動化推進</h3>
-<p><strong>判定: 未確定</strong></p>
-<ul>
-<li>現時点で該当するニュースが確認できないため未確定</li>
-</ul>
-
-<h3>⏳ Google翻訳ライブ機能で日本ECサイトの多言語展開加速</h3>
-<p><strong>判定: 未確定</strong></p>
-<ul>
-<li>現時点で該当するニュースが確認できないため未確定</li>
-</ul></div>
+<h2>1〜6ヶ月後</h2></div>
   </details>
   
 
@@ -527,33 +494,106 @@
   
   
 
-  <!-- 過去レポート一覧 -->
+  <!-- 過去レポート一覧（月別折りたたみ） -->
   
   <div class="past-reports">
     <h3>過去のレポート</h3>
-    <ul>
-      
-      <li><a href="../2026-04-10/">2026-04-10</a></li>
-      
-      <li><a href="../2026-04-09/">2026-04-09</a></li>
-      
-      <li><a href="../2026-04-08/">2026-04-08</a></li>
-      
-      <li><a href="../2026-04-07/">2026-04-07</a></li>
-      
-      <li><a href="../2026-04-06/">2026-04-06</a></li>
-      
-      <li><a href="../2026-04-05/">2026-04-05</a></li>
-      
-      <li><a href="../2026-04-04/">2026-04-04</a></li>
-      
-      <li><a href="../2026-04-02/">2026-04-02</a></li>
-      
-      <li><a href="../2026-03-31/">2026-03-31</a></li>
-      
-      <li><a href="../2026-03-30/">2026-03-30</a></li>
-      
-    </ul>
+    
+    <details class="past-month" open>
+      <summary>2026年5月<span class="month-count">6件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-05-07/">2026-05-07</a></li>
+        
+        <li><a href="../2026-05-05/">2026-05-05</a></li>
+        
+        <li><a href="../2026-05-04/">2026-05-04</a></li>
+        
+        <li><a href="../2026-05-03/">2026-05-03</a></li>
+        
+        <li><a href="../2026-05-02/">2026-05-02</a></li>
+        
+        <li><a href="../2026-05-01/">2026-05-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年4月<span class="month-count">27件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-04-30/">2026-04-30</a></li>
+        
+        <li><a href="../2026-04-29/">2026-04-29</a></li>
+        
+        <li><a href="../2026-04-28/">2026-04-28</a></li>
+        
+        <li><a href="../2026-04-27/">2026-04-27</a></li>
+        
+        <li><a href="../2026-04-26/">2026-04-26</a></li>
+        
+        <li><a href="../2026-04-25/">2026-04-25</a></li>
+        
+        <li><a href="../2026-04-24/">2026-04-24</a></li>
+        
+        <li><a href="../2026-04-22/">2026-04-22</a></li>
+        
+        <li><a href="../2026-04-21/">2026-04-21</a></li>
+        
+        <li><a href="../2026-04-20/">2026-04-20</a></li>
+        
+        <li><a href="../2026-04-19/">2026-04-19</a></li>
+        
+        <li><a href="../2026-04-18/">2026-04-18</a></li>
+        
+        <li><a href="../2026-04-17/">2026-04-17</a></li>
+        
+        <li><a href="../2026-04-16/">2026-04-16</a></li>
+        
+        <li><a href="../2026-04-15/">2026-04-15</a></li>
+        
+        <li><a href="../2026-04-14/">2026-04-14</a></li>
+        
+        <li><a href="../2026-04-13/">2026-04-13</a></li>
+        
+        <li><a href="../2026-04-12/">2026-04-12</a></li>
+        
+        <li><a href="../2026-04-11/">2026-04-11</a></li>
+        
+        <li><a href="../2026-04-10/">2026-04-10</a></li>
+        
+        <li><a href="../2026-04-09/">2026-04-09</a></li>
+        
+        <li><a href="../2026-04-08/">2026-04-08</a></li>
+        
+        <li><a href="../2026-04-07/">2026-04-07</a></li>
+        
+        <li><a href="../2026-04-06/">2026-04-06</a></li>
+        
+        <li><a href="../2026-04-05/">2026-04-05</a></li>
+        
+        <li><a href="../2026-04-04/">2026-04-04</a></li>
+        
+        <li><a href="../2026-04-02/">2026-04-02</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年3月<span class="month-count">4件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-03-31/">2026-03-31</a></li>
+        
+        <li><a href="../2026-03-30/">2026-03-30</a></li>
+        
+        <li><a href="../2026-03-29/">2026-03-29</a></li>
+        
+        <li><a href="../2026-03-28/">2026-03-28</a></li>
+        
+      </ul>
+    </details>
+    
   </div>
   
 
@@ -561,15 +601,52 @@
 
   <script src="/daily-tech-trend/assets/js/common.js" defer></script>
   <script>
-    function switchTab(group, idx) {
+    // タブ状態は URL クエリで共有可能にする:
+    //   ?pred=1  → 予測タブ の 2番目 (0-indexed)
+    //   ?persp=engineer|manager|consumer → 3視点タブ
+    //   ?persp=0|1|2 も互換扱い
+    var PERSP_NAMES = ['engineer','manager','consumer'];
+    var PERSP_LABELS = ['技術者','経営者','消費者'];
+
+    function switchTab(group, idx, opts) {
+      idx = parseInt(idx, 10);
       document.querySelectorAll('#' + group + '-tabs button').forEach(function(b, i) {
         b.classList.toggle('active', i == idx);
       });
       document.querySelectorAll('[id^="' + group + '-panel-"]').forEach(function(p, i) {
         p.classList.toggle('active', i == idx);
       });
+      // URL 同期（history.replaceState で余分な履歴を残さない）
+      if (!opts || opts.updateUrl !== false) {
+        try {
+          var url = new URL(window.location.href);
+          var val = idx;
+          if (group === 'persp' && PERSP_NAMES[idx]) val = PERSP_NAMES[idx];
+          url.searchParams.set(group, val);
+          window.history.replaceState(null, '', url.toString());
+        } catch (e) { /* noop */ }
+      }
     }
-    document.addEventListener('DOMContentLoaded', function(){ if (window.DTTCommon) window.DTTCommon.setupCommon('forecast'); });
+
+    function _initTabFromUrl(group) {
+      try {
+        var url = new URL(window.location.href);
+        var v = url.searchParams.get(group);
+        if (v === null) return;
+        var idx = parseInt(v, 10);
+        if (group === 'persp' && isNaN(idx)) {
+          idx = PERSP_NAMES.indexOf(v);
+          if (idx < 0) idx = PERSP_LABELS.indexOf(v);
+        }
+        if (!isNaN(idx) && idx >= 0) switchTab(group, idx, {updateUrl: false});
+      } catch (e) { /* noop */ }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.DTTCommon) window.DTTCommon.setupCommon('forecast');
+      _initTabFromUrl('pred');
+      _initTabFromUrl('persp');
+    });
   </script>
 </body>
 </html>

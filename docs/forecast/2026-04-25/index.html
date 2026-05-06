@@ -83,9 +83,20 @@
     .no-report{text-align:center;color:var(--text-sub);padding:60px 20px}
     /* 過去レポート */
     .past-reports{margin-top:30px;border-top:1px solid var(--border);padding-top:16px}
-    .past-reports ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+    .past-reports h3{margin:0 0 12px;font-size:1rem;font-weight:700;color:var(--text-main)}
+    .past-reports details.past-month{margin-bottom:8px;border:1px solid var(--border);
+      border-radius:8px;background:var(--panel)}
+    .past-reports details.past-month > summary{cursor:pointer;font-weight:600;color:var(--text-main);
+      padding:10px 14px;list-style:none;display:flex;align-items:center;gap:8px}
+    .past-reports details.past-month > summary::-webkit-details-marker{display:none}
+    .past-reports details.past-month > summary::before{content:"\25B6";display:inline-block;
+      font-size:.7em;color:var(--accent);transition:transform .15s}
+    .past-reports details.past-month[open] > summary::before{transform:rotate(90deg)}
+    .past-reports details.past-month > summary .month-count{margin-left:auto;font-size:.8rem;
+      font-weight:500;color:var(--text-sub)}
+    .past-reports ul{list-style:none;margin:0;padding:0 14px 12px;display:flex;flex-wrap:wrap;gap:8px}
     .past-reports li a{display:inline-block;padding:4px 12px;border:1px solid var(--border);
-      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main)}
+      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main);background:var(--bg)}
     .past-reports li a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
     /* === モバイル (640px以下) === */
     @media(max-width:640px){
@@ -115,7 +126,7 @@
 
   <div class="summary-card" style="margin:16px 0">
     <div class="summary-grid">
-      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-05-06 17:07:53 JST</div></div>
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-05-07 06:18:51 JST</div></div>
       <div class="summary-item"><div class="k">レポート日付</div><div class="v">2026-04-25</div></div>
       
       
@@ -523,33 +534,106 @@
   
   
 
-  <!-- 過去レポート一覧 -->
+  <!-- 過去レポート一覧（月別折りたたみ） -->
   
   <div class="past-reports">
     <h3>過去のレポート</h3>
-    <ul>
-      
-      <li><a href="../2026-05-05/">2026-05-05</a></li>
-      
-      <li><a href="../2026-05-04/">2026-05-04</a></li>
-      
-      <li><a href="../2026-05-03/">2026-05-03</a></li>
-      
-      <li><a href="../2026-05-02/">2026-05-02</a></li>
-      
-      <li><a href="../2026-05-01/">2026-05-01</a></li>
-      
-      <li><a href="../2026-04-30/">2026-04-30</a></li>
-      
-      <li><a href="../2026-04-29/">2026-04-29</a></li>
-      
-      <li><a href="../2026-04-28/">2026-04-28</a></li>
-      
-      <li><a href="../2026-04-27/">2026-04-27</a></li>
-      
-      <li><a href="../2026-04-26/">2026-04-26</a></li>
-      
-    </ul>
+    
+    <details class="past-month" open>
+      <summary>2026年5月<span class="month-count">6件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-05-07/">2026-05-07</a></li>
+        
+        <li><a href="../2026-05-05/">2026-05-05</a></li>
+        
+        <li><a href="../2026-05-04/">2026-05-04</a></li>
+        
+        <li><a href="../2026-05-03/">2026-05-03</a></li>
+        
+        <li><a href="../2026-05-02/">2026-05-02</a></li>
+        
+        <li><a href="../2026-05-01/">2026-05-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年4月<span class="month-count">27件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-04-30/">2026-04-30</a></li>
+        
+        <li><a href="../2026-04-29/">2026-04-29</a></li>
+        
+        <li><a href="../2026-04-28/">2026-04-28</a></li>
+        
+        <li><a href="../2026-04-27/">2026-04-27</a></li>
+        
+        <li><a href="../2026-04-26/">2026-04-26</a></li>
+        
+        <li><a href="../2026-04-24/">2026-04-24</a></li>
+        
+        <li><a href="../2026-04-22/">2026-04-22</a></li>
+        
+        <li><a href="../2026-04-21/">2026-04-21</a></li>
+        
+        <li><a href="../2026-04-20/">2026-04-20</a></li>
+        
+        <li><a href="../2026-04-19/">2026-04-19</a></li>
+        
+        <li><a href="../2026-04-18/">2026-04-18</a></li>
+        
+        <li><a href="../2026-04-17/">2026-04-17</a></li>
+        
+        <li><a href="../2026-04-16/">2026-04-16</a></li>
+        
+        <li><a href="../2026-04-15/">2026-04-15</a></li>
+        
+        <li><a href="../2026-04-14/">2026-04-14</a></li>
+        
+        <li><a href="../2026-04-13/">2026-04-13</a></li>
+        
+        <li><a href="../2026-04-12/">2026-04-12</a></li>
+        
+        <li><a href="../2026-04-11/">2026-04-11</a></li>
+        
+        <li><a href="../2026-04-10/">2026-04-10</a></li>
+        
+        <li><a href="../2026-04-09/">2026-04-09</a></li>
+        
+        <li><a href="../2026-04-08/">2026-04-08</a></li>
+        
+        <li><a href="../2026-04-07/">2026-04-07</a></li>
+        
+        <li><a href="../2026-04-06/">2026-04-06</a></li>
+        
+        <li><a href="../2026-04-05/">2026-04-05</a></li>
+        
+        <li><a href="../2026-04-04/">2026-04-04</a></li>
+        
+        <li><a href="../2026-04-02/">2026-04-02</a></li>
+        
+        <li><a href="../2026-04-01/">2026-04-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年3月<span class="month-count">4件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-03-31/">2026-03-31</a></li>
+        
+        <li><a href="../2026-03-30/">2026-03-30</a></li>
+        
+        <li><a href="../2026-03-29/">2026-03-29</a></li>
+        
+        <li><a href="../2026-03-28/">2026-03-28</a></li>
+        
+      </ul>
+    </details>
+    
   </div>
   
 

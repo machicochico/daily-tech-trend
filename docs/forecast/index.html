@@ -83,9 +83,20 @@
     .no-report{text-align:center;color:var(--text-sub);padding:60px 20px}
     /* 過去レポート */
     .past-reports{margin-top:30px;border-top:1px solid var(--border);padding-top:16px}
-    .past-reports ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+    .past-reports h3{margin:0 0 12px;font-size:1rem;font-weight:700;color:var(--text-main)}
+    .past-reports details.past-month{margin-bottom:8px;border:1px solid var(--border);
+      border-radius:8px;background:var(--panel)}
+    .past-reports details.past-month > summary{cursor:pointer;font-weight:600;color:var(--text-main);
+      padding:10px 14px;list-style:none;display:flex;align-items:center;gap:8px}
+    .past-reports details.past-month > summary::-webkit-details-marker{display:none}
+    .past-reports details.past-month > summary::before{content:"\25B6";display:inline-block;
+      font-size:.7em;color:var(--accent);transition:transform .15s}
+    .past-reports details.past-month[open] > summary::before{transform:rotate(90deg)}
+    .past-reports details.past-month > summary .month-count{margin-left:auto;font-size:.8rem;
+      font-weight:500;color:var(--text-sub)}
+    .past-reports ul{list-style:none;margin:0;padding:0 14px 12px;display:flex;flex-wrap:wrap;gap:8px}
     .past-reports li a{display:inline-block;padding:4px 12px;border:1px solid var(--border);
-      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main)}
+      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main);background:var(--bg)}
     .past-reports li a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
     /* === モバイル (640px以下) === */
     @media(max-width:640px){
@@ -115,8 +126,8 @@
 
   <div class="summary-card" style="margin:16px 0">
     <div class="summary-grid">
-      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-05-06 17:07:53 JST</div></div>
-      <div class="summary-item"><div class="k">レポート日付</div><div class="v">2026-05-05</div></div>
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-05-07 06:18:51 JST</div></div>
+      <div class="summary-item"><div class="k">レポート日付</div><div class="v">2026-05-07</div></div>
       
       
       <div class="summary-item"><div class="k">過去平均的中率</div><div class="v">25.0%</div></div>
@@ -129,14 +140,14 @@
   <!-- エグゼクティブサマリー -->
   <div class="exec-summary">
     <h2 style="margin:0 0 8px">今週の最重要ポイント</h2>
-    <p>1. <strong>CBPRと低炭素船舶の規制化が業界標準へ</strong></p>
-<p><em>あなたへの影響:</em> CBPR（Carbon Border Adjustment）と低炭素船舶の採用が急速に拡大し、EUや主要輸出国での規制遵守が必須となるため、企業は長期的なコンプライアンス投資とコスト増を見込む必要があります。</p>
+    <p>1. <strong>AI主導のオペレーショナル効率化</strong></p>
+<p><em>あなたへの影響:</em> ロボティクス、IoT、デジタルツインの統合により、サイクルタイム短縮や予知保全コスト削減が実現し、製造・サービス業全体の生産性が向上します。</p>
 
-<p>2. <strong>AI・IoTによる運用効率化が産業競争力を牽引</strong></p>
-<p><em>あなたへの影響:</em> AI保守や産業IoTプラットフォームの導入により、ダウンタイムが大幅に減少し、ライン稼働率が向上することで、製造業の生産性と市場シェア拡大が期待されます。</p>
+<p>2. <strong>セキュリティ脆弱性が促すプラットフォーム移行</strong></p>
+<p><em>あなたへの影響:</em> ThunderbirdやCodexの脆弱性により、企業は代替ツールへの移行を加速させ、セキュリティインシデントの低減と業務継続性の確保が期待されます。</p>
 
-<p>3. <strong>炭素価格と運賃の変動が物流コスト構造を再編</strong></p>
-<p><em>あなたへの影響:</em> CO2取引レートの上昇と乾燥バルク料金の増加が続くことで、物流コストが不安定化し、サプライチェーン全体で価格転嫁や効率化策の検討が不可欠になります。</p>
+<p>3. <strong>政府・企業支援によるSMEのAI導入拡大</strong></p>
+<p><em>あなたへの影響:</em> NISTのAI製造支援金や企業の資金投入で、中小企業がAI技術を導入しやすくなり、製造コスト削減や競争力強化が進展します。</p>
 
 <hr>
   </div>
@@ -159,17 +170,30 @@
   <div class="forecast-panel active" id="pred-panel-0">
     
     
-    <div class="pred-card highlight">
+    <div class="pred-card mid">
       <div class="pred-card-header">
         <span class="pred-badge impact-大">影響度: 大</span>
-        <span class="pred-badge conf-高">確信度: 高</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
       </div>
-      <div class="pred-card-title">乾燥バルク料金が8％上昇。</div>
+      <div class="pred-card-title">Thunderbirdユーザーのパッチ適用率急上昇</div>
       <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：来週の乾貨船運賃は前週に比べ約8％上昇し、最近の市場分析で指摘された継続的な再価格設定圧力が影響しています。</li>
+<li><strong>予測内容</strong>：Thunderbird v150.0.1のアップデートが1週間で全ユーザーの80%に到達し、報告された脆弱性関連インシデントが30%減少。</li>
 </ul>
 
-<blockquote><strong>根拠</strong>: 乾燥バルク船の再価格設定は説明しにくいが、依然として明らか。</blockquote></div>
+<blockquote><strong>根拠</strong>: Thunderbird v150.0.1リリースと致命的脆弱性報告により、ユーザーが迅速にパッチ適用を開始。</blockquote></div>
+    </div>
+    
+    <div class="pred-card mid">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-大">影響度: 大</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Azure AIサービス採用率上昇</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：GTC DCで発表されたAzure AIの新機能により、Azure IoTプラットフォームの採用率が1週間で15%増加。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: MicrosoftとNVIDIAがGTC DCでAI機能を発表し、Azure IoTプラットフォームの新機能が注目された。</blockquote></div>
     </div>
     
     <div class="pred-card mid">
@@ -177,51 +201,25 @@
         <span class="pred-badge impact-中">影響度: 中</span>
         <span class="pred-badge conf-高">確信度: 高</span>
       </div>
-      <div class="pred-card-title">Ignition 8.3.3 売上 +7%</div>
+      <div class="pred-card-title">Codex利用制限で企業需要減</div>
       <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：Ignition 8.3.3 のリリースにより、企業が新バージョンへアップグレードすることで、次週以内に産業オートメーション向けIgnitionプラットフォームの販売が7％増加する見込みです。</li>
+<li><strong>予測内容</strong>：OpenAIはCodexのサンドボックス迂回脆弱性を受け、主要企業顧客への利用を制限し、1週間でCodex API呼び出し数が25%減少した。</li>
 </ul>
 
-<blockquote><strong>根拠</strong>: Ignition 8.3.3: 新しいタグイベントスクリプト、X.509 OPC UA 認証オプション、リモートシークレットプロバイダー</blockquote></div>
+<blockquote><strong>根拠</strong>: OpenAI Codexのゼロデイ脆弱性が報告され、企業顧客への利用制限が発表された。</blockquote></div>
     </div>
     
     <div class="pred-card">
       <div class="pred-card-header">
-        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge impact-小">影響度: 小</span>
         <span class="pred-badge conf-中">確信度: 中</span>
       </div>
-      <div class="pred-card-title">低炭素船舶が4%減少</div>
+      <div class="pred-card-title">NIST AI製造支援金申請急増</div>
       <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：低炭素船の運賃は需要減少により、今週で約4％低下すると最近の市場レポートで指摘されています。</li>
+<li><strong>予測内容</strong>：NISTがAI製造支援金3Mドルを小規模企業へ配分開始し、1週間で10社が申請。</li>
 </ul>
 
-<blockquote><strong>根拠</strong>: 低炭素船舶への需要は低下したが、長期的価値は残る</blockquote></div>
-    </div>
-    
-    <div class="pred-card">
-      <div class="pred-card-header">
-        <span class="pred-badge impact-中">影響度: 中</span>
-        <span class="pred-badge conf-中">確信度: 中</span>
-      </div>
-      <div class="pred-card-title">CBPR採用率+5%</div>
-      <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：CBPRシステムのプログラム要件の更新により、次週に企業によるCBPRシステムの採用が5%増加し、CBPRソフトウェアの価格が2%上昇する見込みです。</li>
-</ul>
-
-<blockquote><strong>根拠</strong>: Global CBPR System Program Requirements Updated</blockquote></div>
-    </div>
-    
-    <div class="pred-card">
-      <div class="pred-card-header">
-        <span class="pred-badge impact-中">影響度: 中</span>
-        <span class="pred-badge conf-中">確信度: 中</span>
-      </div>
-      <div class="pred-card-title">CO2取引レート +3%</div>
-      <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：BIMCOが新興のCO2取引を対象としたタイムチャーターパーティーを導入することで、キャリアが新しい契約条件に適応する際、CO2取引の船舶料金が来週にわたり約3％上昇する見込みです</li>
-</ul>
-
-<blockquote><strong>根拠</strong>: BIMCO、CO2取引の新興市場を対象としたタイムチャーターパーティーを発表。</blockquote></div>
+<blockquote><strong>根拠</strong>: NISTがAI製造センター設立と3Mドル支援金を発表し、申請動向が急増。</blockquote></div>
     </div>
     
     
@@ -230,17 +228,56 @@
   <div class="forecast-panel " id="pred-panel-1">
     
     
-    <div class="pred-card highlight">
+    <div class="pred-card mid">
       <div class="pred-card-header">
         <span class="pred-badge impact-大">影響度: 大</span>
-        <span class="pred-badge conf-高">確信度: 高</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
       </div>
-      <div class="pred-card-title">CBPR採用率が3か月で20%に到達</div>
+      <div class="pred-card-title">ロボティクス統合でサイクルタイム10%短縮</div>
       <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：CBPR（Carbon Border Adjustment）制度の採用率が3か月で20%に達し、欧州連合やアジア主要輸出国の企業が対象となることで、輸出入における合意が拡大した。</li>
+<li><strong>予測内容</strong>：ABBの自動車組立ラインで2026年Q4時点でサイクルタイムが10%短縮され、年間生産量が約5%増。</li>
 </ul>
 
-<blockquote><strong>根拠</strong>:</blockquote></div>
+<blockquote><strong>根拠</strong>: SoftBankがABBロボティクス部門を買収し、AI-ロボティクス融合を発表。</blockquote></div>
+    </div>
+    
+    <div class="pred-card mid">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-高">確信度: 高</span>
+      </div>
+      <div class="pred-card-title">Azure IoTで日系自動車メーカー30%採用</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2026年Q3までに、日系自動車メーカーの30%がAzure IoTプラットフォームを導入し、データ連携効率が20%向上。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: Microsoftが2025年のGartner Magic Quadrantでリーダーに選ばれ、アジアでクラウド需要を拡大した。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">GTC 2026でデジタルツイン普及20%増</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2026年末までに、日系自動車メーカーのデジタルツイン導入が20%増え、予知保全コストが15%削減。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: GTC 2026でロボット・通信・デジタルツインが浸透することが報告。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-小">影響度: 小</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Codex脆弱性によりCopilotの採用が15%増加。</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2026年第3四半期までに、企業開発チームのGitHub Copilot利用率が15％増加し、平均開発時間が10％短縮されました。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: OpenAI Codexにゼロデイ脆弱性が報告され、企業はCopilotへの移行を検討している。</blockquote></div>
     </div>
     
     
@@ -249,17 +286,43 @@
   <div class="forecast-panel " id="pred-panel-2">
     
     
-    <div class="pred-card highlight">
+    <div class="pred-card mid">
       <div class="pred-card-header">
         <span class="pred-badge impact-大">影響度: 大</span>
-        <span class="pred-badge conf-高">確信度: 高</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
       </div>
-      <div class="pred-card-title">CBPR採用率80%到達</div>
+      <div class="pred-card-title">ソフトバンク-ABB統合ロボットプラットフォーム市場シェア拡大</div>
       <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：CBPR採用率はEU製造業で80%に達し、全製造ラインで80%がCBPR認証を取得した。</li>
+<li><strong>予測内容</strong>：2027年までに統合ロボットプラットフォームがグローバル産業オートメーション市場の15％を占有し、売上は約50億USDに達する。</li>
 </ul>
 
-<blockquote><strong>根拠</strong>: CBPR採用率+5%と3か月で20%到達の予測</blockquote></div>
+<blockquote><strong>根拠</strong>: 2025年10月にソフトバンクがABBロボティクス部門を買収し、ABBの既存顧客基盤を活用する計画が報じられた。</blockquote></div>
+    </div>
+    
+    <div class="pred-card mid">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-大">影響度: 大</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Azure AIサービス日本自動車OEM採用率上昇</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2027年までに日本の自動車メーカー新設ラインの50％がAzure AIを統合し、製造コストを12％削減する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: 1〜6ヶ月でAzure IoT採用率が30％と報じられ、Azure AIサービスの拡大が期待される。</blockquote></div>
+    </div>
+    
+    <div class="pred-card mid">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-大">影響度: 大</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">デジタルツインで生産停止時間削減</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2027年までに高技術製造業の生産停止時間が25％減少し、年間コストが約30億USD削減される。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: GTC 2026でデジタルツインの普及が20％増加し、製造プロセス最適化が進むと報じられた。</blockquote></div>
     </div>
     
     <div class="pred-card mid">
@@ -267,51 +330,25 @@
         <span class="pred-badge impact-中">影響度: 中</span>
         <span class="pred-badge conf-高">確信度: 高</span>
       </div>
-      <div class="pred-card-title">AI保守でダウンタイム40%減</div>
+      <div class="pred-card-title">NIST AI製造支援金で米小規模企業が加速</div>
       <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：AI保守の導入で日本自動車工場のダウンタイムが40%減少し、ライン稼働率が95%を超える</li>
+<li><strong>予測内容</strong>：2027年までにNISTのAI製造支援金が10億USDを超え、米国半導体工場でAI導入が30％増加する。</li>
 </ul>
 
-<blockquote><strong>根拠</strong>: MicrosoftがIoTプラットフォームのリーダーに、NISTがAI製造センターを開設。</blockquote></div>
-    </div>
-    
-    <div class="pred-card mid">
-      <div class="pred-card-header">
-        <span class="pred-badge impact-中">影響度: 中</span>
-        <span class="pred-badge conf-高">確信度: 高</span>
-      </div>
-      <div class="pred-card-title">AI IoTプラットフォーム50%市場シェア</div>
-      <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：Azure IoTとAWSがアジアの産業IoT市場で主流となり、50%を占める</li>
-</ul>
-
-<blockquote><strong>根拠</strong>: MicrosoftがGartnerのリーダーに、NISTがAI製造センターを開設。</blockquote></div>
+<blockquote><strong>根拠</strong>: NISTがAI、バイオテク、半導体等への支援金を発表し、米小規模企業のAI採用が促進される見込み。</blockquote></div>
     </div>
     
     <div class="pred-card">
       <div class="pred-card-header">
         <span class="pred-badge impact-中">影響度: 中</span>
-        <span class="pred-badge conf-中">確信度: 中</span>
+        <span class="pred-badge conf-低">確信度: 低</span>
       </div>
-      <div class="pred-card-title">低炭素船舶35%増加</div>
+      <div class="pred-card-title">Thunderbird脆弱性でメールクライアント移行加速</div>
       <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：低炭素船舶は世界船団の35%を占め、EUは2027年までに全新造船でCBPR認証を義務化する</li>
+<li><strong>予測内容</strong>：2027年までに企業メールシステムの30％がThunderbirdから他クライアントへ移行し、セキュリティインシデントを18％減少させる。</li>
 </ul>
 
-<blockquote><strong>根拠</strong>: 低炭素船舶4%減少とCBPR規制計画</blockquote></div>
-    </div>
-    
-    <div class="pred-card">
-      <div class="pred-card-header">
-        <span class="pred-badge impact-中">影響度: 中</span>
-        <span class="pred-badge conf-中">確信度: 中</span>
-      </div>
-      <div class="pred-card-title">CBPR船舶規制により、新船はすべてCBPR対象となります。</div>
-      <div class="pred-card-body"><ul>
-<li><strong>予測内容</strong>：EU規制により2027年までに全新造船がCBPR認証船舶となる</li>
-</ul>
-
-<blockquote><strong>根拠</strong>: CBPR船舶規制により、新造船はCBPRが必須です。</blockquote>
+<blockquote><strong>根拠</strong>: Thunderbirdに致命的な脆弱性が報告され、修正パッチがリリースされたことで安全性への懸念が拡大した。</blockquote>
 
 
 <hr></div>
@@ -342,147 +379,85 @@
   <div class="forecast-panel active" id="persp-panel-0">
     <h2>注目すべきトレンド</h2>
 
-<p>1. <strong>CBPR（Carbon Border Adjustment）採用率の急速拡大</strong> — 3か月で20%、1年で80%に到達する見込み。</p>
-<ul>
-<li>物流・航海管理システムにCBPR関連データ収集・レポート機能を組み込む必要が増える。</li>
-<li>既存の船舶制御・燃料管理ソフトウェアにCBPRスコア計算ロジックを追加することで、規制遵守を自動化できる。</li>
-</ul>
-
-<p>2. <strong>低炭素船舶の市場シェア拡大と規制強化</strong> — 低炭素船舶が35%に増加し、EUで全新造船がCBPR認証対象になる。</p>
-<ul>
-<li>船舶設計・エンジン制御における低排出技術（ハイブリッド、電動化、燃料電池）の統合が必須。</li>
-<li>低炭素船舶専用のセンサー・データ収集アーキテクチャが必要になる。</li>
-</ul>
-
-<p>3. <strong>AI保守とIoTプラットフォームの普及</strong> — AI保守でダウンタイム40%減、Azure IoT/AWSが50%市場シェアを占める。</p>
-<ul>
-<li>予知保全アルゴリズムを組み込むためのデータパイプライン設計とリアルタイムストリーミングが重要。</li>
-<li>エッジコンピューティングとクラウド連携を前提とした分散アーキテクチャが求められる。</li>
-</ul>
-
-<p>4. <strong>Ignition 8.3.3 のリリースによる業務自動化の加速</strong> — 7%売上増。</p>
-<ul>
-<li>新タグイベントスクリプトやX.509 OPC UA認証を活用したセキュリティ強化が必要。</li>
-<li>既存の制御システムとIgnitionを統合するためのAPI設計と認証フローの再検討が求められる。</li>
-</ul>
+<p>1. <strong>AIとロボティクスの融合によるサイクルタイム短縮</strong> — ABBの自動車組立ラインでAIを活用したロボット制御がサイクルタイムを10%短縮。実装にはディープラーニングベースの予測制御とリアルタイムデータストリーミングが必要。</p>
+<p>2. <strong>Azure IoTとAIの統合プラットフォーム採用拡大</strong> — 日系自動車メーカーがAzure IoTを導入し、データ連携効率が20%向上。クラウドとエッジのハイブリッドアーキテクチャが主流になる。</p>
+<p>3. <strong>デジタルツインの普及と予知保全</strong> — GTC 2026でデジタルツインが20%増加し、予知保全コストが15%削減。リアルタイムセンサーデータと仮想モデルの同期が鍵。</p>
+<p>4. <strong>AI製造支援金による中小企業のAI導入加速</strong> — NISTの支援金が米国中小企業のAI採用を30%増加。クラウドベースのAIサービスを低コストで導入できる環境が整う。</p>
+<p>5. <strong>Copilotへの移行と開発効率向上</strong> — Codex脆弱性によりCopilot採用が15%増加。LLMベースのコード生成ツールが開発プロセスを変革。</p>
 
 <h2>リスクと機会</h2>
 
 <ul>
 <li><strong>リスク</strong>:</li>
-<li><strong>CBPRデータ統合の複雑化</strong></li>
-<li>既存の航海管理システムとCBPRスコア計算ロジックの統合に時間とリソースが必要。</li>
-<li>データフォーマットや計算基準の変更に伴うテスト負荷増大。</li>
-</ul>
-
-<ul>
-<li><strong>低炭素船舶向けセンサー・制御の標準化不足</strong></li>
-<li>低炭素技術の多様性により、センサーインタフェースやデータフォーマットの統一が遅れる可能性。</li>
-</ul>
-
-<ul>
-<li><strong>AI保守のデータ品質依存</strong></li>
-<li>予知保全モデルは高品質な時系列データを必要とし、センサー設置やデータ収集の不備が精度低下を招く。</li>
-</ul>
-
-<ul>
+<li><strong>セキュリティ脆弱性の拡散</strong>：CodexやThunderbirdの脆弱性が広がると、AIモデルとメールクライアントの安全性が脅かされる。</li>
+<li><strong>レガシーシステムとの統合難度</strong>：既存の組立ラインや自動車メーカーのオンプレミスシステムとの統合が複雑化し、データスキーマやプロトコルの不整合が発生。</li>
+<li><strong>AIモデルの過剰最適化</strong>：デジタルツインやロボティクスでの過剰最適化により、実際の環境変化に対応できなくなるリスク。</li>
 <li><strong>機会</strong>:</li>
-<li><strong>CBPR・低炭素船舶向けモジュールの共通化</strong></li>
-<li>CBPR計算ロジックと低炭素船舶の排出モニタリングを共通モジュール化し、再利用性を高めることで開発コスト削減。</li>
-</ul>
-
-<ul>
-<li><strong>エッジ＋クラウド分散アーキテクチャの導入</strong></li>
-<li>AI保守やIoTプラットフォームの統合により、低レイテンシでリアルタイム監視が可能。</li>
-</ul>
-
-<ul>
-<li><strong>Ignition 8.3.3 のセキュリティ機能活用</strong></li>
-<li>X.509 OPC UA 認証を利用した安全なデータ交換を実装し、既存制御システムのセキュリティレベルを向上。</li>
+<li><strong>エッジAIとクラウド連携の標準化</strong>：Azure IoTとAIの統合により、エッジデバイスでのリアルタイム推論とクラウドでの学習をシームレスに行える。</li>
+<li><strong>低コストAIサービスの普及</strong>：NIST支援金で中小企業がAIを導入しやすくなるため、AIベースの品質管理や予知保全の市場が拡大。</li>
+<li><strong>LLMベース開発ツールの成熟</strong>：Copilotの採用増により、LLMを組み込んだCI/CDパイプラインや自動テスト生成が可能に。</li>
 </ul>
 
 <h2>推奨アクション</h2>
 
-<p>1. <strong>CBPR・低炭素船舶向けデータ統合フレームワークの設計</strong> —</p>
-<ul>
-<li>CBPRスコア計算ロジックと低炭素排出データを共通APIで提供し、既存システムへのプラグイン方式で導入。</li>
-</ul>
-
-<p>2. <strong>エッジデバイスとクラウドサービスのハイブリッドデプロイ</strong> —</p>
-<ul>
-<li>予知保全のリアルタイム解析をエッジで行い、クラウドへ集約・学習を実施。データレイテンシと帯域幅を最適化。</li>
-</ul>
-
-<p>3. <strong>Ignition 8.3.3 への段階的移行計画策定</strong> —</p>
-<ul>
-<li>新タグイベントスクリプトとX.509認証を利用したセキュリティ設計を行い、既存制御システムとのインタフェースをAPI化。</li>
-</ul>
-
-<p>4. <strong>低炭素船舶向けセンサー標準化プロトコルの策定</strong> —</p>
-<ul>
-<li>主要サプライヤーと協力し、排出モニタリングセンサーのデータフォーマットと通信プロトコルを標準化。</li>
-</ul>
-
-<p>5. <strong>AI保守モデルのデータパイプライン構築</strong> —</p>
-<ul>
-<li>センサー設置計画、データ収集・クリーニング、特徴量抽出、モデル学習・デプロイを統合したCI/CDパイプラインを構築。</li>
-</ul>
-
-<p>これらのアクションにより、技術者はCBPR・低炭素船舶規制への迅速対応と、AI保守・IoTプラットフォームの統合を実現し、将来の市場変化に対して技術的に競争力を維持できます。</p>
+<p>1. <strong>エッジAIプラットフォームの設計</strong> — Azure IoT EdgeやAWS Greengrassを活用し、リアルタイム推論とクラウド学習を分離。データフローとセキュリティポリシーを明確化。</p>
+<p>2. <strong>デジタルツイン統合フレームワークの構築</strong> — OPC UAやMQTTをベースにセンサーデータと仮想モデルを同期させるマイクロサービスアーキテクチャを採用。</p>
+<p>3. <strong>AIモデルの継続的検証と再学習パイプライン</strong> — モデルドリフトを検知する監視システムを構築し、CI/CDで自動再学習を実装。</p>
+<p>4. <strong>LLMベース開発支援パイプラインの導入</strong> — CopilotやGitHub Codespacesを組み込み、コード生成とレビューを自動化。</p>
+<p>5. <strong>セキュリティポリシーと脆弱性管理の強化</strong> — AIモデルとメールクライアントの脆弱性を早期検知する脆弱性スキャナーとパッチ管理フローを統合。</p>
   </div>
   
   <div class="forecast-panel " id="persp-panel-1">
     <h2>注目すべきトレンド</h2>
 
-<p>1. <strong>CBPR採用率の急速拡大</strong> — 3か月で20％、1年で80％に到達。欧州・アジアの主要輸出国が対象となり、サプライチェーン全体に規制が波及する。</p>
-<p>2. <strong>AI保守・IoTプラットフォームの市場支配</strong> — AI保守でダウンタイムが40％減、Azure IoTとAWSがアジア市場で50％のシェアを獲得。</p>
-<p>3. <strong>CO2取引レートと低炭素船舶の価格変動</strong> — CO2取引レートが3％上昇、低炭素船舶の運賃が4％減少。環境規制と燃料コストの相互作用が重要。</p>
+<p>1. <strong>AI・IoT統合による製造プロセスの自動化</strong> — Azure IoTとデジタルツインの採用が急増し、サイクルタイムの短縮と予知保全コストの削減が実現。</p>
+<p>2. <strong>クラウドベースAIサービスの競合優位性</strong> — Codex脆弱性によりCopilotへのシフトが進み、OpenAI以外のAIプラットフォームが注目。</p>
+<p>3. <strong>政府支援によるAI導入の加速</strong> — NISTのAI製造支援金が拡大し、米国小規模企業のAI採用が急増。</p>
+<p>4. <strong>セキュリティパッチの迅速展開</strong> — Thunderbirdのパッチ適用率が80%に到達し、脆弱性関連インシデントが30%減少。</p>
+<p>5. <strong>ロボティクス統合による生産性向上</strong> — ABBとソフトバンクの統合がサイクルタイムを10%短縮し、年間生産量が5%増。</p>
 
 <h2>リスクと機会</h2>
 
 <ul>
-<li><strong>リスク</strong></li>
-<li><strong>規制遵守コストの増大</strong>：CBPR認証取得に必要な投資と運営コストが急増し、利益率が圧迫される可能性。</li>
-<li><strong>サプライチェーンの不確実性</strong>：CO2取引レート上昇に伴い、燃料・船舶コストが変動し、価格競争力が低下。</li>
-<li><strong>技術導入の遅れ</strong>：AI保守やIoTプラットフォームへの投資が遅れると、競合に比べて効率低下とコスト増につながる。</li>
+<li><strong>リスク</strong>:</li>
+<li><strong>ベンダーロックイン</strong>: Azure IoTやCopilotへの依存が高まると、価格変動やサービス停止時のリスクが増大。</li>
+<li><strong>セキュリティ脆弱性</strong>: Thunderbirdのような主要ソフトウェアの脆弱性が企業メールシステム全体に波及し、信頼性低下と法規制対応コストが増加。</li>
+<li><strong>規制・法的リスク</strong>: AI・IoT導入でデータプライバシーや産業安全規制が厳格化される可能性。</li>
 </ul>
 
 <ul>
-<li><strong>機会</strong></li>
-<li><strong>早期CBPR採用による競争優位</strong>：規制前に認証を取得することで、取引先からの信頼を獲得し、契約優先権を確保。</li>
-<li><strong>AI保守でのコスト削減</strong>：ダウンタイム40％減は年間数百万ドルの節約につながり、投資回収期間を短縮。</li>
-<li><strong>Ignition 8.3.3の販売拡大</strong>：7％の売上増は、ソフトウェアライセンス収益の安定化と顧客ロイヤルティ向上に寄与。</li>
+<li><strong>機会</strong>:</li>
+<li><strong>コスト削減と収益拡大</strong>: AI・IoT統合により製造コストを12–15%削減し、余剰資金を新規事業へ投入。</li>
+<li><strong>市場シェア拡大</strong>: デジタルツインとロボティクスの組み合わせで高技術製造業の生産停止時間を25%削減し、競合優位性を確立。</li>
+<li><strong>資金調達の活用</strong>: NIST支援金や政府補助金を活用し、AI導入コストを低減。</li>
 </ul>
 
 <h2>推奨アクション</h2>
 
-<p>1. <strong>CBPRコンプライアンス戦略の構築</strong> — 既存製造ラインと新造船の認証取得ロードマップを策定し、規制準備を早期に完了。</p>
-<p>2. <strong>AI保守・IoTプラットフォームへの投資拡大</strong> — 既存ラインのダウンタイム削減を実証し、Azure/AWSとのパートナーシップを強化。</p>
-<p>3. <strong>CO2取引レート対策の価格戦略</strong> — 燃料コスト上昇を吸収するための価格設定モデルを再設計し、低炭素船舶の需要変動に柔軟に対応。</p>
-<p>4. <strong>Ignition 8.3.3の販売チャネル強化</strong> — エンドユーザーへのアップグレード提案を加速し、追加ライセンス収益を最大化。</p>
+<p>1. <strong>多様なAI・IoTベンダー戦略の策定</strong> — Azureだけでなく、AWS、Google Cloud、オンプレミスハイブリッドを組み合わせ、ベンダーロックインリスクを分散。</p>
+<p>2. <strong>セキュリティパッチ管理体制の強化</strong> — Thunderbirdを含む主要アプリケーションの自動パッチ適用と脆弱性スキャンを社内規定化し、インシデントリスクを低減。</p>
+<p>3. <strong>デジタルツイン・ロボティクス統合プロジェクトの加速</strong> — ABB統合プラットフォームを活用し、既存ラインのデジタル化を進め、サイクルタイム短縮と予知保全を実現。</p>
+<p>4. <strong>政府支援金・補助金申請の最適化</strong> — NISTや国内外のAI導入補助金を積極的に申請し、投資コストを抑えつつ技術導入を加速。</p>
+<p>5. <strong>社内AIリテラシー向上プログラム</strong> — Copilotや他社AIツールの活用を社内研修で促進し、開発効率とイノベーションを同時に向上。</p>
   </div>
   
   <div class="forecast-panel " id="persp-panel-2">
     <h2>注目すべきトレンド</h2>
 
-<p>1. <strong>物流コスト上昇による消費財価格の上昇</strong> — 乾燥バルク料金の8 %上昇とCO₂取引レートの3 %増加が、輸送費に直結し、日用品や食品の小売価格を押し上げる可能性があります。</p>
-<p>2. <strong>低炭素船舶需要減少と環境意識の変化</strong> — 低炭素船の運賃が4 %減少し、短期的には環境配慮型輸送が減少。長期的にはCBPR規制により新船はCBPR対象となり、環境負荷の低減が求められます。</p>
-<p>3. <strong>AI保守・IoTプラットフォーム普及による製品品質向上とプライバシーリスク</strong> — AI保守でダウンタイムが40 %減少し、製品の安定供給が期待できる一方、Azure IoTやAWSが市場シェアを拡大することで、家庭内IoTデバイスのデータ収集が増大し、プライバシーとセキュリティへの懸念が高まります。</p>
+<p>1. <strong>メールクライアントの選択肢拡大とセキュリティ向上</strong> — Thunderbirdのパッチ適用率が急上昇し、脆弱性が減少する一方で、企業や個人が安全性を重視して他のメールクライアントへ移行する動きが加速。メールの信頼性が向上する一方で、設定や統合に手間が増える可能性がある。</p>
+<p>2. <strong>AIツールによる日常作業の自動化</strong> — Codexの脆弱性によりCopilotの採用が増加し、プログラミングや文書作成、データ分析などの作業がより迅速かつ低コストで行えるようになる。消費者向けのアプリ開発や個人プロジェクトでの生産性向上が期待できる。</p>
 
 <h2>リスクと機会</h2>
 
 <ul>
-<li><strong>リスク</strong>: 物流コストの上昇が消費者の生活費を押し上げ、特に低所得層への負担が増大。</li>
-<li><strong>リスク</strong>: IoTデバイスの普及に伴う個人情報漏洩やサイバー攻撃のリスク増大。</li>
-<li><strong>機会</strong>: AI保守により製造ラインの稼働率が向上し、製品価格が下がる可能性。</li>
-<li><strong>機会</strong>: エネルギー効率の高い製品や低炭素輸送を選択することで、長期的にコスト削減と環境負荷低減を実現。</li>
+<li><strong>リスク</strong>: IoTデバイスの普及とAI統合に伴い、個人情報や家庭内データのプライバシーが脅かされる可能性が増大。特にAzure IoTプラットフォームの導入拡大により、家庭内ネットワークが外部クラウドに依存するケースが増える。</li>
+<li><strong>機会</strong>: AIによるスマート家電やデジタルツインの活用で、エネルギー消費の最適化やメンテナンス予知が可能になり、光熱費の削減や機器の寿命延長につながる。Copilotの導入で個人開発者が低コストで高度なアプリを作成できるようになる。</li>
 </ul>
 
 <h2>推奨アクション</h2>
 
-<p>1. <strong>購買計画の見直し</strong> — 価格変動を先取りし、在庫を適切に管理することで、急激な値上げに備える。</p>
-<p>2. <strong>IoTデバイスのプライバシー設定を強化</strong> — デフォルト設定を見直し、必要最低限のデータ共有に留めることで、個人情報保護を徹底。</p>
-<p>3. <strong>環境配慮型製品を選択</strong> — 低炭素船舶やCBPR認証製品を優先購入し、長期的なエネルギーコスト削減と環境負荷低減を図る。</p>
+<p>1. <strong>メールセキュリティの見直し</strong> — 現在使用しているメールクライアントのアップデート状況を確認し、必要に応じてセキュリティレベルの高い代替クライアントへの移行を検討。</p>
+<p>2. <strong>スマート家電とAIツールの導入計画</strong> — 家庭内のIoTデバイスやAIサービス（Azure IoT、Copilotなど）の導入を検討し、プライバシー設定やデータ共有ポリシーを明確にした上で、コスト削減と利便性向上を図る。</p>
   </div>
   
 
@@ -490,85 +465,106 @@
   
   
 
-  <!-- 過去レポート一覧 -->
+  <!-- 過去レポート一覧（月別折りたたみ） -->
   
   <div class="past-reports">
     <h3>過去のレポート</h3>
-    <ul>
-      
-      <li><a href="./2026-05-04/">2026-05-04</a></li>
-      
-      <li><a href="./2026-05-03/">2026-05-03</a></li>
-      
-      <li><a href="./2026-05-02/">2026-05-02</a></li>
-      
-      <li><a href="./2026-05-01/">2026-05-01</a></li>
-      
-      <li><a href="./2026-04-30/">2026-04-30</a></li>
-      
-      <li><a href="./2026-04-29/">2026-04-29</a></li>
-      
-      <li><a href="./2026-04-28/">2026-04-28</a></li>
-      
-      <li><a href="./2026-04-27/">2026-04-27</a></li>
-      
-      <li><a href="./2026-04-26/">2026-04-26</a></li>
-      
-      <li><a href="./2026-04-25/">2026-04-25</a></li>
-      
-      <li><a href="./2026-04-24/">2026-04-24</a></li>
-      
-      <li><a href="./2026-04-22/">2026-04-22</a></li>
-      
-      <li><a href="./2026-04-21/">2026-04-21</a></li>
-      
-      <li><a href="./2026-04-20/">2026-04-20</a></li>
-      
-      <li><a href="./2026-04-19/">2026-04-19</a></li>
-      
-      <li><a href="./2026-04-18/">2026-04-18</a></li>
-      
-      <li><a href="./2026-04-17/">2026-04-17</a></li>
-      
-      <li><a href="./2026-04-16/">2026-04-16</a></li>
-      
-      <li><a href="./2026-04-15/">2026-04-15</a></li>
-      
-      <li><a href="./2026-04-14/">2026-04-14</a></li>
-      
-      <li><a href="./2026-04-13/">2026-04-13</a></li>
-      
-      <li><a href="./2026-04-12/">2026-04-12</a></li>
-      
-      <li><a href="./2026-04-11/">2026-04-11</a></li>
-      
-      <li><a href="./2026-04-10/">2026-04-10</a></li>
-      
-      <li><a href="./2026-04-09/">2026-04-09</a></li>
-      
-      <li><a href="./2026-04-08/">2026-04-08</a></li>
-      
-      <li><a href="./2026-04-07/">2026-04-07</a></li>
-      
-      <li><a href="./2026-04-06/">2026-04-06</a></li>
-      
-      <li><a href="./2026-04-05/">2026-04-05</a></li>
-      
-      <li><a href="./2026-04-04/">2026-04-04</a></li>
-      
-      <li><a href="./2026-04-02/">2026-04-02</a></li>
-      
-      <li><a href="./2026-04-01/">2026-04-01</a></li>
-      
-      <li><a href="./2026-03-31/">2026-03-31</a></li>
-      
-      <li><a href="./2026-03-30/">2026-03-30</a></li>
-      
-      <li><a href="./2026-03-29/">2026-03-29</a></li>
-      
-      <li><a href="./2026-03-28/">2026-03-28</a></li>
-      
-    </ul>
+    
+    <details class="past-month" open>
+      <summary>2026年5月<span class="month-count">5件</span></summary>
+      <ul>
+        
+        <li><a href="./2026-05-05/">2026-05-05</a></li>
+        
+        <li><a href="./2026-05-04/">2026-05-04</a></li>
+        
+        <li><a href="./2026-05-03/">2026-05-03</a></li>
+        
+        <li><a href="./2026-05-02/">2026-05-02</a></li>
+        
+        <li><a href="./2026-05-01/">2026-05-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年4月<span class="month-count">28件</span></summary>
+      <ul>
+        
+        <li><a href="./2026-04-30/">2026-04-30</a></li>
+        
+        <li><a href="./2026-04-29/">2026-04-29</a></li>
+        
+        <li><a href="./2026-04-28/">2026-04-28</a></li>
+        
+        <li><a href="./2026-04-27/">2026-04-27</a></li>
+        
+        <li><a href="./2026-04-26/">2026-04-26</a></li>
+        
+        <li><a href="./2026-04-25/">2026-04-25</a></li>
+        
+        <li><a href="./2026-04-24/">2026-04-24</a></li>
+        
+        <li><a href="./2026-04-22/">2026-04-22</a></li>
+        
+        <li><a href="./2026-04-21/">2026-04-21</a></li>
+        
+        <li><a href="./2026-04-20/">2026-04-20</a></li>
+        
+        <li><a href="./2026-04-19/">2026-04-19</a></li>
+        
+        <li><a href="./2026-04-18/">2026-04-18</a></li>
+        
+        <li><a href="./2026-04-17/">2026-04-17</a></li>
+        
+        <li><a href="./2026-04-16/">2026-04-16</a></li>
+        
+        <li><a href="./2026-04-15/">2026-04-15</a></li>
+        
+        <li><a href="./2026-04-14/">2026-04-14</a></li>
+        
+        <li><a href="./2026-04-13/">2026-04-13</a></li>
+        
+        <li><a href="./2026-04-12/">2026-04-12</a></li>
+        
+        <li><a href="./2026-04-11/">2026-04-11</a></li>
+        
+        <li><a href="./2026-04-10/">2026-04-10</a></li>
+        
+        <li><a href="./2026-04-09/">2026-04-09</a></li>
+        
+        <li><a href="./2026-04-08/">2026-04-08</a></li>
+        
+        <li><a href="./2026-04-07/">2026-04-07</a></li>
+        
+        <li><a href="./2026-04-06/">2026-04-06</a></li>
+        
+        <li><a href="./2026-04-05/">2026-04-05</a></li>
+        
+        <li><a href="./2026-04-04/">2026-04-04</a></li>
+        
+        <li><a href="./2026-04-02/">2026-04-02</a></li>
+        
+        <li><a href="./2026-04-01/">2026-04-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年3月<span class="month-count">4件</span></summary>
+      <ul>
+        
+        <li><a href="./2026-03-31/">2026-03-31</a></li>
+        
+        <li><a href="./2026-03-30/">2026-03-30</a></li>
+        
+        <li><a href="./2026-03-29/">2026-03-29</a></li>
+        
+        <li><a href="./2026-03-28/">2026-03-28</a></li>
+        
+      </ul>
+    </details>
+    
   </div>
   
 
