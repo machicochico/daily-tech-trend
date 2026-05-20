@@ -6,28 +6,39 @@ import time
 
 import requests
 
-LMSTUDIO_URL = "http://127.0.0.1:1234/v1/chat/completions"
-DEFAULT_MODEL = "openai/gpt-oss-20b"
+OLLAMA_URL = "http://127.0.0.1:11434/v1/chat/completions"
+OLLAMA_BASE = "http://127.0.0.1:11434"
+DEFAULT_MODEL = "gpt-oss:20b"
 _SESSION = requests.Session()
-_LMSTUDIO_READY = False
+
+# --- タイムアウト/リトライ戦略の統一設定 -----------------------------------
+# 既存の呼び出し箇所で使われていたマジックナンバーを定数化し、環境変数で上書き可能にする。
+# 原則: 長文生成=LONG(120s)、短文生成=SHORT(60s)、ヘルスチェック=HEALTH(4s)
+LLM_LONG_TIMEOUT_SEC = int(os.getenv("LLM_LONG_TIMEOUT_SEC", "120"))
+LLM_SHORT_TIMEOUT_SEC = int(os.getenv("LLM_SHORT_TIMEOUT_SEC", "60"))
+LLM_HEALTH_TIMEOUT_SEC = int(os.getenv("LLM_HEALTH_TIMEOUT_SEC", "4"))
+# リトライ戦略: 指数バックオフ（base=1.5）で 3 回まで
+LLM_RETRY_COUNT = int(os.getenv("LLM_RETRY_COUNT", "2"))
+LLM_RETRY_BASE_SEC = float(os.getenv("LLM_RETRY_BASE_SEC", "1.0"))
+LLM_RETRY_EXP_BASE = float(os.getenv("LLM_RETRY_EXP_BASE", "2.0"))
+_OLLAMA_READY = False
 _AUTOSTART_ATTEMPTED = False
+_MODEL_PREPARED = False
 _SELECTED_MODEL = None
 _FAILED_MODELS = set()
 _LOAD_ATTEMPTED_MODELS = set()
 
 
 def _model_settings() -> dict:
-    primary = (os.getenv("LMSTUDIO_MODEL") or DEFAULT_MODEL).strip() or DEFAULT_MODEL
+    primary = (os.getenv("OLLAMA_MODEL") or DEFAULT_MODEL).strip() or DEFAULT_MODEL
     return {
         "primary": primary,
-        "fallback": (os.getenv("LMSTUDIO_FALLBACK_MODEL") or "").strip(),
-        "load_cmd_template": (os.getenv("LMSTUDIO_MODEL_LOAD_CMD") or "").strip(),
-        "load_wait_sec": int(os.getenv("LMSTUDIO_MODEL_LOAD_WAIT_SEC", "30")),
+        "fallback": (os.getenv("OLLAMA_FALLBACK_MODEL") or "").strip(),
     }
 
 
-def _is_lmstudio_ready(timeout: float = 2.0) -> bool:
-    health_url = LMSTUDIO_URL.rsplit("/chat/completions", 1)[0] + "/models"
+def _is_ollama_ready(timeout: float = 2.0) -> bool:
+    health_url = OLLAMA_URL.rsplit("/chat/completions", 1)[0] + "/models"
     try:
         r = _SESSION.get(health_url, timeout=timeout)
         return r.status_code < 500
@@ -36,7 +47,7 @@ def _is_lmstudio_ready(timeout: float = 2.0) -> bool:
 
 
 def _models_url() -> str:
-    return LMSTUDIO_URL.rsplit("/chat/completions", 1)[0] + "/models"
+    return OLLAMA_URL.rsplit("/chat/completions", 1)[0] + "/models"
 
 
 def _extract_model_ids(data: dict) -> list[str]:
@@ -48,6 +59,24 @@ def _extract_model_ids(data: dict) -> list[str]:
             if mid:
                 ids.append(mid)
     return ids
+
+
+# 埋め込み専用モデルの名前パターン（チャット完了に投げると 400 で必ず失敗する）。
+# `_pick_model_candidates` でフォールバック候補から除外するために使う。
+_EMBEDDING_MODEL_RE = re.compile(r"(?:^|[/_-])(?:bge|nomic-embed|embed(?:ding)?|e5|gte)\b",
+                                  re.IGNORECASE)
+
+
+def _is_embedding_model(name: str) -> bool:
+    """名前から埋め込み専用モデルかをヒューリスティックに判定する。
+
+    Ollama の /v1/models 応答にはチャット可否のメタが含まれないため、
+    名前パターンで識別する。誤判定があった場合は OLLAMA_MODEL / OLLAMA_FALLBACK_MODEL に
+    明示指定することで上書きできる（pinned_model は除外フィルタを通さない）。
+    """
+    if not name:
+        return False
+    return bool(_EMBEDDING_MODEL_RE.search(name))
 
 
 def _available_models(timeout: float = 4.0) -> list[str]:
@@ -69,24 +98,30 @@ def _pick_model_candidates(timeout: float = 4.0) -> list[str]:
 
     candidates = []
 
-    def _add(mid: str):
-        if mid and (mid not in candidates) and (mid not in _FAILED_MODELS):
-            candidates.append(mid)
+    def _add(mid: str, *, skip_embed_filter: bool = False):
+        if not mid or mid in candidates or mid in _FAILED_MODELS:
+            return
+        # 自動収集の候補からは埋め込みモデルを除外。
+        # ユーザー明示指定（requested / fallback / _SELECTED_MODEL）は尊重して通す。
+        if not skip_embed_filter and _is_embedding_model(mid):
+            return
+        candidates.append(mid)
 
-    _add(_SELECTED_MODEL or "")
+    # 前回成功モデル・明示指定モデルは埋め込みフィルタを通さず尊重する
+    _add(_SELECTED_MODEL or "", skip_embed_filter=True)
 
     if model_ids:
         if requested in model_ids:
-            _add(requested)
+            _add(requested, skip_embed_filter=True)
         if fallback and fallback in model_ids:
-            _add(fallback)
+            _add(fallback, skip_embed_filter=True)
         for mid in model_ids:
-            _add(mid)
-        _add(requested)
-        _add(fallback)
+            _add(mid)  # 埋め込みはここで弾かれる
+        _add(requested, skip_embed_filter=True)
+        _add(fallback, skip_embed_filter=True)
     else:
-        _add(requested)
-        _add(fallback)
+        _add(requested, skip_embed_filter=True)
+        _add(fallback, skip_embed_filter=True)
 
     if not candidates:
         candidates = [requested]
@@ -98,62 +133,17 @@ def _pick_usable_model(timeout: float = 4.0) -> str:
     return _pick_model_candidates(timeout=timeout)[0]
 
 
-def _is_model_load_error(detail) -> bool:
-    msg = str(detail).lower()
-    return (
-        "failed to load model" in msg
-        or "erroroutofdevicememory" in msg
-        or "out of memory" in msg
-    )
-
-
-def _wait_until_model_visible(model: str, wait_sec: int) -> bool:
-    for _ in range(max(wait_sec, 1)):
-        try:
-            if model in _available_models(timeout=3.0):
-                return True
-        except Exception:
-            pass
-        time.sleep(1)
-    return False
-
-
-def _try_explicit_model_load(model: str) -> bool:
-    cfg = _model_settings()
-    cmd_template = cfg["load_cmd_template"]
-    if not cmd_template:
-        return False
-
-    cmd = cmd_template.format(model=model)
-    try:
-        subprocess.Popen(
-            cmd,
-            shell=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-    except Exception:
-        return False
-
-    return _wait_until_model_visible(model, cfg["load_wait_sec"])
-
-
-def _ensure_lmstudio_ready() -> None:
-    global _LMSTUDIO_READY, _AUTOSTART_ATTEMPTED
-    if _LMSTUDIO_READY:
+def _ensure_ollama_ready() -> None:
+    global _OLLAMA_READY, _AUTOSTART_ATTEMPTED
+    if _OLLAMA_READY:
         return
-    if _is_lmstudio_ready():
-        _LMSTUDIO_READY = True
+    if _is_ollama_ready():
+        _OLLAMA_READY = True
         return
 
-    autostart_cmd = (os.getenv("LMSTUDIO_AUTOSTART_CMD") or "").strip()
-    if not autostart_cmd:
-        raise RuntimeError(
-            "LMStudio is not reachable at 127.0.0.1:1234. "
-            "Start LMStudio manually or set LMSTUDIO_AUTOSTART_CMD to auto-launch it."
-        )
+    autostart_cmd = (os.getenv("OLLAMA_AUTOSTART_CMD") or "ollama serve").strip()
     if _AUTOSTART_ATTEMPTED:
-        raise RuntimeError("LMStudio auto-start was attempted but the API is still unavailable.")
+        raise RuntimeError("Ollama auto-start was attempted but the API is still unavailable.")
 
     _AUTOSTART_ATTEMPTED = True
     subprocess.Popen(
@@ -163,49 +153,122 @@ def _ensure_lmstudio_ready() -> None:
         stderr=subprocess.DEVNULL,
     )
 
-    wait_sec = int(os.getenv("LMSTUDIO_AUTOSTART_WAIT_SEC", "45"))
+    wait_sec = int(os.getenv("OLLAMA_AUTOSTART_WAIT_SEC", "30"))
     for _ in range(max(wait_sec, 1)):
-        if _is_lmstudio_ready():
-            _LMSTUDIO_READY = True
+        if _is_ollama_ready():
+            _OLLAMA_READY = True
             return
         time.sleep(1)
-    raise RuntimeError("LMStudio auto-start command was launched, but API did not become ready in time.")
+    raise RuntimeError(
+        "Ollama is not reachable at 127.0.0.1:11434. "
+        "Start Ollama manually or check OLLAMA_AUTOSTART_CMD."
+    )
+
+
+def _get_running_models(timeout: float = 4.0) -> list[str]:
+    """Ollama に現在ロードされているモデル一覧を返す"""
+    try:
+        r = _SESSION.get(f"{OLLAMA_BASE}/api/ps", timeout=timeout)
+        if r.status_code >= 400:
+            return []
+        data = r.json()
+        return [m["name"] for m in (data.get("models") or []) if "name" in m]
+    except Exception:
+        return []
+
+
+def _unload_model(model: str, timeout: float = 10.0) -> None:
+    """指定モデルをOllamaからアンロードする"""
+    try:
+        _SESSION.post(
+            f"{OLLAMA_BASE}/api/generate",
+            json={"model": model, "keep_alive": 0},
+            timeout=timeout,
+        )
+        print(f"[INFO] モデル '{model}' をアンロードしました")
+    except Exception as e:
+        print(f"[WARN] モデル '{model}' のアンロードに失敗: {e}")
+
+
+def _load_model(model: str, timeout: float = 120.0) -> None:
+    """指定モデルをOllamaにプリロードする"""
+    try:
+        _SESSION.post(
+            f"{OLLAMA_BASE}/api/generate",
+            json={"model": model, "keep_alive": "10m"},
+            timeout=timeout,
+        )
+        print(f"[INFO] モデル '{model}' をロードしました")
+    except Exception as e:
+        print(f"[WARN] モデル '{model}' のロードに失敗: {e}")
+
+
+def _ensure_model_prepared() -> None:
+    """対象モデル以外をアンロードし、対象モデルがロードされていなければロードする"""
+    global _MODEL_PREPARED
+    if _MODEL_PREPARED:
+        return
+
+    cfg = _model_settings()
+    target = cfg["primary"]
+
+    # 現在ロード中のモデルを取得
+    running = _get_running_models()
+    print(f"[INFO] 現在ロード中のモデル: {running or '(なし)'}")
+
+    # 対象モデル以外を全てアンロード
+    for model in running:
+        if model != target:
+            _unload_model(model)
+
+    # 対象モデルがロードされていなければロード
+    if target not in running:
+        print(f"[INFO] モデル '{target}' をロード中...")
+        _load_model(target)
+
+    _MODEL_PREPARED = True
 
 
 def _get_lm_content(resp: requests.Response) -> str:
     try:
         data = resp.json()
     except Exception as e:
-        raise RuntimeError(f"LMStudio returned non-JSON: {resp.text[:500]}") from e
+        raise RuntimeError(f"Ollama returned non-JSON: {resp.text[:500]}") from e
 
     try:
         return (data["choices"][0]["message"]["content"] or "").strip()
     except Exception as e:
-        raise RuntimeError(f"LMStudio unexpected schema: {str(data)[:500]}") from e
+        raise RuntimeError(f"Ollama unexpected schema: {str(data)[:500]}") from e
 
 
-def post_lmstudio(payload: dict, timeout: int, retries: int = 2, backoff_sec: float = 0.8):
+def post_ollama(
+    payload: dict,
+    timeout: int | None = None,
+    retries: int | None = None,
+    backoff_sec: float | None = None,
+):
+    """Ollama にチャット補完を POST する。
+
+    timeout: None の場合は LLM_LONG_TIMEOUT_SEC（既定 120 秒）
+    retries: None の場合は LLM_RETRY_COUNT（既定 2、合計 3 回試行）
+    backoff_sec: None の場合、指数バックオフ（LLM_RETRY_BASE_SEC * LLM_RETRY_EXP_BASE**i）
+                 明示指定された場合はその値を倍率として使う
+    """
     global _SELECTED_MODEL
-    _ensure_lmstudio_ready()
+
+    eff_timeout = LLM_LONG_TIMEOUT_SEC if timeout is None else int(timeout)
+    eff_retries = LLM_RETRY_COUNT if retries is None else int(retries)
+
+    _ensure_ollama_ready()
+    _ensure_model_prepared()
     body = dict(payload)
     last_err = None
 
     # 呼び出し元がmodelを明示指定している場合はそのモデルを優先
     pinned_model = payload.get("model", "").strip()
 
-    preferred = pinned_model or _model_settings()["primary"]
-    try:
-        loaded = _available_models(timeout=3.0)
-    except Exception:
-        loaded = []
-    if preferred and (preferred not in loaded) and (preferred not in _LOAD_ATTEMPTED_MODELS):
-        _LOAD_ATTEMPTED_MODELS.add(preferred)
-        if _try_explicit_model_load(preferred):
-            _FAILED_MODELS.discard(preferred)
-
-    for i in range(retries + 1):
+    for i in range(eff_retries + 1):
         if pinned_model:
-            # 指定モデルを先頭に、フォールバック候補も含める
             others = [m for m in _pick_model_candidates() if m != pinned_model]
             candidates = [pinned_model] + others
         else:
@@ -213,47 +276,71 @@ def post_lmstudio(payload: dict, timeout: int, retries: int = 2, backoff_sec: fl
         for model in candidates:
             body["model"] = model
             try:
-                r = _SESSION.post(LMSTUDIO_URL, json=body, timeout=timeout)
+                r = _SESSION.post(OLLAMA_URL, json=body, timeout=eff_timeout)
                 if r.status_code >= 400:
                     try:
                         detail = r.json()
                     except Exception:
                         detail = r.text
-                    if _is_model_load_error(detail):
-                        if model not in _LOAD_ATTEMPTED_MODELS:
-                            _LOAD_ATTEMPTED_MODELS.add(model)
-                            if _try_explicit_model_load(model):
-                                continue
-                        _FAILED_MODELS.add(model)
-                        if _SELECTED_MODEL == model:
-                            _SELECTED_MODEL = None
-                        print(f"[WARN] model '{model}' failed to load on LM Studio; trying another loaded model")
-                        continue
-                    raise RuntimeError(f"LMStudio HTTP {r.status_code}: {detail}")
+                    _FAILED_MODELS.add(model)
+                    if _SELECTED_MODEL == model:
+                        _SELECTED_MODEL = None
+                    print(f"[WARN] model '{model}' failed on Ollama; trying next candidate")
+                    continue
 
                 _SELECTED_MODEL = model
                 return r
             except Exception as e:
                 last_err = e
 
-        if i < retries:
-            time.sleep(backoff_sec * (i + 1))
+        if i < eff_retries:
+            # 指数バックオフ。backoff_sec が明示指定されていれば従来通り線形扱い。
+            if backoff_sec is None:
+                sleep_for = LLM_RETRY_BASE_SEC * (LLM_RETRY_EXP_BASE ** i)
+            else:
+                sleep_for = float(backoff_sec) * (i + 1)
+            time.sleep(sleep_for)
             continue
 
     if last_err:
         raise last_err
-    raise RuntimeError("LMStudio request failed: no model candidate succeeded")
+    raise RuntimeError("Ollama request failed: no model candidate succeeded")
+
+
+# 後方互換エイリアス（既存の呼び出し元用）
+post_lmstudio = post_ollama
 
 
 def _extract_json_object(text: str) -> str | None:
     if not text:
         return None
     t = text.strip().replace("```json", "").replace("```", "").strip()
-    s = t.find("{")
-    e = t.rfind("}")
-    if s == -1 or e == -1 or e <= s:
+    start = t.find("{")
+    if start == -1:
         return None
-    return t[s:e + 1]
+    depth = 0
+    in_string = False
+    escape_next = False
+    for i in range(start, len(t)):
+        c = t[i]
+        if escape_next:
+            escape_next = False
+            continue
+        if c == '\\' and in_string:
+            escape_next = True
+            continue
+        if c == '"':
+            in_string = not in_string
+            continue
+        if in_string:
+            continue
+        if c == '{':
+            depth += 1
+        elif c == '}':
+            depth -= 1
+            if depth == 0:
+                return t[start:i + 1]
+    return None
 
 
 def _repair_json_with_llm(bad_text: str) -> dict:
@@ -266,7 +353,7 @@ def _repair_json_with_llm(bad_text: str) -> dict:
         "temperature": 0.0,
         "max_tokens": 700,
     }
-    r = post_lmstudio(payload, timeout=120)
+    r = post_ollama(payload, timeout=LLM_LONG_TIMEOUT_SEC)
     fixed = _get_lm_content(r)
     candidate = _extract_json_object(fixed)
     if not candidate:
@@ -352,7 +439,7 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
     )
 
     payload = {"model": _pick_usable_model(), "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}], "temperature": 0.3, "max_tokens": 700}
-    r = post_lmstudio(payload, timeout=60)
+    r = post_ollama(payload, timeout=LLM_SHORT_TIMEOUT_SEC)
     s = _get_lm_content(r)
 
     if not s:
@@ -367,7 +454,7 @@ def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
             '  "inferred": 1\n'
             "}"
         )
-        r = post_lmstudio(payload, timeout=60)
+        r = post_ollama(payload, timeout=LLM_SHORT_TIMEOUT_SEC)
         s = _get_lm_content(r)
 
     candidate = _extract_json_object(s)
@@ -431,7 +518,7 @@ def call_llm(topic_title, category, url, body, kind: str | None = None):
         "必ず全フィールドを出力し、欠落や型違いは禁止。"
         "key_pointsは入力textに明記された事実のみ。推測・解釈・一般論は禁止。"
         "evidence_urlsは必ず1つ以上で、入力のevidence_urlを必ず含める。"
-        "tagsは1〜5個の配列。短い名詞。重複禁止。本文/要約から抽出。足りない場合は推測で補ってよい。"
+        "tagsは1〜5個の配列。短い名詞。重複禁止。本文/要約から抽出し、本文に記載のある固有名詞・技術名を優先する。"
         "OT/セキュリティ関連では tags に sbom / patch_window / safety_impact を含めることを優先する。"
         "算定・規制関連トピックでは、算定対象範囲(scope)と報告義務(reporting_obligation)を必ず抽出する。"
         "再現条件(repro_conditions)と導入前提(deployment_prerequisites)の抽出は必須。本文に明記が無ければ '不明'。"
@@ -465,7 +552,7 @@ def call_llm(topic_title, category, url, body, kind: str | None = None):
         "temperature": 0.2,
         "max_tokens": 500,
     }
-    r = post_lmstudio(payload, timeout=120)
+    r = post_ollama(payload, timeout=LLM_LONG_TIMEOUT_SEC)
     text = _get_lm_content(r)
     candidate = _extract_json_object(text)
     if not candidate:
