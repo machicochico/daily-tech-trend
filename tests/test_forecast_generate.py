@@ -42,10 +42,13 @@ class TestBuildMarkdownReport:
         assert "内容A" in md
 
     def test_sorts_by_impact_and_confidence(self):
+        # P2: evidence 空はレンダから除外される仕様に変更されたため、テストでも明示する
         predictions = {
             "1週間後": [
-                {"impact": "小", "confidence": "低", "title": "低優先", "prediction": "", "evidence": ""},
-                {"impact": "大", "confidence": "高", "title": "高優先", "prediction": "", "evidence": ""},
+                {"impact": "小", "confidence": "低", "title": "低優先",
+                 "prediction": "本文低", "evidence": "根拠低"},
+                {"impact": "大", "confidence": "高", "title": "高優先",
+                 "prediction": "本文高", "evidence": "根拠高"},
             ],
         }
         md = build_markdown_report([], predictions, "2026-03-28 12:00:00")
@@ -547,19 +550,31 @@ class TestShortTermLeakFilter:
 class TestValidateNumericClaims:
     """T10: 数値出典トレース（警告のみ・本文改変なし）"""
 
-    def test_unverified_number_recorded(self):
+    def test_unverified_count_recorded(self):
+        # P4: パーセンテージは予測の本質として検証対象外。社数・件数等のカウント値のみ対象。
+        from forecast_generate import _validate_numeric_claims
+        item = {
+            "prediction": "Azure IoTがアジアで200社の採用を獲得する",
+            "numeric_claims": [],
+        }
+        digest = "Microsoft press release: Gartner Magic Quadrant leader for Industrial IoT"
+        out = _validate_numeric_claims(item, digest)
+        assert "200社" in out.get("unverified_numerics", [])
+        # 本文は改変されないこと
+        assert out["prediction"] == "Azure IoTがアジアで200社の採用を獲得する"
+
+    def test_percentage_not_recorded(self):
+        # P4: パーセンテージは予測の推定値として許容され、unverified に入らない
         from forecast_generate import _validate_numeric_claims
         item = {
             "prediction": "Azure IoTがアジアで40%シェアを獲得する",
             "numeric_claims": [],
         }
-        digest = "Microsoft press release: Gartner Magic Quadrant leader for Industrial IoT"
+        digest = "Microsoft press release"  # digest に 40% は無い
         out = _validate_numeric_claims(item, digest)
-        assert "40%" in out.get("unverified_numerics", [])
-        # 本文は改変されないこと
-        assert out["prediction"] == "Azure IoTがアジアで40%シェアを獲得する"
+        assert "40%" not in out.get("unverified_numerics", [])
 
-    def test_verified_number_not_recorded(self):
+    def test_verified_count_not_recorded(self):
         from forecast_generate import _validate_numeric_claims
         item = {
             "prediction": "Aurora採用は200社に達する",
@@ -573,13 +588,146 @@ class TestValidateNumericClaims:
     def test_estimated_prefix_skips_validation(self):
         from forecast_generate import _validate_numeric_claims
         item = {
-            "prediction": "Azure IoTが[推定] 12%成長する",
-            "numeric_claims": [{"value": "12%", "source": "[推定]"}],
+            "prediction": "Azure IoTが[推定] 100社で導入される",
+            "numeric_claims": [{"value": "100社", "source": "[推定]"}],
         }
-        digest = "Microsoft press release"  # digest に 12% は無い
+        digest = "Microsoft press release"
         out = _validate_numeric_claims(item, digest)
         # [推定] 宣言があるので unverified には入らない
-        assert "12%" not in out.get("unverified_numerics", [])
+        assert "100社" not in out.get("unverified_numerics", [])
+
+
+class TestSmartTruncateForTitle:
+    """P3: タイトル整形 (句読点優先で切る + ... 付与)"""
+
+    def test_cuts_at_period(self):
+        from forecast_generate import _smart_truncate_for_title
+        s = "ブレント原油先物は2％上昇する。米国市場で続伸。"
+        out = _smart_truncate_for_title(s, max_len=40)
+        assert out == "ブレント原油先物は2％上昇する。"
+
+    def test_falls_back_to_ellipsis_when_no_punct(self):
+        from forecast_generate import _smart_truncate_for_title
+        s = "a" * 60
+        out = _smart_truncate_for_title(s, max_len=20)
+        assert out.endswith("…")
+        assert len(out) <= 21
+
+    def test_keeps_short_text_intact(self):
+        from forecast_generate import _smart_truncate_for_title
+        s = "短いタイトル"
+        assert _smart_truncate_for_title(s, max_len=40) == "短いタイトル"
+
+    def test_empty_input(self):
+        from forecast_generate import _smart_truncate_for_title
+        assert _smart_truncate_for_title("") == ""
+        assert _smart_truncate_for_title(None) == ""
+
+    def test_japanese_period_dot(self):
+        from forecast_generate import _smart_truncate_for_title
+        s = "AIサービスがリリースされる. 来週初公開."
+        out = _smart_truncate_for_title(s, max_len=40)
+        assert out.endswith(".")
+
+
+class TestIsTitleRedundant:
+    """P3: title と prediction の冗長検知"""
+
+    def test_identical_strings_redundant(self):
+        from forecast_generate import _is_title_redundant
+        s = "ブレント原油先物は来週までに2％上昇する見込みです。"
+        assert _is_title_redundant(s, s)
+
+    def test_title_is_prefix_of_prediction_redundant(self):
+        from forecast_generate import _is_title_redundant
+        t = "AWS Aurora採用が拡大"
+        p = "AWS Aurora採用が拡大し、200社が導入する見込み"
+        assert _is_title_redundant(t, p)
+
+    def test_distinct_strings_not_redundant(self):
+        from forecast_generate import _is_title_redundant
+        t = "Azure IoT普及"
+        p = "Microsoftが新しいAIエージェントを発表する"
+        assert not _is_title_redundant(t, p)
+
+    def test_empty_inputs_not_redundant(self):
+        from forecast_generate import _is_title_redundant
+        assert not _is_title_redundant("", "x")
+        assert not _is_title_redundant("x", "")
+
+
+class TestPredictionEmptyEvidenceFiltered:
+    """P2: evidence 空のアイテムが build_markdown_report で除外される"""
+
+    def test_skips_item_without_evidence(self):
+        predictions = {
+            "1週間後": [
+                {"impact": "中", "confidence": "中", "title": "evidenceなし",
+                 "prediction": "本文あり", "evidence": ""},
+                {"impact": "中", "confidence": "中", "title": "evidenceあり",
+                 "prediction": "本文", "evidence": "根拠あり"},
+            ],
+        }
+        md = build_markdown_report([], predictions, "2026-03-28 12:00:00")
+        assert "evidenceあり" in md
+        assert "evidenceなし" not in md
+
+
+class TestEstimatedBadgeLabel:
+    """P4: ⚠[出典未確認数値あり] が 📊 [推定値あり] にニュートラル化された"""
+
+    def test_badge_uses_neutral_label(self):
+        predictions = {
+            "1週間後": [
+                {"impact": "中", "confidence": "中", "title": "テスト",
+                 "prediction": "100社が導入する", "evidence": "根拠",
+                 "unverified_numerics": ["100社"]},
+            ],
+        }
+        md = build_markdown_report([], predictions, "2026-03-28 12:00:00")
+        assert "📊 [推定値あり]" in md
+        assert "⚠[出典未確認数値あり]" not in md
+
+
+class TestAggregateTopicPerspectivesCategoryFilter:
+    """P1: _aggregate_topic_perspectives がカテゴリ allowlist で絞り込む"""
+
+    def _setup_db(self):
+        import sqlite3
+        conn = sqlite3.connect(":memory:")
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE articles (id INTEGER PRIMARY KEY, title TEXT, category TEXT, fetched_at TEXT)")
+        cur.execute("CREATE TABLE topic_articles (article_id INTEGER, topic_id INTEGER, is_representative INTEGER DEFAULT 0)")
+        cur.execute("CREATE TABLE topic_insights (topic_id INTEGER PRIMARY KEY, summary TEXT, importance INTEGER, perspectives TEXT)")
+        return conn, cur
+
+    def test_news_category_excluded(self):
+        import json as _json
+        from forecast_generate import _aggregate_topic_perspectives
+        from datetime import datetime, timezone
+        conn, cur = self._setup_db()
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+        # 事件系（news）と AI 系の topic を1件ずつ。news は除外されるはず。
+        cur.execute("INSERT INTO articles VALUES (1, '発砲事件', 'news', ?)", (now,))
+        cur.execute("INSERT INTO topic_articles VALUES (1, 1, 1)")
+        cur.execute(
+            "INSERT INTO topic_insights VALUES (1, '事件', 90, ?)",
+            (_json.dumps({"engineer": "事件分析", "management": "事件管理", "consumer": "事件消費"}),),
+        )
+        cur.execute("INSERT INTO articles VALUES (2, 'AIニュース', 'ai', ?)", (now,))
+        cur.execute("INSERT INTO topic_articles VALUES (2, 2, 1)")
+        cur.execute(
+            "INSERT INTO topic_insights VALUES (2, 'AI', 80, ?)",
+            (_json.dumps({"engineer": "AI分析", "management": "AI管理", "consumer": "AI消費"}),),
+        )
+        conn.commit()
+
+        result = _aggregate_topic_perspectives(cur, hours=24, top_n=8)
+        # AI のコメントは含まれる
+        assert any("AI分析" in c for c in result["engineer"])
+        # 事件のコメントは含まれない
+        assert not any("事件分析" in c for c in result["engineer"])
+        conn.close()
 
 
 class TestLocalizeAllowsNewFields:

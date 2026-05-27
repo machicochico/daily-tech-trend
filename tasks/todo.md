@@ -110,3 +110,41 @@ data/forecasts/report_*.md の品質に複数の構造的欠陥を観測:
 ### 追加テスト
 - `tests/test_llm_embedding_filter.py` 新設 8件 ✅
 - 全テスト 183件 pass (pre-existing 失敗を除く)
+
+---
+
+# Phase 5 品質チューニング（2026-05-27）
+
+## 背景
+オーバーホール後1週間の生成レポートを目視レビューしたところ、新たに見えた品質問題:
+- 5/25, 5/27 で **3視点分析が予測と無関係な「発砲事件」「軍事輸送」を分析** している
+- 5/27 1週間後 horizon の**根拠 evidence が4件すべて空欄**
+- タイトルが途中切れ（「日本のO」「電気SUVを発売し」）・冗長（title=prediction の丸写し）
+- `[推定]` ラベルゼロ、⚠ バッジ 12件と過剰警告（5/25）
+
+## 修正内容
+
+### P1: 3視点分析のカテゴリフィルタ ✅
+- `_aggregate_topic_perspectives` の SQL に `a.category IN (_TECH_CATEGORIES)` を追加
+- allowlist は IT/製造業/テクノロジー系16カテゴリ（ai, dev, system, manufacturing, security, security_ot, policy, market, environment 等）
+- 事件・テロ・スポーツ系トピックが3視点分析を乗っ取る問題を根絶
+- prefix に category 名を含めて、LLM に「どのカテゴリの立場別コメントか」を可視化
+
+### P2: 根拠空欄アイテムの除去 ✅
+- `build_markdown_report` で evidence が空のアイテムを除外
+- SYSTEM_PROMPT に「evidence は実質的に必須、元タイトル丸写し禁止、先行事例・市場動向・統計を引用」を強化
+
+### P3: タイトル冗長/切れ防止 ✅
+- `_smart_truncate_for_title`: 句読点（。.!?）優先で切り、なければ 70% 以降の読点（、,）で切る、それもなければ … 付与
+- `_is_title_redundant`: title が prediction の prefix にある場合の冗長検知
+- build_markdown_report で title が空・50字超・冗長のいずれかなら整形
+
+### P4: ⚠ バッジニュートラル化 ✅
+- `⚠[出典未確認数値あり]` → `📊 [推定値あり]`（読者を不安にさせない語感）
+- 脚注 `⚠ 出典未確認の数値:` → `📊 推定値（ニュース原文での明示なし）:`
+- `_validate_numeric_claims` でパーセンテージ (`\d+%`) を検証対象外に。「200社」「90ドル」「1000万」など根拠が問われるべきカウント・金額のみ対象
+
+## 検証
+- `tests/test_forecast_generate.py` に新規 17件追加（smart truncate 5, redundant 4, evidence filter 1, badge 1, category filter 1, percentage 1 + 既存修正4）
+- 既存テスト regression なし: forecast 系 94件全 pass
+- 全体 pre-existing 失敗除く: 全 pass

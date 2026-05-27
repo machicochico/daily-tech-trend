@@ -142,7 +142,8 @@ SYSTEM_PROMPT = """\
    - 中: 過去パターンや業界動向からの外挿
    - 低: 複数あり得るシナリオの一つ
 7. **subjects フィールド**: 影響を受ける主体名（企業名・業界名・地域名）を必ず配列で明示。
-8. 出力は JSON のみ。挨拶・説明・コードブロック・注釈を一切出さない。必ず日本語で出力する。"""
+8. **evidence は必須かつ実質的に**: 「なぜそうなるか」のロジックを必ず書く。元ニュース記事のタイトルをそのままコピーするのは禁止（タイトルだけでは論拠にならない）。先行事例・市場動向・過去の類似事象・契約・統計を引用する形で論証する。evidence が空・元タイトル丸写し・「〜の記事」だけ等の場合、その予測は出力しない。
+9. 出力は JSON のみ。挨拶・説明・コードブロック・注釈を一切出さない。必ず日本語で出力する。"""
 
 PREDICTION_USER_TMPL = """\
 以下は直近48時間の主要ニュースダイジェストです。
@@ -479,6 +480,61 @@ def _has_prediction_content(item: dict) -> bool:
 # 数値表現抽出用（パーセント・金額単位・社数等を含む）
 _NUMERIC_RE = re.compile(r"\d+(?:[.,]\d+)?\s*(?:%|％|億|兆|万|千|百|円|ドル|ユーロ|社|台|件|人|本)")
 
+# 検証対象から **除外** する数値表現（P4）。パーセンテージは「予測の本質」であり
+# LLM が独自に推定するのが当然なので、出典未確認バッジで読者を不安にさせない。
+# 出典が問われるべきは「200社が採用」「90ドルに達する」のような、ニュース原文に
+# 書いてあるはずの具体的な count / 金額。
+_PERCENT_RE = re.compile(r"\d+(?:[.,]\d+)?\s*(?:%|％)")
+
+
+def _smart_truncate_for_title(text: str, max_len: int = 40) -> str:
+    """タイトル用に文字列を句読点優先で切り詰める（P3）。
+
+    `prediction[:40]` の単純切り捨てでは「日本のOEMやフリート…」のように途中で
+    切れて読みにくくなるため、最初の句読点（。、！？ / .,!?）で切ることを優先する。
+    句読点がなければ max_len で切って末尾に「…」を付ける。
+    """
+    if not text:
+        return ""
+    text = text.strip()
+    # max_len 以内に句読点があればそこで切る
+    head = text[:max_len + 10]  # 句読点検索のため少し広めに
+    for i, ch in enumerate(head):
+        if i > max_len:
+            break
+        if ch in "。.!?！？":
+            return head[: i + 1]
+    # 読点（、,）は max_len の70%超えてからなら採用
+    for i in range(len(head) - 1, int(max_len * 0.5), -1):
+        if i < len(head) and head[i] in "、,":
+            return head[:i]
+    # フォールバック: 単純切り詰め + …
+    if len(text) > max_len:
+        return text[:max_len] + "…"
+    return text
+
+
+def _is_title_redundant(title: str, prediction: str, overlap_ratio: float = 0.8) -> bool:
+    """title が prediction とほぼ同じなら冗長と判定（P3）。
+
+    例: title="ブレント原油先物は来週までに2％上昇する見込みです。"
+        prediction="ブレント原油先物は来週までに2％上昇する見込みです。"
+    のように title が prediction の先頭部分に丸ごと含まれる場合は冗長扱い。
+    冗長な場合、build_markdown_report は title を短縮版に置き換える。
+    """
+    if not title or not prediction:
+        return False
+    t = title.strip().rstrip("。.!?！？")
+    p = prediction.strip()
+    if not t or not p:
+        return False
+    # title が prediction の prefix にある（先頭一致）
+    if p.startswith(t):
+        return True
+    # 文字レベル共通部分が title の overlap_ratio 以上
+    common = sum(1 for ch in t if ch in p[: len(t) + 10])
+    return common / max(len(t), 1) >= overlap_ratio
+
 
 def _validate_numeric_claims(item: dict, digest: str) -> dict:
     """予測 item の数値のうち digest（ニュース原文）に裏付けがないものを警告として記録する。
@@ -515,6 +571,9 @@ def _validate_numeric_claims(item: dict, digest: str) -> dict:
         value = m.group(0).strip()
         # 表記揺れに耐えるため空白除去で比較
         compact = value.replace(" ", "").replace("　", "")
+        # パーセンテージは検証対象外（予測の本質的な推定値）
+        if _PERCENT_RE.fullmatch(value):
+            continue
         if any(compact == ev.replace(" ", "").replace("　", "") for ev in estimated_values):
             continue
         # digest に該当数値が含まれているか
@@ -672,6 +731,17 @@ def _load_existing_today_report(report_date: str) -> dict:
     }
 
 
+# IT/製造業/テクノロジー系のカテゴリ ID（_aggregate_topic_perspectives で許可するもの）。
+# sources.yaml の英語カテゴリ ID と一致させる。事件・テロ・スポーツ・政治雑録など
+# サイト主旨と関係ないトピックを3視点分析に混入させないための allowlist。
+_TECH_CATEGORIES = (
+    "ai", "dev", "system", "manufacturing", "quality",
+    "maintenance", "smart_factory", "decarbonization_ops",
+    "security", "security_ot", "standards", "policy",
+    "industry", "company", "market", "environment",
+)
+
+
 def _aggregate_topic_perspectives(cur, hours: int = 48,
                                    top_n: int = 8) -> dict[str, list[str]]:
     """topic_insights.perspectives JSON を集約し、立場別コメントのリストを返す。
@@ -681,6 +751,10 @@ def _aggregate_topic_perspectives(cur, hours: int = 48,
     これを未来予測の 3視点分析プロンプトに「素材」として渡すことで、LLM の役割を
     「自由推論」から「集約と構造化」に格下げし、捏造リスクを下げる。
 
+    重要: トピックは IT/製造業/テクノロジー系カテゴリ (_TECH_CATEGORIES) に限定する。
+    事件・テロ・スポーツ等のニュースが重要度トップに来ると、3視点分析が予測と
+    完全に乖離した内容に乗っ取られるため。
+
     戻り値: {"engineer": [...], "management": [...], "consumer": [...]}
     各値はニュース原文に紐付いた立場別コメントの文字列リスト（重要度上位 top_n 件）。
     """
@@ -688,23 +762,25 @@ def _aggregate_topic_perspectives(cur, hours: int = 48,
         "%Y-%m-%d %H:%M:%S"
     )
     result = {"engineer": [], "management": [], "consumer": []}
+    placeholders = ",".join("?" * len(_TECH_CATEGORIES))
     try:
-        cur.execute("""
-            SELECT DISTINCT ti.perspectives, ti.summary, ti.importance
+        cur.execute(f"""
+            SELECT DISTINCT ti.perspectives, ti.summary, ti.importance, a.category
             FROM topic_insights ti
             JOIN topic_articles ta ON ta.topic_id = ti.topic_id AND ta.is_representative = 1
             JOIN articles a ON a.id = ta.article_id
             WHERE datetime(a.fetched_at) >= datetime(?)
               AND ti.perspectives IS NOT NULL
               AND COALESCE(ti.importance, 0) >= 50
+              AND a.category IN ({placeholders})
             ORDER BY ti.importance DESC
             LIMIT ?
-        """, (cutoff, top_n))
+        """, (cutoff, *_TECH_CATEGORIES, top_n))
     except Exception as e:
         print(f"  [WARN] topic_insights 取得失敗: {e}")
         return result
 
-    for raw_perspectives, summary, importance in cur.fetchall():
+    for raw_perspectives, summary, importance, category in cur.fetchall():
         if not raw_perspectives:
             continue
         try:
@@ -713,7 +789,8 @@ def _aggregate_topic_perspectives(cur, hours: int = 48,
             continue
         if not isinstance(obj, dict):
             continue
-        prefix = f"(重要度{importance}) " if importance else ""
+        cat_label = CAT_LABELS.get(category, category or "")
+        prefix = f"(重要度{importance}/{cat_label}) " if importance else f"({cat_label}) "
         for key in ("engineer", "management", "consumer"):
             val = obj.get(key)
             if isinstance(val, str) and val.strip():
@@ -867,6 +944,10 @@ def build_markdown_report(
         items = predictions.get(horizon, [])
         # 念のためレンダー直前にも空アイテムを弾く（generate_predictions のフィルタと二重防御）
         items = [it for it in items if isinstance(it, dict) and _has_prediction_content(it)]
+        # 根拠 (evidence) が空のアイテムを除外（P2）。
+        # 根拠なしの予測は信頼性ゼロで読者ノイズになる。LLM が evidence を返さなかった
+        # ケースは品質欠落として扱い、表示しない。
+        items = [it for it in items if (it.get("evidence") or "").strip()]
         lines.append(f"## {horizon}")
         lines.append("")
         if not items:
@@ -887,14 +968,25 @@ def build_markdown_report(
             title = (item.get("title") or "").strip()
             prediction = (item.get("prediction") or "").strip()
             evidence = (item.get("evidence") or "").strip()
-            # title 空時は prediction 先頭40字を見出しに使う。それも空なら item をスキップ
-            # （上流の `_has_prediction_content` を通過しても title=prediction=空 のケースを最終防御）
+            # title 空時は prediction を句読点優先で切ってフォールバック（P3）。
+            # 単純な [:40] では「日本のOEMやフリート…」のように途中で切れる問題を回避する。
             if not title:
-                title = prediction[:40] if prediction else ""
+                title = _smart_truncate_for_title(prediction, max_len=40) if prediction else ""
+            # title が長すぎる場合も同様に整形（LLM が30字制限を守らないケース）
+            elif len(title) > 50:
+                title = _smart_truncate_for_title(title, max_len=40)
+            # title と prediction が冗長（先頭一致）なら、title を句読点で短くする（P3）。
+            # 例: title "ブレント原油先物は来週までに2％上昇する見込みです。"
+            #     prediction 同上 → title を「ブレント原油先物が来週2％上昇」程度に縮める
+            if title and prediction and _is_title_redundant(title, prediction):
+                short_title = _smart_truncate_for_title(title, max_len=25)
+                # 句読点で切った結果が短くなれば採用、変わらなければ末尾の重複を取り除く
+                if short_title and short_title != title:
+                    title = short_title
             if not title:
                 continue
             unverified = item.get("unverified_numerics") or []
-            badge = " ⚠[出典未確認数値あり]" if unverified else ""
+            badge = " 📊 [推定値あり]" if unverified else ""
 
             lines.append(f"### {idx}. {title}{badge}")
             lines.append("")
@@ -905,7 +997,7 @@ def build_markdown_report(
             lines.append(f"> **根拠**: {evidence}")
             if unverified:
                 lines.append("")
-                lines.append(f"> ⚠ 出典未確認の数値: {', '.join(str(u) for u in unverified)}")
+                lines.append(f"> 📊 推定値（ニュース原文での明示なし）: {', '.join(str(u) for u in unverified)}")
             lines.append("")
         lines.append("")
 
