@@ -1,0 +1,38 @@
+# 検証専用 CI
+#
+# 旧 daily.yml はパイプライン実行 + docs/state.sqlite のコミットまで行っていたが、
+# 発行元はローカル（PC2 の run_daily.bat → git_auto_push.py）に一本化されており、
+# CI 側のコミットは直近100コミット以上使われていなかった（二重push の競合源）。
+# 本ワークフローはフィード定義の検証とテストのみを行い、リポジトリへの書き込みはしない。
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements.txt
+
+      - name: Check for known vulnerabilities
+        run: pip install pip-audit && pip-audit
+        continue-on-error: true
+
+      - name: Lint feed definitions
+        run: python src/feed_lint.py --config src/sources.yaml
+
+      - name: Run tests
+        run: python -m pytest tests/ -q

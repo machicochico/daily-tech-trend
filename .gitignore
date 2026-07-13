@@ -40,21 +40,26 @@ data/
 src/data/
 logs/
 
-# GitHub Pages output
+# GitHub Pages output（公開対象のディレクトリ/ファイルのみ許可）
 docs/*
 !docs/index.html
+!docs/search.html
+!docs/sitemap.xml
+!docs/feed.xml
+!docs/search-index.json
 !docs/news/
-!docs/news/index.html
 !docs/ops/
-!docs/ops/index.html
-!docs/opinion/
-!docs/opinion/index.html
 !docs/forecast/
-!docs/forecast/index.html
 !docs/tech/
-!docs/tech/index.html
+!docs/topic/
+!docs/entity/
+!docs/diff/
+!docs/exec/
+!docs/api/
 !docs/assets/
-!docs/assets/css/
-!docs/assets/css/common.css
-!docs/assets/js/
-!docs/assets/js/common.js
+
+# ローカル作業用ツール・環境（コミットしない）
+★*.bat
+01_git pull.bat
+.claude/
+docs_backup/
