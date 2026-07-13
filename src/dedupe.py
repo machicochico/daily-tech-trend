@@ -1,3 +1,4 @@
+import logging
 import re
 import time
 import unicodedata
@@ -5,6 +6,8 @@ from collections import defaultdict
 from datetime import datetime
 from typing import Dict
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+
+logger = logging.getLogger(__name__)
 
 from difflib import SequenceMatcher
 
@@ -219,7 +222,7 @@ def log_decision(
 
 def main():
     t0 = _now_sec()
-    print("[TIME] step=dedupe start")
+    logger.info("step=dedupe start")
 
     conn = connect()
     cur = conn.cursor()
@@ -348,15 +351,19 @@ def main():
                 seen_by_norm_url[norm_url] = kept_entry
 
         if idx % 500 == 0:
-            print(
-                f"[TIME] dedupe progress processed={idx}/{len(rows)} "
-                f"deleted={deleted} candidate_checked={candidate_checked} sec={_now_sec() - t0:.1f}"
+            logger.info(
+                "dedupe progress processed=%d/%d deleted=%d candidate_checked=%d sec=%.1f",
+                idx, len(rows), deleted, candidate_checked, _now_sec() - t0,
             )
 
     conn.commit()
     conn.close()
-    print(f"[TIME] step=dedupe end sec={_now_sec() - t0:.1f} deleted={deleted} total={len(rows)}")
+    logger.info("step=dedupe end sec=%.1f deleted=%d total=%d", _now_sec() - t0, deleted, len(rows))
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
     main()

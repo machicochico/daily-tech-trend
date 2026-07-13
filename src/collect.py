@@ -1,6 +1,7 @@
 import feedparser
+import os
 import yaml
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from collections import defaultdict
 from pathlib import Path
@@ -8,6 +9,7 @@ from pathlib import Path
 from db import init_db, connect
 
 from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
+import logging
 import re
 import time
 from functools import lru_cache
@@ -18,6 +20,8 @@ import urllib.request
 import urllib.error
 import html as _html
 import socket
+
+logger = logging.getLogger(__name__)
 import ssl
 
 import certifi
@@ -44,6 +48,12 @@ MIN_CONTENT_CHARS = 200          # RSS本文がこれ未満なら「薄い」と
 MAX_FETCH_BYTES = 2_000_000      # 取得上限 2MB（暴走防止）
 FETCH_TIMEOUT_SEC = 15
 LOG_DETAIL_LIMIT_PER_RUN = 20
+
+# feedparser / urllib など、呼び出し側で timeout を指定できない経路の
+# 無限ハング対策として、プロセス全体のソケット既定 timeout を強制する。
+# 個別に timeout 指定がある経路 (requests.get 等) はそちらが優先される。
+if socket.getdefaulttimeout() is None:
+    socket.setdefaulttimeout(FETCH_TIMEOUT_SEC)
 MANUFACTURING_KEYWORDS_PATH = Path(__file__).with_name("keywords_manufacturing.yaml")
 
 # 同意画面/JS依存など、取得しても本文抽出できない・リスク高いドメインは除外
@@ -107,7 +117,8 @@ def fetch_fulltext(url: str, source: str = "") -> str:
                 raise ValueError("content_too_short")
 
             return text
-    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, socket.timeout, ValueError):
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, socket.timeout, ValueError) as e:
+        logger.warning("fetch_fulltext failed url=%s err=%s: %s", url[:120], type(e).__name__, e)
         return ""
 
 
@@ -191,14 +202,27 @@ def append_collect_health_log(*, stats: dict, started_at: datetime, ended_at: da
     }
     with log_path.open("a", encoding="utf-8") as f:
         f.write(json.dumps(payload, ensure_ascii=False) + "\n")
+    _rotate_collect_health_logs(log_path.parent, ended_at)
+
+
+def _rotate_collect_health_logs(log_dir: Path, now: datetime, keep_days: int = 90):
+    """90日より古い collect_health_*.jsonl を削除する（無期限蓄積の防止）。"""
+    cutoff = (now - timedelta(days=keep_days)).strftime("%Y%m%d")
+    try:
+        for p in log_dir.glob("collect_health_*.jsonl"):
+            day = p.stem.removeprefix("collect_health_")
+            if day.isdigit() and day < cutoff:
+                p.unlink(missing_ok=True)
+    except OSError as e:
+        logger.warning("collect_health log rotation failed: %s", e)
 
 
 def print_collect_summary(stats: dict):
     top_sources = sorted(stats["by_source"].items(), key=lambda x: x[1], reverse=True)[:5]
     top_error_types = sorted(stats["by_error_type"].items(), key=lambda x: x[1], reverse=True)[:5]
-    print(f"[INFO] collect failure summary total={stats['total']} suppressed_logs={stats['suppressed_logs']}")
-    print(f"[INFO] collect failure top_sources={top_sources}")
-    print(f"[INFO] collect failure top_error_types={top_error_types}")
+    logger.info("collect failure summary total=%d suppressed_logs=%d", stats['total'], stats['suppressed_logs'])
+    logger.info("collect failure top_sources=%s", top_sources)
+    logger.info("collect failure top_error_types=%s", top_error_types)
 
 
 DROP_QS = {"utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "ref", "fbclid", "gclid"}
@@ -449,10 +473,9 @@ def upsert_feed_health(cur, feed_url: str, health: dict):
 
 
 def log_feed_health(*, source: str, url: str, error_type: str, failure_count: int, suspended: bool):
-    print(
-        "[INFO] feed_health "
-        f"source={source} url={url} error_type={error_type} "
-        f"failure_count={failure_count} suspended={int(suspended)}"
+    logger.info(
+        "feed_health source=%s url=%s error_type=%s failure_count=%d suspended=%d",
+        source, url, error_type, failure_count, int(suspended),
     )
 
 
@@ -513,21 +536,96 @@ def _parse_feed_with_requests(url: str, *, tls_mode: str):
     return feedparser.parse(response.content)
 
 
+# --- フィード並列プリフェッチ --------------------------------------------
+# ネットワーク I/O のみ並列化し、DB 書き込みは既存の逐次ループに任せる。
+FEED_FETCH_WORKERS = int(os.environ.get("FEED_FETCH_WORKERS", "5"))
+# 個別 timeout をすり抜けた場合の保険: プリフェッチ全体の総時間制限（秒）。
+FEED_FETCH_TOTAL_TIMEOUT = int(os.environ.get("FEED_FETCH_TOTAL_TIMEOUT", "600"))
+
+
+def _fetch_single_feed(feed: dict):
+    """requests 経由で 1 フィードを取得し feedparser でパースする。
+
+    feedparser.parse(url) を直接呼ぶと内部 urllib に timeout が効かず、
+    応答遅延のあるサーバで無限ハングするため、必ず timeout 付き requests を経由する。
+
+    戻り値は (feed_url, parsed, err) のタプル。err が非 None なら例外発生を示す。
+    """
+    tls_mode = (feed.get("tls_mode") or "strict").lower()
+    try:
+        d = _parse_feed_with_requests(feed["url"], tls_mode=tls_mode)
+        return (feed["url"], d, None)
+    except Exception as e:
+        return (feed["url"], None, e)
+
+
+def _prefetch_feeds(feed_list: list[dict]) -> dict:
+    """複数フィードを並列取得し、url -> parsed のマップを返す。
+
+    取得に失敗したフィードはマップに含めない（逐次ループ側で従来通り取り直す）。
+    個別 timeout（socket.setdefaulttimeout / requests.get timeout）をすり抜けた
+    異常系に備え、全体で FEED_FETCH_TOTAL_TIMEOUT 秒経過したら打ち切る。
+    """
+    from concurrent.futures import ThreadPoolExecutor, TimeoutError, as_completed
+
+    workers = max(1, min(FEED_FETCH_WORKERS, len(feed_list) or 1))
+    results: dict[str, object] = {}
+    timed_out = 0
+    ex = ThreadPoolExecutor(max_workers=workers)
+    try:
+        futures = [ex.submit(_fetch_single_feed, f) for f in feed_list]
+        try:
+            for fut in as_completed(futures, timeout=FEED_FETCH_TOTAL_TIMEOUT):
+                try:
+                    url, parsed, err = fut.result()
+                except Exception as e:
+                    logger.warning("prefetch worker crashed err=%s", e)
+                    continue
+                if err is None and parsed is not None:
+                    results[url] = parsed
+        except TimeoutError:
+            timed_out = sum(1 for fut in futures if not fut.done())
+            logger.warning(
+                "prefetch total timeout exceeded sec=%d pending=%d; "
+                "残りのフィードは逐次ループで再取得する",
+                FEED_FETCH_TOTAL_TIMEOUT, timed_out,
+            )
+    finally:
+        # 実行中スレッドは cancel できない（socket timeout が効く前提）が、
+        # 待機中の future は cancel し、__exit__ の wait=True ブロックを避ける。
+        ex.shutdown(wait=False, cancel_futures=True)
+    logger.info(
+        "prefetch done total=%d success=%d workers=%d timed_out=%d",
+        len(feed_list), len(results), workers, timed_out,
+    )
+    return results
+
+
 def main():
     started_at = datetime.now(timezone.utc)
     t0 = _now_sec()
-    print("[TIME] step=collect start")
+    logger.info("step=collect start")
     init_db()
+    logger.info("step=collect init_db done")
 
     with open("src/sources.yaml", encoding="utf-8") as f:
         cfg = yaml.safe_load(f) or {}
 
     feed_list = load_feed_list(cfg)
+    logger.info(
+        "feeds loaded total=%d workers=%d fetch_timeout=%ds total_timeout=%ds",
+        len(feed_list), FEED_FETCH_WORKERS,
+        FETCH_TIMEOUT_SEC, FEED_FETCH_TOTAL_TIMEOUT,
+    )
 
     conn = connect()
     cur = conn.cursor()
     source_week_new_count = defaultdict(int)
     failure_stats = init_failure_stats()
+
+    # ネットワーク I/O 部のみ並列化し、結果を url -> parsed のマップに格納する。
+    # DB 書き込みは既存ループで逐次実行するため、ここではフェッチのみを並列化する。
+    prefetched = _prefetch_feeds(feed_list)
 
     for feed in feed_list:
         loop_now = datetime.now(timezone.utc)
@@ -535,9 +633,9 @@ def main():
         health = get_feed_health(cur, feed["url"])
         suspend_until = _parse_iso8601(health.get("suspend_until"))
         if suspend_until and suspend_until > loop_now:
-            print(
-                f"[INFO] feed suspended source={feed.get('source', '')} "
-                f"url={feed['url']} suspend_until={health.get('suspend_until', '')}"
+            logger.info(
+                "feed suspended source=%s url=%s suspend_until=%s",
+                feed.get('source', ''), feed['url'], health.get('suspend_until', ''),
             )
             log_feed_health(
                 source=feed.get("source", ""),
@@ -550,10 +648,15 @@ def main():
 
         fetch_count = 0
         fetch_limit = 30  # Forest Watchは30件全部補完してもよい
-        # d = feedparser.parse(feed["url"])
         tls_mode = (feed.get("tls_mode") or "strict").lower()
+        # 並列プリフェッチ結果がある場合はそれを使う。
+        # 失敗時のみ従来のリトライ/フォールバック経路に入る。
+        prefetched_d = prefetched.get(feed["url"])
         try:
-            d = feedparser.parse(feed["url"], request_headers=HEADERS)
+            if prefetched_d is not None:
+                d = prefetched_d
+            else:
+                d = feedparser.parse(feed["url"], request_headers=HEADERS)
         except ssl.SSLError as e:
             error_type = classify_error(e)
             should_log, suppressed = record_failure(
@@ -563,12 +666,12 @@ def main():
                 error_type=error_type,
             )
             if should_log:
-                print(
-                    f"[WARN] feed fetch failed source={feed.get('source', '')} "
-                    f"url={feed['url']} tls_mode={tls_mode} error_type={error_type} err={e}"
+                logger.warning(
+                    "feed fetch failed source=%s url=%s tls_mode=%s error_type=%s err=%s",
+                    feed.get('source', ''), feed['url'], tls_mode, error_type, e,
                 )
             elif suppressed == 1:
-                print("[INFO] collect failure detailed logs are now rate-limited")
+                logger.info("collect failure detailed logs are now rate-limited")
             try:
                 d = _parse_feed_with_requests(feed["url"], tls_mode=tls_mode)
             except requests.exceptions.SSLError as retry_e:
@@ -580,12 +683,12 @@ def main():
                     error_type=retry_error_type,
                 )
                 if should_log:
-                    print(
-                        f"[WARN] feed fetch retry failed source={feed.get('source', '')} "
-                        f"url={feed['url']} tls_mode={tls_mode} error_type={retry_error_type} err={retry_e}"
+                    logger.warning(
+                        "feed fetch retry failed source=%s url=%s tls_mode=%s error_type=%s err=%s",
+                        feed.get('source', ''), feed['url'], tls_mode, retry_error_type, retry_e,
                     )
                 elif suppressed == 1:
-                    print("[INFO] collect failure detailed logs are now rate-limited")
+                    logger.info("collect failure detailed logs are now rate-limited")
                 mark_feed_failure(cur, feed=feed, error_type=retry_error_type, now_iso=now_iso)
                 continue
             except (requests.RequestException, ValueError, OSError) as retry_e:
@@ -597,12 +700,12 @@ def main():
                     error_type=retry_error_type,
                 )
                 if should_log:
-                    print(
-                        f"[WARN] feed fetch retry failed source={feed.get('source', '')} "
-                        f"url={feed['url']} tls_mode={tls_mode} error_type={retry_error_type} err={retry_e}"
+                    logger.warning(
+                        "feed fetch retry failed source=%s url=%s tls_mode=%s error_type=%s err=%s",
+                        feed.get('source', ''), feed['url'], tls_mode, retry_error_type, retry_e,
                     )
                 elif suppressed == 1:
-                    print("[INFO] collect failure detailed logs are now rate-limited")
+                    logger.info("collect failure detailed logs are now rate-limited")
                 mark_feed_failure(cur, feed=feed, error_type=retry_error_type, now_iso=now_iso)
                 continue
         except (urllib.error.URLError, ValueError, OSError) as e:
@@ -614,12 +717,12 @@ def main():
                 error_type=error_type,
             )
             if should_log:
-                print(
-                    f"[WARN] feed fetch failed source={feed.get('source', '')} "
-                    f"url={feed['url']} error_type={error_type} err={e}"
+                logger.warning(
+                    "feed fetch failed source=%s url=%s error_type=%s err=%s",
+                    feed.get('source', ''), feed['url'], error_type, e,
                 )
             elif suppressed == 1:
-                print("[INFO] collect failure detailed logs are now rate-limited")
+                logger.info("collect failure detailed logs are now rate-limited")
             mark_feed_failure(cur, feed=feed, error_type=error_type, now_iso=now_iso)
             continue
 
@@ -627,7 +730,7 @@ def main():
         bozo = getattr(d, "bozo", 0)
         if bozo:
             # 壊れたXMLでも entries が取れることがあるので続行はする
-            print(f"[WARN] malformed feed source={feed.get('source', '')} url={feed['url']} err={getattr(d, 'bozo_exception', '')}")
+            logger.warning("malformed feed source=%s url=%s err=%s", feed.get('source', ''), feed['url'], getattr(d, 'bozo_exception', ''))
 
         if bozo and not entries:
             mark_feed_failure(cur, feed=feed, error_type="bozo_empty", now_iso=now_iso)
@@ -640,12 +743,12 @@ def main():
         for e in entries[:limit]:
             raw_link = getattr(e, "link", None)
             if not raw_link:
-                print(f"[WARN] skip entry without link source={feed.get('source', '')} feed_url={feed['url']}")
+                logger.warning("skip entry without link source=%s feed_url=%s", feed.get('source', ''), feed['url'])
                 continue
             link = normalize_url(raw_link)
             title = getattr(e, "title", None)
             if not link or not title:
-                print(f"[WARN] skip invalid entry source={feed.get('source', '')} feed_url={feed['url']} url={raw_link}")
+                logger.warning("skip invalid entry source=%s feed_url=%s url=%s", feed.get('source', ''), feed['url'], raw_link)
                 continue
             content = ""
 
@@ -658,8 +761,9 @@ def main():
             content = strip_html(content)
 
             if is_arxiv_feed(feed) and not matches_manufacturing_keywords(title, content):
-                print(
-                    f"[INFO] skip arxiv entry by manufacturing filter source={feed.get('source', '')} title={title[:80]}"
+                logger.info(
+                    "skip arxiv entry by manufacturing filter source=%s title=%s",
+                    feed.get('source', ''), title[:80],
                 )
                 continue
 
@@ -776,9 +880,9 @@ def main():
         """
     )
     for feed_url, failure_count, suspend_until in cur.fetchall():
-        print(
-            "[INFO] daily feed failure ranking "
-            f"url={feed_url} failure_count={failure_count} suspended={int(bool(suspend_until))}"
+        logger.info(
+            "daily feed failure ranking url=%s failure_count=%d suspended=%d",
+            feed_url, failure_count, int(bool(suspend_until)),
         )
 
     conn.commit()
@@ -789,8 +893,12 @@ def main():
     append_collect_health_log(stats=failure_stats, started_at=started_at, ended_at=ended_at)
 
     sec = _now_sec() - t0
-    print(f"[TIME] step=collect end sec={sec:.1f}")
+    logger.info("step=collect end sec=%.1f", sec)
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
     main()

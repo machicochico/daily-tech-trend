@@ -1,6 +1,7 @@
 import argparse
 import os
 import re
+import sqlite3
 import sys
 import time
 
@@ -9,7 +10,7 @@ from llm_insights_api import (
     _get_lm_content,
     call_llm,
     call_llm_short_news,
-    post_lmstudio,
+    post_ollama,
 )
 from llm_insights_pipeline import (
     compute_src_hash,
@@ -43,6 +44,12 @@ def _parse_args(argv: list[str]):
         default=int(os.environ.get("LLM_MAX_SEC", "300") or "300"),
         help="Maximum processing time in seconds (default: env LLM_MAX_SEC or 300)",
     )
+    parser.add_argument(
+        "--delay",
+        type=float,
+        default=float(os.environ.get("LLM_DELAY_SEC", "3") or "3"),
+        help="Delay in seconds between LLM requests (default: env LLM_DELAY_SEC or 3)",
+    )
     return parser.parse_args(argv)
 
 
@@ -60,51 +67,52 @@ def main():
     limit = args.limit
     rescue = args.rescue
     max_sec = max(0, int(args.max_sec or 0))
+    delay = max(0.0, float(args.delay or 0))
 
     conn = connect()
-    rows = pick_topic_inputs(conn, limit=limit, rescue=rescue)
-    pending = 0
+    try:
+        rows = pick_topic_inputs(conn, limit=limit, rescue=rescue)
 
-    for r in rows:
-        if max_sec and (_now_sec() - t0) >= max_sec:
-            print(f"[TIME] llm budget reached sec={_now_sec() - t0:.1f} max_sec={max_sec}")
-            break
-        topic_id = r["topic_id"]
-        try:
-            title = (r["topic_title"] or "").strip()
-            url = (r["url"] or "").strip()
-            body = (r["body"] or "").strip()
-            src_hash = compute_src_hash(title, url, body)
+        for r in rows:
+            if max_sec and (_now_sec() - t0) >= max_sec:
+                print(f"[TIME] llm budget reached sec={_now_sec() - t0:.1f} max_sec={max_sec}")
+                break
+            topic_id = r["topic_id"]
+            try:
+                title = (r["topic_title"] or "").strip()
+                url = (r["url"] or "").strip()
+                body = (r["body"] or "").strip()
+                src_hash = compute_src_hash(title, url, body)
 
-            prev_hash = (r["prev_src_hash"] or "").strip()
-            if (not rescue) and prev_hash and (prev_hash == src_hash):
-                print(f"[SKIP] same src_hash topic_id={topic_id}")
-                continue
+                prev_hash = (r["prev_src_hash"] or "").strip()
+                if (not rescue) and prev_hash and (prev_hash == src_hash):
+                    print(f"[SKIP] same src_hash topic_id={topic_id}")
+                    continue
 
-            t1 = _now_sec()
-            category = _row_get(r, "category", "other") or "other"
-            kind = _row_get(r, "kind", "")
-            raw = call_llm(title, category, url, body, kind=kind)
-            ins = postprocess_insight(raw, r)
-            print(f"[TIME] llm_one topic={topic_id} sec={_now_sec() - t1:.1f}")
+                t1 = _now_sec()
+                category = _row_get(r, "category", "other") or "other"
+                kind = _row_get(r, "kind", "")
+                raw = call_llm(title, category, url, body, kind=kind)
+                ins = postprocess_insight(raw, r)
+                print(f"[TIME] llm_one topic={topic_id} sec={_now_sec() - t1:.1f}")
 
-            upsert_insight(conn, topic_id, ins, r["src_article_id"], src_hash)
-            pending += 1
-            if pending >= 50:
+                upsert_insight(conn, topic_id, ins, r["src_article_id"], src_hash)
                 conn.commit()
-                pending = 0
-            print(f"[OK] insight saved topic_id={topic_id} imp={ins['importance']} cat={r['category']}")
-        except (RuntimeError, ValueError, TypeError) as e:
-            print(
-                "[WARN] insight skipped "
-                f"topic_id={topic_id} cat={_row_get(r, 'category', '')} source={_row_get(r, 'source', '')} "
-                f"url={_row_get(r, 'url', '')} err={e}"
-            )
-            continue
-
-    if pending:
-        conn.commit()
-
+                print(f"[OK] insight saved topic_id={topic_id} imp={ins['importance']} cat={r['category']}")
+                if delay > 0:
+                    time.sleep(delay)
+            except sqlite3.Error:
+                # DB異常は全トピックで再発するため握りつぶさず停止させる
+                raise
+            except Exception as e:
+                print(
+                    "[WARN] insight skipped "
+                    f"topic_id={topic_id} cat={_row_get(r, 'category', '')} source={_row_get(r, 'source', '')} "
+                    f"url={_row_get(r, 'url', '')} err={e}"
+                )
+                continue
+    finally:
+        conn.close()
     print(f"[TIME] step=llm end sec={_now_sec() - t0:.1f}")
 
 

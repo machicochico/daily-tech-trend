@@ -1,7 +1,10 @@
+import logging
 import re
 from datetime import datetime, timezone
 from rapidfuzz import fuzz
 from db import connect
+
+logger = logging.getLogger(__name__)
 
 # トピック統合が粗くなりすぎないよう、統合閾値を引き上げる
 TOPIC_SIM = 88
@@ -106,6 +109,9 @@ def mark_news_representative_articles(cur):
     )
 
 def main():
+    import time as _time
+    t0 = _time.perf_counter()
+    logger.info("step=thread start")
     conn = connect()
     cur = conn.cursor()
     now = datetime.now(timezone.utc).isoformat()
@@ -147,7 +153,6 @@ def main():
                 INSERT OR IGNORE INTO topics(topic_key, title, category, kind, region, created_at)
                 VALUES(?,?,?,?,?,?)
             """, (key, title[:200], cat, kind, region, now))
-            conn.commit()
 
             cur.execute("SELECT id, title FROM topics WHERE topic_key=?", (key,))
             row = cur.fetchone()
@@ -187,6 +192,11 @@ def main():
 
     conn.commit()
     conn.close()
+    logger.info("step=thread end sec=%.1f", _time.perf_counter() - t0)
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
     main()

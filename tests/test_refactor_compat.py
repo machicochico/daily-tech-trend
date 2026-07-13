@@ -37,4 +37,4 @@ def test_llm_postprocess_news_fills_required_fields():
 
 def test_llm_wrapper_exports():
     assert callable(llm_insights_local.call_llm)
-    assert callable(llm_insights_local.post_lmstudio)
+    assert callable(llm_insights_local.post_ollama)

@@ -284,9 +284,9 @@ def upsert_insight(conn, topic_id, insight, src_article_id: int | None, src_hash
         """
     INSERT INTO topic_insights(
         topic_id, importance, type, summary, key_points, evidence_urls, tags,
-        perspectives, updated_at, src_article_id, src_hash, inferred
+        perspectives, perspective_digest, updated_at, src_article_id, src_hash, inferred
       )
-      VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
       ON CONFLICT(topic_id) DO UPDATE SET
         importance=excluded.importance,
         type=excluded.type,
@@ -295,6 +295,7 @@ def upsert_insight(conn, topic_id, insight, src_article_id: int | None, src_hash
         evidence_urls=excluded.evidence_urls,
         tags=excluded.tags,
         perspectives=excluded.perspectives,
+        perspective_digest=excluded.perspective_digest,
         updated_at=excluded.updated_at,
         src_article_id=excluded.src_article_id,
         src_hash=excluded.src_hash,
@@ -309,6 +310,7 @@ def upsert_insight(conn, topic_id, insight, src_article_id: int | None, src_hash
             json.dumps(insight.get("evidence_urls") or [], ensure_ascii=False),
             json.dumps(insight.get("tags") or [], ensure_ascii=False),
             json.dumps(insight.get("perspectives") or {}, ensure_ascii=False),
+            json.dumps(insight.get("perspective_digest") or {}, ensure_ascii=False),
             _now(),
             src_article_id,
             src_hash,

@@ -40,7 +40,7 @@ def test_call_llm_short_news_uses_normalized_perspectives(monkeypatch):
     )
 
     monkeypatch.setattr(llm_insights_api, "_pick_usable_model", lambda *args, **kwargs: "dummy/model")
-    monkeypatch.setattr(llm_insights_api, "post_lmstudio", lambda *_args, **_kwargs: DummyResponse(payload))
+    monkeypatch.setattr(llm_insights_api, "post_ollama", lambda *_args, **_kwargs: DummyResponse(payload))
 
     got = llm_insights_api.call_llm_short_news("タイトル", "本文", url="https://example.com")
 

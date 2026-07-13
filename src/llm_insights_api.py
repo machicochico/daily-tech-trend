@@ -407,6 +407,116 @@ def _normalize_perspectives(raw) -> dict:
     return normalized
 
 
+_DIGEST_MIN_LEN = 80
+_DIGEST_MAX_LEN = 260
+_DIGEST_PROMPT_SAMPLES = [
+    "技術者向けの考え方・推奨行動・注意点を含む200字前後の説明",
+    "経営者向けの考え方・推奨行動・注意点を含む200字前後の説明",
+    "消費者向けの考え方・推奨行動・注意点を含む200字前後の説明",
+    "技術者向けの考え方・推奨行動・注意点（2〜3文）",
+    "経営者向けの考え方・推奨行動・注意点（2〜3文）",
+    "消費者向けの考え方・推奨行動・注意点（2〜3文）",
+]
+
+
+def _extract_evidence_domain(evidence_urls) -> str:
+    """evidence_urls先頭の有効なURLから参考ドメインを抽出。取得不能なら空文字。"""
+    from urllib.parse import urlparse
+
+    for u in (evidence_urls or []):
+        if not isinstance(u, str) or not u.strip():
+            continue
+        try:
+            netloc = urlparse(u.strip()).netloc
+        except Exception:
+            netloc = ""
+        if netloc:
+            return netloc
+    return ""
+
+
+def _normalize_perspective_digest(raw, evidence_urls=None) -> dict:
+    """立場別200字サマリーを正規化する。短すぎる(生成失敗疑い)場合は空にしてフォールバック対象にする。"""
+    normalized = {"engineer": "", "management": "", "consumer": ""}
+    if not isinstance(raw, dict):
+        return normalized
+
+    domain = _extract_evidence_domain(evidence_urls)
+    suffix = f"（参考: {domain}）" if domain else "（参考情報未取得）"
+
+    key_aliases = {
+        "engineer": "engineer", "技術者目線": "engineer", "技術者": "engineer", "エンジニア": "engineer",
+        "management": "management", "経営者目線": "management", "経営": "management", "マネジメント": "management",
+        "consumer": "consumer", "消費者目線": "consumer", "利用者目線": "consumer", "ユーザー目線": "consumer", "生活者目線": "consumer",
+    }
+
+    for k, v in raw.items():
+        canonical = key_aliases.get(str(k).strip().lower()) or key_aliases.get(str(k).strip())
+        if not canonical:
+            continue
+        text = v.strip() if isinstance(v, str) else ""
+        if any(sample in text for sample in _DIGEST_PROMPT_SAMPLES):
+            text = ""
+        if not text or len(text) < _DIGEST_MIN_LEN:
+            continue
+        if "（参考:" in text or "参考情報未取得" in text:
+            body_text = text
+        else:
+            max_body_len = _DIGEST_MAX_LEN - len(suffix)
+            if len(text) > max_body_len:
+                text = text[:max_body_len].rstrip() + "…"
+            body_text = text + suffix
+        normalized[canonical] = body_text
+    return normalized
+
+
+def call_llm_perspective_digest(title: str, summary: str, perspectives_short: dict, url: str = "") -> dict:
+    """既存の短いperspectives(50字)を土台に、行動につながる200字前後の立場別サマリーを生成する。"""
+    short = perspectives_short or {}
+    system = (
+        "あなたはニュース記事の立場別サマリー作成アシスタント。出力はJSONのみ。前置きの思考や説明文は出力しない。"
+        "perspective_digest は {engineer,management,consumer} の3キー。"
+        "各値は2〜3文の日本語で、考え方→推奨行動→注意点の順に書く。文字数を数えようとしなくてよい。"
+        "本文に明記のない内容は必ず '推測: ' から始める。"
+        "同じ文言の使い回し・カタログ的な羅列は禁止。参考情報URLへの言及は書かなくてよい（別途自動付与される）。"
+    )
+    user = (
+        f"タイトル: {title}\n要約: {summary}\nURL: {url}\n"
+        f"技術者向け短評: {short.get('engineer', '')}\n"
+        f"経営者向け短評: {short.get('management', '')}\n"
+        f"消費者向け短評: {short.get('consumer', '')}\n\n"
+        "次のJSONを出力:\n"
+        "{\n"
+        '  "perspective_digest": {\n'
+        '    "engineer": "技術者向けの考え方・推奨行動・注意点（2〜3文）",\n'
+        '    "management": "経営者向けの考え方・推奨行動・注意点（2〜3文）",\n'
+        '    "consumer": "消費者向けの考え方・推奨行動・注意点（2〜3文）"\n'
+        "  }\n"
+        "}\n"
+    )
+    payload = {
+        "model": _pick_usable_model(),
+        "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
+        "temperature": 0.4,
+        "max_tokens": 900,
+        # gpt-oss系は文字数を厳密に狙う指示があると reasoning が肥大化し、
+        # max_tokens を使い切って本文が空になることを実機検証で確認済み（finish_reason=length）。
+        # reasoning_effort を下げて本文生成に確実にトークンを残す。
+        "reasoning_effort": "low",
+    }
+    r = post_ollama(payload, timeout=LLM_SHORT_TIMEOUT_SEC)
+    s = _get_lm_content(r)
+    candidate = _extract_json_object(s)
+    digest = {}
+    if candidate:
+        try:
+            obj = json.loads(candidate)
+            digest = obj.get("perspective_digest") or {}
+        except Exception:
+            digest = {}
+    return _normalize_perspective_digest(digest, evidence_urls=[url] if url else [])
+
+
 def call_llm_short_news(title: str, body: str, url: str = "") -> dict:
     system = (
         "あなたはニュース記事の要約アシスタント。出力はJSONのみ。"

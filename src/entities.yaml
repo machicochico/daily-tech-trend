@@ -1,0 +1,147 @@
+# エンティティ辞書（entities.py が読み込む）
+# name: 表示名 / kind: company | product | org / aliases: 照合パターン
+# 照合ルール: ASCII の alias は単語境界つき・大文字小文字無視で照合。
+#   日本語 alias は部分一致。誤マッチを避けるため 2 文字以下の alias は書かない。
+entities:
+  # --- IT大手 ---
+  - name: Microsoft
+    kind: company
+    aliases: [Microsoft, マイクロソフト]
+  - name: Google
+    kind: company
+    aliases: [Google, グーグル, Alphabet]
+  - name: Amazon
+    kind: company
+    aliases: [Amazon, AWS, アマゾン]
+  - name: Apple
+    kind: company
+    aliases: [Apple, アップル]
+  - name: Meta
+    kind: company
+    aliases: [Meta, Facebook, メタ社]
+  - name: OpenAI
+    kind: company
+    aliases: [OpenAI, ChatGPT]
+  - name: Anthropic
+    kind: company
+    aliases: [Anthropic, アンソロピック]
+  - name: NVIDIA
+    kind: company
+    aliases: [NVIDIA, エヌビディア]
+  - name: Intel
+    kind: company
+    aliases: [Intel, インテル]
+  - name: AMD
+    kind: company
+    aliases: [AMD]
+  - name: IBM
+    kind: company
+    aliases: [IBM]
+  - name: Oracle
+    kind: company
+    aliases: [Oracle, オラクル]
+  - name: Cisco
+    kind: company
+    aliases: [Cisco, シスコ]
+  - name: Samsung
+    kind: company
+    aliases: [Samsung, サムスン]
+  - name: TSMC
+    kind: company
+    aliases: [TSMC]
+  - name: SAP
+    kind: company
+    aliases: [SAP]
+  - name: Siemens
+    kind: company
+    aliases: [Siemens, シーメンス]
+
+  # --- 国内IT・製造 ---
+  - name: 日立製作所
+    kind: company
+    aliases: [Hitachi, 日立製作所, 日立]
+  - name: 富士通
+    kind: company
+    aliases: [Fujitsu, 富士通]
+  - name: NEC
+    kind: company
+    aliases: [NEC]
+  - name: NTT
+    kind: company
+    aliases: [NTT]
+  - name: ソニー
+    kind: company
+    aliases: [Sony, ソニー]
+  - name: パナソニック
+    kind: company
+    aliases: [Panasonic, パナソニック]
+  - name: 三菱重工
+    kind: company
+    aliases: [Mitsubishi Heavy, 三菱重工]
+  - name: トヨタ
+    kind: company
+    aliases: [Toyota, トヨタ]
+
+  # --- 鉄鋼 ---
+  - name: POSCO
+    kind: company
+    aliases: [POSCO, ポスコ]
+  - name: Nippon Steel
+    kind: company
+    aliases: [Nippon Steel, 日本製鉄, 新日鉄]
+  - name: JFE
+    kind: company
+    aliases: [JFEスチール, JFE Steel, JFE]
+  - name: 神戸製鋼
+    kind: company
+    aliases: [Kobe Steel, 神戸製鋼, コベルコ]
+  - name: ArcelorMittal
+    kind: company
+    aliases: [ArcelorMittal, アルセロール・ミッタル]
+  - name: 中国宝武鋼鉄
+    kind: company
+    aliases: [Baowu, 宝武鋼鉄, 宝武]
+  - name: Tata Steel
+    kind: company
+    aliases: [Tata Steel, タタ製鉄]
+  - name: Nucor
+    kind: company
+    aliases: [Nucor, ニューコア]
+  - name: thyssenkrupp
+    kind: company
+    aliases: [thyssenkrupp, ティッセンクルップ]
+
+  # --- 製品・技術 ---
+  - name: Claude
+    kind: product
+    aliases: [Claude, クロード]
+  - name: GPT
+    kind: product
+    aliases: [GPT-4, GPT-5, GPT-6]
+  - name: Gemini
+    kind: product
+    aliases: [Gemini]
+  - name: Llama
+    kind: product
+    aliases: [Llama]
+  - name: Copilot
+    kind: product
+    aliases: [Copilot, コパイロット]
+  - name: Windows
+    kind: product
+    aliases: [Windows 10, Windows 11, Windows Server, Windows]
+  - name: Linux
+    kind: product
+    aliases: [Linux]
+  - name: Kubernetes
+    kind: product
+    aliases: [Kubernetes, k8s]
+  - name: Azure
+    kind: product
+    aliases: [Azure]
+  - name: Android
+    kind: product
+    aliases: [Android]
+  - name: iPhone
+    kind: product
+    aliases: [iPhone]

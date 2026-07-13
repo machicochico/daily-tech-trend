@@ -50,9 +50,13 @@ def test_translate_news_titles_skips_request_failures_and_keeps_running(monkeypa
 class DummyConn:
     def __init__(self):
         self.commit_count = 0
+        self.closed = False
 
     def commit(self):
         self.commit_count += 1
+
+    def close(self):
+        self.closed = True
 
 
 def test_llm_main_skips_expected_generation_errors(monkeypatch, capsys):

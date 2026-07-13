@@ -10,12 +10,20 @@ def _now_sec():
 
 API = "https://translate.googleapis.com/translate_a/single"
 
-def translate(text: str) -> str:
+def translate(text: str, retries: int = 2) -> str:
     params = {"client":"gtx","sl":"en","tl":"ja","dt":"t","q":text}
-    r = requests.get(API, params=params, timeout=15)
-    r.raise_for_status()
-    data = r.json()
-    return "".join([x[0] for x in data[0] if x and x[0]])
+    last_err = None
+    for attempt in range(retries + 1):
+        try:
+            r = requests.get(API, params=params, timeout=15)
+            r.raise_for_status()
+            data = r.json()
+            return "".join([x[0] for x in data[0] if x and x[0]])
+        except (RequestException, ValueError) as e:
+            last_err = e
+            if attempt < retries:
+                time.sleep(1.0 * (attempt + 1))
+    raise last_err
 
 def looks_english(text: str) -> bool:
     return bool(re.search(r"[A-Za-z]", text or ""))

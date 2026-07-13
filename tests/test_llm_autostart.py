@@ -22,8 +22,12 @@ class DummySession:
     def __init__(self, get_results=None):
         self.get_results = list(get_results or [])
         self.post_calls = 0
+        self.ollama_post_calls = 0
 
-    def get(self, *_args, **_kwargs):
+    def get(self, url="", *_args, **_kwargs):
+        # /api/ps へのリクエストには空のモデルリストを返す
+        if "/api/ps" in str(url):
+            return DummyResponse(status_code=200, payload={"models": []})
         if not self.get_results:
             raise RuntimeError("not ready")
         result = self.get_results.pop(0)
@@ -31,47 +35,41 @@ class DummySession:
             raise result
         return DummyResponse(status_code=result)
 
-    def post(self, *_args, **_kwargs):
+    def post(self, url="", *_args, **_kwargs):
+        # /api/generate（モデルロード/アンロード）は別カウント
+        if "/api/generate" in str(url):
+            self.ollama_post_calls += 1
+            return DummyResponse()
         self.post_calls += 1
         return DummyResponse()
 
 
 def _reset_flags():
-    llm_insights_api._LMSTUDIO_READY = False
+    llm_insights_api._OLLAMA_READY = False
     llm_insights_api._AUTOSTART_ATTEMPTED = False
+    llm_insights_api._MODEL_PREPARED = False
     llm_insights_api._SELECTED_MODEL = None
     llm_insights_api._FAILED_MODELS = set()
     llm_insights_api._LOAD_ATTEMPTED_MODELS = set()
 
 
-def test_post_lmstudio_uses_existing_running_server(monkeypatch):
+def test_post_ollama_uses_existing_running_server(monkeypatch):
     _reset_flags()
     session = DummySession(get_results=[200])
     monkeypatch.setattr(llm_insights_api, "_SESSION", session)
 
-    res = llm_insights_api.post_lmstudio({"model": "x"}, timeout=1)
+    res = llm_insights_api.post_ollama({"model": "x"}, timeout=1)
 
     assert res.status_code == 200
     assert session.post_calls == 1
 
 
-def test_post_lmstudio_errors_when_server_down_without_autostart(monkeypatch):
-    _reset_flags()
-    monkeypatch.setattr(llm_insights_api, "_SESSION", DummySession(get_results=[]))
-    monkeypatch.delenv("LMSTUDIO_AUTOSTART_CMD", raising=False)
-
-    with pytest.raises(RuntimeError) as e:
-        llm_insights_api.post_lmstudio({"model": "x"}, timeout=1)
-
-    assert "LMSTUDIO_AUTOSTART_CMD" in str(e.value)
-
-
-def test_post_lmstudio_autostarts_and_waits_until_ready(monkeypatch):
+def test_post_ollama_autostarts_and_waits_until_ready(monkeypatch):
     _reset_flags()
     session = DummySession(get_results=[RuntimeError("down"), RuntimeError("down"), 200])
     monkeypatch.setattr(llm_insights_api, "_SESSION", session)
-    monkeypatch.setenv("LMSTUDIO_AUTOSTART_CMD", "echo start")
-    monkeypatch.setenv("LMSTUDIO_AUTOSTART_WAIT_SEC", "3")
+    monkeypatch.setenv("OLLAMA_AUTOSTART_CMD", "echo start")
+    monkeypatch.setenv("OLLAMA_AUTOSTART_WAIT_SEC", "3")
 
     launched = {"ok": False}
 
@@ -81,7 +79,7 @@ def test_post_lmstudio_autostarts_and_waits_until_ready(monkeypatch):
     monkeypatch.setattr(llm_insights_api.subprocess, "Popen", fake_popen)
     monkeypatch.setattr(llm_insights_api.time, "sleep", lambda *_args, **_kwargs: None)
 
-    res = llm_insights_api.post_lmstudio({"model": "x"}, timeout=1)
+    res = llm_insights_api.post_ollama({"model": "x"}, timeout=1)
 
     assert launched["ok"]
     assert res.status_code == 200
@@ -93,112 +91,67 @@ class DummyModelSession(DummySession):
         super().__init__(get_results=[200])
         self.model_ids = model_ids
 
-    def get(self, *_args, **_kwargs):
+    def get(self, url="", *_args, **_kwargs):
+        if "/api/ps" in str(url):
+            return DummyResponse(status_code=200, payload={"models": []})
         return DummyResponse(status_code=200, payload={"data": [{"id": m} for m in self.model_ids]})
 
 
 def test_pick_usable_model_prefers_requested(monkeypatch):
     _reset_flags()
-    monkeypatch.setattr(llm_insights_api, "_SESSION", DummyModelSession(["openai/gpt-oss-20b", "other/model"]))
-    monkeypatch.delenv("LMSTUDIO_MODEL", raising=False)
+    monkeypatch.setattr(llm_insights_api, "_SESSION", DummyModelSession(["gpt-oss:20b", "other:model"]))
+    monkeypatch.delenv("OLLAMA_MODEL", raising=False)
 
     model = llm_insights_api._pick_usable_model()
 
-    assert model == "openai/gpt-oss-20b"
+    assert model == "gpt-oss:20b"
 
 
 def test_pick_usable_model_falls_back_to_loaded_first(monkeypatch):
     _reset_flags()
-    monkeypatch.setattr(llm_insights_api, "_SESSION", DummyModelSession(["local/model-a", "local/model-b"]))
-    monkeypatch.setenv("LMSTUDIO_MODEL", "openai/gpt-oss-20b")
+    monkeypatch.setattr(llm_insights_api, "_SESSION", DummyModelSession(["local:model-a", "local:model-b"]))
+    monkeypatch.setenv("OLLAMA_MODEL", "gpt-oss:20b")
 
     model = llm_insights_api._pick_usable_model()
 
-    assert model == "local/model-a"
+    assert model == "local:model-a"
 
 
-def test_post_lmstudio_overrides_unavailable_requested_model(monkeypatch):
+def test_post_ollama_uses_pinned_model_first(monkeypatch):
+    """Ollamaはオンデマンドロードのため、指定モデルを先頭で試す"""
     _reset_flags()
 
     class HybridSession:
         def __init__(self):
             self.post_model = None
 
-        def get(self, *_args, **_kwargs):
-            return DummyResponse(status_code=200, payload={"data": [{"id": "local/model-a"}]})
+        def get(self, url="", *_args, **_kwargs):
+            if "/api/ps" in str(url):
+                return DummyResponse(status_code=200, payload={"models": []})
+            return DummyResponse(status_code=200, payload={"data": [{"id": "local:model-a"}]})
 
-        def post(self, *_args, **kwargs):
+        def post(self, url="", *_args, **kwargs):
+            # モデルロード/アンロードのPOSTはスキップ
+            if "/api/generate" in str(url):
+                return DummyResponse()
             self.post_model = kwargs["json"]["model"]
             return DummyResponse()
 
     session = HybridSession()
     monkeypatch.setattr(llm_insights_api, "_SESSION", session)
-    monkeypatch.setenv("LMSTUDIO_MODEL", "openai/gpt-oss-20b")
+    monkeypatch.setenv("OLLAMA_MODEL", "gpt-oss:20b")
 
-    llm_insights_api.post_lmstudio({"model": "openai/gpt-oss-20b"}, timeout=1, retries=0)
+    llm_insights_api.post_ollama({"model": "gpt-oss:20b"}, timeout=1, retries=0)
 
-    assert session.post_model == "local/model-a"
+    assert session.post_model == "gpt-oss:20b"
 
 
-def test_post_lmstudio_retries_with_another_model_on_oom(monkeypatch):
+# 後方互換: post_lmstudio エイリアスが動作すること
+def test_post_lmstudio_alias_works(monkeypatch):
     _reset_flags()
-
-    class OOMThenSuccessSession:
-        def __init__(self):
-            self.calls = []
-
-        def get(self, *_args, **_kwargs):
-            return DummyResponse(status_code=200, payload={"data": [{"id": "openai/gpt-oss-20b"}, {"id": "local/small-model"}]})
-
-        def post(self, *_args, **kwargs):
-            model = kwargs["json"]["model"]
-            self.calls.append(model)
-            if model == "openai/gpt-oss-20b":
-                return DummyResponse(status_code=400, payload={"error": "Failed to load model: vk::Queue::submit: ErrorOutOfDeviceMemory"})
-            return DummyResponse()
-
-    session = OOMThenSuccessSession()
+    session = DummySession(get_results=[200])
     monkeypatch.setattr(llm_insights_api, "_SESSION", session)
-    monkeypatch.setenv("LMSTUDIO_MODEL", "openai/gpt-oss-20b")
 
-    res = llm_insights_api.post_lmstudio({"model": "openai/gpt-oss-20b"}, timeout=1, retries=0)
+    res = llm_insights_api.post_lmstudio({"model": "x"}, timeout=1)
 
     assert res.status_code == 200
-    assert session.calls == ["openai/gpt-oss-20b", "local/small-model"]
-
-
-def test_post_lmstudio_tries_explicit_model_load_when_primary_not_loaded(monkeypatch):
-    _reset_flags()
-
-    class LoadThenPostSession:
-        def __init__(self):
-            self.models = ["local/small-model"]
-            self.calls = []
-
-        def get(self, *_args, **_kwargs):
-            return DummyResponse(status_code=200, payload={"data": [{"id": m} for m in self.models]})
-
-        def post(self, *_args, **kwargs):
-            model = kwargs["json"]["model"]
-            self.calls.append(model)
-            return DummyResponse()
-
-    session = LoadThenPostSession()
-    monkeypatch.setattr(llm_insights_api, "_SESSION", session)
-    monkeypatch.setenv("LMSTUDIO_MODEL", "openai/gpt-oss-20b")
-    monkeypatch.setenv("LMSTUDIO_MODEL_LOAD_CMD", "echo load {model}")
-    monkeypatch.setenv("LMSTUDIO_MODEL_LOAD_WAIT_SEC", "1")
-
-    launched = {"cmd": ""}
-
-    def fake_popen(cmd, **_kwargs):
-        launched["cmd"] = cmd
-        session.models.append("openai/gpt-oss-20b")
-
-    monkeypatch.setattr(llm_insights_api.subprocess, "Popen", fake_popen)
-    monkeypatch.setattr(llm_insights_api.time, "sleep", lambda *_args, **_kwargs: None)
-
-    llm_insights_api.post_lmstudio({"model": "openai/gpt-oss-20b"}, timeout=1, retries=0)
-
-    assert "openai/gpt-oss-20b" in launched["cmd"]
-    assert session.calls[0] == "openai/gpt-oss-20b"

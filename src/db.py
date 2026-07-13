@@ -39,6 +39,24 @@ def init_db():
     ON articles(url)
     """)
 
+    # クエリ性能向上用インデックス
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_articles_category_published
+    ON articles(category, published_at DESC)
+    """)
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_articles_kind_published
+    ON articles(kind, published_at DESC)
+    """)
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_articles_url_norm
+    ON articles(url_norm)
+    """)
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_articles_published
+    ON articles(published_at DESC)
+    """)
+
     # ---- articles: 後方互換（既存DBに列が無い場合の追加）----
     ensure_column(cur, "articles", "kind", "TEXT")
     ensure_column(cur, "articles", "region", "TEXT")
@@ -82,6 +100,19 @@ def init_db():
     WHERE topic_key IS NOT NULL AND topic_key != ''
     """)
 
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_topics_category_created
+    ON topics(category, created_at DESC)
+    """)
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_topics_kind_created
+    ON topics(kind, created_at DESC)
+    """)
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_topics_score_48h
+    ON topics(score_48h DESC)
+    """)
+
     # 既存データ移行: NULL/空のみデフォルト補完
     cur.execute("UPDATE topics SET kind='tech' WHERE kind IS NULL OR kind=''")
     cur.execute("UPDATE topics SET region='global' WHERE region IS NULL OR region=''")
@@ -96,6 +127,11 @@ def init_db():
     )
     """)
     ensure_column(cur, "topic_articles", "is_representative", "INTEGER DEFAULT 0")
+
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_topic_articles_article
+    ON topic_articles(article_id)
+    """)
 
     # ---- edges (topic内の親子リンク) ----
     cur.execute("""
@@ -133,6 +169,7 @@ def init_db():
     ensure_column(cur, "topic_insights", "evidence_urls", "TEXT")
     ensure_column(cur, "topic_insights", "src_article_id", "INTEGER")
     ensure_column(cur, "topic_insights", "src_hash", "TEXT")
+    ensure_column(cur, "topic_insights", "perspective_digest", "TEXT")
 
     # ---- low_priority_articles (source上限超過分の退避キュー) ----
     cur.execute("""
@@ -192,10 +229,147 @@ def init_db():
     ON forecast_reports(report_date)
     """)
 
+    # forecast_reports の拡張カラム（検証結果用）
+    ensure_column(cur, "forecast_reports", "accuracy_score", "REAL")
+    ensure_column(cur, "forecast_reports", "verified_at", "TEXT")
+    # forecast_reports の拡張カラム（生成メタ情報）
+    ensure_column(cur, "forecast_reports", "model_id", "TEXT")
+    ensure_column(cur, "forecast_reports", "temperature_config", "TEXT")
+
+    # ---- forecast_verifications (時間軸別・ラウンド別の検証結果) ----
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS forecast_verifications (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      report_date TEXT NOT NULL,
+      horizon TEXT NOT NULL,
+      verification_round INTEGER NOT NULL DEFAULT 1,
+      verdict_json TEXT,
+      accuracy_score REAL,
+      undetermined_count INTEGER DEFAULT 0,
+      verified_at TEXT NOT NULL,
+      digest_hours INTEGER
+    )
+    """)
+
+    cur.execute("""
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_fv_date_horizon_round
+    ON forecast_verifications(report_date, horizon, verification_round)
+    """)
+
+    # ---- entities / article_entities (企業・製品・技術エンティティ) ----
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS entities (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      slug TEXT NOT NULL,
+      kind TEXT,
+      aliases TEXT,
+      created_at TEXT
+    )
+    """)
+    cur.execute("""
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_entities_slug
+    ON entities(slug)
+    """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS article_entities (
+      article_id INTEGER NOT NULL,
+      entity_id INTEGER NOT NULL,
+      confidence REAL DEFAULT 1.0,
+      PRIMARY KEY (article_id, entity_id)
+    )
+    """)
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_article_entities_entity
+    ON article_entities(entity_id)
+    """)
+
+    # ---- topic_snapshots (トピックの日次スナップショット、Diffビュー用) ----
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS topic_snapshots (
+      report_date TEXT NOT NULL,
+      topic_id INTEGER NOT NULL,
+      importance INTEGER,
+      category TEXT,
+      title TEXT,
+      PRIMARY KEY (report_date, topic_id)
+    )
+    """)
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_topic_snapshots_date
+    ON topic_snapshots(report_date DESC)
+    """)
+
+    # ---- category_trends (カテゴリ別日別統計の履歴) ----
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS category_trends (
+      report_date TEXT NOT NULL,
+      category TEXT NOT NULL,
+      articles_count INTEGER DEFAULT 0,
+      topics_count INTEGER DEFAULT 0,
+      PRIMARY KEY (report_date, category)
+    )
+    """)
+
+    cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_category_trends_category
+    ON category_trends(category, report_date DESC)
+    """)
+
+    # ---- FTS5 全文検索（articles の title / title_ja / content） ----
+    # SQLite の FTS5 拡張が有効ならトリガ同期付きで作成する。
+    # 拡張不在の古い SQLite でも起動できるよう例外は握りつぶす（検索機能はオプション扱い）。
+    try:
+        cur.execute("""
+        CREATE VIRTUAL TABLE IF NOT EXISTS articles_fts USING fts5(
+            title, title_ja, content,
+            content='articles',
+            content_rowid='id',
+            tokenize='unicode61'
+        )
+        """)
+        cur.execute("""
+        CREATE TRIGGER IF NOT EXISTS articles_fts_ai AFTER INSERT ON articles BEGIN
+          INSERT INTO articles_fts(rowid, title, title_ja, content)
+          VALUES (new.id, COALESCE(new.title,''), COALESCE(new.title_ja,''), COALESCE(new.content,''));
+        END
+        """)
+        cur.execute("""
+        CREATE TRIGGER IF NOT EXISTS articles_fts_ad AFTER DELETE ON articles BEGIN
+          INSERT INTO articles_fts(articles_fts, rowid, title, title_ja, content)
+          VALUES ('delete', old.id, COALESCE(old.title,''), COALESCE(old.title_ja,''), COALESCE(old.content,''));
+        END
+        """)
+        cur.execute("""
+        CREATE TRIGGER IF NOT EXISTS articles_fts_au AFTER UPDATE ON articles BEGIN
+          INSERT INTO articles_fts(articles_fts, rowid, title, title_ja, content)
+          VALUES ('delete', old.id, COALESCE(old.title,''), COALESCE(old.title_ja,''), COALESCE(old.content,''));
+          INSERT INTO articles_fts(rowid, title, title_ja, content)
+          VALUES (new.id, COALESCE(new.title,''), COALESCE(new.title_ja,''), COALESCE(new.content,''));
+        END
+        """)
+        # 空テーブルのときのみ既存データを rebuild で一括投入
+        # (content='articles' モードでは 'rebuild' コマンドが正式な初期化手段)
+        cur.execute("SELECT COUNT(*) FROM articles_fts")
+        fts_count = cur.fetchone()[0]
+        if fts_count == 0:
+            cur.execute("INSERT INTO articles_fts(articles_fts) VALUES('rebuild')")
+    except sqlite3.OperationalError:
+        # FTS5 拡張が無い環境では検索機能を諦める（他機能は継続）。
+        pass
+
     conn.commit()
     conn.close()
 
+import re as _re
+_VALID_IDENTIFIER = _re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
+
 def ensure_column(cur, table: str, col: str, coltype: str):
+    if not _VALID_IDENTIFIER.match(table):
+        raise ValueError(f"Invalid table name: {table!r}")
+    if not _VALID_IDENTIFIER.match(col):
+        raise ValueError(f"Invalid column name: {col!r}")
     cur.execute(f"PRAGMA table_info({table})")
     cols = {r[1] for r in cur.fetchall()}
     if col not in cols:
