@@ -437,3 +437,26 @@ Web 調査（別エージェント・全候補を実取得検証）に基づき 
 ## 検証
 - render 後、diff/entity/topic/exec 各ページに dark CSS が入っていること、search.html が遅延ロードになっていることを確認
 - 全テスト 224 pass
+
+---
+
+# 死亡フィード棚卸し 第2弾 完了（2026-07-13）
+
+Web 調査（24件・全候補を実取得検証）に基づき sources.yaml を更新。第1弾と合わせて棚卸しは完了。
+
+## 復旧・差し替え（9件・全件 collect.py 実取得経路で entries>0 を確認）
+- POSCO → newsroom.posco.com/en/feed/（tls_mode: relaxed の例外運用も解消）
+- Nucor → IR プレスリリース RSS / thyssenkrupp → グループ全体 RSS / Rockwell → IR プレスリリース RSS
+- SMS group → PresseBox 配信 RSS（新規再追加）
+- AWS Manufacturing → カテゴリパス変更に追従
+- 東京都報道発表 → 新 RSS URL / EU CBAM → taxation-customs.ec.europa.eu / GHG Protocol → rss.xml（再追加）
+
+## 廃止確定（コメントで sources.yaml に記録・14件）
+ISO, IEC(ボット保護), JISC, NEDO, 環境省, U.S. Steel(IRサイト消滅), Recycling Today,
+Tenova(空フィード), Primetals, AVEVA, NTT DATA, SKF(更新停止), ZEISS, Danieli(ボット保護),
+PR TIMES カテゴリ別RDF（index.rdf のみ提供・非IT混在のためカテゴリフィルタ実装まで見送り）
+
+## これで死亡フィード45件の棚卸しがすべて完了
+- 第1弾: 17件復旧（うち4件は UA/WAF 対策で復旧）+ 廃止4件
+- 第2弾: 9件復旧 + 廃止14件
+- feed_health の陳腐化行も全掃除済み（sources.yaml と完全同期）

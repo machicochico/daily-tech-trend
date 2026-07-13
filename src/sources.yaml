@@ -75,15 +75,8 @@ sources:
   #   https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
 
   # --- 標準化・規格 ---
-  - id: iso-news
-    name: ISO News
-    category: standards
-    url: https://www.iso.org/contents/news/all.rss
-
-  - id: iec-news
-    name: IEC Newsroom
-    category: standards
-    url: https://www.iec.ch/newsroom/rss.xml
+  # ISO はニュースを /insights に統合し RSS 廃止（2026-07 確認）
+  # IEC は Imperva ボット保護でフィード取得不可・公式購読はメールのみ（2026-07 確認）
 
   - id: nist-news
     name: NIST News
@@ -93,10 +86,7 @@ sources:
   # ENISA は新サイト移行で RSS を全廃（公式告知あり・2026-07 確認）。
   # 新しい購読メカニズムが公開されたら再追加する。
 
-  - id: jisc-news
-    name: JISC News (JIS)
-    category: standards
-    url: https://www.jisc.go.jp/newstopics/rss.xml
+  # JISC は RSS 廃止（2026-07 確認・新着ページに購読導線なし）
 
   # --- 市況（コモディティ・港湾/海運・スクラップ指数） ---
   - id: oilprice-commodities
@@ -109,10 +99,7 @@ sources:
     category: market
     url: https://www.hellenicshippingnews.com/feed/
 
-  - id: recycling-today-ferrous
-    name: Recycling Today (Ferrous)
-    category: market
-    url: https://www.recyclingtoday.com/rss/topic/ferrous.aspx
+  # Recycling Today は新プラットフォーム移行で RSS 廃止（2026-07 確認）
 
   # --- AI ---
   - id: openai-news
@@ -209,22 +196,20 @@ sources:
   # 神戸製鋼所は RSS 提供を終了（2026-07 確認、代替はメール配信のみ）
 
   - id: posco-holdings
-    name: POSCO Holdings
+    name: POSCO Group Newsroom
     category: manufacturing
-    tls_mode: relaxed
-    url: https://www.posco-inc.com:4451/poscoinc/v2/company/news_en/feed
+    # 旧 posco-inc.com:4451（証明書問題で relaxed 運用）から公式 Newsroom へ移転（2026-07 確認）
+    url: https://newsroom.posco.com/en/feed/
 
   # ArcelorMittal は新サイトで RSS 提供なし（2026-07 確認）
 
   - id: nucor
-    name: Nucor
+    name: Nucor (IR Press Releases)
     category: manufacturing
-    url: https://nucor.com/rss/news.xml
+    # 本体サイトの RSS は廃止。IR プレスリリース RSS で代替（2026-07 確認）
+    url: https://investors.nucor.com/rss/pressrelease.aspx
 
-  - id: us-steel
-    name: U.S. Steel
-    category: manufacturing
-    url: https://www.ussteel.com/rss/news.xml
+  # U.S. Steel は日本製鉄傘下で IR サイトごと消滅・RSS なし（2026-07 確認）
 
   - id: tata-steel
     name: Tata Steel Nederland
@@ -240,9 +225,16 @@ sources:
     url: https://www.steelonthenet.com/news/newsfeed.xml
 
   - id: thyssenkrupp-steel
-    name: thyssenkrupp Steel
+    name: thyssenkrupp Group
     category: manufacturing
-    url: https://www.thyssenkrupp-steel.com/en/newsroom/rss.xml
+    # Steel 専用 RSS は消滅。グループ全体のプレスリリース RSS で代替（Steel のニュースも含む・2026-07 確認）
+    url: https://www.thyssenkrupp.com/en/rss-feed/rss-newsfeed
+
+  - id: sms-group
+    name: SMS group (PresseBox)
+    category: manufacturing
+    # 自社サイトの RSS は廃止。公式配信先 PresseBox の RSS で代替（2026-07 確認）
+    url: https://www.pressebox.com/rss/press-releases/newsroom/sms-siemag-ag
 
   # 既存（製造/OT・ICSも残す）
   - id: mhi
@@ -273,19 +265,15 @@ sources:
     region: global
     url: https://inductiveautomation.com/blog/rss.xml
 
-  - id: aveva-insight
-    name: AVEVA
-    category: manufacturing
-    kind: tech
-    region: global
-    url: https://www.aveva.com/en/perspectives/blog/rss/
+  # AVEVA はブログ RSS 廃止（2026-07 確認。Medium の @AVEVA はあるが未検証のため見送り）
 
   - id: rockwell-blog
-    name: Rockwell Automation
+    name: Rockwell Automation (Press Releases)
     category: manufacturing
     kind: tech
     region: global
-    url: https://www.rockwellautomation.com/en-us/company/news/blogs.feed.xml
+    # ブログ用フィードは廃止。公式 IR ページが案内するプレスリリース RSS で代替（2026-07 確認）
+    url: https://rockwell2023tf.q4web.com/rss/pressrelease.aspx
 
   # --- スマートファクトリー（設備OEM / 産業SIer / クラウド導入事例） ---
   - id: siemens-case-studies
@@ -302,19 +290,15 @@ sources:
     region: global
     url: https://blog.se.com/feed/
 
-  - id: nttdata-manufacturing
-    name: "[産業SIer] NTT DATA Manufacturing"
-    category: smart_factory
-    kind: tech
-    region: jp
-    url: https://www.nttdata.com/global/en/-/media/nttdataglobal/feed.xml
+  # NTT DATA は RSS 廃止（2026-07 確認・BusinessWire 配信のみ）
 
   - id: aws-manufacturing-blog
     name: "[クラウド] AWS Industries - Manufacturing"
     category: smart_factory
     kind: tech
     region: global
-    url: https://aws.amazon.com/blogs/industries/category/manufacturing/feed/
+    # カテゴリパスが category/industries/manufacturing に変更（2026-07 確認）
+    url: https://aws.amazon.com/blogs/industries/category/industries/manufacturing/feed/
 
   - id: azure-industrial-iot
     name: "[クラウド] Microsoft Azure IoT Blog"
@@ -391,24 +375,27 @@ sources:
     # news.rdf へ移転（2026-07 確認）
     url: https://www.soumu.go.jp/news.rdf
 
-  - id: nedo-news
-    name: NEDO ニュースリリース
-    category: industry
-    kind: news
-    region: jp
-    url: https://www.nedo.go.jp/rss/news.xml
+  # NEDO は RSS 廃止（2026-07 確認・ニュースページに購読導線なし）
 
   - id: tokyo-smart-city
-    name: 東京都 デジタル・スマートシティ関連情報
+    name: 東京都 報道発表
     category: policy
     kind: news
     region: jp
-    url: https://www.metro.tokyo.lg.jp/tosei/hodohappyo/rss.xml
+    # サイトリニューアルで RSS URL 変更（2026-07 確認）
+    url: https://www.metro.tokyo.lg.jp/index.html/-/asset_publisher/knkg/rss
 
   - id: eu-cbam
     name: European Commission - CBAM (Taxation and Customs Union)
     category: policy
-    url: https://ec.europa.eu/newsroom/taxation_customs/feed?item_type_id=1536&lang=en&orderby=item_date
+    # newsroom 廃止に伴い専用サイトの RSS へ移転（2026-07 確認）
+    url: https://taxation-customs.ec.europa.eu/node/2/rss_en
+
+  - id: ghg-protocol
+    name: GHG Protocol
+    category: decarbonization_ops
+    # 旧 /blog/feed は廃止。Drupal 標準の rss.xml で復活（2026-07 確認）
+    url: https://ghgprotocol.org/rss.xml
 
   - id: atit
     name: "@IT"
@@ -478,14 +465,9 @@ sources:
     rss:
       - https://xtech.nikkei.com/rss/index.rdf
 
-  - name: PR TIMES テクノロジー
-    kind: news
-    region: jp
-    category: company
-    vendor: PR TIMES
-    weekly_new_limit: 8
-    rss:
-      - https://prtimes.jp/main/html/rss/it.rdf
+  # PR TIMES はカテゴリ別 RDF（it.rdf 等）を全廃（2026-07 確認）。
+  # 全カテゴリ横断の index.rdf のみ提供だが1日数百件・非IT混在のため、
+  # カテゴリフィルタを実装するまで購読を見送る。
 
   - name: Impress Watch (INTERNET Watch)
     kind: news
