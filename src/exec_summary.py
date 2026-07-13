@@ -21,7 +21,7 @@ from html import escape
 from pathlib import Path
 
 from db import connect
-from page_common import PAGE_BASE_CSS
+from page_common import PAGE_BASE_CSS, PAGE_DARK_CSS
 
 # LLM 呼び出しは失敗しても致命にしないため、import は遅延化しない（型を明示）。
 try:
@@ -116,20 +116,27 @@ def _call_llm_for_summary(category: str, articles: list[dict]) -> dict | None:
             {"role": "user", "content": user},
         ],
         "temperature": 0.3,
-        "max_tokens": 900,
+        # gpt-oss は reasoning がトークンを食い潰して content が空になりやすい
+        # （finish_reason=length・content=0 を実測）。effort を下げ、余裕を持たせる
+        "max_tokens": 1600,
+        "reasoning_effort": "low",
     }
 
-    try:
-        r = post_ollama(payload, timeout=LLM_LONG_TIMEOUT_SEC)
-        text = _get_lm_content(r)
-        obj_str = _extract_json_object(text)
-        if not obj_str:
-            return None
-        parsed = json.loads(obj_str)
-        if isinstance(parsed, dict) and isinstance(parsed.get("items"), list):
-            return parsed
-    except Exception as e:
-        print(f"[WARN] exec_summary LLM failed category={category} err={e}")
+    # gpt-oss は reasoning 超過で content が空になることが確率的にあるため軽くリトライする
+    for attempt in range(1, 3):
+        try:
+            r = post_ollama(payload, timeout=LLM_LONG_TIMEOUT_SEC)
+            text = _get_lm_content(r)
+            obj_str = _extract_json_object(text)
+            if not obj_str:
+                print(f"[WARN] exec_summary empty/unparsable response category={category} attempt={attempt}")
+                continue
+            parsed = json.loads(obj_str)
+            if isinstance(parsed, dict) and isinstance(parsed.get("items"), list):
+                return parsed
+            print(f"[WARN] exec_summary schema mismatch category={category} attempt={attempt}")
+        except Exception as e:
+            print(f"[WARN] exec_summary LLM failed category={category} attempt={attempt} err={e}")
     return None
 
 
@@ -178,6 +185,7 @@ dl dd{{margin:.2rem 0 .5rem 1rem}}
 .refs h3{{font-size:1rem;color:#6b7280}}
 .refs li{{font-size:.9rem;margin:.2rem 0}}
 .meta{{color:#6b7280;font-size:.85rem}}
+{PAGE_DARK_CSS}
 </style></head>
 <body>
 <nav><a href="../">&larr; Top</a></nav>
@@ -202,7 +210,7 @@ def _render_index(categories_with_output: list[tuple[str, str]]) -> str:
 <html lang="ja"><head><meta charset="utf-8">
 <title>エグゼクティブサマリー | Daily Tech Trend</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<style>body{{font-family:system-ui,sans-serif;max-width:720px;margin:2rem auto;padding:0 1rem}}h1{{font-size:1.3rem}}li{{margin:.4rem 0}}</style>
+<style>{PAGE_BASE_CSS}li{{margin:.4rem 0}}{PAGE_DARK_CSS}</style>
 </head><body>
 <nav><a href="../">&larr; Top</a></nav>
 <h1>エグゼクティブサマリー</h1>
@@ -232,7 +240,14 @@ def generate(categories: list[str], *, no_llm: bool = False) -> None:
         generated.append((cat, label))
 
     if generated:
-        (OUT_DIR / "index.html").write_text(_render_index(generated), encoding="utf-8")
+        # index は「今回生成した分」ではなくディスク上の全カテゴリページから構築する
+        # （--category 単体実行で index が1件だけに上書きされるのを防ぐ）
+        existing = [
+            (cat, CAT_LABELS.get(cat, cat))
+            for cat in CAT_LABELS
+            if (OUT_DIR / f"{cat}.html").exists()
+        ]
+        (OUT_DIR / "index.html").write_text(_render_index(existing), encoding="utf-8")
 
     conn.close()
 

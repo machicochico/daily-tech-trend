@@ -13,7 +13,7 @@ from html import escape
 from pathlib import Path
 
 from db import connect
-from page_common import PAGE_BASE_CSS
+from page_common import PAGE_BASE_CSS, PAGE_DARK_CSS
 
 # スナップショットの保持日数。差分表示は直近2日しか参照しないため、
 # 余裕を持たせつつ無制限の蓄積（過去に150万行/480MBまで肥大）を防ぐ。
@@ -231,6 +231,7 @@ h2 small{{color:#6b7280;font-weight:400;font-size:.85rem}}
 .diff-table a{{color:#2563eb;text-decoration:none}}
 .diff-table a:hover{{text-decoration:underline}}
 .empty{{color:#9ca3af;font-style:italic}}
+{PAGE_DARK_CSS}
 </style></head>
 <body>
 <nav><a href="../">&larr; Top</a></nav>

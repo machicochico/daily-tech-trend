@@ -1,55 +1,7 @@
 {
-  "generated_at": "2026-07-13T10:23:09+00:00",
-  "count": 85,
+  "generated_at": "2026-07-13T10:44:50+00:00",
+  "count": 57,
   "items": [
-    {
-      "url": "https://cloud.google.com/blog/rss",
-      "failure_count": 106,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://ai.facebook.com/blog/rss/",
-      "failure_count": 105,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://ai.googleblog.com/feeds/posts/default",
-      "failure_count": 105,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://github.blog/category/machine-learning/feed/",
-      "failure_count": 105,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.cisa.gov/cybersecurity-advisories/ics-recommended-practices.xml",
-      "failure_count": 105,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog.xml",
-      "failure_count": 105,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.cisa.gov/sbom.xml",
-      "failure_count": 105,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.enisa.europa.eu/news/enisa-news/RSS",
-      "failure_count": 105,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
     {
       "url": "https://www.iec.ch/newsroom/rss.xml",
       "failure_count": 105,
@@ -75,25 +27,7 @@
       "last_failure_reason": "bozo_empty"
     },
     {
-      "url": "https://corporate.arcelormittal.com/media/news-articles/rss",
-      "failure_count": 104,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
       "url": "https://nucor.com/rss/news.xml",
-      "failure_count": 104,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.kobelco.co.jp/rss/news.xml",
-      "failure_count": 104,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.nipponsteel.com/news/rss.xml",
       "failure_count": 104,
       "last_success_at": "",
       "last_failure_reason": "bozo_empty"
@@ -129,18 +63,6 @@
       "last_failure_reason": "bozo_empty"
     },
     {
-      "url": "https://www.digital.go.jp/assets/contents/news/feed.xml",
-      "failure_count": 103,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.ipa.go.jp/security/rss/rss.rdf",
-      "failure_count": 103,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
       "url": "https://www.metro.tokyo.lg.jp/tosei/hodohappyo/rss.xml",
       "failure_count": 103,
       "last_success_at": "",
@@ -165,24 +87,6 @@
       "last_failure_reason": "bozo_empty"
     },
     {
-      "url": "https://www.siemens.com/cert/rss/advisories.xml",
-      "failure_count": 103,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.soumu.go.jp/menu_news/s-news/rss.xml",
-      "failure_count": 103,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.tatasteel.com/media/newsroom/press-releases/rss.xml",
-      "failure_count": 103,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
       "url": "https://www.thyssenkrupp-steel.com/en/newsroom/rss.xml",
       "failure_count": 103,
       "last_success_at": "",
@@ -191,84 +95,6 @@
     {
       "url": "https://www.ussteel.com/rss/news.xml",
       "failure_count": 103,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://azure.microsoft.com/en-us/blog/topics/internet-of-things/feed/",
-      "failure_count": 20,
-      "last_success_at": "2026-06-11T06:00:23+00:00",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.meti.go.jp/ml_index_en_atom.xml",
-      "failure_count": 10,
-      "last_success_at": "2026-07-04T00:00:47+00:00",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://blog.skf.com/feed/",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://ghgprotocol.org/blog/feed",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.automationworld.com/rss.xml",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.controlglobal.com/rss.xml",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.danieli.com/en/news/rss.xml",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.env.go.jp/press/rss.xml",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.primetals.com/news-media/news/rss/",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.sms-group.com/company/newsroom/rss.xml",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.steeltimesint.com/feed/",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.tenova.com/news/feed/",
-      "failure_count": 5,
-      "last_success_at": "",
-      "last_failure_reason": "bozo_empty"
-    },
-    {
-      "url": "https://www.zeiss.com/metrology/en/news-events/newsroom/rss.xml",
-      "failure_count": 5,
       "last_success_at": "",
       "last_failure_reason": "bozo_empty"
     },
@@ -468,6 +294,12 @@
       "url": "https://www.maintenanceworld.com/feed/",
       "failure_count": 0,
       "last_success_at": "2026-07-13T06:00:27+00:00",
+      "last_failure_reason": ""
+    },
+    {
+      "url": "https://www.meti.go.jp/ml_index_en_atom.xml",
+      "failure_count": 0,
+      "last_success_at": "2026-07-04T00:00:47+00:00",
       "last_failure_reason": ""
     },
     {

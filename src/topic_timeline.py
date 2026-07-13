@@ -10,7 +10,7 @@ from html import escape
 from pathlib import Path
 
 from db import connect
-from page_common import PAGE_BASE_CSS
+from page_common import PAGE_BASE_CSS, PAGE_DARK_CSS
 
 
 def _format_date(s: str | None) -> str:
@@ -154,6 +154,7 @@ ol.timeline{{list-style:none;padding:0;position:relative;margin:1rem 0 1rem 1rem
 .timeline-meta{{color:#9ca3af;font-size:.8rem}}
 .timeline-snippet{{margin:.3rem 0 0;font-size:.88rem;color:#4b5563}}
 .importance-badge{{display:inline-block;padding:2px 8px;border-radius:4px;color:#fff;background:#d97706;font-size:.8rem;font-weight:700}}
+{PAGE_DARK_CSS}
 </style></head><body>
 <nav><a href="../../">&larr; Top</a> / <a href="../../diff/">差分</a></nav>
 <h1>{escape(title)}</h1>

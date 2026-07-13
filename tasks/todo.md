@@ -417,3 +417,23 @@ Web 調査（別エージェント・全候補を実取得検証）に基づき 
 
 ## DB 整備
 - feed_health: sources.yaml に存在しない陳腐化 28行を削除、UA対応で復旧した4フィードの suspend を解除
+
+---
+
+# 利用価値向上 第2弾（2026-07-13）
+
+## 実施内容
+- **ダークモード**: common.css に prefers-color-scheme:dark 追従（変数上書き＋ハードコード色の個別補正）。
+  サブページ（diff/entity/exec/topic）にも page_common.PAGE_DARK_CSS を適用
+- **描画軽量化**: .topic-row に content-visibility:auto（トップは200件超の行があるため画面外の描画をスキップ）
+- **検索の遅延ロード**: search-index.json(約2MB) をページ表示時ではなく最初の入力時に fetch
+- **タグ選択の永続化**: 選択タグ・AND/OR モードを localStorage に保存し次回訪問時に復元（ウォッチリスト的な使い方）
+- **エグゼクティブサマリーの定常運用化**:
+  - run_daily.bat に exec_summary ステップを追加（ナビから導線を張ったため毎晩更新が必要になった）
+  - gpt-oss の reasoning 暴走による空応答（finish_reason=length）を修正: reasoning_effort=low + max_tokens 1600 + リトライ2回
+  - --category 単体実行で index.html が1件に上書きされるバグを修正（ディスク上の全ページから index を構築）
+  - 全7カテゴリを llm=yes で再生成済み
+
+## 検証
+- render 後、diff/entity/topic/exec 各ページに dark CSS が入っていること、search.html が遅延ロードになっていることを確認
+- 全テスト 224 pass

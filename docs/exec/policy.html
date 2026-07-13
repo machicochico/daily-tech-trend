@@ -3,8 +3,8 @@
 <title>政策・規制 エグゼクティブサマリー | Daily Tech Trend</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-body{font-family:system-ui,-apple-system,sans-serif;max-width:820px;margin:2rem auto;padding:0 1rem;color:#1f2937;line-height:1.7}
-h1{font-size:1.4rem;border-bottom:2px solid #2563eb;padding-bottom:.3rem}
+:root{color-scheme:light dark}body{font-family:system-ui,-apple-system,sans-serif;max-width:820px;margin:2rem auto;padding:0 1rem;color:#1f2937;line-height:1.6}h1{font-size:1.4rem;border-bottom:2px solid #2563eb;padding-bottom:.3rem}.meta{color:#6b7280;font-size:.9rem;margin-bottom:1rem}a{color:#2563eb}
+body{line-height:1.7}
 .exec-item{border:1px solid #e5e7eb;border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;background:#f9fafb}
 .exec-item h2{font-size:1.05rem;color:#2563eb;margin:0 0 .5rem}
 dl dt{font-weight:600;color:#6b7280;margin-top:.5rem;font-size:.9rem}
@@ -14,33 +14,48 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 .refs h3{font-size:1rem;color:#6b7280}
 .refs li{font-size:.9rem;margin:.2rem 0}
 .meta{color:#6b7280;font-size:.85rem}
+
+@media (prefers-color-scheme: dark){
+  body{background:#111827;color:#e5e7eb}
+  a,.diff-table a,.timeline-title,ul.entity-list a,.count{color:#7ea9ff}
+  h1{border-bottom-color:#7ea9ff}
+  h2{color:#7ea9ff}
+  .meta,.meta-info,.timeline-date,.timeline-meta,.timeline-snippet,.kind,dl dt,.refs h3,.empty{color:#9ca3af}
+  .summary,.exec-item,.diff-table th{background:#1b2432}
+  .diff-table th,.diff-table td,ul.entity-list li,li,.exec-item{border-color:#374151}
+  ol.timeline{border-left-color:#374151}
+  .exec-fallback{color:#fbbf24;background:#3a2e10}
+}
+
 </style></head>
 <body>
 <nav><a href="../">&larr; Top</a></nav>
 <h1>政策・規制 エグゼクティブサマリー</h1>
-<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-04-18 23:40</p>
-<p class="exec-fallback">LLMによる分析が未実行のため、参考として直近記事一覧のみ表示しています。</p>
+<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-07-13 19:48</p>
+<section class="exec-item"><h2>1. RHEL 8、9、10への影響 CVSS 9.8の脆弱性、修正済みのはずが再発</h2><dl><dt>何が起きているか</dt><dd>Red Hat Enterprise Linuxの印刷ソフトHPLIPに重大脆弱性が再び発見され、既存パッチが不完全であることが判明。</dd><dt>事業への影響</dt><dd>多くの日本企業がRHELを基盤としたサーバや業務システムを稼働しており、脆弱性を突かれた場合、情報漏えいやサービス停止、顧客信頼の低下が発生。</dd><dt>推奨行動</dt><dd>全社のRHEL環境を対象にパッチ適用状況を即時確認し、未適用・不完全パッチの修正を優先。加えて、印刷ジョブの監査ログを有効化し、異常検知体制を構築。</dd></dl></section>
+<section class="exec-item"><h2>2. USBは「禁止したつもり」が一番危険ない 設定ミスを解決する新ツール公開</h2><dl><dt>何が起きているか</dt><dd>USBデバイスの利用可否を可視化する検証ツールが公開され、禁止設定だけではUSB関連の事故やマルウェア感染リスクが残ることが示された。</dd><dt>事業への影響</dt><dd>USB経由の情報漏えいやマルウェア感染は、特に製造業や金融業での業務停止やデータ改ざんリスクを高める。</dd><dt>推奨行動</dt><dd>USB管理ポリシーを見直し、禁止設定だけでなく実際に接続可能なデバイスを定期的にスキャン。新ツールを導入して可視化と監査ログを自動化し、従業員への教育を強化。</dd></dl></section>
+<section class="exec-item"><h2>3. 32万台超のFortiGateが狙った次ぐ「大規模侵略」に備えるには必要？</h2><dl><dt>何が起きているか</dt><dd>FortiGate機器を標的としたFortiBleed攻撃が32万台以上を狙い、ネットワーク機器全体への大規模攻撃が懸念される。</dd><dt>事業への影響</dt><dd>企業のネットワークインフラが攻撃対象となると、サービス停止、データ漏えい、法的責任のリスクが急増。</dd><dt>推奨行動</dt><dd>FortiGateを含む全ネットワーク機器のファームウェアを最新に更新し、脆弱性情報を継続的に監視。脆弱性が発見された場合は即時パッチ適用と、侵入検知・防御システムの強化を実施。</dd></dl></section>
 <section class="refs">
   <h3>参考にしたニュース</h3>
-  <ul><li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/18/news006.html" target="_blank" rel="noopener">「Windows 11に起動できないの怖さ」「初期設定のままはダメ」、Windows PCの安全と快適化対策</a> <small>(@IT, 2026-04-17)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news126.html" target="_blank" rel="noopener">「MCPにシステム的な脆弱性」とセキュリティ企業が指摘 Anthropicは仕様として修正を拒否</a> <small>(@IT, 2026-04-17)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news063.html" target="_blank" rel="noopener">「コードの約48％がAI生成」、AIの影響はソフトウェア開発で特に留意 Snowflake調査</a> <small>(@IT, 2026-04-17)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news045.html" target="_blank" rel="noopener">「その言葉、カスハラかも？」をAIで監視 会話のテキスト化で証跡を残す</a> <small>(@IT, 2026-04-17)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news056.html" target="_blank" rel="noopener">その企業は本物？ VS Codeを悪用する「偽の採用面接」に注意 Microsoftが説く対策</a> <small>(@IT, 2026-04-17)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news061.html" target="_blank" rel="noopener">「AI＝チャット」時代を待っていたClaude CoworkがM365 Copilotに Excel／メール操作はどう変わる？</a> <small>(@IT, 2026-04-17)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/06/news002.html" target="_blank" rel="noopener">PR： 紙の日報3万8400枚がゼロに 自動車部品メーカー東亜工業の「現場主導DX」</a> <small>(@IT, 2026-04-17)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news043.html" target="_blank" rel="noopener">修正対応必須 Active Directoryにリモートコード実行の脆弱性</a> <small>(@IT, 2026-04-16)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news034.html" target="_blank" rel="noopener">NIST、ついに「脆弱性の全件分析」を断念 CVE爆増でパンク状態、方針転換</a> <small>(@IT, 2026-04-16)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news015.html" target="_blank" rel="noopener">半導体再編の鍵を握る「ローム」の行方</a> <small>(@IT, 2026-04-16)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news009.html" target="_blank" rel="noopener">AIは若手の実務経験を奪うが人材育成を担うことができる</a> <small>(@IT, 2026-04-16)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/17/news018.html" target="_blank" rel="noopener">もう入門書はいらないですか？ Colabに統合されたGeminiの学習モードを使ってみた</a> <small>(@IT, 2026-04-16)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/16/news037.html" target="_blank" rel="noopener">「PCでVPN」は主流じゃない？ ハイブリッドワークで使われるリモートアクセス手段とは</a> <small>(@IT, 2026-04-16)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/16/news045.html" target="_blank" rel="noopener">Google、Gemini CLIに読み取りモードで調査や設計ができる「プランモード」追加</a> <small>(@IT, 2026-04-16)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/16/news051.html" target="_blank" rel="noopener">複雑な数式の解析から更新まで Excel内でAI分析を公開する「ChatGPT for Excel」</a> <small>(@IT, 2026-04-16)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/16/news049.html" target="_blank" rel="noopener">「個別製品を買い足すセキュリティ」終了、2026年に投資される「3大カテゴリー」、IDC予測</a> <small>(@IT, 2026-04-16)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/16/news038.html" target="_blank" rel="noopener">新入社員を狙うビジネスチャット詐欺が流行「即レス」の圧力を悪用するか</a> <small>(@IT, 2026-04-15)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/16/news033.html" target="_blank" rel="noopener">【事例】ペット業界大手コジマがマイクロセグメンテーション製品を導入 その成果を見る</a> <small>(@IT, 2026-04-15)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2604/16/news001.html" target="_blank" rel="noopener">プラグイン自作とチャットフローへの組み込み――Difyで再利用可能なカスタムツールの開発</a> <small>(@IT, 2026-04-15)</small></li>
-<li><a href="https://ec.europa.eu/newsroom/clima/redirection/item/932449/en" target="_blank" rel="noopener">なぜ参加するのか</a> <small>(European Commission - DG CLIMA, 2026-04-15)</small></li></ul>
+  <ul><li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news043.html" target="_blank" rel="noopener">RHEL 8、9、10への影響 CVSS 9.8の脆弱性、「修正済み」のはずが再発</a> <small>(@IT, 2026-07-13)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news042.html" target="_blank" rel="noopener">USBは「禁止したつもり」が一番危険ない 設定ミスを解決する新ツール公開</a> <small>(@IT, 2026-07-13)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news048.html" target="_blank" rel="noopener">「紙・Excelの承認・集計3000人規模」 福山通運は3人でどう変えた？</a> <small>(@IT, 2026-07-13)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news034.html" target="_blank" rel="noopener">エージェントによる業務自動化をどう実現？ 「Microsoft Build 2026」で発表された多数の新技術</a> <small>(@IT, 2026-07-13)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news038.html" target="_blank" rel="noopener">中央で初のSAP ERP導入 海上自衛隊は「全国に分散した物資情報」をどう一元管理したのか？</a> <small>(@IT, 2026-07-13)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news020.html" target="_blank" rel="noopener">Googleの初心者向けAI講座を徹底的レビュー 受ける価値はある？【動画あり】</a> <small>(@IT, 2026-07-12)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news044.html" target="_blank" rel="noopener">700キロ先でも成功、「60GHz帯」無線LANでつロボットを低遅延制御 その通信とは？</a> <small>(@IT, 2026-07-12)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news007.html" target="_blank" rel="noopener">企業が考えるべき「客観像」～国家ハッカーが「AIに全てを任せない」理由～</a> <small>(@IT, 2026-07-12)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news009.html" target="_blank" rel="noopener">生成AIが「Excel限りに当たり前」の今、知らないと損する「単純な構造」の話</a> <small>(@IT, 2026-07-12)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/13/news015.html" target="_blank" rel="noopener">AI、MCP、A2A時代に「API」はどう変わる？ APIを「管理するだけ」では乗り切れない</a> <small>(@IT, 2026-07-12)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/12/news016.html" target="_blank" rel="noopener">32万台超のFortiGateが狙った次ぐ「大規模侵略」に備えるには必要？</a> <small>(@IT, 2026-07-11)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/11/news008.html" target="_blank" rel="noopener">「富士通勝った就職人気2位のITベンダーは？」「『AIは全て禁止』は限界」――企業ITの潮流を読む</a> <small>(@IT, 2026-07-10)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/10/news044.html" target="_blank" rel="noopener">「特定メンバーへの依存」からどう脱退する？ JR西日本「JRおでかけネット」を支える基盤監視標準化の考え方</a> <small>(@IT, 2026-07-10)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/10/news056.html" target="_blank" rel="noopener">「生成AIをもう手放せない人」が約6割 逆に「消えたもの」1位は？</a> <small>(@IT, 2026-07-10)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/10/news067.html" target="_blank" rel="noopener">エンジニアの雇用は激変、しかし「AIによる人員削減」は真実の一部に過ぎなかった</a> <small>(@IT, 2026-07-10)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/10/news001.html" target="_blank" rel="noopener">PR： テスト管理の属人化を解消 三菱電機に学ぶ「TestRail」活用とテスト自動化の極意</a> <small>(@IT, 2026-07-10)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/10/news027.html" target="_blank" rel="noopener">モデルは問題にはならない、SnowflakeとNTTデータが語る「AIで差がつく真の貢献」</a> <small>(@IT, 2026-07-10)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/10/news066.html" target="_blank" rel="noopener">「ミリ秒単位の検討でも技術的には追い越せる」 産業化したサイバー攻撃に対抗するための４つのポイント</a> <small>(@IT, 2026-07-09)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/10/news063.html" target="_blank" rel="noopener">Linuxカーネルに15年潜伏した脆弱性が発見 攻撃成功率は97％</a> <small>(@IT, 2026-07-09)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/10/news062.html" target="_blank" rel="noopener">2026年上半期の展望総まとめ：90万件分析で見えた「危険なAIスキル」の正体</a> <small>(@IT, 2026-07-09)</small></li></ul>
 </section>
 </body></html>

@@ -23,7 +23,7 @@ from typing import Any
 import yaml
 
 from db import connect
-from page_common import PAGE_BASE_CSS
+from page_common import PAGE_BASE_CSS, PAGE_DARK_CSS
 
 
 ENTITIES_YAML_PATH = Path(__file__).with_name("entities.yaml")
@@ -225,6 +225,7 @@ ul.entity-list li{{padding:.5rem 0;border-bottom:1px solid #e5e7eb;font-size:.92
 ul.entity-list a{{color:#2563eb;text-decoration:none}}
 ul.entity-list a:hover{{text-decoration:underline}}
 .meta{{color:#6b7280;font-size:.8rem}}
+{PAGE_DARK_CSS}
 </style></head><body>
 <nav><a href="../../">&larr; Top</a> / <a href="../">エンティティ一覧</a></nav>
 <h1>{escape(name)} 関連ニュース</h1>
@@ -256,6 +257,7 @@ ul{{list-style:none;padding:0}}
 li{{padding:.4rem 0;border-bottom:1px solid #e5e7eb}}
 .kind{{color:#6b7280;font-size:.85rem;margin-left:.5rem}}
 .count{{float:right;color:#2563eb;font-weight:600}}
+{PAGE_DARK_CSS}
 </style></head><body>
 <nav><a href="../">&larr; Top</a></nav>
 <h1>エンティティ一覧（記事数順 · {len(index_entries)}件）</h1>

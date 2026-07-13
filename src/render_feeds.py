@@ -200,11 +200,20 @@ SEARCH_HTML = r"""<!doctype html>
       </div>`).join('');
     results.innerHTML = html;
   }
-  fetch('search-index.json').then(r => r.json()).then(rows => {
-    data = rows;
-    total.textContent = rows.length;
-    q.addEventListener('input', () => render(q.value));
-  }).catch(err => { meta.textContent = '検索インデックスを読み込めませんでした: ' + err; });
+  // インデックス(約2MB)はページ表示時ではなく最初の入力時に遅延ロードする
+  let loading = null;
+  function ensureIndex(){
+    if (!loading){
+      meta.textContent = '検索インデックスを読み込み中…';
+      loading = fetch('search-index.json').then(r => r.json()).then(rows => {
+        data = rows;
+        total.textContent = rows.length;
+      }).catch(err => { meta.textContent = '検索インデックスを読み込めませんでした: ' + err; });
+    }
+    return loading;
+  }
+  q.addEventListener('focus', () => { ensureIndex(); }, { once: true });
+  q.addEventListener('input', () => { ensureIndex().then(() => render(q.value)); });
 })();
 </script>
 </body>

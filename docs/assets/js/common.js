@@ -33,9 +33,37 @@ if (DTT_GOATCOUNTER_ENDPOINT) {
     box.innerHTML = renderStateChips(states);
   }
 
+  // タグ選択を localStorage に永続化し、次回訪問時に復元する（ウォッチリスト的な使い方）
+  function saveTagState(){
+    try {
+      localStorage.setItem('dttSelectedTags', JSON.stringify([...selectedTags]));
+      localStorage.setItem('dttTagMode', tagMode);
+    } catch (_) {}
+  }
+
+  function restoreTagState(){
+    try {
+      const saved = JSON.parse(localStorage.getItem('dttSelectedTags') || '[]');
+      const mode = localStorage.getItem('dttTagMode');
+      if (mode === 'OR' || mode === 'AND'){
+        tagMode = mode;
+        const cb = document.getElementById('tagModeOr');
+        if (cb) cb.checked = (mode === 'OR');
+      }
+      for (const tg of saved){
+        // このページに存在するタグだけ復元する
+        const btns = document.querySelectorAll(`[data-tag-btn="${CSS.escape(tg)}"]`);
+        if (btns.length === 0) continue;
+        selectedTags.add(tg);
+        btns.forEach(b => b.classList.add('active'));
+      }
+    } catch (_) {}
+  }
+
   function toggleTag(tg){
     selectedTags.has(tg) ? selectedTags.delete(tg) : selectedTags.add(tg);
     document.querySelectorAll(`[data-tag-btn="${tg}"]`).forEach(b => b.classList.toggle('active', selectedTags.has(tg)));
+    saveTagState();
     syncTagMoreLabel();
     updateTagActiveView();
     applyFilter();
@@ -44,6 +72,7 @@ if (DTT_GOATCOUNTER_ENDPOINT) {
   function clearTagFilter(){
     selectedTags.clear();
     document.querySelectorAll('[data-tag-btn]').forEach(b => b.classList.remove('active'));
+    saveTagState();
     syncTagMoreLabel();
     updateTagActiveView();
     applyFilter();
@@ -319,7 +348,7 @@ if (DTT_GOATCOUNTER_ENDPOINT) {
 
   function setupCommon(pagePrefix){
     document.getElementById('q')?.addEventListener('input', applyFilter);
-    document.getElementById('tagModeOr')?.addEventListener('change', e => { tagMode = e.target.checked ? 'OR' : 'AND'; updateTagActiveView(); applyFilter(); });
+    document.getElementById('tagModeOr')?.addEventListener('change', e => { tagMode = e.target.checked ? 'OR' : 'AND'; saveTagState(); updateTagActiveView(); applyFilter(); });
     document.getElementById('tagMore')?.addEventListener('click', () => {
       const bar = document.getElementById('tagBar'); if (!bar) return;
       bar.classList.toggle('collapsed');
@@ -335,6 +364,7 @@ if (DTT_GOATCOUNTER_ENDPOINT) {
     bindHashNavigation(pagePrefix);
     setupCategoryToc();
     syncToggleAllCatsLabel();
+    restoreTagState();
     syncTagMoreLabel();
     updateTagActiveView();
     applyFilter();
