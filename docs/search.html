@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>記事検索 | Daily Tech Trend</title>
+<link rel="stylesheet" href="/daily-tech-trend/assets/css/common.css">
+<style>
+  .search-wrap{max-width:900px;margin:2rem auto;padding:0 1rem}
+  .search-input{width:100%;font-size:1.1rem;padding:.7rem 1rem;border:1px solid var(--border);border-radius:8px;background:var(--panel);color:var(--text-main);box-sizing:border-box}
+  .search-meta{margin:.8rem 0;color:var(--text-sub);font-size:.9rem}
+  .search-hit{border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;margin-bottom:.6rem;background:var(--panel)}
+  .search-hit h3{margin:0 0 .3rem;font-size:1rem}
+  .search-hit h3 a{color:var(--accent);text-decoration:none}
+  .search-hit h3 a:hover{text-decoration:underline}
+  .search-hit .meta{font-size:.8rem;color:var(--text-sub)}
+  .search-hit .snippet{font-size:.9rem;margin-top:.3rem;color:var(--text-main)}
+  mark{background:var(--accent-soft);color:var(--text-main);padding:0 2px;border-radius:3px}
+</style>
+</head>
+<body>
+<nav class="topnav" role="navigation" aria-label="グローバル">
+  <a href="/daily-tech-trend/">Tech</a>
+  <a href="/daily-tech-trend/news/">News</a>
+  <a href="/daily-tech-trend/forecast/">Forecast</a>
+  <a href="/daily-tech-trend/ops/">Ops</a>
+  <a href="/daily-tech-trend/search.html" class="active">Search</a>
+</nav>
+<main class="search-wrap">
+<h1>記事検索</h1>
+<p class="search-meta">タイトル・日本語タイトル・本文を対象にキーワード検索します（インデックス件数: <span id="total">0</span>）。</p>
+<input id="q" class="search-input" type="search" placeholder="キーワード（スペース区切りでAND検索）" autofocus>
+<div id="meta" class="search-meta"></div>
+<div id="results"></div>
+</main>
+<script>
+(function(){
+  const q = document.getElementById('q');
+  const results = document.getElementById('results');
+  const total = document.getElementById('total');
+  const meta = document.getElementById('meta');
+  let data = [];
+
+  function escapeHtml(s){
+    return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
+  }
+  function highlight(text, terms){
+    let out = escapeHtml(text);
+    for (const t of terms){
+      if (!t) continue;
+      const re = new RegExp('(' + t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')','gi');
+      out = out.replace(re, '<mark>$1</mark>');
+    }
+    return out;
+  }
+  function render(query){
+    const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    if (terms.length === 0){ results.innerHTML = ''; meta.textContent=''; return; }
+    const hits = [];
+    for (const row of data){
+      const hay = ((row.t||'') + ' ' + (row.tj||'') + ' ' + (row.s||'')).toLowerCase();
+      if (terms.every(t => hay.includes(t))) hits.push(row);
+      if (hits.length >= 200) break;
+    }
+    meta.textContent = hits.length + ' 件ヒット（最大200件表示）';
+    const html = hits.map(h => `
+      <div class="search-hit">
+        <h3><a href="${escapeHtml(h.u)}" target="_blank" rel="noopener">${highlight(h.tj||h.t, terms)}</a></h3>
+        <div class="meta">${escapeHtml(h.c||'')} · ${escapeHtml(h.d||'')} · ${escapeHtml(h.src||'')}</div>
+        <div class="snippet">${highlight((h.s||'').slice(0,200), terms)}</div>
+      </div>`).join('');
+    results.innerHTML = html;
+  }
+  fetch('search-index.json').then(r => r.json()).then(rows => {
+    data = rows;
+    total.textContent = rows.length;
+    q.addEventListener('input', () => render(q.value));
+  }).catch(err => { meta.textContent = '検索インデックスを読み込めませんでした: ' + err; });
+})();
+</script>
+</body>
+</html>
