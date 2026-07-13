@@ -73,7 +73,7 @@ def test_prefetch_feeds_returns_successful_urls(monkeypatch):
     """_prefetch_feeds が成功分だけマップに入れることを検証する。"""
     # _fetch_single_feed は内部で _parse_feed_with_requests を呼ぶため、
     # そちらをモックする。
-    def fake_parse_with_requests(url, *, tls_mode):
+    def fake_parse_with_requests(url, *, tls_mode, user_agent=None):
         if "good" in url:
             return {"entries": []}  # parsed っぽいダミー
         raise RuntimeError("network fail")

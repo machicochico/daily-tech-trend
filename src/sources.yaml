@@ -36,13 +36,16 @@ sources:
   - id: gcp-blog
     name: Google Cloud Blog
     category: system
-    url: https://cloud.google.com/blog/rss
+    # 旧 cloud.google.com/blog/rss は空応答化（2026-07 に移転確認）
+    url: https://cloudblog.withgoogle.com/rss/
 
   # --- セキュリティ ---
+  # CISA は非ブラウザ UA に 403 を返すため user_agent 指定が必須（2026-07 確認）
   - id: cisa-all
     name: CISA Cybersecurity Advisories
     category: security
     subcategory: security_ot
+    user_agent: &browser_ua "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
     url: https://www.cisa.gov/cybersecurity-advisories/all.xml
 
   - id: jpcert
@@ -55,31 +58,21 @@ sources:
     name: CISA ICS Advisories
     category: security
     subcategory: security_ot
+    user_agent: *browser_ua
     url: https://www.cisa.gov/cybersecurity-advisories/ics-advisories.xml
 
   - id: cisa-ics-medical-advisories
     name: CISA ICS Medical Advisories
     category: security
     subcategory: security_ot
+    user_agent: *browser_ua
     url: https://www.cisa.gov/cybersecurity-advisories/ics-medical-advisories.xml
 
-  - id: cisa-ics-mitigation-guides
-    name: CISA ICS Recommended Practices / Mitigation Guides
-    category: security
-    subcategory: security_ot
-    url: https://www.cisa.gov/cybersecurity-advisories/ics-recommended-practices.xml
-
-  - id: cisa-sbom
-    name: CISA SBOM Resources
-    category: security
-    subcategory: security_ot
-    url: https://www.cisa.gov/sbom.xml
-
-  - id: cisa-known-exploited-vulns
-    name: CISA Known Exploited Vulnerabilities Catalog
-    category: security
-    subcategory: security_ot
-    url: https://www.cisa.gov/known-exploited-vulnerabilities-catalog.xml
+  # 廃止済み CISA フィード（2026-07 確認・削除）:
+  #   ics-recommended-practices.xml / sbom.xml / known-exploited-vulnerabilities-catalog.xml
+  #   → いずれも 404。KEV 追加は cisa-all (all.xml) に流れる。
+  #   KEV カタログ全量が必要なら公式 JSON API:
+  #   https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
 
   # --- 標準化・規格 ---
   - id: iso-news
@@ -97,10 +90,8 @@ sources:
     category: standards
     url: https://www.nist.gov/news-events/news/rss.xml
 
-  - id: enisa-news
-    name: ENISA News
-    category: standards
-    url: https://www.enisa.europa.eu/news/enisa-news/RSS
+  # ENISA は新サイト移行で RSS を全廃（公式告知あり・2026-07 確認）。
+  # 新しい購読メカニズムが公開されたら再追加する。
 
   - id: jisc-news
     name: JISC News (JIS)
@@ -132,11 +123,12 @@ sources:
     url: https://openai.com/news/rss.xml
 
   - id: google-ai-blog
-    name: Google AI Blog
+    name: Google Research Blog
     category: ai
     vendor: Google
     weekly_new_limit: 8
-    url: https://ai.googleblog.com/feeds/posts/default
+    # 旧 ai.googleblog.com は research.google/blog に統合（2026-07 確認）
+    url: https://research.google/blog/rss/
 
   - id: deepmind-blog
     name: Google DeepMind Blog
@@ -146,11 +138,12 @@ sources:
     url: https://deepmind.google/blog/rss.xml
 
   - id: meta-ai
-    name: Meta AI Blog
+    name: Meta AI Research (Engineering at Meta)
     category: ai
     vendor: Meta
     weekly_new_limit: 5
-    url: https://ai.facebook.com/blog/rss/
+    # ai.meta.com/blog は公式RSSなし。Engineering at Meta の AI Research カテゴリで代替（2026-07 確認）
+    url: https://engineering.fb.com/category/ai-research/feed/
 
   - id: microsoft-ai
     name: Microsoft AI Blog
@@ -192,7 +185,8 @@ sources:
     category: ai
     vendor: GitHub
     weekly_new_limit: 6
-    url: https://github.blog/category/machine-learning/feed/
+    # カテゴリ URL 再編（2026-07 確認）
+    url: https://github.blog/ai-and-ml/machine-learning/feed/
 
   # --- 製造（鉄鋼） ---
   # 鉄鋼団体・企業ニュース（鉄鋼主軸に寄せる）
@@ -209,12 +203,10 @@ sources:
   - id: nippon-steel
     name: 日本製鉄
     category: manufacturing
-    url: https://www.nipponsteel.com/news/rss.xml
+    # newsroom 配下へ移転（2026-07 確認）
+    url: https://www.nipponsteel.com/newsroom/news/rss.xml
 
-  - id: kobe-steel
-    name: 神戸製鋼所
-    category: manufacturing
-    url: https://www.kobelco.co.jp/rss/news.xml
+  # 神戸製鋼所は RSS 提供を終了（2026-07 確認、代替はメール配信のみ）
 
   - id: posco-holdings
     name: POSCO Holdings
@@ -222,10 +214,7 @@ sources:
     tls_mode: relaxed
     url: https://www.posco-inc.com:4451/poscoinc/v2/company/news_en/feed
 
-  - id: arcelormittal
-    name: ArcelorMittal
-    category: manufacturing
-    url: https://corporate.arcelormittal.com/media/news-articles/rss
+  # ArcelorMittal は新サイトで RSS 提供なし（2026-07 確認）
 
   - id: nucor
     name: Nucor
@@ -238,9 +227,17 @@ sources:
     url: https://www.ussteel.com/rss/news.xml
 
   - id: tata-steel
-    name: Tata Steel
+    name: Tata Steel Nederland
     category: manufacturing
-    url: https://www.tatasteel.com/media/newsroom/press-releases/rss.xml
+    # 本体サイトは WAF で RSS 取得不可。欧州部門の Presspage フィードで代替（2026-07 確認）
+    url: https://www.tatasteelnederland.com/nieuws/tagfeed/en/tags/news,statements
+
+  - id: steel-on-the-net
+    name: SteelOnTheNet (鉄鋼業界ニュース)
+    category: manufacturing
+    weekly_new_limit: 5
+    # Steel Times International のフィード廃止に伴う業界ニュースの代替（2026-07 追加）
+    url: https://www.steelonthenet.com/news/newsfeed.xml
 
   - id: thyssenkrupp-steel
     name: thyssenkrupp Steel
@@ -254,9 +251,10 @@ sources:
     url: https://www.mhi.com/rss/mhi_news.xml
 
   - id: siemens-cert
-    name: Siemens
+    name: Siemens ProductCERT
     category: manufacturing
-    url: https://www.siemens.com/cert/rss/advisories.xml
+    # cert-portal.siemens.com へ移転（2026-07 確認）
+    url: https://cert-portal.siemens.com/productcert/rss/advisories.atom
 
   # MES / SCADA / IIoT 専門媒体・主要ベンダ技術アラート
   # kind は tech のまま、category は manufacturing に統一し
@@ -323,7 +321,22 @@ sources:
     category: smart_factory
     kind: tech
     region: global
-    url: https://azure.microsoft.com/en-us/blog/topics/internet-of-things/feed/
+    # topics/ → category/ に再編（2026-07 確認）。デフォルト UA だとタイムアウトするためブラウザ UA 必須
+    user_agent: *browser_ua
+    url: https://azure.microsoft.com/en-us/blog/category/internet-of-things/feed/
+
+  - id: automation-world
+    name: Automation World
+    category: smart_factory
+    weekly_new_limit: 5
+    # 新プラットフォームの公式フィード（?input= は URLエンコード済み JSON。2026-07 確認）
+    url: "https://www.automationworld.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D"
+
+  - id: control-global
+    name: Control Global
+    category: smart_factory
+    weekly_new_limit: 5
+    url: "https://www.controlglobal.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D"
 
   # --- 品質 ---
   - id: metrology-news
@@ -358,6 +371,8 @@ sources:
     category: policy
     kind: tech
     region: jp
+    # AWS WAF の JS チャレンジ対策でブラウザ UA を指定（それでも間欠ブロックの可能性あり・2026-07 確認）
+    user_agent: *browser_ua
     url: https://www.meti.go.jp/ml_index_en_atom.xml
 
   - id: digital-agency-news
@@ -365,14 +380,16 @@ sources:
     category: policy
     kind: news
     region: jp
-    url: https://www.digital.go.jp/assets/contents/news/feed.xml
+    # /rss/ 配下へ移転（2026-07 確認）
+    url: https://www.digital.go.jp/rss/news.xml
 
   - id: soumu-press
     name: 総務省 報道資料
     category: policy
     kind: news
     region: jp
-    url: https://www.soumu.go.jp/menu_news/s-news/rss.xml
+    # news.rdf へ移転（2026-07 確認）
+    url: https://www.soumu.go.jp/news.rdf
 
   - id: nedo-news
     name: NEDO ニュースリリース
@@ -449,7 +466,8 @@ sources:
     vendor: IPA
     weekly_new_limit: 6
     rss:
-      - https://www.ipa.go.jp/security/rss/rss.rdf
+      # rss.rdf は 404。緊急対策情報 alert.rdf へ移転（2026-07 確認）
+      - https://www.ipa.go.jp/security/rss/alert.rdf
 
   - name: NIKKEI TECH
     kind: news

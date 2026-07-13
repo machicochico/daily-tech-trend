@@ -379,3 +379,41 @@ danieli.com, zeiss.com, ghgprotocol.org, env.go.jp
 - [ ] ダークモード（common.css の変数上書き）
 - [ ] ウォッチリスト（localStorage）
 - [ ] 死亡フィードの URL 差し替え（Web調査は別エージェントで進行中）
+
+---
+
+# 死亡フィードの棚卸し・差し替え完了（2026-07-13 利用価値向上 第1弾の続き）
+
+Web 調査（別エージェント・全候補を実取得検証）に基づき sources.yaml を更新。
+
+## 復旧・差し替え（実取得検証済み・18/18 OK）
+- Google Cloud Blog → cloudblog.withgoogle.com/rss/
+- Google AI Blog → research.google/blog/rss/（Research Blog に統合）
+- Meta AI → engineering.fb.com/category/ai-research/feed/（公式RSS廃止のため代替）
+- GitHub ML → github.blog/ai-and-ml/machine-learning/feed/
+- 日本製鉄 → nipponsteel.com/newsroom/news/rss.xml
+- Tata Steel → tatasteelnederland.com（欧州部門 Presspage）
+- Siemens ProductCERT → cert-portal.siemens.com/productcert/rss/advisories.atom
+- Azure IoT → /blog/category/internet-of-things/feed/（要ブラウザUA）
+- デジタル庁 → digital.go.jp/rss/news.xml / 総務省 → soumu.go.jp/news.rdf / IPA → alert.rdf
+- CISA all/ics/ics-medical: URL 据え置きで復旧（403 の原因は UA。下記参照）
+- METI: URL 据え置きで復旧（AWS WAF。ブラウザUA指定）
+- 新規追加: SteelOnTheNet（Steel Times Int'l 廃止の代替）、Automation World、Control Global
+
+## collect.py の機能追加
+- フィード単位の `user_agent:` オプション（sources.yaml、YAML アンカー &browser_ua で共有）
+- user_agent 指定時は Accept/Accept-Language を含むブラウザ相当ヘッダ一式を送信
+  （CISA は UA 単体では 403 のまま。ヘッダ一式で 200 になることを実測確認）
+
+## 廃止（コメントで sources.yaml に記録）
+- ENISA（新サイトで RSS 全廃・公式告知あり）、神戸製鋼（RSS 終了）、ArcelorMittal（新サイトに RSS なし）、
+  CISA の sbom.xml / KEV catalog.xml / ics-recommended-practices.xml（404。KEV は all.xml に流れる。
+  KEV 全量が必要なら公式 JSON API → 将来の JSON インジェスト課題）
+
+## 未対応（優先度低・次回以降）
+- iso.org / iec.ch / jisc.go.jp / nedo.go.jp / 東京都 / ec.europa.eu(taxation) / prtimes.jp/it /
+  recyclingtoday / tenova / sms-group / danieli / zeiss / ghgprotocol / env.go.jp / nucor / ussteel /
+  thyssenkrupp / posco / aveva / rockwellautomation / nttdata / aws industries / skf blog（今回の調査対象外）
+
+## DB 整備
+- feed_health: sources.yaml に存在しない陳腐化 28行を削除、UA対応で復旧した4フィードの suspend を解除

@@ -230,6 +230,14 @@ HEADERS = {
     "User-Agent": "DailyTechTrend/1.0 (+https://github.com/yourname/daily-tech-trend)"
 }
 
+# user_agent 指定フィード用の追加ヘッダ。
+# CISA 等の WAF は UA 単体では 403 を返し、Accept/Accept-Language を含む
+# ブラウザ相当のヘッダ一式で初めて 200 を返す（2026-07 実測）。
+BROWSER_EXTRA_HEADERS = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "ja,en-US;q=0.7,en;q=0.3",
+}
+
 
 def normalize_url(u: str) -> str:
     sp = urlsplit(u)
@@ -271,6 +279,7 @@ def load_feed_list(cfg: dict):
                     "limit": x.get("limit", 30),
                     "weekly_new_limit": x.get("weekly_new_limit"),
                     "tls_mode": x.get("tls_mode", "strict"),
+                    "user_agent": x.get("user_agent"),
                 }
             )
         return out
@@ -292,6 +301,9 @@ def load_feed_list(cfg: dict):
                 "limit": s.get("limit", 30),
                 "weekly_new_limit": s.get("weekly_new_limit"),
                 "tls_mode": s.get("tls_mode", "strict"),
+                # 一部サイト（CISA, METI 等）はデフォルト UA に 403/WAF を返すため
+                # フィード単位でブラウザ相当の UA を指定できるようにする
+                "user_agent": s.get("user_agent"),
             }
 
             rss_list = s.get("rss") or []
@@ -317,6 +329,7 @@ def load_feed_list(cfg: dict):
                             "vendor": r.get("vendor", base["vendor"]),
                             "source_tier": r.get("source_tier", base["source_tier"]),
                             "tls_mode": r.get("tls_mode", base["tls_mode"]),
+                            "user_agent": r.get("user_agent", base["user_agent"]),
                         }
                     )
 
@@ -526,12 +539,17 @@ def mark_feed_success(cur, *, feed: dict, now_iso: str):
     )
 
 
-def _parse_feed_with_requests(url: str, *, tls_mode: str):
+def _parse_feed_with_requests(url: str, *, tls_mode: str, user_agent: str | None = None):
     verify = certifi.where()
     if tls_mode == "relaxed":
         verify = False
 
-    response = requests.get(url, headers=HEADERS, timeout=FETCH_TIMEOUT_SEC, verify=verify)
+    headers = dict(HEADERS)
+    if user_agent:
+        headers["User-Agent"] = user_agent
+        headers.update(BROWSER_EXTRA_HEADERS)
+
+    response = requests.get(url, headers=headers, timeout=FETCH_TIMEOUT_SEC, verify=verify)
     response.raise_for_status()
     return feedparser.parse(response.content)
 
@@ -553,7 +571,9 @@ def _fetch_single_feed(feed: dict):
     """
     tls_mode = (feed.get("tls_mode") or "strict").lower()
     try:
-        d = _parse_feed_with_requests(feed["url"], tls_mode=tls_mode)
+        d = _parse_feed_with_requests(
+            feed["url"], tls_mode=tls_mode, user_agent=feed.get("user_agent")
+        )
         return (feed["url"], d, None)
     except Exception as e:
         return (feed["url"], None, e)
@@ -656,7 +676,11 @@ def main():
             if prefetched_d is not None:
                 d = prefetched_d
             else:
-                d = feedparser.parse(feed["url"], request_headers=HEADERS)
+                _headers = dict(HEADERS)
+                if feed.get("user_agent"):
+                    _headers["User-Agent"] = feed["user_agent"]
+                    _headers.update(BROWSER_EXTRA_HEADERS)
+                d = feedparser.parse(feed["url"], request_headers=_headers)
         except ssl.SSLError as e:
             error_type = classify_error(e)
             should_log, suppressed = record_failure(
