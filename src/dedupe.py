@@ -356,6 +356,19 @@ def main():
                 idx, len(rows), deleted, candidate_checked, _now_sec() - t0,
             )
 
+    # 削除した記事に紐づく topic_articles の孤児行を掃除する
+    # （残すとトピックが「記事0件のゾンビ」としてページに現れ、タイムラインが空になる）
+    # テスト用の最小DBには topic_articles が無いため存在チェックを挟む
+    if cur.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='topic_articles'"
+    ).fetchone():
+        cur.execute(
+            "DELETE FROM topic_articles WHERE article_id NOT IN (SELECT id FROM articles)"
+        )
+        orphans_removed = cur.rowcount
+        if orphans_removed:
+            logger.info("dedupe cleaned orphan topic_articles rows=%d", orphans_removed)
+
     conn.commit()
     conn.close()
     logger.info("step=dedupe end sec=%.1f deleted=%d total=%d", _now_sec() - t0, deleted, len(rows))

@@ -432,6 +432,7 @@ HTML = r"""
   <title>技術動向ダイジェスト</title>
   <meta name="description" content="国内外の技術トレンドをカテゴリ別に要約し、注目度・新着・解説を1ページで確認できる技術動向ダイジェスト。">
   <link rel="canonical" href="/daily-tech-trend/">
+  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
 
   <meta property="og:title" content="技術動向ダイジェスト">
   <meta property="og:description" content="国内外の技術トレンドをカテゴリ別に要約し、注目度・新着・解説を1ページで確認できる技術動向ダイジェスト。">
@@ -454,7 +455,12 @@ HTML = r"""
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/forecast/hits/" class="{{ 'active' if page=='forecast_hits' else '' }}">予想的中</a>
+    <a href="/daily-tech-trend/diff/" class="">差分</a>
+    <a href="/daily-tech-trend/entity/" class="">企業別</a>
+    <a href="/daily-tech-trend/exec/" class="">エグゼクティブ</a>
+    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
+    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
   </div>
 
     <div class="summary-card">
@@ -685,6 +691,7 @@ HTML = r"""
                   <span class="badge">{{ tg }}</span>
                 {% endfor %}
               {% endif %}
+              <a class="badge" href="/daily-tech-trend/topic/{{ t.id }}/" title="このトピックの記事を時系列で見る">📈 経緯</a>
             </div>
 
             {% if t.summary %}
@@ -823,6 +830,7 @@ NEWS_HTML = r"""
   <title>{{ title }}</title>
   <meta name="description" content="国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。">
   <link rel="canonical" href="/daily-tech-trend/news/">
+  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
 
   <meta property="og:title" content="ニュースダイジェスト">
   <meta property="og:description" content="国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。">
@@ -845,7 +853,12 @@ NEWS_HTML = r"""
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/forecast/hits/" class="{{ 'active' if page=='forecast_hits' else '' }}">予想的中</a>
+    <a href="/daily-tech-trend/diff/" class="">差分</a>
+    <a href="/daily-tech-trend/entity/" class="">企業別</a>
+    <a href="/daily-tech-trend/exec/" class="">エグゼクティブ</a>
+    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
+    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
   </div>
 
 
@@ -1115,6 +1128,7 @@ OPS_HTML = r"""
   <title>運用ダッシュボード | Daily Tech Trend</title>
   <meta name="description" content="パイプライン稼働状況・記事収集トレンド・フィード健全性を確認する運用ダッシュボード。">
   <link rel="canonical" href="/daily-tech-trend/ops/">
+  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
   <link rel="stylesheet" href="{{ common_css_href }}">
   <style>
     .ops-section{margin:16px 0;padding:14px 16px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
@@ -1164,7 +1178,12 @@ OPS_HTML = r"""
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/forecast/hits/" class="{{ 'active' if page=='forecast_hits' else '' }}">予想的中</a>
+    <a href="/daily-tech-trend/diff/" class="">差分</a>
+    <a href="/daily-tech-trend/entity/" class="">企業別</a>
+    <a href="/daily-tech-trend/exec/" class="">エグゼクティブ</a>
+    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
+    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
   </div>
 
   <!-- セクション1: パイプライン概況 -->
@@ -1882,6 +1901,7 @@ FORECAST_HTML = r"""
   <title>未来予測レポート | Daily Tech Trend</title>
   <meta name="description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
   <link rel="canonical" href="/daily-tech-trend/forecast/">
+  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
 
   <meta property="og:title" content="未来予測レポート | Daily Tech Trend">
   <meta property="og:description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
@@ -1996,7 +2016,12 @@ FORECAST_HTML = r"""
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/forecast/hits/" class="{{ 'active' if page=='forecast_hits' else '' }}">予想的中</a>
+    <a href="/daily-tech-trend/diff/" class="">差分</a>
+    <a href="/daily-tech-trend/entity/" class="">企業別</a>
+    <a href="/daily-tech-trend/exec/" class="">エグゼクティブ</a>
+    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
+    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
   </div>
 
   <div class="summary-card" style="margin:16px 0">
@@ -2562,6 +2587,7 @@ FORECAST_HITS_HTML = r"""
   <title>予想的中 | Daily Tech Trend</title>
   <meta name="description" content="過去の未来予測のうち、後日のニュースで的中が確認された予測をまとめたページ。">
   <link rel="canonical" href="/daily-tech-trend/forecast/hits/">
+  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
   <meta property="og:title" content="予想的中 | Daily Tech Trend">
   <meta property="og:description" content="過去の未来予測のうち、後日のニュースで的中が確認された予測をまとめたページ。">
   <meta property="og:type" content="website">
@@ -2598,7 +2624,12 @@ FORECAST_HITS_HTML = r"""
     <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
     <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
     <a href="/daily-tech-trend/forecast/hits/" class="{{ 'active' if page=='forecast_hits' else '' }}">予想的中</a>
+    <a href="/daily-tech-trend/diff/" class="">差分</a>
+    <a href="/daily-tech-trend/entity/" class="">企業別</a>
+    <a href="/daily-tech-trend/exec/" class="">エグゼクティブ</a>
+    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
     <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
+    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
   </div>
 
   <div class="hit-summary">
@@ -4316,9 +4347,20 @@ def main():
         _log_render_error("diff.render", e, level="error")
 
     try:
-        # トピックタイムライン（上位 importance 50件）
+        # トピックタイムライン。生成済みメインページが 📈 経緯リンクで参照している
+        # トピック ID をすべて含める（リンク切れ防止のため HTML から実リンクを回収）
+        import re as _re
         from topic_timeline import render_topic_timelines
-        render_topic_timelines(out_dir, top_n=50, conn=conn)
+        linked_ids: set[int] = set()
+        for _page in ("index.html", "tech/index.html", "news/index.html"):
+            _p = out_dir / _page
+            if _p.exists():
+                linked_ids |= {
+                    int(m) for m in _re.findall(
+                        r'href="/daily-tech-trend/topic/(\d+)/"', _p.read_text(encoding="utf-8")
+                    )
+                }
+        render_topic_timelines(out_dir, top_n=50, include_ids=linked_ids, conn=conn)
     except Exception as e:
         _log_render_error("topic_timeline.render", e, level="error")
 

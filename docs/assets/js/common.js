@@ -1,3 +1,16 @@
+// --- アクセス計測（プライバシーフレンドリー・Cookie不使用） ---
+// GoatCounter (https://www.goatcounter.com) でサイト登録後、
+// 下記にエンドポイントを設定すると計測が有効になる（空のままなら何もしない）。
+// 例: 'https://daily-tech-trend.goatcounter.com/count'
+const DTT_GOATCOUNTER_ENDPOINT = '';
+if (DTT_GOATCOUNTER_ENDPOINT) {
+  const s = document.createElement('script');
+  s.async = true;
+  s.dataset.goatcounter = DTT_GOATCOUNTER_ENDPOINT;
+  s.src = 'https://gc.zgo.at/count.js';
+  document.head.appendChild(s);
+}
+
 (() => {
   const selectedTags = new Set();
   let tagMode = 'AND';

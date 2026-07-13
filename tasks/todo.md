@@ -354,3 +354,28 @@ danieli.com, zeiss.com, ghgprotocol.org, env.go.jp
 - [ ] 上記死亡フィードの URL 差し替え（各サイトの新フィードURLを Web で調査）または sources.yaml からの削除
 - [ ] render_main.py の段階的分割の継続（テンプレート外部化）
 - [ ] git 履歴の肥大解消（filter-repo で過去の state.sqlite blob を除去。force-push を伴うため要ユーザー判断）
+
+---
+
+# 利用価値向上 第1弾（2026-07-13）
+
+## 実施内容
+- **ナビ導線整備**: 全5ページ共通ナビに「差分」「企業別」「エグゼクティブ」「🔍検索」「RSS」を追加（従来これらのページへのリンクはゼロで発見不能だった）
+- **📈 経緯リンク**: tech ページの各トピックカードからトピックタイムライン（topic/<id>/）へリンク。リンク切れ防止のため、render 時に生成済み HTML から実リンク ID を回収してタイムライン生成対象に含める自己整合方式（render_main.py → topic_timeline.render_topic_timelines(include_ids=...)）
+- **RSS 自動検出**: 全5ページの head に <link rel="alternate" type="application/rss+xml">
+- **通知の配線**: run_daily.bat に notify.py ステップ追加（webhook 環境変数未設定なら no-op。設定手順は README）
+- **perspective_digest 自動生成の配線**: run_daily.bat に --limit 30 --max-sec 120 で組み込み（Phase 3 準備済み案の適用）
+- **計測フック**: common.js に GoatCounter フック（DTT_GOATCOUNTER_ENDPOINT 空なら無効。手順は README）
+- run_daily.bat は編集前に C:\workun_daily.bat.bak_20260713 へバックアップ済み
+
+## 派生バグ修正（経緯リンク検証で発見）
+- **topic_articles の孤児行 9,281件**: dedupe.py が記事削除時に紐付けを掃除していなかった。一括削除＋ dedupe.py 末尾に恒久掃除を追加（テスト用最小DB対応の存在チェック付き）
+- **タイムラインの記事0件スキップ**: スキップすると 404 になるため、空状態メッセージつきページを生成する方式に変更
+- 検証: 経緯リンク 215件 → 404 ゼロ、全テスト 224 pass
+
+## 残り（第2弾以降・計測データを見てから優先度決定）
+- [ ] トップページ軽量化（936KB → 初期表示絞り込み）
+- [ ] 検索インデックス(1.9MB)の遅延ロード
+- [ ] ダークモード（common.css の変数上書き）
+- [ ] ウォッチリスト（localStorage）
+- [ ] 死亡フィードの URL 差し替え（Web調査は別エージェントで進行中）

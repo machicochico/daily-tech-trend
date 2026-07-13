@@ -6,6 +6,17 @@
 - **GitHub Actions（`.github/workflows/ci.yml`）は検証専用**: push/PR 時に `feed_lint` と `pytest` を実行するのみで、リポジトリへの書き込みはしない
 - **`data/state.sqlite` は git 管理外**（`.gitignore` の方針どおり）。DB のスナップショットが必要な場合はローカルでバックアップを取る
 
+## 通知（Slack / Discord）
+`run_daily.bat` の末尾で `src/notify.py` が毎晩実行される。**webhook URL を環境変数に設定するだけで有効になる**（未設定なら何もしない）:
+- `SLACK_WEBHOOK_URL`: Slack の Incoming Webhook URL
+- `DISCORD_WEBHOOK_URL`: Discord の Webhook URL
+- `NOTIFY_MIN_IMPORTANCE`（デフォルト 80）/ `NOTIFY_MAX_ITEMS`（デフォルト 5）
+
+設定はタスクスケジューラ実行ユーザーのシステム環境変数として登録する（例: `[System.Environment]::SetEnvironmentVariable('SLACK_WEBHOOK_URL','https://hooks.slack.com/...','Machine')`）。事前確認は `python src/notify.py --dry-run`。
+
+## アクセス計測（任意・プライバシーフレンドリー）
+[GoatCounter](https://www.goatcounter.com)（無料・Cookie不使用）でサイトを登録し、`docs/assets/js/common.js` 冒頭の `DTT_GOATCOUNTER_ENDPOINT` にエンドポイント（例: `https://<code>.goatcounter.com/count`）を設定すると計測が始まる。空のままなら何も送信しない。
+
 
 ## LLM 自動起動（任意）
 `src/llm_insights_api.py` は LMStudio API (`http://127.0.0.1:1234`) へ接続します。
