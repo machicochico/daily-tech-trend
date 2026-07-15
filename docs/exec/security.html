@@ -31,13 +31,21 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 <body>
 <nav><a href="../">&larr; Top</a></nav>
 <h1>セキュリティ エグゼクティブサマリー</h1>
-<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-07-15 12:30</p>
-<section class="exec-item"><h2>1. Linuxカーネルのx86向けKVMに解放済みメモリ使用の脆弱性</h2><dl><dt>何が起きているか</dt><dd>Linuxカーネルのx86向けKVMにおいて、解放済みメモリを再利用できる脆弱性が発見され、悪用されるとゲストVMからホストマシンをクラッシュさせるDoS攻撃や任意コード実行が可能となる。</dd><dt>事業への影響</dt><dd>クラウド・仮想化環境を提供する企業や、社内でKVMを利用している企業は、ホストOSのアップデート遅延によりサービス停止リスクが高まる。特に、マルチテナント環境では全顧客に影響が及ぶ可能性がある。</dd><dt>推奨行動</dt><dd>① 直ちにベンダーが公開したパッチを適用し、KVMのバージョンを最新に保つ。② 既存環境の脆弱性スキャンを実施し、未適用箇所を特定。③ 重要サービスに対しては一時的に仮想化機能を停止し、リスクを最小化。④ 監視体制を強化し、DoS兆候や異常アクセスを検知できるようにする。</dd></dl></section>
-<section class="exec-item"><h2>2. CISA、SharePoint Serverの既知脆弱性を含む4件をカタログに追加</h2><dl><dt>何が起きているか</dt><dd>CISAがSharePoint Serverに対するCVE-2026-32201、CVE-2026-45659、CVE-2026-56164を含む4件の既知脆弱性をKEVカタログに追加し、実際に悪用が確認されたことを報告。</dd><dt>事業への影響</dt><dd>社内外でSharePointを利用している企業は、認証情報漏えいやデータ改ざん、サービス停止など重大なセキュリティインシデントに直面するリスクが増大。特に、機密情報を扱う部署では業務継続に支障をきたす可能性が高い。</dd><dt>推奨行動</dt><dd>① SharePoint Serverのパッチ適用状況を即時確認し、未適用の場合は直ちにアップデート。② 既存のアクセス権限を見直し、最小権限原則を徹底。③ 監査ログを強化し、異常アクセスをリアルタイムで検知。④ 重要データは定期的にバックアップし、災害復旧計画を再確認。</dd></dl></section>
-<section class="exec-item"><h2>3. CISA、既知脆弱性4件をKEVカタログに追加（CVE-2026-15409等）</h2><dl><dt>何が起きているか</dt><dd>CISAがCVE-2026-15409（SonicWall SMA1000）やCVE-2026-31431（ABB製品）など、複数の既知脆弱性をKEVカタログに追加し、実際に悪用が確認されたことを報告。</dd><dt>事業への影響</dt><dd>ネットワーク機器や産業制御システムを利用する企業は、外部からの攻撃によりシステム停止やデータ漏えい、製造ラインの停止など重大な業務障害を被る恐れがある。</dd><dt>推奨行動</dt><dd>① 影響を受ける機器のファームウェア・ソフトウェアを最新バージョンに更新。② ネットワーク分離・ファイアウォール設定を見直し、外部からのアクセスを制限。③ 重要機器のログを集中監視し、異常検知時に即時対応できる体制を構築。④ 取引先やサプライヤーにも同様のパッチ適用を要請し、サプライチェーン全体でリスクを低減。</dd></dl></section>
+<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-07-15 15:30</p>
+<section class="exec-item"><h2>1. 注意喚起: 2026年7月マイクロソフトセキュリティ更新プログラムに関する注意喚起</h2><dl><dt>何が起きているか</dt><dd>Microsoftが2026年7月にリリース予定のセキュリティ更新プログラムに関し、既知の脆弱性が修正されていない環境への影響を警告。</dd><dt>事業への影響</dt><dd>社内システムや顧客向けサービスでMicrosoft製品を利用している企業は、更新プログラムの適用遅延により攻撃リスクが増大し、業務停止やデータ漏えいの可能性が高まる。</dd><dt>推奨行動</dt><dd>即時にパッチ適用計画を策定し、テスト環境での検証後に本番環境へ展開。更新遅延が発生した場合は代替対策（ファイアウォール設定強化等）を講じ、経営層へ進捗報告を行う。</dd></dl></section>
+<section class="exec-item"><h2>2. Linuxカーネルのx86向けKVMに解放済みメモリの使用の脆弱性</h2><dl><dt>何が起きているか</dt><dd>KVM仮想化環境で解放済みメモリを不正に利用できる脆弱性が報告され、ゲストVMからホストへのDoSや任意コード実行が可能となる。</dd><dt>事業への影響</dt><dd>クラウドサービスプロバイダーや社内仮想化環境を持つ企業は、サービス停止や機密情報漏えいのリスクが急増。</dd><dt>推奨行動</dt><dd>各ディストリビューションのパッチ適用状況を確認し、未適用の場合は直ちに更新。仮想化環境の監査を実施し、脆弱性利用検知機能を導入。経営層へリスク評価と対策計画を報告。</dd></dl></section>
+<section class="exec-item"><h2>3. CISA、悪用された既知の脆弱性 4 件をカタログに追加</h2><dl><dt>何が起きているか</dt><dd>米国CISAが4件の既知脆弱性（CVE-2026-15409等）をKEVカタログに追加し、実際に悪用が確認されたことを公表。</dd><dt>事業への影響</dt><dd>組織はこれらの脆弱性を対象とした攻撃を受ける可能性が高く、特にSharePointやICS製品を利用している企業は業務継続に重大な影響を受ける。</dd><dt>推奨行動</dt><dd>KEVリストにある脆弱性を対象に、脆弱性管理プロセスを強化。パッチ適用優先度を上げ、必要に応じてネットワーク分離やアクセス制御を再設定。経営層へリスクマトリクスを提示し、緊急対策資源の確保を提案。</dd></dl></section>
 <section class="refs">
   <h3>参考にしたニュース</h3>
-  <ul><li><a href="https://www.watch.impress.co.jp/docs/news/2125190.html" target="_blank" rel="noopener">LUUP、法人向けサービス開始 1人2500円の「ビジネスプラン」も</a> <small>(Impress Watch (INTERNET Watch), 2026-07-15)</small></li>
+  <ul><li><a href="https://www.watch.impress.co.jp/docs/news/2125321.html" target="_blank" rel="noopener">ファミマ、「コンビニサングラス」にスクエアタイプ</a> <small>(Impress Watch (INTERNET Watch), 2026-07-15)</small></li>
+<li><a href="https://www.jpcert.or.jp/at/2026/at260020.html" target="_blank" rel="noopener">注意喚起: 2026年7月マイクロソフトセキュリティ更新プログラムに関する注意喚起 (公開)</a> <small>(JPCERT/CC, 2026-07-15)</small></li>
+<li><a href="https://www.watch.impress.co.jp/docs/news/2125249.html" target="_blank" rel="noopener">イオン、無料の健康サービス「からサポ」開始 食事記録や睡眠記録など</a> <small>(Impress Watch (INTERNET Watch), 2026-07-15)</small></li>
+<li><a href="https://www.watch.impress.co.jp/docs/news/2125282.html" target="_blank" rel="noopener">ファミマとドコモ、能登半島でキッチンカー型の移動販売店舗</a> <small>(Impress Watch (INTERNET Watch), 2026-07-15)</small></li>
+<li><a href="https://www.watch.impress.co.jp/docs/news/2125272.html" target="_blank" rel="noopener">Instagram、リールのAI翻訳が日本語対応 音声質再現やリップシンクも</a> <small>(Impress Watch (INTERNET Watch), 2026-07-15)</small></li>
+<li><a href="https://jvn.jp/jp/JVN59875262/" target="_blank" rel="noopener">JVN: HYPER SBI 2のインストーラにおけるDLL読み込みに関する脆弱性</a> <small>(JPCERT/CC, 2026-07-15)</small></li>
+<li><a href="https://www.watch.impress.co.jp/docs/news/2125250.html" target="_blank" rel="noopener">アマゾン、家電に延長保証「Amazon製品保証」価格の5%で自然故障を5年保証</a> <small>(Impress Watch (INTERNET Watch), 2026-07-15)</small></li>
+<li><a href="https://jvn.jp/vu/JVNVU91295052/" target="_blank" rel="noopener">JVN: Siemens製品に対するアップデート（2026年7月）</a> <small>(JPCERT/CC, 2026-07-15)</small></li>
+<li><a href="https://www.watch.impress.co.jp/docs/news/2125190.html" target="_blank" rel="noopener">LUUP、法人向けサービス開始 1人2500円の「ビジネスプラン」も</a> <small>(Impress Watch (INTERNET Watch), 2026-07-15)</small></li>
 <li><a href="https://www.jpcert.or.jp/wr/2026/wr260715.html" target="_blank" rel="noopener">ウィークリーレポート: Linuxカーネルのx86向けKVMに解放済みメモリの使用の脆弱性</a> <small>(JPCERT/CC, 2026-07-15)</small></li>
 <li><a href="https://www.watch.impress.co.jp/docs/news/2125111.html" target="_blank" rel="noopener">JR東、水素ハイブリッド電車「HYBARI」 27年末営業運転</a> <small>(Impress Watch (INTERNET Watch), 2026-07-15)</small></li>
 <li><a href="https://www.watch.impress.co.jp/docs/topic/2124462.html" target="_blank" rel="noopener">円安時代の海外旅行 上がり続けるクレカ「海外事務手数料」の注意と対策</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li>
@@ -48,14 +56,6 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 <li><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-195-03" target="_blank" rel="noopener">ABB T-MAC プラス</a> <small>(CISA ICS Advisories, 2026-07-14)</small></li>
 <li><a href="https://www.cisa.gov/news-events/alerts/2026/07/14/cisa-urges-sharepoint-hardening-after-new-exploitations" target="_blank" rel="noopener">CISA、新たな悪用後にSharePointの強化を促す</a> <small>(CISA Cybersecurity Advisories, 2026-07-14)</small></li>
 <li><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-195-04" target="_blank" rel="noopener">ロックウェル・オートメーション 1715-AENTR EtherNet/IP アダプタ</a> <small>(CISA ICS Advisories, 2026-07-14)</small></li>
-<li><a href="https://www.watch.impress.co.jp/docs/news/2125105.html" target="_blank" rel="noopener">ファミマ、旗艦店限定のFAMIMA商品を全国展開</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li>
-<li><a href="https://www.watch.impress.co.jp/docs/news/2125091.html" target="_blank" rel="noopener">JR東、駅前広場を“開放” 御茶ノ水・両国駅など</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li>
-<li><a href="https://www.watch.impress.co.jp/docs/news/2125088.html" target="_blank" rel="noopener">ローソン、「コンビニ車中泊」エリア拡大「安心感」でリピート</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li>
-<li><a href="https://www.watch.impress.co.jp/docs/news/2125066.html" target="_blank" rel="noopener">東京都、自然公園利用ルールに「クマに出会わないために」追加</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li>
-<li><a href="https://www.watch.impress.co.jp/docs/news/2125035.html" target="_blank" rel="noopener">JALとマリオット・ボンヴォイ、「虎の子」開放の戦略的提携</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li>
-<li><a href="https://www.watch.impress.co.jp/docs/news/2125039.html" target="_blank" rel="noopener">Google Play、日本の手数料を9月30日から前倒しで割引</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li>
-<li><a href="https://www.watch.impress.co.jp/docs/news/2125027.html" target="_blank" rel="noopener">自由が丘駅前の新ランドマーク「MUSE SQUARE」9月17日開業</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li>
-<li><a href="https://www.watch.impress.co.jp/docs/news/2125008.html" target="_blank" rel="noopener">JR東日本、駅ロッカーからホテルへ手荷物を即日配送</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li>
-<li><a href="https://www.watch.impress.co.jp/docs/news/2125011.html" target="_blank" rel="noopener">JR東日本、新型新幹線専用検測車の愛称は「SOAR」 デザイン公開</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li></ul>
+<li><a href="https://www.watch.impress.co.jp/docs/news/2125105.html" target="_blank" rel="noopener">ファミマ、旗艦店限定のFAMIMA商品を全国展開</a> <small>(Impress Watch (INTERNET Watch), 2026-07-14)</small></li></ul>
 </section>
 </body></html>
