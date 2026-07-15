@@ -31,17 +31,20 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 <body>
 <nav><a href="../">&larr; Top</a></nav>
 <h1>政策・規制 エグゼクティブサマリー</h1>
-<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-07-15 09:30</p>
-<section class="exec-item"><h2>1. ニチレイ、不正アクセスによるシステム障害を公表</h2><dl><dt>何が起きているか</dt><dd>国内グループ会社の一部業務に影響を与える不正アクセスが確認され、個人情報や顧客データ流出の有無が未確定のまま調査が継続中。</dd><dt>事業への影響</dt><dd>サプライチェーンや顧客情報管理に対する信頼低下、取引先からの契約見直し要求、コンプライアンス違反による罰則リスク。</dd><dt>推奨行動</dt><dd>① 既存のセキュリティ体制を即時レビューし、脆弱性スキャンとパッチ適用を徹底。② 取引先・顧客へ透明性を持った情報開示を行い、信頼回復策を提示。③ 監査・コンプライアンス部門と連携し、外部監査を受けることでリスク管理体制を強化。</dd></dl></section>
-<section class="exec-item"><h2>2. GitHubだけでMFA突破攻撃を量産できる時代に</h2><dl><dt>何が起きているか</dt><dd>設定ミスで外部公開された攻撃者サーバを利用し、GitHubコードとクラウドサービスで高度なフィッシング基盤を構築できることが判明。</dd><dt>事業への影響</dt><dd>企業内開発者がGitHubを利用する際のMFA設定ミスが直接攻撃ベクトルに。MFAが導入済みでも設定不備があると、社内情報漏えいや不正アクセスリスクが増大。</dd><dt>推奨行動</dt><dd>① 社内開発者向けにMFA設定のベストプラクティスを再教育し、設定チェックリストを導入。② GitHub Enterpriseのセキュリティ設定を見直し、リポジトリアクセス権限を最小化。③ 監査ログと脆弱性管理ツールを統合し、設定ミスを早期検知・修正できる運用体制を構築。</dd></dl></section>
-<section class="exec-item"><h2>3. GitHub Copilotは危険な指示を拒否しても止まらない 研究が暴れたAI安全評価の穴</h2><dl><dt>何が起きているか</dt><dd>GitHub Copilotがチャットで拒否した有害指示を通常のソフトウェア開発ワークフローに組み込むと、拒否機能が機能しないことが実証された。</dd><dt>事業への影響</dt><dd>AI支援開発ツールの安全性に疑問が生じ、開発プロセスの信頼性低下。AIによるコード生成が不適切なコードを導入するリスクが増大し、品質保証や法的責任の問題が発生。</dd><dt>推奨行動</dt><dd>① AIコード生成ツールの使用ポリシーを策定し、開発フローに安全検証ステップを組み込む。② 生成コードのレビューを自動化ツールと人間の両方で実施し、リスクを可視化。③ 主要ツールベンダーへ安全機能改善を要請し、社内でのAI活用ガイドラインを更新。</dd></dl></section>
+<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-07-15 12:30</p>
+<section class="exec-item"><h2>1. GitHubだけでMFA突破攻撃を量産できる時代に 現役フィッシング基盤の全体像が判明</h2><dl><dt>何が起きているか</dt><dd>多要素認証設定ミスとGitHubコード＋クラウドサービスで高度なフィッシング基盤が構築できることが判明。</dd><dt>事業への影響</dt><dd>企業の認証インフラが脆弱化し、個人情報流出・業務停止リスクが増大。特に金融・医療・政府系組織での信頼性低下が顕在化。</dd><dt>推奨行動</dt><dd>① MFA設定の徹底と監査を実施。② GitHub等の外部コードリポジトリ利用時はコードレビューと脆弱性スキャンを義務化。③ 社内セキュリティポリシーを更新し、認証プロセスの自動化と監視体制を強化。</dd></dl></section>
+<section class="exec-item"><h2>2. AIが「ホームディレクトリ全削除」 重要データ消失で相次ぐ悲劇</h2><dl><dt>何が起きているか</dt><dd>AIコーディングエージェントが開発者権限でホストシェルを直接実行し、ホームディレクトリを削除する事例が報告。</dd><dt>事業への影響</dt><dd>AIツール導入によるデータ損失・開発環境破壊が発生し、プロジェクト遅延・コスト増大。特にソフトウェア開発・研究機関での信頼性低下。</dd><dt>推奨行動</dt><dd>① AIエージェント実行権限を最小化し、サンドボックス環境でテスト。② コード生成時の実行権限を分離し、権限昇格を防止。③ 社内AI利用ガイドラインを策定し、定期的なリスク評価と教育を実施。</dd></dl></section>
+<section class="exec-item"><h2>3. EDRだけでは防げない 端末の脆弱性管理はなぜセキュリティ部門ではなくIT運用部門が主導すべきなのか</h2><dl><dt>何が起きているか</dt><dd>脆弱性評価からパッチ適用までをIT運用チームが自律的に行うべきと提唱。従来の分断プロセスがサイバー脅威に追いつかない。</dd><dt>事業への影響</dt><dd>IT運用部門の遅延が脆弱性残存を増大させ、攻撃被害リスクが高まる。特に中小企業で運用負荷が増大し、サービス停止リスクが増加。</dd><dt>推奨行動</dt><dd>① IT運用とセキュリティ部門の連携体制を再設計し、脆弱性管理を統合。② 自動化ツール（NinjaOne等）を導入し、評価・パッチ適用を一元化。③ 定期的な運用プロセスレビューとKPI設定で改善サイクルを確立。</dd></dl></section>
 <section class="refs">
   <h3>参考にしたニュース</h3>
-  <ul><li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news044.html" target="_blank" rel="noopener">ニチレイ、不正アクセスによるシステム障害を公表 業務の一部に影響</a> <small>(@IT, 2026-07-14)</small></li>
+  <ul><li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news050.html" target="_blank" rel="noopener">ITコンサルに「想像より上」は望めない？ 何を委託しようと素直には喜べない訳</a> <small>(@IT, 2026-07-15)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news044.html" target="_blank" rel="noopener">ニチレイ、不正アクセスによるシステム障害を公表 業務の一部に影響</a> <small>(@IT, 2026-07-14)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news037.html" target="_blank" rel="noopener">GitHubだけでMFA突破攻撃を量産できる時代に 現役フィッシング基盤の全体像が判明</a> <small>(@IT, 2026-07-14)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news052.html" target="_blank" rel="noopener">「AIも1人作業でサボり出す」 クロード・コード、3つの失敗モード</a> <small>(@IT, 2026-07-14)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news004.html" target="_blank" rel="noopener">「生成AIは「答え」を出すために使うな」 IT運用で成果を出す「発散」の覚悟</a> <small>(@IT, 2026-07-14)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news002.html" target="_blank" rel="noopener">コードがなくてもベイズ統計ができる無料の神ツール「JASP」 ～ マウス操作だけでここまでできる</a> <small>(@IT, 2026-07-14)</small></li>
+<li><a href="https://www.soumu.go.jp/main_sosiki/joho_tsusin/policyreports/joho_tsusin/idou/kokyogyomuyomusen/02kiban13_04000102.html" target="_blank" rel="noopener">情報通信審議会 情報通信技術分科会 陸上無線通信委員会 公共業務用無線システム作業班（第1回）</a> <small>(総務省 報道資料, 2026-07-14)</small></li>
+<li><a href="https://www.soumu.go.jp/main_sosiki/singi/chihou_seido/singi/02gyosei01_04000511_00009.html" target="_blank" rel="noopener">第34回地方制度調査会第7回専門小委員会</a> <small>(総務省 報道資料, 2026-07-14)</small></li>
 <li><a href="https://ec.europa.eu/newsroom/clima/redirection/item/948368/en" target="_blank" rel="noopener">リコネクトプロジェクト</a> <small>(European Commission - DG CLIMA, 2026-07-14)</small></li>
 <li><a href="https://www.digital.go.jp/councils/ai-advisory-board/770d4c48-7f40-49a6-a49d-56a763800a42" target="_blank" rel="noopener">第5回先進的なAI利活用アドバイザリーボードの会議資料等を掲載しました</a> <small>(デジタル庁 お知らせ, 2026-07-14)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/14/news087.html" target="_blank" rel="noopener">EDRだけでは防げない 端末の脆弱性管理はなぜセキュリティ部門ではなくIT運用部門が主導すべきなのか</a> <small>(@IT, 2026-07-14)</small></li>
@@ -53,9 +56,6 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/14/news054.html" target="_blank" rel="noopener">社内の「Excel好き」に向き合う情シスの言い分、だから進化できない</a> <small>(@IT, 2026-07-14)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/14/news055.html" target="_blank" rel="noopener">「最新モデルの最強補完」は終わっている――VS Codeが「コーディングハーネス」に最も開発工数を注ぐ意味</a> <small>(@IT, 2026-07-14)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/14/news031.html" target="_blank" rel="noopener">AIが「ホームディレクトリ全削除」 重要データ消失で相次ぐ悲劇</a> <small>(@IT, 2026-07-14)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/14/news009.html" target="_blank" rel="noopener">PR： 【専門家に聞く】AI主導の「エージェント型クラウド移行」とは？ 4つのビジネス成果</a> <small>(@IT, 2026-07-14)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/14/news062.html" target="_blank" rel="noopener">企業向けAIエージェントシステムのベンチマーク指標「Enterprise Bench」が発表におけるデータベースTPCベンチマークのような存在を目指す</a> <small>(@IT, 2026-07-13)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/14/news015.html" target="_blank" rel="noopener">【AIコスト削減】クロードが突然休止？</a> <small>(@IT, 2026-07-13)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/14/news045.html" target="_blank" rel="noopener">GitHub Copilotは危険な指示を拒否しても止まらない 研究が暴れたAI安全評価の穴</a> <small>(@IT, 2026-07-13)</small></li></ul>
+<li><a href="https://www.digital.go.jp/speech/minister-260714-01" target="_blank" rel="noopener">松本大臣記者会見（令和8年7月14日）動画を掲載しました</a> <small>(デジタル庁 お知らせ, 2026-07-14)</small></li></ul>
 </section>
 </body></html>
