@@ -31,10 +31,10 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 <body>
 <nav><a href="../">&larr; Top</a></nav>
 <h1>政策・規制 エグゼクティブサマリー</h1>
-<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-07-16 09:31</p>
-<section class="exec-item"><h2>1. PHPパッケージ管理ツール「Composer」に脆弱性</h2><dl><dt>何が起きているか</dt><dd>Composerに複数の脆弱性が発見され、悪意ある依存パッケージがインストール時にプロジェクト外ファイルを書き換えるリスクが確認された。</dd><dt>事業への影響</dt><dd>ソフトウェア開発・運用を行う全企業に対し、既存プロジェクトの依存関係再検証・パッチ適用が必須となり、開発サイクルの遅延やセキュリティインシデントの増加が懸念される。</dd><dt>推奨行動</dt><dd>全開発チームでComposerのバージョンと依存パッケージを即時確認し、脆弱性が報告されたパッケージはパッチ適用または代替パッケージへの切替を実施。CI/CDパイプラインに脆弱性スキャンを組み込み、定期的な監査を実施する。</dd></dl></section>
-<section class="exec-item"><h2>2. npmサプライチェーン攻撃は新段階に</h2><dl><dt>何が起きているか</dt><dd>npm経由で配布されるパッケージに自己増殖マルウェアが埋め込まれ、Claude CodeやCursorなどAI開発環境の設定を書き換える攻撃が確認された。</dd><dt>事業への影響</dt><dd>AI開発・データサイエンスを活用する企業は、外部パッケージの信頼性が低下し、開発環境の破壊や機密情報漏洩のリスクが増大。AIプロジェクトの納期遅延や品質低下が懸念される。</dd><dt>推奨行動</dt><dd>npmパッケージの導入前に信頼性評価（署名・監査ログ）を徹底し、社内レジストリを構築して外部パッケージをプロキシ。AI開発環境は分離・監査ログを有効化し、定期的に設定の整合性チェックを実施。</dd></dl></section>
-<section class="exec-item"><h2>3. 日立がメインフレームOS終了次の注目力「AIエージェントによる基幹システム刷新」の現状は？</h2><dl><dt>何が起きているか</dt><dd>日立製作所がVOS3メインフレームOSの販売・保守終了を発表し、AIエージェントを活用した基幹システムのモダナイゼーション事業へシフト。</dd><dt>事業への影響</dt><dd>既存メインフレームを利用する大手企業は、OSサポート終了に伴うリスク管理と代替技術への移行コストが増大。AIエージェントによる自動化は導入障壁を下げる一方、データ統合・セキュリティ要件が厳格化される。</dd><dt>推奨行動</dt><dd>既存メインフレーム環境の資産評価を実施し、移行計画（ハイブリッド・クラウド・AIエージェント）を策定。AIエージェント導入に際しては、データガバナンス・セキュリティポリシーを再構築し、社内外の専門家と協働して段階的移行を推進する。</dd></dl></section>
+<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-07-16 12:31</p>
+<section class="exec-item"><h2>1. PHPパッケージ管理ツール「Composer」に脆弱性</h2><dl><dt>何が起きているか</dt><dd>Composerに複数の脆弱性が発見され、悪意ある依存パッケージがプロジェクト外ファイルを書き換えるリスクがある。</dd><dt>事業への影響</dt><dd>ソフトウェア開発・運用におけるセキュリティリスクが増大し、既存の開発プロセスやCI/CDパイプラインの信頼性が低下。顧客への納品遅延や品質低下、法的責任の増大が懸念される。</dd><dt>推奨行動</dt><dd>全社的にComposerのバージョン管理と依存パッケージの監査を実施し、脆弱性スキャンツールを導入。開発者向けのセキュリティ教育を強化し、更新前にリスク評価を行うプロセスを確立する。</dd></dl></section>
+<section class="exec-item"><h2>2. npmサプライチェーン攻撃は新段階に</h2><dl><dt>何が起きているか</dt><dd>npm経由で配布されるパッケージに自己増殖マルウェアが埋め込まれ、AI開発環境（Claude Code、Cursor等）の設定を書き換える攻撃が確認された。</dd><dt>事業への影響</dt><dd>AI開発・運用環境全体が脅威にさらされ、機密データ漏洩やモデル不正改ざん、業務停止リスクが高まる。顧客からの信頼失墜と規制対応コストが増大。</dd><dt>推奨行動</dt><dd>サプライチェーン監査を徹底し、パッケージのデジタル署名とハッシュ検証を必須化。社内CIに自動スキャンを組み込み、外部パッケージの使用を最小化。AI開発フレームワークの設定管理を分離し、アクセス権限を厳格化する。</dd></dl></section>
+<section class="exec-item"><h2>3. 日立がメインフレームOS終了次の注目力「AIエージェントによる基幹システム刷新」の現状は？</h2><dl><dt>何が起きているか</dt><dd>日立製作所がメインフレーム向けOS「VOS3」の販売・保守終了を発表し、AIエージェントを活用した基幹システムのモダナイゼーションへシフト。</dd><dt>事業への影響</dt><dd>既存のメインフレーム依存企業は、システム刷新のコストとリスクが増大。AIを活用したモダナイゼーションは新たなビジネスチャンスを提供するが、スキルギャップと導入障壁が課題。</dd><dt>推奨行動</dt><dd>自社の基幹システム構成を棚卸し、メインフレーム依存度を評価。AIエージェント導入のロードマップを策定し、社内AI/ML人材育成と外部パートナーとの協業体制を構築。投資判断を行う際は、リスク・リターンを定量化し、段階的な移行計画を策定する。</dd></dl></section>
 <section class="refs">
   <h3>参考にしたニュース</h3>
   <ul><li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/16/news040.html" target="_blank" rel="noopener">PHPパッケージ管理ツール「Composer」に脆弱性 更新前に確認したい3つのリスク</a> <small>(@IT, 2026-07-15)</small></li>
@@ -42,6 +42,7 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/16/news019.html" target="_blank" rel="noopener">「国産だから安心」はもう通用しない？ 安全新基準「日本度」の詳細を深掘り</a> <small>(@IT, 2026-07-15)</small></li>
 <li><a href="https://www.soumu.go.jp/menu_news/s-news/01kanbo01_02001149.html" target="_blank" rel="noopener">令和8年7月16日 総務省人事</a> <small>(総務省 報道資料, 2026-07-15)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/16/news007.html" target="_blank" rel="noopener">生成AIで激変した「野良システム」問題 ヒヤリハットが起きた遺物はどう対策できたのか</a> <small>(@IT, 2026-07-15)</small></li>
+<li><a href="https://www.soumu.go.jp/main_sosiki/kenkyu/ICT_services/02kiban18_02000495.html" target="_blank" rel="noopener">利用者情報に関するワーキンググループ（第40回）</a> <small>(総務省 報道資料, 2026-07-15)</small></li>
 <li><a href="https://ec.europa.eu/newsroom/clima/redirection/item/948710/en" target="_blank" rel="noopener">RE-CONNECTの研究が気候変動とモデリングの国際会議で発表</a> <small>(European Commission - DG CLIMA, 2026-07-15)</small></li>
 <li><a href="https://ec.europa.eu/newsroom/clima/redirection/item/948637/en" target="_blank" rel="noopener">イントロ3</a> <small>(European Commission - DG CLIMA, 2026-07-15)</small></li>
 <li><a href="https://ec.europa.eu/newsroom/clima/redirection/item/948636/en" target="_blank" rel="noopener">イントロ2</a> <small>(European Commission - DG CLIMA, 2026-07-15)</small></li>
@@ -55,7 +56,6 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news044.html" target="_blank" rel="noopener">ニチレイ、不正アクセスによるシステム障害を公表 業務の一部に影響</a> <small>(@IT, 2026-07-14)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news037.html" target="_blank" rel="noopener">GitHubだけでMFA突破攻撃を量産できる時代に 現役フィッシング基盤の全体像が判明</a> <small>(@IT, 2026-07-14)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news052.html" target="_blank" rel="noopener">「AIも1人作業でサボり出す」 クロード・コード、3つの失敗モード</a> <small>(@IT, 2026-07-14)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news004.html" target="_blank" rel="noopener">「生成AIは「答え」を出すために使うな」 IT運用で成果を出す「発散」の覚悟</a> <small>(@IT, 2026-07-14)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news002.html" target="_blank" rel="noopener">コードがなくてもベイズ統計ができる無料の神ツール「JASP」 ～ マウス操作だけでここまでできる</a> <small>(@IT, 2026-07-14)</small></li></ul>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/15/news004.html" target="_blank" rel="noopener">「生成AIは「答え」を出すために使うな」 IT運用で成果を出す「発散」の覚悟</a> <small>(@IT, 2026-07-14)</small></li></ul>
 </section>
 </body></html>
