@@ -1,7 +1,599 @@
 {
-  "generated_at": "2026-07-17T03:32:24+00:00",
+  "generated_at": "2026-07-17T06:32:43+00:00",
   "count": 100,
   "items": [
+    {
+      "id": 34516,
+      "title": "500人以上のロヒンギャが海で行方不明、何が起こったのか？",
+      "category": "news",
+      "importance": 80,
+      "summary": "2隻の船がミャンマーを出発して以来、約530人のロヒンギャを乗せて行方不明になった。",
+      "updated_at": "2026-07-17T06:29:28.010575+00:00"
+    },
+    {
+      "id": 34571,
+      "title": "エッジ機能を備えたグラフ同型ネットワークを介したNR-V2X車両通信における低遅延リレー選択",
+      "category": "ai",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:29:20.535011+00:00"
+    },
+    {
+      "id": 34520,
+      "title": "アジア太平洋地域で、EC・予約サービスを狙うAIボットの攻撃が急増、Akamaiが警告",
+      "category": "industry",
+      "importance": 75,
+      "summary": "Akamaiは7月17日に、アジア太平洋地域でECやオンライン予約サービスがAIボットを悪用した攻撃のターゲットとなり、AIボットのアクティビティが急増していると警告した。",
+      "updated_at": "2026-07-17T06:29:11.693796+00:00"
+    },
+    {
+      "id": 34195,
+      "title": "SAFETY SENTRY: EXECUTE-ASK-REFUSE ルーティングによるコンテキスト認識型人間介入",
+      "category": "ai",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:29:04.007739+00:00"
+    },
+    {
+      "id": 34509,
+      "title": "タコベル、爆発性下痢との関連で米国のメニューからレタスを削除",
+      "category": "news",
+      "importance": 70,
+      "summary": "タコベルは米国メニューからレタスを除外し、あるサプライヤーからのレタスを「慎重さから」無期限に削除した。",
+      "updated_at": "2026-07-17T06:28:55.164037+00:00"
+    },
+    {
+      "id": 34572,
+      "title": "マルチドメイン取得のための認証済みドメイン一貫性: ラベルフリーのドメインごとの汚染管理とコンフォーマルリスク保証",
+      "category": "ai",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:28:47.485670+00:00"
+    },
+    {
+      "id": 34536,
+      "title": "国産AI開発のノエトラ、NVIDIAのGPU2万7500ベースで「実世界モデル」構築へ",
+      "category": "industry",
+      "importance": 73,
+      "summary": "国産AI開発のノエトラ、NVIDIAのGPU2万7500ベースで「実世界モデル」構築へ",
+      "updated_at": "2026-07-17T06:28:38.570356+00:00"
+    },
+    {
+      "id": 34494,
+      "title": "循環性 – 持続可能性の輪を閉じる",
+      "category": "smart_factory",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:28:24.755944+00:00"
+    },
+    {
+      "id": 34573,
+      "title": "人工知能 LLM エンジンが世界的な紛争情報環境をどのように形成するか",
+      "category": "ai",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:28:15.912661+00:00"
+    },
+    {
+      "id": 34517,
+      "title": "トランプ大統領、中間選挙を前に米国の選挙安全保障に「衝撃的な脆弱性」があると主張",
+      "category": "news",
+      "importance": 54,
+      "summary": "トランプ大統領、中間選挙を前に米国の選挙安全保障に「衝撃的な脆弱性」があると主張",
+      "updated_at": "2026-07-17T06:28:07.057087+00:00"
+    },
+    {
+      "id": 34542,
+      "title": "GMO「事情があれば在宅勤務可能」「全面廃止」表明の暫定受付コメント",
+      "category": "news",
+      "importance": 60,
+      "summary": "GMO「事情があれば在宅勤務可能」「全面廃止」表明の暫定受付コメント",
+      "updated_at": "2026-07-17T06:27:58.699273+00:00"
+    },
+    {
+      "id": 34327,
+      "title": "カタールの供給が低迷する中、パキスタンは4年間で最高のスポットLNG価格を支払う",
+      "category": "market",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:27:45.016649+00:00"
+    },
+    {
+      "id": 34574,
+      "title": "マルチエージェント AI および MCP サーバーを使用した電力網研究の調整",
+      "category": "ai",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:27:36.112880+00:00"
+    },
+    {
+      "id": 34376,
+      "title": "米国が新たな攻撃の波を開始する中、イランで爆発が報告",
+      "category": "news",
+      "importance": 54,
+      "summary": "米国が新たな攻撃の波を開始する中、イランで爆発が報告",
+      "updated_at": "2026-07-17T06:27:27.301819+00:00"
+    },
+    {
+      "id": 34539,
+      "title": "鹿児島 川から服着ていない遺体発見 不明の5歳男児の可能性も",
+      "category": "news",
+      "importance": 70,
+      "summary": "鹿児島川から服着てない証拠発見 不明の5歳男児の可能性も",
+      "updated_at": "2026-07-17T06:27:13.638316+00:00"
+    },
+    {
+      "id": 34328,
+      "title": "ホルムズ危機で供給不安が再燃、アジアのLNGスポット価格が10％上昇",
+      "category": "market",
+      "importance": 70,
+      "summary": "ホルムズ危機で供給不安が再燃し、アジアLNGスポット価格が10％上昇",
+      "updated_at": "2026-07-17T06:27:05.207494+00:00"
+    },
+    {
+      "id": 34575,
+      "title": "ナレッジグラフグラウンディングによる小規模言語モデル推論の強化",
+      "category": "ai",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:26:55.903154+00:00"
+    },
+    {
+      "id": 34511,
+      "title": "オリンピック自転車選手、妻死亡事故で出場停止にもかかわらず運転を認める",
+      "category": "news",
+      "importance": 54,
+      "summary": "オリンピック自転車選手、妻死亡事故で出場停止にもかかわらず運転を認める",
+      "updated_at": "2026-07-17T06:26:46.908220+00:00"
+    },
+    {
+      "id": 34530,
+      "title": "Suicaのコード決済「テッペイ」、加盟店募集開始 今秋スタート",
+      "category": "security",
+      "importance": 70,
+      "summary": "JR東日本は、2026年秋に開始予定のコード決済サービス「テッペイ」の加盟店募集を7月22日10時からWebフォームで開始する。",
+      "updated_at": "2026-07-17T06:26:33.192368+00:00"
+    },
+    {
+      "id": 34329,
+      "title": "中国の重要鉱物資源の把握により、世界の産業が6.5兆ドルの危機にさらされる",
+      "category": "market",
+      "importance": 80,
+      "summary": "中国が希少土類",
+      "updated_at": "2026-07-17T06:26:24.699139+00:00"
+    },
+    {
+      "id": 34555,
+      "title": "新しい校正コンプライアンス スコアカードにより、メーカーは監査上のギャップを埋めることができます",
+      "category": "quality",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:26:15.645806+00:00"
+    },
+    {
+      "id": 34515,
+      "title": "日本、王位継承規定を緩和―しかし女性天皇の禁止は依然として続く",
+      "category": "news",
+      "importance": 54,
+      "summary": "日本、王位継承規定を緩和―しかし女性天皇の禁止は依然として続く",
+      "updated_at": "2026-07-17T06:26:06.724112+00:00"
+    },
+    {
+      "id": 34481,
+      "title": "再審制度見直し 改正刑事訴訟法が参議院本会議で可決・成立",
+      "category": "news",
+      "importance": 70,
+      "summary": "再審制度見直し見直し刑事訴訟法が参議院本会議で可決・成立",
+      "updated_at": "2026-07-17T06:25:53.065379+00:00"
+    },
+    {
+      "id": 34330,
+      "title": "誰もが認める世界的な石油超大国",
+      "category": "market",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:25:44.544849+00:00"
+    },
+    {
+      "id": 34556,
+      "title": "IMTS 2026 は AI を活用した製造業の未来を紹介します",
+      "category": "quality",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:25:35.735076+00:00"
+    },
+    {
+      "id": 34512,
+      "title": "中国が英国鉄鋼の国有化を非難",
+      "category": "news",
+      "importance": 50,
+      "summary": "英国政府は鉄鋼会社を国有化することで『重要な国の能力』を守ると述べた。",
+      "updated_at": "2026-07-17T06:25:26.974212+00:00"
+    },
+    {
+      "id": 34543,
+      "title": "広告主の本人確認、SNS等に詳細の開示請求 総務省、偽広告対策の調査を取りまとめ",
+      "category": "news",
+      "importance": 60,
+      "summary": "広告主の本人確認、SNS等に詳細の開示請求 総務省、偽広告対策の調査を取りまとめ",
+      "updated_at": "2026-07-17T06:25:14.004231+00:00"
+    },
+    {
+      "id": 34307,
+      "title": "UKMPA副会長が海上安全週間中に海事技能アカデミーを訪問",
+      "category": "market",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:25:05.444112+00:00"
+    },
+    {
+      "id": 34513,
+      "title": "ウガンダでスクールバス事故、生徒20人以上死亡",
+      "category": "news",
+      "importance": 80,
+      "summary": "ウガンダでスクールバス事故により20人以上の生徒が死亡し、数十人の教職員を含む乗客が負傷した。",
+      "updated_at": "2026-07-17T06:24:56.622374+00:00"
+    },
+    {
+      "id": 34576,
+      "title": "イラン戦争激化で原油価格が週間で4月以来最大の高騰へ",
+      "category": "market",
+      "importance": 20,
+      "summary": "（要約を生成できませんでした）",
+      "updated_at": "2026-07-17T06:24:48.412235+00:00"
+    },
+    {
+      "id": 34483,
+      "title": "改正皇室典範 参議院本会議で可決・成立",
+      "category": "news",
+      "importance": 70,
+      "summary": "改正改正典範参議院本会議で可決・成立",
+      "updated_at": "2026-07-17T06:24:39.561725+00:00"
+    },
+    {
+      "id": 34510,
+      "title": "オーストラリア、ラオスのメタノール中毒容疑で「深く不満」",
+      "category": "news",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34514,
+      "title": "フィリピン、AIビデオで猿のように描写した中国メディアを非難",
+      "category": "news",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34518,
+      "title": "元サッカー女子日本代表の澤穂希さん、特別客員教授に　京産大",
+      "category": "news",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34519,
+      "title": "行き先はアプリ任せ。熱中症対策バンドを相棒に、散歩アプリ「どこか」で「どこか」に向かう鎌倉散歩【空いた時間でる？】",
+      "category": "industry",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34521,
+      "title": "Uber、高松空港に「専用のりば」設置 国内空港初",
+      "category": "security",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34522,
+      "title": "ローソン、郵便配達員の休憩場所に　熱中症対策",
+      "category": "security",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34523,
+      "title": "ソニー、aiboに新型試作機 将来の機能検討で東大・UCバークレーと協力",
+      "category": "security",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34524,
+      "title": "ローソン、ゴーストレストランを香川・徳島・島根・鳥取で開始",
+      "category": "security",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34525,
+      "title": "2.8兆パラメータのAI「キミK3」 一部性能でFable 5超え",
+      "category": "security",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34526,
+      "title": "欧州DMA、Androidに「代替AI」開放要求 Googleは反発",
+      "category": "security",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34527,
+      "title": "ChatGPT Workとは何か AIエージェントが変える「仕事」のあり方",
+      "category": "security",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34528,
+      "title": "PayPayカード、オンライン決済時の本人認証がPayPayアプリに",
+      "category": "security",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34529,
+      "title": "Visa、どこでも決済にテーブルコインを組み込む新基盤「VSP」",
+      "category": "security",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34531,
+      "title": "純国産量子、自信を砕いた「極低温の壁」　冷凍機開発に4年",
+      "category": "industry",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34532,
+      "title": "日立ハイテクCTO「医療と半導体は近い」、ハードとソフトで計測の精度極める",
+      "category": "industry",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34533,
+      "title": "ソフトバンクHAPS開発に訪れた危機、救ったのはTOPPANの成層圏用膜材",
+      "category": "industry",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34535,
+      "title": "デジタルツインを机上の空論にしない、「データ同化」で仮想と現実のずれを調整",
+      "category": "industry",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34537,
+      "title": "日本で開発された種苗 海外流出を防止へ 改正種苗法が成立",
+      "category": "news",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34538,
+      "title": "福岡県議会“金銭授受”問題 議会が説明責任を 林総務相",
+      "category": "news",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34540,
+      "title": "AIも「ミュトス級」に到着か ムーンショットAIが「キミK3」発表、中国一部ベンチでFable 5抜き首位",
+      "category": "news",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34541,
+      "title": "「ダブル革ジャン」大ウケ、NVIDIAフアンCEO「赤沢大臣とセンス似てる」、赤沢大臣「私の格好マネた？」",
+      "category": "news",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34544,
+      "title": "2030年代の対応では手遅れ？　暗号化されたデータを将来暴くサイバー攻撃、対策の道筋",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34545,
+      "title": "「AIエージェントの約半数が『戦力外』になる」 なぜ企業は使いこなせないのか？",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34546,
+      "title": "「データを社外に公開AIを使えるインフラ」を1カ月で構築 Skyはどう実現した？",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34547,
+      "title": "「12倍高速化」したTypeScript 7.0、メモリ使用量は? 互換性、移行時の注意点",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34548,
+      "title": "令和8年分政党交付金の7月分の請求及び交付額",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34549,
+      "title": "電波法関係手数料令の一部を改正する政令案等に対する意見募集の結果",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34550,
+      "title": "情報通信審議会 情報通信技術分科会 電波利用環境委員会 CISPR F作業班（第31回）開催案内",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34551,
+      "title": "「令和7年度電気通信事故に関する検証報告」の公表",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34552,
+      "title": "「電気通信役務の安全・信頼性の確保に係るモニタリングの基本方針（案）」及び「電気通信役務の安全・信頼性の確保に係るモニタリングの年次計画（令和8年度）（案）」に対する意見募集の結果並びに基本方針及び年次計画（令和8年度）の公表",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34553,
+      "title": "消防防災科学技術研究推進制度の令和8年度第1期緊急枠研究開発課題の採択",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34554,
+      "title": "情報通信審議会 情報通信技術分科会 IPネットワーク設備委員会 電気通信事業におけるパブリッククラウドシステム利用に関する検討作業班（第6回）",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34557,
+      "title": "T.J.スノーがEwald Instrumentsを買収",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34558,
+      "title": "英国政府により英国鉄鋼が国有化される",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34559,
+      "title": "ドイツの平鋼価格は上昇し続ける",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34560,
+      "title": "Suncoke Energy, Inc.、2026 年第 2 四半期の決算日を発表",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34561,
+      "title": "英国の鉄鋼国有化で短期雇用を確保",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34565,
+      "title": "スポンサードサーチ市場向けの適応型広告読み込み設計: 証拠、理論、展開",
+      "category": "ai",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34566,
+      "title": "逆強化学習による歪みリスクメトリクスのための、ノイズに強い Elicit-to-Optimize フレームワーク",
+      "category": "ai",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34567,
+      "title": "反事実最適アクション ツリー (COAT): 観察データから解釈可能な規範的ポリシー",
+      "category": "ai",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34568,
+      "title": "ストリーミングビデオゲームにおける堅牢かつ効率的な模倣学習のための拡張",
+      "category": "ai",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34569,
+      "title": "TEDDY: ICD コード化された診断履歴からリスクを事前に警告するための小児基礎モデル",
+      "category": "ai",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
+    {
+      "id": 34570,
+      "title": "更新: 世界モデルの学習と設定によるモデル悪用の修復に向けて",
+      "category": "ai",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-07-17T06:13:18.877591+00:00"
+    },
     {
       "id": 34478,
       "title": "NECがTNFD対応のAIサービスを26年9月に提供開始、調査の作業時間9割削減",
@@ -131,14 +723,6 @@
       "updated_at": "2026-07-17T03:27:09.503726+00:00"
     },
     {
-      "id": 34483,
-      "title": "改正皇室典範 参議院本会議で可決・成立",
-      "category": "news",
-      "importance": 80,
-      "summary": "改正皇室典範が参議院本会議で可決・成立し、女性皇族が結婚後も皇室に残ることや旧皇族の男系男子を養子に迎えることが定められた。",
-      "updated_at": "2026-07-17T03:26:55.791439+00:00"
-    },
-    {
       "id": 34312,
       "title": "政府は英国の鉄鋼業を保護するために英国製鋼を公有化する",
       "category": "market",
@@ -163,14 +747,6 @@
       "updated_at": "2026-07-17T03:26:29.620383+00:00"
     },
     {
-      "id": 34481,
-      "title": "再審制度見直し 改正刑事訴訟法が参議院本会議で可決・成立",
-      "category": "news",
-      "importance": 70,
-      "summary": "再審制度見直し見直し刑事訴訟法が参議院本会議で可決・成立",
-      "updated_at": "2026-07-17T03:26:15.963203+00:00"
-    },
-    {
       "id": 34313,
       "title": "EU 10カ国、ETS全面見直しで業界の猶予を土壇場で推進",
       "category": "market",
@@ -185,14 +761,6 @@
       "importance": 20,
       "summary": "（要約を生成できませんでした）",
       "updated_at": "2026-07-17T03:25:53.422316+00:00"
-    },
-    {
-      "id": 34376,
-      "title": "米国が新たな攻撃の波を開始する中、イランで爆発が報告",
-      "category": "news",
-      "importance": 54,
-      "summary": "米国が新たな攻撃の波を開始する中、イランで爆発が報告",
-      "updated_at": "2026-07-17T03:25:44.526162+00:00"
     },
     {
       "id": 34482,
@@ -233,574 +801,6 @@
       "importance": 70,
       "summary": "システム障害のニチレイ安全などのシステムの稼働の一部再開",
       "updated_at": "2026-07-17T03:24:45.414021+00:00"
-    },
-    {
-      "id": 34460,
-      "title": "カナダの山火事が貨物列車を取り囲むドラマチックなビデオ",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34461,
-      "title": "逮捕の看護師、病室に複数回出入り　「便注入、死ぬか」と検索も―汚物混入死亡事件・千葉",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34462,
-      "title": "「NotebookLM」が「Gemini Notebook」へ改称 ～Gemini、Google検索との連携強化／コードを記述・クラウドで実行できる新機能も",
-      "category": "company",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34463,
-      "title": "「Google Chrome」に今週2回目のセキュリティアップデート、「緊急」3件を含む7件に対応／Windows環境に「Google Chrome」v150.0.7871.128/.129が展開中",
-      "category": "company",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34464,
-      "title": "UGREEN製の盗難防止トラッカーがAmazonでセール中 110dBの大音量ブザー採用「FineTrack Mini 2」は1599円〜",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34465,
-      "title": "GEEKOMのAMD Ryzen 7 6800H搭載ミニPCが7万999円！ Amazonでセール中 Ryzen 9 7940HS搭載のハイエンドモデルは9万4410円",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34468,
-      "title": "GoogleNotebookLM、「Gemini Notebook」に名称変更",
-      "category": "security",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34469,
-      "title": "オルファ、柔らかい素材・濡れた素材を美しく切断できる「テクニックナイフ」",
-      "category": "security",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34470,
-      "title": "JT、Ploom用タバコスティック値上げ 10月に加熱式タバコスティック",
-      "category": "security",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34471,
-      "title": "「日本の通信事業者、訪日客向けSIMに販売機」など5本",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34472,
-      "title": "「見積もり作成に手間と時間がかかる」を解決、実現性ある打ち手を導く",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34473,
-      "title": "何をどう判断しどう行動したか、AIエージェントを「追跡」するログ設計",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34474,
-      "title": "グリーンインフラの資金調達を多角化、成果連動型報酬を先行導入した前橋市",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34475,
-      "title": "扉を開いてキャビネットの両脇に垂直に収納するための金物",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34476,
-      "title": "米マイクロン、1.5兆円投じ広島で最先端HBM氏「かつては必要ない」",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34477,
-      "title": "富士通がファナックなどとフィジカルAIで提携、NVIDIA協力 長期成長への足場",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34480,
-      "title": "国旗損壊処罰法 参議院本会議で可決・成立",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34484,
-      "title": "欧州委員会、Google に AI アシスタントの相互運用と検索データ共有を命令──Google は「安全性を損なう」と反発",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34485,
-      "title": "Netflix「今年配信の約300作品で生成AI活用」 制作は2倍速で制作費は半額の実例も",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34486,
-      "title": "キオクシア株、一時ストップ安　上場来高値から半値以下に",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34487,
-      "title": "Metaが「Meta AI」に新たな保護機能 10代の自殺・自傷に関する会話を保護者に通知",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34490,
-      "title": "デジタル空間における情報流通の諸課題への対処に関する検討会 デジタル広告ワーキンググループ（第17回）配布資料",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34491,
-      "title": "令和8年7月滋賀県甲賀市の土砂崩れによる被害に係る普通交付税（9月定例交付分）の繰上げ交付",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34492,
-      "title": "商業登記電子証明書のリモート署名方式の運用開始についてお知らせします",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34493,
-      "title": "任期付職員の募集を掲載しました",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34494,
-      "title": "循環性 – 持続可能性の輪を閉じる",
-      "category": "smart_factory",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34496,
-      "title": "英国鉄鋼、英国鉄鋼の国有化を歓迎",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34497,
-      "title": "欧州鉄鋼技術プラットフォームが新事務局長を任命",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34498,
-      "title": "Celsa Atlantic、エネルギー回収プロジェクトを開発",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34499,
-      "title": "英国国有化法案、コモンズの最終検討に向かう",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34500,
-      "title": "エストニア：スウェーデンのハンザがフィンランドのフォルタコからナルヴァの金属加工工場を買収",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T03:13:17.805100+00:00"
-    },
-    {
-      "id": 34210,
-      "title": "クリス・ジェンナーの母メアリー・ジョーさんが91歳で死去",
-      "category": "news",
-      "importance": 54,
-      "summary": "クリス・ジェンナーの母メアリー・ジョーさんが91歳で死去",
-      "updated_at": "2026-07-17T00:30:00.743778+00:00"
-    },
-    {
-      "id": 34314,
-      "title": "英国経済は5月に成長に戻る",
-      "category": "market",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:29:52.180700+00:00"
-    },
-    {
-      "id": 34411,
-      "title": "ニチレイのサイバー攻撃被害、外食チェーンを直撃 KFC全店にも影響広がる",
-      "category": "policy",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:29:43.298595+00:00"
-    },
-    {
-      "id": 34381,
-      "title": "【アップデート情報】窓の杜収録ソフト 7月17日～「TeraCopy」「Inno Setup」「Blender」など",
-      "category": "company",
-      "importance": 55,
-      "summary": "【アップデート情報】窓の杜収録ソフト 7月17日～「TeraCopy」「Inno Setup」「Blender」など",
-      "updated_at": "2026-07-17T00:29:34.477512+00:00"
-    },
-    {
-      "id": 34315,
-      "title": "米国の住宅販売保留中、過去6カ月で最大の減少を記録",
-      "category": "market",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:29:20.681438+00:00"
-    },
-    {
-      "id": 34412,
-      "title": "トヨタの数年をかけたゼロトラスト改革、行く手を阻んだ最大の壁とは？",
-      "category": "policy",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:28:58.162634+00:00"
-    },
-    {
-      "id": 34386,
-      "title": "セブン銀行、子どもがお金の使い方を実践で学ぶ「money Ring」",
-      "category": "security",
-      "importance": 64,
-      "summary": "セブン銀行、子どもがお金の使い方を実践で学ぶ「money Ring」",
-      "updated_at": "2026-07-17T00:28:49.177108+00:00"
-    },
-    {
-      "id": 34316,
-      "title": "米国の住宅建設業者のセンチメント、7月に低下",
-      "category": "market",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:28:40.759209+00:00"
-    },
-    {
-      "id": 34413,
-      "title": "GMOの在宅勤務廃止は間違っていない？ ワサビのインシデントから企業防衛を考える",
-      "category": "policy",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:28:31.773999+00:00"
-    },
-    {
-      "id": 34395,
-      "title": "相模原 女子高校生殺害 “位置情報共有アプリ消すな”",
-      "category": "news",
-      "importance": 70,
-      "summary": "相模原女子高校生「位置情報共有アプリ消えるな」",
-      "updated_at": "2026-07-17T00:28:09.134924+00:00"
-    },
-    {
-      "id": 34317,
-      "title": "米国の小売売上高は予想ほど鈍化",
-      "category": "market",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:28:00.576735+00:00"
-    },
-    {
-      "id": 34452,
-      "title": "インドと南アフリカ、戦略的石油埋蔵量を拡大へ",
-      "category": "market",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:27:51.633167+00:00"
-    },
-    {
-      "id": 34398,
-      "title": "トランプ政権“極左による政治テロへの対策”各国連携呼びかけ",
-      "category": "news",
-      "importance": 70,
-      "summary": "トランプ政権「極左による政治テロへの対策」各国連携協力",
-      "updated_at": "2026-07-17T00:27:34.349336+00:00"
-    },
-    {
-      "id": 34318,
-      "title": "英国の貿易格差は4カ月で最小に",
-      "category": "market",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:27:20.629160+00:00"
-    },
-    {
-      "id": 34414,
-      "title": "GETでもPOSTでも HTTP新メソッド「QUERY」が標準化へ",
-      "category": "policy",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:26:58.160046+00:00"
-    },
-    {
-      "id": 34387,
-      "title": "「いまさら再利用ロケット」ではないJAXA「RV-X」の強みとは？",
-      "category": "security",
-      "importance": 70,
-      "summary": "JAXAは2026年7月11日に約10年開発した再使用ロケット実験機RV-Xの飛行試験を実施し、機体は約11mの高度に上昇し、約16mの水平移動後に無事に着陸した。",
-      "updated_at": "2026-07-17T00:26:49.266880+00:00"
-    },
-    {
-      "id": 34319,
-      "title": "フィラデルフィア工場の活動は予想より好調",
-      "category": "market",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:26:41.613305+00:00"
-    },
-    {
-      "id": 34400,
-      "title": "Google、「NotebookLM」を「Gemini Notebook」に改称 Geminiエコシステムへの統合を強化",
-      "category": "news",
-      "importance": 60,
-      "summary": "Google、「NotebookLM」を「Gemini Notebook」に改称 Geminiエコシステムへの統合を強化",
-      "updated_at": "2026-07-17T00:26:15.086784+00:00"
-    },
-    {
-      "id": 34320,
-      "title": "ニューヨークのサービス活動が2022年の最高水準に拡大",
-      "category": "market",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:26:01.381158+00:00"
-    },
-    {
-      "id": 34382,
-      "title": "「Tera Term 5.6.2」が公開 ～SSH2パケットの検証不備による弱点性を修正／安全あるサーバーや中間攻撃者により情報漏洩や異常終了などを考慮される恐れ",
-      "category": "company",
-      "importance": 55,
-      "summary": "「Tera Term 5.6.2」が公開 ～SSH2パケットの検証不備による弱点性を修正／安全あるサーバーや中間攻撃者により情報漏洩や異常終了などを考慮される恐れ",
-      "updated_at": "2026-07-17T00:25:52.588369+00:00"
-    },
-    {
-      "id": 34454,
-      "title": "今年No.1のコモディティ・ストーリーはウォール街のレーダーの下を飛んでいる",
-      "category": "market",
-      "importance": 20,
-      "summary": "（要約を生成できませんでした）",
-      "updated_at": "2026-07-17T00:25:30.496414+00:00"
-    },
-    {
-      "id": 34365,
-      "title": "動画: ジェノバ橋の災害裁判が終了する際に知っておくべきこと",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34366,
-      "title": "米国、新たな封鎖を強化中、初のタンカーをミサイル攻撃",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34367,
-      "title": "「運命の真の奇跡」 - メッシとラミネ・ヤマルの素晴らしい初対面",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34368,
-      "title": "カナダと米国の山火事とその影響について知っておくべきこと",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34372,
-      "title": "半導体大手TSMC、米国での生産拡大にさらに1000億ドルを約束",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34373,
-      "title": "JD・ヴァンス、ウェールズの城は「今まで見た中で一番クールだった」と語る",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34374,
-      "title": "ガーナ ID カードの詐欺取り締まりでデジタル小切手が義務化 - コピーは禁止",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34377,
-      "title": "養子策「極めて慎重な対応必要」　皇室典範改正で宮内庁長官",
-      "category": "news",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34378,
-      "title": "AIデータ、USBメモリ・SDカードの「容量偽装」などをチェックするツールを無償提供／Windows 10/11対応の「DATA119 Media Test」公開",
-      "category": "company",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34379,
-      "title": "『夜鷹ふたたび』『金田一パパのイベント簿』などが実質半額！ Kindleストア「マンガ毎週末セール」／藤田和日郎『シルバーマウンテン』、奥浩哉『還暦姫』など新作シリーズ読み始める応援セール【Book Watch/セール情報】",
-      "category": "company",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34380,
-      "title": "クールシステム搭載ワイヤレス充電器、UGREEN「MagFlow Pro」がAmazonでセール中【本日みつけたお買い得情報】",
-      "category": "company",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34383,
-      "title": "物理的にUSB Type-Cポートを塞ぎ、情報漏えいを防ぐポートロック製品、サンワサプライが発売",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34384,
-      "title": "イケアのサメ「BLÅHAJ」の名前は？ スウェーデン語の商品名に悩むIKEAファン向け、アプリの新機能【やじうまWatch】",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34385,
-      "title": "無印良品、組み立て・解体自在でオフィス環境の変化に柔軟に対応できる「強化ダンボールブース」発売",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34388,
-      "title": "3位は「EV向け全固体電池の『量産』いよいよ開始、トヨタは優位を保っているか」60代以上の注目トップ10",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34389,
-      "title": "世界揺るがすファーウェイの40年、創業者の任氏「蛇口とパイプを売る企業」",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34390,
-      "title": "インサートエージェントは不要 現場がAI活用でアプリ開発者に",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34391,
-      "title": "50年計画を修正した孫正義会長 ASIが楽しみで仕方ない",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
-    },
-    {
-      "id": 34392,
-      "title": "AIバブルの生成は「必然」 その間する必要がない訳",
-      "category": "industry",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-07-17T00:13:46.855186+00:00"
     }
   ]
 }
