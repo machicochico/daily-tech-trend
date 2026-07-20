@@ -9,7 +9,7 @@ from typing import Any, Dict, List
 from urllib.parse import urlparse
 
 import yaml
-from jinja2 import Template
+from jinja2 import Template, Environment, FileSystemLoader
 from datetime import datetime, timedelta, timezone
 
 from db import connect
@@ -18,6 +18,11 @@ from text_clean import clean_for_html, clean_json_like
 from typing import Any, List
 import logging
 import time
+
+# 外部化したJinja2テンプレート（src/templates/）を読み込むためのEnvironment
+# render_main.py の巨大インラインHTML文字列を段階的にテンプレートファイルへ移す一環
+_TEMPLATE_DIR = Path(__file__).parent / "templates"
+_jinja_env = Environment(loader=FileSystemLoader(_TEMPLATE_DIR))
 
 # レンダリング中の非致命エラーを集計するためのグローバルリスト
 # 各要素は (section, error_message) のタプル
@@ -374,53 +379,6 @@ TECH_EXTRA_CSS = r"""
       color: #666;
       white-space: nowrap;
     }
-"""
-
-PORTAL_HTML = r"""
-<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Daily Tech Trend</title>
-  <link rel="stylesheet" href="{{ common_css_href }}">
-</head>
-<body>
-  <h1>Daily Tech Trend</h1>
-   <div class="small">Generated: {{ generated_at }}</div>
-
-  <div class="card">
-    <h2 style="margin:0 0 6px">技術動向ダイジェスト</h2>
-    <div class="small">技術トピックの整理（カテゴリ別・注目・解説）</div>
-    <a class="btn" href="./tech/index.html">技術動向を見る →</a>
-  </div>
-
-  <div class="card">
-    <h2 style="margin:0 0 6px">ニュースダイジェスト</h2>
-    <div class="small">提案の背景となる国内/世界ニュース</div>
-    <a class="btn" href="./news/index.html">ニュースを見る →</a>
-  </div>
-
-  <div class="card">
-    <h2 style="margin:0 0 6px">未来予測レポート</h2>
-    <div class="small">多視点ニュース分析に基づく未来予測（1週間〜1年）</div>
-    <a class="btn" href="./forecast/index.html">未来予測を見る →</a>
-  </div>
-
-  <div class="card">
-    <h2 style="margin:0 0 6px">運用メトリクス</h2>
-    <div class="small">Source露出（競合比較）とカテゴリ別 一次情報比率を確認</div>
-    <a class="btn" href="./ops/index.html">運用ページを見る →</a>
-  </div>
-
-  <script src="{{ common_js_src }}" defer></script>
-  <script>
-    if (location.hash && location.hash.startsWith("#topic-")) {
-      location.replace("./tech/index.html" + location.hash);
-    }
-  </script>
-</body>
-</html>
 """
 
 HTML = r"""
@@ -816,268 +774,6 @@ window.addEventListener('load', () => {
 });
 
 document.addEventListener('DOMContentLoaded', function(){ if (window.DTTCommon) window.DTTCommon.setupCommon('topic'); });
-</script>
-
-</body>
-</html>
-"""
-NEWS_HTML = r"""
-<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ title }}</title>
-  <meta name="description" content="国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。">
-  <link rel="canonical" href="/daily-tech-trend/news/">
-  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
-
-  <meta property="og:title" content="ニュースダイジェスト">
-  <meta property="og:description" content="国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="/daily-tech-trend/news/">
-  <meta property="og:site_name" content="Daily Tech Trend">
-  <meta property="og:locale" content="ja_JP">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="ニュースダイジェスト">
-  <meta name="twitter:description" content="国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。">
-  <link rel="stylesheet" href="{{ common_css_href }}">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"ニュースダイジェスト","description":"国内・世界ニュースを技術活用の背景として整理し、新着と重要トピックを素早く把握できるニュースダイジェスト。","url":"/daily-tech-trend/news/","isPartOf":{"@type":"WebSite","name":"Daily Tech Trend","url":"/daily-tech-trend/"}}</script>
-</head>
-<body data-filter-total="0">
-  <h1>{{ heading }}</h1>
-
-  <div class="nav">
-    <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
-    <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
-    <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
-    <a href="/daily-tech-trend/forecast/hits/" class="{{ 'active' if page=='forecast_hits' else '' }}">予想的中</a>
-    <a href="/daily-tech-trend/diff/" class="">差分</a>
-    <a href="/daily-tech-trend/entity/" class="">企業別</a>
-    <a href="/daily-tech-trend/exec/" class="">エグゼクティブ</a>
-    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
-    <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
-    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
-  </div>
-
-
-  <!-- techと同じ：今日の要点 -->
-  <div class="summary-card">
-    <div class="summary-title">今日の要点（ニュース）</div>
-
-    <div class="summary-grid">
-      <div class="summary-item">
-        <div class="k">Generated (JST)</div>
-        <div class="v">{{ meta.generated_at_jst }}</div>
-      </div>
-      <div class="summary-item">
-        <div class="k">News</div>
-        <div class="v">{{ meta.total_articles }} <span class="small">(new48h {{ meta.new_articles_48h }})</span></div>
-      </div>
-      <div class="summary-item">
-        <div class="k">Japan</div>
-        <div class="v">{{ meta.jp_count }}</div>
-      </div>
-      <div class="summary-item">
-        <div class="k">Global</div>
-        <div class="v">{{ meta.global_count }}</div>
-      </div>
-    </div>
-
-    <!-- techと同じ：タグバー -->
-    <div class="small" style="margin-top:10px">
-      <span class="badge">Tags</span>
-      <div id="tagBar" class="tag-bar collapsed" role="toolbar" aria-label="タグフィルタ" style="margin-top:6px">
-        <button class="btn btn-reset" type="button" onclick="clearTagFilter()">🔄 リセット</button>
-        <label class="small tag-mode">
-          <input type="checkbox" id="tagModeOr"> OR（どれか）
-        </label>
-        {% for tg, cnt in tag_list %}
-          <button class="btn" type="button" data-tag-btn="{{ tg }}" onclick="toggleTag('{{ tg }}')">
-            {{ tg }} ({{ cnt }})
-          </button>
-        {% endfor %}
-      </div>
-      <button id="tagMore" class="btn btn-more" type="button" style="margin-top:6px">＋ よく使うタグ以外も表示</button>
-    </div>
-
-    <div id="tag-active" class="small" style="margin-top:6px; display:none;"></div>
-
-    <!-- techと同じ：検索（imp/recentはnewsでは使わないので固定） -->
-    <div class="quick-controls">
-      <input id="q" type="search" placeholder="タイトル・要約を検索" aria-label="タイトル・要約を検索" />
-      <button class="btn" type="button" data-toggle-all-cats onclick="toggleAllCats()">すべて閉じる</button>
-      <label class="small">並び替え
-        <select id="sortKey">
-          <option value="date">日付</option>
-          <option value="importance">重要度</option>
-          <option value="composite">重要度×新着</option>
-        </select>
-      </label>
-
-      <label class="small">順序
-        <select id="sortDir">
-          <option value="desc">降順</option>
-          <option value="asc">昇順</option>
-        </select>
-      </label>
-
-      <button class="btn" type="button" onclick="applySort()" aria-label="ソートを適用">適用</button>
-
-    </div>
-    <div id="filter-count" class="small" style="margin-top:6px; display:none;"></div>
-    <div id="filter-hint" class="small" style="margin-top:4px; display:none;"></div>
-  </div>
-
-  <!-- techと同じ：カテゴリ（折りたたみ） -->
- {% for sec in sections %}
-  <section class="category-section" id="cat-{{ sec.anchor }}" role="region" aria-label="{{ sec.title }}">
-    <div class="category-header">
-      <h2>
-        {{ sec.title }}
-        <span class="badge">{{ sec.count }}</span>
-        {% if sec.recent48 is defined %}
-          <span class="badge">+{{ sec.recent48 }}/48h</span>
-        {% endif %}
-      </h2>
-      <button class="btn" type="button" onclick="toggleCat('{{ sec.anchor }}')">表示切替</button>
-    </div>
-
-    <div class="category-body">
-      <ul style="list-style:none;padding:0">
-        {% for it in sec.rows %}
-          <li id="news-{{ it.id }}" class="topic-row"
-            data-title="{{ it.title|e }}"
-            data-summary="{{ (it.summary or '')|e }}"
-            data-imp="{{ it.importance or 0 }}"
-            data-date="{{ it.dt }}"
-            data-tags="{{ it.tags|default([])|join(',') }}">
-
-           <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px">
-            {% if it.is_representative %}<span class="badge">代表記事</span>{% endif %}
-            <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener" style="font-weight:500">{{ it.title }}</a>
-            <span class="date">{{ it.dt_jst }}</span>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
-            <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
-            {% if it.tags and it.tags|length>0 %}
-              {% for tg in it.tags %}
-                <span class="badge">{{ tg }}</span>
-              {% endfor %}
-            {% endif %}
-          </div>
-
-          {% if it.summary %}
-            <div class="summary-preview">{{ it.summary[:100] }}{% if it.summary|length > 100 %}…{% endif %}</div>
-          {% endif %}
-          {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
-
-           {% if it.importance_basis or it.summary or (it.key_points and it.key_points|length>0) or (it.perspectives and (it.perspectives.engineer or it.perspectives.management or it.perspectives.consumer)) or (it.perspective_digest and (it.perspective_digest.engineer or it.perspective_digest.management or it.perspective_digest.consumer)) %}
-              <details class="insight" role="group">
-                <summary>要約・解説を表示</summary>
-                <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
-
-                {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
-
-                {% if it.key_points and it.key_points|length>0 %}
-                  <ul class="kps">
-                    {% set shown = namespace(has_real=0, has_guess=0) %}
-                    {% for kp in it.key_points %}
-                      {% if "推測" in kp or "本文確認" in kp %}
-                        {% if shown.has_guess == 0 %}
-                          <li>{{ kp }}</li>
-                          {% set shown.has_guess = 1 %}
-                        {% endif %}
-                      {% else %}
-                        <li>{{ kp }}</li>
-                        {% set shown.has_real = 1 %}
-                      {% endif %}
-                    {% endfor %}
-
-                    {% if shown.has_real == 0 and shown.has_guess == 0 %}
-                      <li>推測：記事情報が限定的なため、リンク先の本文確認が必要</li>
-                    {% endif %}
-                  </ul>
-                {% endif %}
-
-                {% if it.perspectives %}
-                  <div class="perspectives">
-                    {% if it.perspectives.engineer %}<div><b>技術者目線</b>: {{ it.perspectives.engineer }}</div>{% endif %}
-                    {% if it.perspectives.management %}<div><b>経営者目線</b>: {{ it.perspectives.management }}</div>{% endif %}
-                    {% if it.perspectives.consumer %}<div><b>消費者目線</b>: {{ it.perspectives.consumer }}</div>{% endif %}
-                  </div>
-                {% endif %}
-                {% if it.perspective_digest %}
-                  <div class="perspective-digest">
-                    <div style="font-size:12px;color:#666;margin-bottom:2px">立場別くわしい解説</div>
-                    {% if it.perspective_digest.engineer %}<div><b>技術者目線</b>: {{ it.perspective_digest.engineer }}</div>{% endif %}
-                    {% if it.perspective_digest.management %}<div><b>経営者目線</b>: {{ it.perspective_digest.management }}</div>{% endif %}
-                    {% if it.perspective_digest.consumer %}<div><b>消費者目線</b>: {{ it.perspective_digest.consumer }}</div>{% endif %}
-                  </div>
-                {% endif %}
-                {% if it.evidence_urls and it.evidence_urls|length>0 %}
-                  <div class="evidence-urls">
-                    <strong>根拠</strong>：
-                    {% for u in it.evidence_urls %}
-                      <a href="{{ u }}" target="_blank" rel="noopener">{{ u|truncate(60, True) }}</a>{% if not loop.last %} | {% endif %}
-                    {% endfor %}
-                  </div>
-                {% endif %}
-
-              </details>
-          {% endif %}
-
-          </li>
-
-        {% endfor %}
-        {% if sec.other_rows and sec.other_rows|length > 0 %}
-          <li class="topic-row">
-            <details class="insight">
-              <summary class="small">その他 {{ sec.other_rows|length }} 件を表示</summary>
-              <ul>
-                {% for it in sec.other_rows %}
-                  <li id="news-{{ it.id }}" class="topic-row"
-                    data-title="{{ it.title|e }}"
-                    data-summary="{{ (it.summary or '')|e }}"
-                    data-imp="{{ it.importance or 0 }}"
-                    data-date="{{ it.dt }}"
-                    data-tags="{{ it.tags|default([])|join(',') }}">
-                    <div>
-                      <span class="badge imp">重要度 {{ it.importance or 0 }}</span>
-                      <a class="topic-link" href="{{ it.url }}" target="_blank" rel="noopener">{{ it.title }}</a>
-                      <span class="date">{{ it.dt_jst }}</span>
-                      {% if it.summary %}
-                        <div class="summary-preview">{{ it.summary[:80] }}{% if it.summary|length > 80 %}…{% endif %}</div>
-                      {% endif %}
-                      <details class="insight" role="group">
-                        <summary class="small">要約・解説を表示</summary>
-                        {% if it.summary %}<div><strong>要約</strong>：{{ it.summary }}</div>{% endif %}
-                        <div class="small" style="margin-top:6px;"><strong>算出根拠（簡易）</strong>：{{ it.importance_basis }}</div>
-                      </details>
-                    </div>
-                    {% if it.source %}<div class="mini">{{ it.source }}</div>{% endif %}
-                  </li>
-                {% endfor %}
-              </ul>
-            </details>
-          </li>
-        {% endif %}
-      </ul>
-    </div>
-  </section>
-  {% endfor %}
-
-
-<script src="{{ common_js_src }}" defer></script>
-<script>
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    if (!location.hash) window.scrollTo(0, 0);
-  }, 0);
-});
-
-document.addEventListener('DOMContentLoaded', function(){ if (window.DTTCommon) window.DTTCommon.setupCommon('news'); });
 </script>
 
 </body>
@@ -1524,7 +1220,7 @@ def render_news_pages(out_dir: Path, generated_at: str, cur) -> None:
 
     for page, title, heading, sections, filename in pages:
         (news_dir / filename).write_text(
-            Template(NEWS_HTML).render(
+            _jinja_env.get_template("news.html").render(
                 common_css_href=news_assets["common_css_href"],
                 common_js_src=news_assets["common_js_src"],
 

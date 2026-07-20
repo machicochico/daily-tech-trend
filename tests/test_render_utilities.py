@@ -284,7 +284,7 @@ def test_render_news_region_page_item_has_perspective_digest():
 
 def _render_news_html(sections) -> str:
     news_assets = render_main.build_asset_paths()
-    return render_main.Template(render_main.NEWS_HTML).render(
+    return render_main._jinja_env.get_template("news.html").render(
         common_css_href=news_assets["common_css_href"],
         common_js_src=news_assets["common_js_src"],
         page="news",
