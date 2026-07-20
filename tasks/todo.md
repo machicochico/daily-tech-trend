@@ -352,8 +352,51 @@ danieli.com, zeiss.com, ghgprotocol.org, env.go.jp
 
 ### 残タスク（次回以降）
 - [ ] 上記死亡フィードの URL 差し替え（各サイトの新フィードURLを Web で調査）または sources.yaml からの削除
-- [ ] render_main.py の段階的分割の継続（テンプレート外部化）
+- [x] render_main.py の段階的分割の継続（テンプレート外部化）→ 2026-07-21 第1弾実施（下記参照）。残り4テンプレートは未着手
 - [ ] git 履歴の肥大解消（filter-repo で過去の state.sqlite blob を除去。force-push を伴うため要ユーザー判断）
+
+---
+
+# render_main.py テンプレート外部化 第1弾（2026-07-21・自律発案）
+
+## 実施内容
+render_main.py（4,397行）にインライン埋め込みされていた6個の巨大Jinja2テンプレート文字列
+（`PORTAL_HTML`/`HTML`/`NEWS_HTML`/`OPS_HTML`/`FORECAST_HTML`/`FORECAST_HITS_HTML`）のうち、
+`PORTAL_HTML` と `NEWS_HTML` の2個を `src/templates/` に外部化した（commit `049dfc82`）。
+
+- `_TEMPLATE_DIR = Path(__file__).parent / "templates"` と
+  `_jinja_env = Environment(loader=FileSystemLoader(_TEMPLATE_DIR))` を追加
+- `NEWS_HTML` → `src/templates/news.html`。`Template(NEWS_HTML).render(...)` を
+  `_jinja_env.get_template("news.html").render(...)` に置換（news/index.html 生成で実使用中）
+- `PORTAL_HTML` → `src/templates/portal.html`。**着手前の調査で、現在このテンプレートは
+  render_main.py 内のどこからも `render()` されていない死コードと判明**
+  （docs/index.html は `HTML`/`tech_html_root` から生成されており、`PORTAL_HTML` を参照する
+  呼び出し箇所は存在しなかった）。git log では継続的に編集されている形跡があり、
+  過去に明示的な「廃止」コミット（OPINION_HTML削除時の `7fafd026` のような）も見当たらないため、
+  安全側の判断として削除はせず、内容を保持したままファイル化するに留めた
+  （将来ポータルページとして再利用する場合は `_jinja_env.get_template("portal.html")` で読み込める）
+- `tests/test_render_utilities.py` の `_render_news_html` ヘルパーを新しい読み込み方式に追従修正
+
+## 検証方法・結果
+- 変更前後で `python src/render.py` を実行し、生成された `docs/` を比較
+  （タイムスタンプが常時変動するため厳密なバイト完全一致にはならない前提で、
+  全108件の差分ファイルについて `generated_at` 系タイムスタンプ行以外に差分がないことを
+  Pythonスクリプトで自動検証。非タイムスタンプ差分ゼロを確認）
+- `python -m pytest -q`: 224 passed（新規リグレッションなし）
+- `render_main.py`: 4,397行 → 4,093行（-304行）
+- 検証用に生成した `docs/` の差分・`docs_baseline_compare/` 退避コピーはコミット前に
+  `git checkout -- docs` で元に戻し、退避ディレクトリも削除済み（リポジトリはクリーンな状態でコミット）
+
+## 次回候補（未着手・残り4テンプレート）
+- [ ] `HTML`（tech ページ本体、約400行）
+- [ ] `OPS_HTML`（運用メトリクスページ）
+- [ ] `FORECAST_HTML`（未来予測ページ・過去分含め複数箇所で呼び出し）
+- [ ] `FORECAST_HITS_HTML`（予想的中ページ）
+- 上記いずれも `_jinja_env.get_template(...)` への置換で同様の手順が使える
+  （Jinja2の `Environment`/`FileSystemLoader` インフラは今回のコミットで整備済み）
+- 抽出時の注意点: 元の `r"""..."""` 文字列は開始直後に改行が1つ入る（`r"""\n<!doctype...`）ため、
+  外部化したテンプレートファイルの先頭に空行を1行残さないと出力の先頭に空行が1行減るバグになる
+  （今回の作業で実際にハマった箇所。ファイル抽出後は必ず元の文字列と1文字単位で比較すること）
 
 ---
 
