@@ -352,7 +352,7 @@ danieli.com, zeiss.com, ghgprotocol.org, env.go.jp
 
 ### 残タスク（次回以降）
 - [ ] 上記死亡フィードの URL 差し替え（各サイトの新フィードURLを Web で調査）または sources.yaml からの削除
-- [x] render_main.py の段階的分割の継続（テンプレート外部化）→ 2026-07-21 第1弾実施（下記参照）。残り4テンプレートは未着手
+- [x] render_main.py の段階的分割の継続（テンプレート外部化）→ 2026-07-21 第1弾・第2弾実施（下記参照）。残り2テンプレート（`FORECAST_HTML`/`FORECAST_HITS_HTML`）は未着手
 - [ ] git 履歴の肥大解消（filter-repo で過去の state.sqlite blob を除去。force-push を伴うため要ユーザー判断）
 
 ---
@@ -397,6 +397,58 @@ render_main.py（4,397行）にインライン埋め込みされていた6個の
 - 抽出時の注意点: 元の `r"""..."""` 文字列は開始直後に改行が1つ入る（`r"""\n<!doctype...`）ため、
   外部化したテンプレートファイルの先頭に空行を1行残さないと出力の先頭に空行が1行減るバグになる
   （今回の作業で実際にハマった箇所。ファイル抽出後は必ず元の文字列と1文字単位で比較すること）
+
+---
+
+# render_main.py テンプレート外部化 第2弾（2026-07-21・夜間ランナー）
+
+## 実施内容
+第1弾の続き。残り4テンプレートのうち `HTML`（tech ページ本体・docs/index.html および
+docs/tech/index.html 生成に実使用中）と、時間に余裕があったため `OPS_HTML`（運用メトリクスページ・
+docs/ops/index.html 生成に実使用中）の2個を追加で `src/templates/` に外部化した。
+
+- `HTML` → `src/templates/tech.html`。`Template(HTML).render(...)` の2箇所（`tech_html_sub` /
+  `tech_html_root` 生成、それぞれ docs/tech/index.html と docs/index.html に対応）を
+  `_jinja_env.get_template("tech.html").render(...)` に置換
+- `OPS_HTML` → `src/templates/ops.html`。`Template(OPS_HTML).render(...)` を
+  `_jinja_env.get_template("ops.html").render(...)` に置換（docs/ops/index.html 生成で実使用中）
+- 抽出は手作業の書き写しではなく、Python スクリプトで `render_main.py` の該当行範囲を
+  バイト単位でスライスして `src/templates/*.html` に書き出し、`import render_main` した
+  実行時の変数値（`render_main.HTML` / `render_main.OPS_HTML`）と文字列完全一致することを
+  スクリプトで検証してから元の変数定義を削除する手順を踏んだ（第1弾で判明した「先頭改行」の
+  落とし穴を機械的に回避するため）
+- `tests/test_render_utilities.py` 等を確認したが、`HTML`/`OPS_HTML` 変数や専用ヘルパーに
+  依存するテストは存在しなかった（`NEWS_HTML` の `_render_news_html` のような追従修正は不要）
+
+## 検証方法・結果
+- `HTML`→`tech.html`: 変更前（`git stash` で一時的に旧コードへ戻す）と変更後それぞれで
+  `python src/render.py` を実行し `docs/` を比較。バイト差分が出た109ファイルのうち
+  非タイムスタンプ差分は5ファイル（`feed.xml` の `lastBuildDate`、`index.html`/`tech/index.html`/
+  `news/index.html`/`ops/index.html` の `new48h` 系カウント・`+NN/48h` バッジ）のみ。
+  これらが本変更由来か切り分けるため、変更後コード のみで `render.py` を数十秒間隔で2回連続実行し
+  再度比較したところ、同一コードでも同じ種類の差分（時刻・48h集計カウント）が発生することを確認。
+  すなわち `datetime.now()` 基準の48h集計が実行タイミングでぶれる既存の仕様であり、
+  今回のテンプレート外部化によるレンダリング内容の変化ではないと判断した
+  （tech.html の内容自体は `render_main.HTML`（旧変数）とスクリプトでバイト完全一致を確認済み）
+- `OPS_HTML`→`ops.html`: 同様に `python src/render.py` 実行後、`docs/ops/index.html` を
+  変更前（コミット済み `docs/`）と比較。差分は701行中6行のみで、いずれもタイムスタンプ行と
+  ソース別48h集計カウント（`BBC World`/`OilPrice.com`/`ITmedia NEWS`等の数値列）で、
+  上記と同種の時刻依存の揺れと確認。行数・構造の差分はゼロ
+- `python -m pytest -q`: 224 passed, 0 failed（新規リグレッションなし。前回セッションで
+  記録されていた pre-existing 12件の失敗は、その後の別コミット（daily update 等）で
+  解消済みとみられ今回は再現しなかった）
+- `render_main.py`: 4,093行 → 3,495行（-598行）
+- 検証用に生成した `docs_baseline_compare` / `docs_before` / `docs_after1` / `docs_baseline2`
+  等の退避ディレクトリ、および抽出・検証用の一時スクリプト（`extract_*.py` / `verify_*.py` /
+  `remove_*.py` / `compare_*.py`）はすべて削除し、`git checkout -- docs` で `docs/` を
+  コミット前の状態に戻した上でコミットした
+
+## 次回候補（未着手・残り2テンプレート）
+- [ ] `FORECAST_HTML`（未来予測ページ・過去分を含め複数箇所から呼び出されており依存関係が複雑なため
+  今回もスコープ外とした）
+- [ ] `FORECAST_HITS_HTML`（予想的中ページ）
+- 上記も `_jinja_env.get_template(...)` への置換で同様の手順が使える見込みだが、
+  呼び出し箇所が複数・条件分岐を伴う可能性があるため、着手前に呼び出し箇所を全て洗い出すこと
 
 ---
 
