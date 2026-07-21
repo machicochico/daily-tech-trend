@@ -452,6 +452,66 @@ docs/ops/index.html 生成に実使用中）の2個を追加で `src/templates/`
 
 ---
 
+# render_main.py テンプレート外部化 第3弾（2026-07-22 02:07・夜間ランナー・自律発案）
+
+## 実施内容
+残り2テンプレート（`FORECAST_HTML`・`FORECAST_HITS_HTML`）を`src/templates/forecast.html`・
+`src/templates/forecast_hits.html`として外部化した。これで全6テンプレートの外部化が完了。
+
+- 呼び出し箇所を事前にgrepで洗い出し: `FORECAST_HTML`は2箇所（現在レポート`forecast_html`・
+  過去レポートループ内`pr_html`）、`FORECAST_HITS_HTML`は1箇所（`html`）
+- 抽出は第2弾と同じ「バイト単位スライス→`import render_main`した実行時変数値との文字列完全一致を
+  スクリプトで検証→元の変数定義を削除」手順を踏襲
+- **CRLF保持に関する新知見**: `render_main.py`はCRLF改行だが、Pythonがソースをコンパイルする際に
+  文字列リテラル内の`\r\n`も含めユニバーサル改行変換で`\n`のみに正規化してメモリ上に保持するため、
+  `open(path, encoding="utf-8").read()`（デフォルトのテキストモード）で読んだ変数値は常に`\n`のみになる。
+  これをそのまま`open(outfile, "w", encoding="utf-8", newline="\n")`で書き出すとテンプレートファイルが
+  LFのみになり、既存4テンプレート（すべてCRLF）と不整合が生じる。回避策: 書き込み時は`newline`引数を
+  指定せず（Windowsのデフォルトテキストモード書き込みに`\n`→`\r\n`変換を任せる）、CRLFで統一する。
+  一方、`render_main.py`自体の行削除・置換編集は`open(path, encoding="utf-8", newline="")`で読み書きし
+  ユニバーサル改行変換自体を無効化してCRLFを文字通り保持する必要がある（読み込み時にデフォルトモードを
+  使うと全行がLFに正規化され、無関係な行まで含めた巨大な差分になってしまう）
+- `render_main.py`: 3,495行 → 3,109行（-386行）
+
+## 検証方法・結果
+- `python -m pytest -q`実行で1件失敗（`test_navigation_contains_ops_page_link`）を発見:
+  `render_main.py`本体のソース文字列に`/daily-tech-trend/ops/`というナビリンク文字列が含まれることを
+  検証するテストだったが、このリンクは`FORECAST_HTML`（今回外部化）に残っていた最後の1箇所であり、
+  外部化によってrender_main.py本体からこの文字列が消えたため失敗した。`git stash`で変更前のコードに
+  戻して同テストを実行し、変更前は成功（＝今回の変更による純粋なリグレッション）であることを確認した。
+  第1弾・第2弾で外部化した`PORTAL_HTML`/`NEWS_HTML`/`HTML`/`OPS_HTML`にも同じナビリンク文字列が
+  含まれていたが、当時はまだ`FORECAST_HTML`が本体に残っていたためテストが通っていた、という
+  「段階的外部化の副作用が最後の1個を消すまで顕在化しなかった」ケースだった。
+  `tests/test_docs_asset_paths.py`に`_read_render_sources()`（render_main.py本体＋
+  `src/templates/*.html`全件を連結して返す）を追加し、`test_navigation_contains_ops_page_link`が
+  このヘルパーを使うよう修正。修正後`python -m pytest -q`で224件全合格を確認
+- `python src/render.py`実行前後で`docs/`を比較したところ、forecast配下99ページ・feed.xml・
+  api/*.json含め109ファイルに差分が出た。中身を確認したところタイムスタンプ以外に、
+  Markdown箇条書き（`1. **予測内容**：...`形式）が`<p>`羅列と`<ol><li>`の2パターンで揺れる
+  構造的な差分が見つかり、当初は今回の変更による影響を疑った。しかし**同一コード（変更後）で
+  render.pyを2回連続実行しても差分が発生**し、さらに**`git stash`で変更前の旧コードに戻して
+  実行しても同じ揺れが再現**したため、今回のテンプレート外部化とは無関係な、既存のMarkdown
+  変換処理の非決定性（原因未特定、`markdown`ライブラリの拡張処理順序等が疑われる）であると
+  切り分けられた。検証用に生成した`docs_baseline_compare`/`docs_after1`退避コピーと
+  一時スクリプト（`extract_forecast_tmp.py`/`remove_forecast_tmp.py`/`debug_forecast_tmp.py`）は
+  すべて削除し、`git checkout -- docs`で`docs/`をコミット前の状態に戻した上でコミットした
+  （forecastページのMarkdown非決定性は本タスクのスコープ外のため、下記「次回候補」に記録するに留める）
+- 着手前・完了後とも`Get-ScheduledTask`で`Daily Tech Trend`/`Watchdog Daily Tech Trend`/
+  `CollectedInfo_Pipeline`が`Ready`（実行中でない）であることを確認済み。`run_daily.bat`には触れていない
+
+## 次回候補
+- [ ] **未来予測ページ(forecast)のMarkdown箇条書きレンダリングが非決定的**（`<p>1. ...</p>`羅列と
+  `<ol><li>...</li></ol>`の2パターンの間で、同一コード・同一DBデータでも実行するたびに揺れる）。
+  今回の調査でrender_main.py側のコード起因ではないことは切り分け済み。`md_to_html()`が使っている
+  Markdownライブラリ・拡張設定（`markdown`パッケージのバージョン、拡張ロード順、リスト判定の
+  曖昧な入力に対する挙動等）を調査し、揺れの原因を特定するとよい。実害は現状「同じ内容が別のHTML
+  構造で表示される」程度で、記事内容自体が変わるわけではないため優先度は低い
+- [ ] テンプレート外部化自体は6/6完了。今後は`render_main.py`の残り約3,100行（DB読み書き・
+  データ集計ロジック中心）の可読性改善が次の分割候補になりうるが、テンプレート文字列のような
+  自己完結した単位ではないため難易度が上がる
+
+---
+
 # 利用価値向上 第1弾（2026-07-13）
 
 ## 実施内容
