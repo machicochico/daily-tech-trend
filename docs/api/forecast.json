@@ -1,11 +1,16 @@
 {
-  "generated_at": "2026-07-20T21:37:01+00:00",
+  "generated_at": "2026-07-21T00:33:44+00:00",
   "latest": {
     "report_date": "2026-07-21",
     "executive_summary": "- AIとローコードで業務効率が飛躍的に向上: Gemini SparkやAzure AI Low‑Code Builderの普及により、開発・業務プロセスの自動化が加速し、あなたのプロジェクトのデプロイ時間が半分に短縮される可能性があります。\n- クラウド移行とセキュリティ基準の統合化: SQL Server 2016のサポート終了とAzure SQL 2025の導入、さらにAIボット検出の国際認証基準が確立されることで、既存システムのクラウド移行とセキュリティ対策が一体化し、運用コストとリスクが低減します。\n- デジタル決済とAIセキュリティの融合: Suicaのテッペイ加盟店拡大とAkamaiのAIボット対策サービスの普及により、オンライン・オフラインの決済環境がより安全かつスムーズになり、顧客体験が向上します。",
     "accuracy_score": null
   },
   "verifications": [
+    {
+      "report_date": "2026-07-14",
+      "horizon": "1週間後",
+      "accuracy": 0.375
+    },
     {
       "report_date": "2026-07-12",
       "horizon": "1週間後",
@@ -110,6 +115,11 @@
       "report_date": "2026-04-26",
       "horizon": "1週間後",
       "accuracy": 0.0
+    },
+    {
+      "report_date": "2026-04-22",
+      "horizon": "1〜6ヶ月後",
+      "accuracy": 0.5
     },
     {
       "report_date": "2026-04-21",
