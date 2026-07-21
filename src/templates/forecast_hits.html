@@ -1,0 +1,90 @@
+
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>予想的中 | Daily Tech Trend</title>
+  <meta name="description" content="過去の未来予測のうち、後日のニュースで的中が確認された予測をまとめたページ。">
+  <link rel="canonical" href="/daily-tech-trend/forecast/hits/">
+  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
+  <meta property="og:title" content="予想的中 | Daily Tech Trend">
+  <meta property="og:description" content="過去の未来予測のうち、後日のニュースで的中が確認された予測をまとめたページ。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/daily-tech-trend/forecast/hits/">
+  <meta property="og:site_name" content="Daily Tech Trend">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="{{ common_css_href }}">
+  <style>
+    .hit-summary{margin:16px 0;padding:12px 16px;border:1px solid var(--border);border-radius:8px;background:var(--panel)}
+    .hit-summary .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+    .hit-summary .k{font-size:.78rem;color:var(--text-sub)}
+    .hit-summary .v{font-size:1.1rem;font-weight:700;color:var(--accent)}
+    .hit-horizon-section{margin:24px 0}
+    .hit-horizon-section > h2{margin:0 0 10px;font-size:1.1rem;padding-bottom:4px;border-bottom:2px solid var(--accent)}
+    .hit-card{border:1px solid var(--border);border-left:4px solid #2ea043;border-radius:6px;
+              padding:10px 14px;margin:8px 0;background:var(--panel)}
+    .hit-card.partial{border-left-color:#d29922}
+    .hit-card-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:4px;font-size:.78rem;color:var(--text-sub)}
+    .hit-card-head .badge{background:#2ea043;color:#fff;padding:2px 8px;border-radius:10px;font-weight:700}
+    .hit-card-head .badge.partial{background:#d29922}
+    .hit-card-head .acc{color:#2ea043;font-weight:700}
+    .hit-card.partial .hit-card-head .acc{color:#d29922}
+    .hit-card-title{font-weight:700;font-size:.98rem;margin:4px 0}
+    .hit-card-reason{font-size:.88rem;line-height:1.6;color:var(--text-main)}
+    .hit-empty{padding:24px;text-align:center;color:var(--text-sub)}
+  </style>
+  <script src="{{ common_js_src }}" defer></script>
+</head>
+<body>
+  <h1>予想的中</h1>
+  <div class="nav">
+    <a href="/daily-tech-trend/" class="{{ 'active' if page=='tech' else '' }}">技術</a>
+    <a href="/daily-tech-trend/news/" class="{{ 'active' if page=='news' else '' }}">ニュース</a>
+    <a href="/daily-tech-trend/forecast/" class="{{ 'active' if page=='forecast' else '' }}">未来予測</a>
+    <a href="/daily-tech-trend/forecast/hits/" class="{{ 'active' if page=='forecast_hits' else '' }}">予想的中</a>
+    <a href="/daily-tech-trend/diff/" class="">差分</a>
+    <a href="/daily-tech-trend/entity/" class="">企業別</a>
+    <a href="/daily-tech-trend/exec/" class="">エグゼクティブ</a>
+    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
+    <a href="/daily-tech-trend/ops/" class="{{ 'active' if page=='ops' else '' }}">運用</a>
+    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
+  </div>
+
+  <div class="hit-summary">
+    <div class="summary-grid">
+      <div><div class="k">Generated (JST)</div><div class="v" style="font-size:.9rem;color:var(--text-main)">{{ generated_at }}</div></div>
+      <div><div class="k">的中した予測数</div><div class="v">{{ total_hits }}</div></div>
+      <div><div class="k">検証対象レポート数</div><div class="v">{{ report_count }}</div></div>
+    </div>
+    <p style="margin:10px 0 0;font-size:.82rem;color:var(--text-sub)">
+      過去の未来予測をその後のニュースで照合し、LLMが「的中」または「部分的中」（的中度 &gt; 0）と判定した項目を抽出しています。
+      各項目にはレポート日・時間軸・的中度スコアを表示します。
+    </p>
+  </div>
+
+  {% if total_hits == 0 %}
+  <div class="hit-empty">まだ的中と判定された予測はありません。</div>
+  {% else %}
+    {% for horizon, hits in hits_by_horizon.items() %}
+    <section class="hit-horizon-section">
+      <h2>{{ horizon }}（{{ hits|length }}件）</h2>
+      {% for h in hits %}
+      <div class="hit-card{% if h.label == '部分的中' %} partial{% endif %}">
+        <div class="hit-card-head">
+          <span class="badge{% if h.label == '部分的中' %} partial{% endif %}">{{ h.label }}</span>
+          <span>レポート日: {{ h.report_date }}</span>
+          {% if h.accuracy is not none %}<span class="acc">的中度: {{ h.accuracy }}</span>{% endif %}
+          <span>検証日: {{ h.verified_at }}</span>
+        </div>
+        <div class="hit-card-title">{{ h.title }}</div>
+        {% if h.reason %}<div class="hit-card-reason">{{ h.reason }}</div>{% endif %}
+        {% if h.evidence_title %}<div class="hit-evidence" style="margin-top:6px;font-size:.85rem;color:var(--text-sub)">根拠記事: <b>{{ h.evidence_title }}</b>{% if h.evidence_source %} <span style="color:#6b7280">({{ h.evidence_source }})</span>{% endif %}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </section>
+    {% endfor %}
+  {% endif %}
+</body>
+</html>

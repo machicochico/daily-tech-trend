@@ -5,6 +5,19 @@ def _read(path: str) -> str:
     return Path(path).read_text(encoding="utf-8")
 
 
+def _read_render_sources() -> str:
+    """render_main.py と外部化された src/templates/*.html を連結して返す。
+
+    render_main.py のHTML文字列は段階的にテンプレート外部化されており
+    (PORTAL_HTML/NEWS_HTML/HTML/OPS_HTML/FORECAST_HTML/FORECAST_HITS_HTML)、
+    ナビゲーション等の共通マークアップは外部化先のテンプレートファイル側にある。
+    """
+    parts = [_read("src/render_main.py")]
+    for template in Path("src/templates").glob("*.html"):
+        parts.append(template.read_text(encoding="utf-8"))
+    return "\n".join(parts)
+
+
 def test_render_source_uses_absolute_project_asset_paths() -> None:
     source = _read("src/render_main.py")
     assert 'def build_asset_paths(base_path: str = "/daily-tech-trend/")' in source
@@ -22,7 +35,7 @@ def test_render_source_uses_common_asset_builder_for_all_pages() -> None:
 
 
 def test_navigation_contains_ops_page_link() -> None:
-    source = _read("src/render_main.py")
+    source = _read_render_sources()
     assert '/daily-tech-trend/ops/' in source
 
 
