@@ -500,15 +500,48 @@ docs/ops/index.html 生成に実使用中）の2個を追加で `src/templates/`
   `CollectedInfo_Pipeline`が`Ready`（実行中でない）であることを確認済み。`run_daily.bat`には触れていない
 
 ## 次回候補
-- [ ] **未来予測ページ(forecast)のMarkdown箇条書きレンダリングが非決定的**（`<p>1. ...</p>`羅列と
-  `<ol><li>...</li></ol>`の2パターンの間で、同一コード・同一DBデータでも実行するたびに揺れる）。
-  今回の調査でrender_main.py側のコード起因ではないことは切り分け済み。`md_to_html()`が使っている
-  Markdownライブラリ・拡張設定（`markdown`パッケージのバージョン、拡張ロード順、リスト判定の
-  曖昧な入力に対する挙動等）を調査し、揺れの原因を特定するとよい。実害は現状「同じ内容が別のHTML
-  構造で表示される」程度で、記事内容自体が変わるわけではないため優先度は低い
 - [ ] テンプレート外部化自体は6/6完了。今後は`render_main.py`の残り約3,100行（DB読み書き・
   データ集計ロジック中心）の可読性改善が次の分割候補になりうるが、テンプレート文字列のような
   自己完結した単位ではないため難易度が上がる
+
+---
+
+## 2026-07-22 07:07 自律発案: forecastページMarkdown非決定性の再調査（結論: 誤診断・対応不要）
+
+前回セッション（02:07）で「forecastページのMarkdown箇条書きレンダリングが`<p>`羅列と
+`<ol><li>`の間で非決定的に揺れる」と報告された件を再調査した。結論: **再現せず。実際には
+`generated_at`系タイムスタンプの差分のみであり、Markdownレンダリング自体は完全に決定的**
+だったと判明した（前回セッションの診断は誤り）。
+
+### 調査内容
+1. `md_to_html()`が実際に使っているのは`markdown`パッケージではなく`mistune`
+   （`mistune.create_markdown(plugins=["table"])`、`render_forecast_page()`内でローカル関数として
+   都度生成）だったため、まずこの前提を訂正した
+2. `parse_forecast_markdown`/`parse_prediction_items`で全101件の`data/forecasts/report_*.md`から
+   抽出した全セクション（executive_summary・checked_report・appendix×2・perspectives・
+   predictions各horizon×item、計1,960項目）を`md_to_html()`でレンダリングしSHA256ハッシュ化する
+   スクリプトを作成し、別プロセスとして3回起動して比較 → **1,960項目×3回、完全に同一のハッシュ**
+   （mistuneのレンダリングはプロセスを跨いでも決定的）
+3. 上記だけでは実際のパイプライン全体（Jinja2テンプレート結合・DB読み取り順序等）をカバーしないため、
+   `python src/render.py`を同一DB状態で2回連続実行し`docs/`を比較する、前回と同じ手法で再検証した。
+   着手前に`Get-ScheduledTask`で`Daily Tech Trend`/`Watchdog Daily Tech Trend`/`CollectedInfo_Pipeline`
+   が`Ready`であることを確認済み
+4. 差分が出たファイルは110件（前回の109件とほぼ同数）だったが、**全ファイルとも差分行数はちょうど2行
+   （1行の書き換えのみ）で、中身は`generated_at`/`Generated (JST)`/`最終更新`いずれかの
+   タイムスタンプ表示だけ**だった（`diff <file1> <file2> | grep -c '^[<>]'`で110ファイル全件を機械的に
+   確認、Markdown構造（`<p>`/`<ol>`等）の差分は1件も存在しなかった）
+5. 前回セッションが「タイムスタンプ以外の構造差分」と報告したのは、`grep -v`等での除外パターンが
+   `generated_at`表記ゆれ（ページごとに"Generated (JST)"/"最終更新"/ラベルなしの3パターンがある）を
+   拾いきれず、除外しきれなかったタイムスタンプ行を構造差分と誤認した可能性が高いと推測される
+   （今回のログでも同じ誤認が再現しかけたため、これが原因だとほぼ断定できる）
+
+### 対応
+- 実際のバグが存在しないため、コード修正は行わない
+- `python -m pytest -q`は変更なしのため未実行（コード変更ゼロ）
+- 検証用一時ファイル（`repro_md_nondeterminism.py`・`repro_hashes_*.txt`・`docs_run1`/`docs_run2`・
+  `render_run*.log`）はすべて削除し、`git checkout -- docs`で`docs/`をコミット前の状態に戻して
+  作業ツリーをクリーンにした（`git status --short`で確認済み）
+- 上記「次回候補」から本項目を削除した（対応不要と判明したため）
 
 ---
 
