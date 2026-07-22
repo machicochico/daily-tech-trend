@@ -31,13 +31,17 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 <body>
 <nav><a href="../">&larr; Top</a></nav>
 <h1>政策・規制 エグゼクティブサマリー</h1>
-<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-07-22 12:33</p>
-<section class="exec-item"><h2>1. わずか11バイトでメモリを圧迫 OpenSSLを狙う新たなDoS攻撃、その意外な仕組み</h2><dl><dt>何が起きているか</dt><dd>TLSハンドシェイク前の処理を悪用し、サーバメモリを消費させる軽量DoS攻撃が発見され、複数のオープンソースライブラリが影響を受ける。</dd><dt>事業への影響</dt><dd>クラウドサービス・金融・通信業界のサーバー稼働コストが急増し、サービス停止リスクが高まる。既存インフラの脆弱性評価が不可欠となり、セキュリティパッチ適用遅延が業績に直結する。</dd><dt>推奨行動</dt><dd>① 既存OpenSSLバージョンの即時アップデートを実施。② TLSハンドシェイク前のリクエストを制限するファイアウォール／WAF設定を追加。③ 影響を受ける全サーバーの脆弱性スキャンとパッチ適用計画を策定し、経営会議で優先順位を決定。</dd></dl></section>
-<section class="exec-item"><h2>2. WordPress本体に重大な脆弱性、運営元が異例の強制更新</h2><dl><dt>何が起きているか</dt><dd>WordPress本体において、認証不要で管理画面にアクセスできる脆弱性が発見され、公式サイトが強制自動更新を開始。</dd><dt>事業への影響</dt><dd>ウェブサイト運営企業・ECサイト運営者がダウンタイムを被り、顧客信頼損失と売上減少のリスクが高まる。多くの企業がWordPressを基盤にしているため、全体的なセキュリティ対策の見直しが必要。</dd><dt>推奨行動</dt><dd>① すべてのWordPressサイトを最新版に更新し、更新ログを社内監査で確認。② 追加のセキュリティプラグイン導入と定期的な脆弱性スキャンを実施。③ 重要サイトに対しては二段階認証やIP制限を設定し、緊急時の復旧手順をマニュアル化。</dd></dl></section>
-<section class="exec-item"><h2>3. AI社内消費「24倍」の衝撃 本番運用に向けて絶対に「やってはいけない」コストの考え方</h2><dl><dt>何が起きているか</dt><dd>AIモデルの本番運用に伴うトークン消費が試験段階より24倍に増加し、予算超過や運用停止のリスクが浮上。</dd><dt>事業への影響</dt><dd>AIプロジェクトのROIが低下し、投資判断が遅延。企業全体のITコスト構造が変化し、予算管理が難航。</dd><dt>推奨行動</dt><dd>① 本番環境でのトークン使用量をリアルタイムでモニタリングし、閾値超過時にアラートを発信。② コスト最適化のため、モデル圧縮・量子化技術の導入を検討。③ AI運用に関するガバナンス体制を整備し、経営層に定期的なレポートを提出。</dd></dl></section>
+<p class="meta">直近7日の記事 20 件を対象 · 生成: 2026-07-22 15:33</p>
+<section class="exec-item"><h2>1. 物流大混乱、ニチレイを襲ったサイバー攻撃、OSINTから見えた「明らかな弱点」</h2><dl><dt>何が起きているか</dt><dd>低温物流を対象としたサイバー攻撃により、ニチレイの物流網が停止し、外食チェーンやスーパーへまで供給が滞る事態が発生。OSINT調査で明らかになった脆弱性は、古い認証方式と未パッチ化のシステムが主因とされる。</dd><dt>事業への影響</dt><dd>食品・飲料業界全体のサプライチェーンリスクが顕在化し、物流コストの増大、ブランドイメージ低下、規制強化によるコンプライアンス負担増。</dd><dt>推奨行動</dt><dd>① 既存物流システムのセキュリティ診断を実施し、脆弱性を速やかに修正。② 物流業務の多重認証・ゼロトラスト設計を導入。③ 供給網の多様化とサプライヤー監査体制を強化し、リスク分散を図る。</dd></dl></section>
+<section class="exec-item"><h2>2. VMware ライセンス変更でコストが増えたが、移行をためらう理由とは？</h2><dl><dt>何が起きているか</dt><dd>VMware社がライセンスモデルを変更し、従来のサブスクリプションから従量課金へ移行。これに伴い、企業はコスト増を懸念し、移行を先延ばしにしている。</dd><dt>事業への影響</dt><dd>ITインフラ運用コストが上昇し、クラウド移行計画が遅延。競合他社がコスト優位性を確保できれば、業界内での競争力が低下。</dd><dt>推奨行動</dt><dd>① ライセンス変更の詳細を社内で共有し、コストシミュレーションを実施。② 移行に伴うリスクとメリットを定量化し、経営層へ報告。③ 既存VMware環境の最適化（リソース再配置・不要VM削除）を進め、移行コストを最小化。</dd></dl></section>
+<section class="exec-item"><h2>3. わずか11バイトでメモリを圧迫 OpenSSLを狙う新たなDoS攻撃</h2><dl><dt>何が起きているか</dt><dd>OpenSSLライブラリにおけるTLSハンドシェイク前の処理を悪用し、少量の通信でサーバメモリを消費させるDoS脆弱性が発見。多くのサーバーが対象となる可能性が高い。</dd><dt>事業への影響</dt><dd>Webサービス・クラウドプロバイダーなど、OpenSSLを利用する全ITサービスが稼働停止リスクに直面。セキュリティ対策費用の増大と顧客信頼の低下。</dd><dt>推奨行動</dt><dd>① すべてのサーバーでOpenSSLを最新版にパッチ適用。② TLSハンドシェイク前の接続制御（レートリミット・IPブラックリスト）を強化。③ 監視体制を整備し、異常なメモリ使用を即時検知できるようにする。</dd></dl></section>
 <section class="refs">
   <h3>参考にしたニュース</h3>
-  <ul><li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/22/news042.html" target="_blank" rel="noopener">わずか11バイトでメモリを圧迫 OpenSSLを狙う新たなDoS攻撃、その意外な仕組み</a> <small>(@IT, 2026-07-21)</small></li>
+  <ul><li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/23/news023.html" target="_blank" rel="noopener">物流大混乱、ニチレイを襲ったサイバー攻撃、OSINTから見えた「明らかな弱点」</a> <small>(@IT, 2026-07-22)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/22/news043.html" target="_blank" rel="noopener">「VMware ライセンス変更でコストが増えた」が 9 割超の間「移行をためらう理由」とは？</a> <small>(@IT, 2026-07-22)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/22/news024.html" target="_blank" rel="noopener">無料で身につくデータサイエンス 延べ23万人が受講、総務省が募集開始</a> <small>(@IT, 2026-07-22)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/22/news060.html" target="_blank" rel="noopener">この1年で「パブリッククラウドからの回帰」を加速させた、セキュリティだけでは語れない変化</a> <small>(@IT, 2026-07-22)</small></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/22/news042.html" target="_blank" rel="noopener">わずか11バイトでメモリを圧迫 OpenSSLを狙う新たなDoS攻撃、その意外な仕組み</a> <small>(@IT, 2026-07-21)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/22/news047.html" target="_blank" rel="noopener">GoogleがAIアプリ「Dreambeans」を発表「画面を延々とスクロール」の脱却で何を目指すのか</a> <small>(@IT, 2026-07-21)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/22/news037.html" target="_blank" rel="noopener">WordPress本体に重大な脆弱性、運営元が異例の強制更新 専門家が語る「本当の危険」</a> <small>(@IT, 2026-07-21)</small></li>
 <li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/22/news005.html" target="_blank" rel="noopener">AI社内消費「24倍」の衝撃 本番運用に向けて絶対に「やってはいけない」コストの考え方</a> <small>(@IT, 2026-07-21)</small></li>
@@ -46,16 +50,12 @@ dl dd{margin:.2rem 0 .5rem 1rem}
 <li><a href="https://www.soumu.go.jp/menu_kyotsuu/important/kinkyu02_000654.html" target="_blank" rel="noopener">「地域社会DX推進パッケージ事業（補助事業）」の事業開始式が北海道斜里町にて開催</a> <small>(総務省 報道資料, 2026-07-21)</small></li>
 <li><a href="https://www.soumu.go.jp/main_sosiki/kenkyu/online_casino/02kiban18_02000497.html" target="_blank" rel="noopener">オンラインカジノに係るアクセス抑止の在り方に関する検討会（第15回）</a> <small>(総務省 報道資料, 2026-07-21)</small></li>
 <li><a href="https://www.soumu.go.jp/menu_syokai/saiyou/detail/02gyokan01_04000442.html" target="_blank" rel="noopener">行政管理局企画調整課総務係任期付職員採用情報</a> <small>(総務省 報道資料, 2026-07-21)</small></li>
-<li><a href="https://www.digital.go.jp/councils/mobility-working-group" target="_blank" rel="noopener">モビリティ・ロードマップ2026を掲載しました</a> <small>(デジタル庁 お知らせ, 2026-07-21)</small></li>
-<li><a href="https://www.digital.go.jp/councils/mobility-working-group/f2f10a04-15de-4a03-95d0-61224a443fb0" target="_blank" rel="noopener">モビリティワーキンググループ（第16回）の会議資料等を追加しました</a> <small>(デジタル庁 お知らせ, 2026-07-21)</small></li>
-<li><a href="https://www.digital.go.jp/councils/social-promotion/b1ab9739-cc25-4126-a2d8-e5d00cf809ff" target="_blank" rel="noopener">第7回デジタル社会推進会議の会議資料等を掲載しました</a> <small>(デジタル庁 お知らせ, 2026-07-21)</small></li>
-<li><a href="https://www.digital.go.jp/policies/base_registry" target="_blank" rel="noopener">「公的基礎情報データベース整備計画（改訂）（2026年7月21日閣議決定）」を公表しました</a> <small>(デジタル庁 お知らせ, 2026-07-21)</small></li>
-<li><a href="https://www.digital.go.jp/archives" target="_blank" rel="noopener">公文書管理における行政文書ファイル管理簿および行政文書ファイル等の廃棄の記録を更新しました</a> <small>(デジタル庁 お知らせ, 2026-07-21)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/21/news050.html" target="_blank" rel="noopener">「AIのクレジット浪費」をどう防ぐか？ Visual Studio Codeに「コスト管理」機能追加</a> <small>(@IT, 2026-07-21)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/21/news059.html" target="_blank" rel="noopener">なぜ今自社データセンターより「コロケーション」が選ばれる？</a> <small>(@IT, 2026-07-21)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/21/news029.html" target="_blank" rel="noopener">58万人が使う決済アプリ、遅い原因が「4時間たっても不明」――食品スーパーはどう解消したの？</a> <small>(@IT, 2026-07-21)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/21/news025.html" target="_blank" rel="noopener">ニチレイも事業停止 ランサム復旧「3日」「50日」「73日」の分岐点 医療・港・物流のサイバー攻撃に学ぶ</a> <small>(@IT, 2026-07-21)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/21/news044.html" target="_blank" rel="noopener">「取りあえずAI導入」の末路 現場で危機情報漏れい不安 IPAの意識調査で意見</a> <small>(@IT, 2026-07-21)</small></li>
-<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/2607/21/news071.html" target="_blank" rel="noopener">フィジカルAIで3大産業ロボットメーカーが集結 NVIDIA／富士通の共通基盤で目指すものとは</a> <small>(@IT, 2026-07-21)</small></li></ul>
+<li><a href="https://www.soumu.go.jp/menu_news/s-news/01gyosei04_02000161.html" target="_blank" rel="noopener">地方税共同機構による地方公金の収納事務局に係る安全性及び信頼性の確保に必要な基準(案)等に対する意見募集</a> <small>(総務省 報道資料, 2026-07-21)</small></li>
+<li><a href="https://www.soumu.go.jp/menu_news/s-news/01kiban16_02000386.html" target="_blank" rel="noopener">電波利用環境委員会報告（案）に対する意見募集</a> <small>(総務省 報道資料, 2026-07-21)</small></li>
+<li><a href="https://www.soumu.go.jp/main_sosiki/joho_tsusin/policyreports/joho_tsusin/kaisai/02kiban16_04000954.html" target="_blank" rel="noopener">情報通信審議会 情報通信技術分科会 電波利用環境委員会 CISPR D作業班（第10回）開催案内</a> <small>(総務省 報道資料, 2026-07-21)</small></li>
+<li><a href="https://www.soumu.go.jp/main_sosiki/joho_tsusin/policyreports/joho_tsusin/kaisai/02kiban16_04000953.html" target="_blank" rel="noopener">情報通信審議会 情報通信技術分科会 電波利用環境委員会 CISPR A作業班（第26回）開催案内</a> <small>(総務省 報道資料, 2026-07-21)</small></li>
+<li><a href="https://www.soumu.go.jp/menu_news/s-news/01shoubo01_02001240.html" target="_blank" rel="noopener">令和8年6月の熱中症による救急搬送状況</a> <small>(総務省 報道資料, 2026-07-21)</small></li>
+<li><a href="https://www.soumu.go.jp/menu_news/s-news/01kiban10_02000049.html" target="_blank" rel="noopener">第3回アジア・太平洋電気通信共同体 WRC-27準備展望(APG27-3)の開催</a> <small>(総務省 報道資料, 2026-07-21)</small></li>
+<li><a href="https://www.soumu.go.jp/main_sosiki/singi/senkyoku/02gyosei14_04000262.html" target="_blank" rel="noopener">第8回衆議院議員選挙議決審議会</a> <small>(総務省 報道資料, 2026-07-21)</small></li></ul>
 </section>
 </body></html>
