@@ -1,7 +1,511 @@
 {
-  "generated_at": "2026-09-12T21:24:54+00:00",
+  "generated_at": "2026-09-13T21:19:36+00:00",
   "count": 100,
   "items": [
+    {
+      "id": 45677,
+      "title": "アインシュタインやゴッホも「異脳」だった　天才と発達障害の深い関係",
+      "category": "industry",
+      "importance": 10,
+      "summary": "記事は、アインシュタインやゴッホなどの歴史的天才が「異脳」であったことと、発達障害との深い関係を示唆している。",
+      "updated_at": "2026-09-13T21:12:08.326123+00:00"
+    },
+    {
+      "id": 45678,
+      "title": "AI訓練のRiver AIが11億ドル調達、Valar Atomicsは原子炉の量産へ",
+      "category": "industry",
+      "importance": 80,
+      "summary": "米River AIは2026年8月11日にシード及びシリーズAで総額11億ドルを調達した。",
+      "updated_at": "2026-09-13T21:11:40.930358+00:00"
+    },
+    {
+      "id": 45679,
+      "title": "「Advanced Renamer」でファイル名操作、表記揺れ解消や写真に撮影日追加も",
+      "category": "industry",
+      "importance": 70,
+      "summary": "Advanced Renamer はファイル名の表記揺れを解消し、写真に撮影日を追加する機能を備えたファイル名操作ツールです。",
+      "updated_at": "2026-09-13T21:11:29.384446+00:00"
+    },
+    {
+      "id": 45733,
+      "title": "第769回　入札監理小委員会（会議資料）",
+      "category": "policy",
+      "importance": 50,
+      "summary": "第769回入札監理小委員会の会議資料である。",
+      "updated_at": "2026-09-13T21:11:19.129970+00:00"
+    },
+    {
+      "id": 45734,
+      "title": "情報通信審議会　情報通信技術分科会　電波有効利用委員会（第15回）開催案内",
+      "category": "policy",
+      "importance": 50,
+      "summary": "情報通信審議会情報通信技術分科会電波有効利用委員会第15回が開催されることが案内されている。",
+      "updated_at": "2026-09-13T21:11:07.784733+00:00"
+    },
+    {
+      "id": 45735,
+      "title": "電波法施行規則の一部を改正する省令案に係る意見募集",
+      "category": "policy",
+      "importance": 50,
+      "summary": "電波法施行規則の一部を改正する省令案に関して、意見募集が行われている。",
+      "updated_at": "2026-09-13T21:10:57.589119+00:00"
+    },
+    {
+      "id": 45736,
+      "title": "ふるさと納税のポータルサイト手数料の引下げに係る要請に対するポータルサイト運営事業者からの回答の公表",
+      "category": "policy",
+      "importance": 60,
+      "summary": "ポータルサイト運営事業者が、ふるさと納税の手数料引下げ要請に対する回答を公表した。",
+      "updated_at": "2026-09-13T21:10:46.781438+00:00"
+    },
+    {
+      "id": 44943,
+      "title": "How might Lindsay Clancy’s case have unfolded in another country?",
+      "category": "news",
+      "importance": 70,
+      "summary": "米国の母親が3人の子どもを絞殺した疑いで裁判中である。",
+      "updated_at": "2026-09-13T21:10:34.178438+00:00"
+    },
+    {
+      "id": 45940,
+      "title": "日本はマルウェア攻撃の検知件数で世界10位、NordVPN「2026年上半期サイバー脅威レポート」",
+      "category": "industry",
+      "importance": 70,
+      "summary": "NordVPNが2016年1月〜6月の脅威インテリジェンスデータを分析したサイバーセキュリティレポートを発表し、同レポートによると日本は世界でマルウェア攻撃の検知件数で10位にランクインした。",
+      "updated_at": "2026-09-13T21:10:23.402472+00:00"
+    },
+    {
+      "id": 45941,
+      "title": "TP-Link、屋外用ネットワークカメラ2台と動画を大量保存できるハブのセット3製品発売　9月17日までの予約で15%OFF",
+      "category": "industry",
+      "importance": 70,
+      "summary": "TP-LinkはTapoシリーズのソーラーパネル対応ネットワークカメラキット「Tapo HB112」「Tapo HB410」「Tapo HB610」を9月18日にAmazon.co.jpなどで発売し、9月17日までの予約で15%OFFの特別価格で購入できる。",
+      "updated_at": "2026-09-13T21:10:09.854403+00:00"
+    },
+    {
+      "id": 45942,
+      "title": "NTT西日本、「フレッツ光」提供エリアを愛媛県松山市門田町、泊町、由良町の一部地域で拡大　10月9日より受付開始予定",
+      "category": "industry",
+      "importance": 70,
+      "summary": "NTT西日本は愛媛県松山市門田町、泊町、由良町の一部地域で、10Gbpsの「フレッツ 光クロス」、1Gbpsの「フレッツ 光ネクスト」、およびIP電話サービスの「ひかり電話ネクスト」を提供開始することを発表した。",
+      "updated_at": "2026-09-13T21:09:58.727145+00:00"
+    },
+    {
+      "id": 45943,
+      "title": "NECプラットフォームズの法人向けWi-Fiルーター「Aterm Biz SH」シリーズ、セキュリティ評価制度「JC-STAR」★1取得",
+      "category": "industry",
+      "importance": 70,
+      "summary": "NECプラットフォームズは、スモールビジネス向けWi‑Fiルーター「Aterm Biz SH」シリーズの3製品がJC‑STARの★1適合ラベルを取得したと発表した。",
+      "updated_at": "2026-09-13T21:09:47.614667+00:00"
+    },
+    {
+      "id": 45944,
+      "title": "ラック、情報リテラシーを学べるカードゲーム「リテらっこ」のスターターキット公開　配布サイトから無料でダウンロードでき、学校や企業で活用可能",
+      "category": "industry",
+      "importance": 60,
+      "summary": "株式会社ラックは9月7日に情報リテラシーカードゲーム「リテらっこ」のスターターキットを公開し、印刷して利用できる教材を無料でダウンロードできると発表した。",
+      "updated_at": "2026-09-13T21:09:37.072275+00:00"
+    },
+    {
+      "id": 45945,
+      "title": "お風呂でも使えるEdifierのポータブルスピーカーがAmazonでセール中　327gと軽量・小型でマルチポイント接続もできる「QS20」は3974円に",
+      "category": "industry",
+      "importance": 60,
+      "summary": "EdifierのBluetooth対応ポータブルスピーカーがAmazon.co.jpでセール中で、防塵防水性能を備え浴室など水回りで使用できる。",
+      "updated_at": "2026-09-13T21:09:27.709237+00:00"
+    },
+    {
+      "id": 45946,
+      "title": "10Gbps対応のWi-Fi 7高機能モデル「Archer BE19000」が5万1840円など、TP-LinkのWi-FiルーターがAmazonでセール中！",
+      "category": "industry",
+      "importance": 70,
+      "summary": "TP-LinkのWi‑Fi 7ルーターArcher BE19000がAmazonで5万1840円でセール中である。",
+      "updated_at": "2026-09-13T21:09:18.361830+00:00"
+    },
+    {
+      "id": 45947,
+      "title": "マニアックすぎる？ 3Dスキャンした公共トイレのデータを集めた投稿型アーカイブサイト【やじうまWatch】",
+      "category": "industry",
+      "importance": 60,
+      "summary": "海外で話題になっている投稿型アーカイブサイトは、公共トイレの内部を3Dスキャンし、マウスで動かしながら閲覧できるようにしている。",
+      "updated_at": "2026-09-13T21:09:06.336339+00:00"
+    },
+    {
+      "id": 45948,
+      "title": "「iPhone Duo」開閉時のエフェクト、他社製品でも再現できる？ Galaxy Z Fold 8での検証結果は【やじうまWatch】",
+      "category": "industry",
+      "importance": 60,
+      "summary": "Galaxy Z Fold 8でiPhone Duoの開閉時に表示されるアニメーションエフェクトを再現した動画が話題になった。",
+      "updated_at": "2026-09-13T21:08:55.860500+00:00"
+    },
+    {
+      "id": 45966,
+      "title": "映画「バックルームズ」が怖くなかったマンガ家、基になったネット都市伝説にハマって本作の楽しみ方を理解する",
+      "category": "news",
+      "importance": 70,
+      "summary": "映画『バックルームズ』は4日に日本で公開され、世界中で大ヒットしている。",
+      "updated_at": "2026-09-13T21:08:44.812510+00:00"
+    },
+    {
+      "id": 45967,
+      "title": "AnthropicのアモデイCEO、AI開発の「ペース調整」訴えるエッセイ公開　アルトマン氏とマスク氏も賛同",
+      "category": "news",
+      "importance": 80,
+      "summary": "AnthropicのアモデイCEOがAI開発のペースを抑える3段階計画を提言し、第三者評価者の導入と国際協調を訴え、OpenAIのアルトマンCEOとマスク氏が同意した。",
+      "updated_at": "2026-09-13T21:08:31.572215+00:00"
+    },
+    {
+      "id": 45949,
+      "title": "パナソニック、浄水型ウォーターサーバー参入　月額2420円",
+      "category": "security",
+      "importance": 60,
+      "summary": "パナソニックは10月1日から水道水を浄水するウォーターサーバー「TK-RSS1」の月額2,420円のサブスクリプションサービスを開始する。",
+      "updated_at": "2026-09-13T21:08:21.353424+00:00"
+    },
+    {
+      "id": 45938,
+      "title": "ウクライナ情勢、宣言で触れず　ＢＲＩＣＳ首脳会議が閉幕",
+      "category": "news",
+      "importance": 70,
+      "summary": "BRICS首脳会議は閉幕したが、声明でウクライナ情勢については触れられなかった。",
+      "updated_at": "2026-09-13T21:08:11.022431+00:00"
+    },
+    {
+      "id": 45960,
+      "title": "秋雨前線停滞 月曜は日本海側中心大雨に その後太平洋側も",
+      "category": "news",
+      "importance": 70,
+      "summary": "秋雨前線の活動が再び活発になり、14日は日本海側で激しい雨が降る見込みで、15日ごろは太平洋側でも雨雲が発達する恐れがある。",
+      "updated_at": "2026-09-13T21:07:59.899295+00:00"
+    },
+    {
+      "id": 45950,
+      "title": "AI開発「減速」をアンソロピックCEOが提案　アルトマン氏・マスク氏らも賛同",
+      "category": "security",
+      "importance": 80,
+      "summary": "AnthropicのCEOダリオ・アモデイがAI開発の減速を提案し、OpenAIのサム・アルトマン氏とイーロン・マスク氏も賛同した。",
+      "updated_at": "2026-09-13T21:07:49.610798+00:00"
+    },
+    {
+      "id": 45959,
+      "title": "大相撲秋場所初日 大関復帰の安青錦は白星発進",
+      "category": "news",
+      "importance": 70,
+      "summary": "安青錦が秋場所初日に琴栄峰を制し、白星発進した。",
+      "updated_at": "2026-09-13T21:07:39.321481+00:00"
+    },
+    {
+      "id": 45964,
+      "title": "【解説】沖縄県知事選挙 古謝氏の勝因は? 高市政権への影響は?",
+      "category": "news",
+      "importance": 70,
+      "summary": "古謝玄太氏が沖縄県知事選挙で初めての当選を確実にした。",
+      "updated_at": "2026-09-13T21:07:29.374874+00:00"
+    },
+    {
+      "id": 45927,
+      "title": "Afghan woman deported from US in first use of 'alien terrorist' court",
+      "category": "news",
+      "importance": 70,
+      "summary": "アフガン人女性が米国から国外追放されたが、彼女自身は犯罪で起訴されていない。",
+      "updated_at": "2026-09-13T21:07:11.992960+00:00"
+    },
+    {
+      "id": 45962,
+      "title": "中部電力きょう会見へ 林社長 勝野会長が辞意固める",
+      "category": "news",
+      "importance": 80,
+      "summary": "中部電力は浜岡原子力発電所3号機と4号機の審査で地震想定データを改ざんした問題により、林欣吾社長と勝野哲会長が辞任する意向を固め、14日に記者会見を開くことを発表した。",
+      "updated_at": "2026-09-13T21:06:59.059897+00:00"
+    },
+    {
+      "id": 45926,
+      "title": "Russians seek answers over hundreds missing after Ukraine's 2024 incursion",
+      "category": "news",
+      "importance": 80,
+      "summary": "2024年のクルスク攻勢後、300人以上のロシア人が行方不明となっていると公式に発表されたが、正確な数は不明である。",
+      "updated_at": "2026-09-13T21:06:46.544401+00:00"
+    },
+    {
+      "id": 45951,
+      "title": "アイシン、ギガキャスト対抗に分割構造　投資抑え高剛性と修理・交換性を両立",
+      "category": "industry",
+      "importance": 70,
+      "summary": "アイシンは2026年8月31日の試乗会で、ギガキャストに対抗する新アプローチ「TEKIZAIボデー」を開発していると明らかにした。",
+      "updated_at": "2026-09-13T21:06:35.123998+00:00"
+    },
+    {
+      "id": 45928,
+      "title": "They lost their jobs after posting about Charlie Kirk, but some have no regrets",
+      "category": "news",
+      "importance": 60,
+      "summary": "カリー・カークの暗殺事件後に解雇された人々のうち、一部は雇用主から大きな和解金を受け取り、他の人はゼロから再スタートを余儀なくされた。",
+      "updated_at": "2026-09-13T21:06:18.272463+00:00"
+    },
+    {
+      "id": 45952,
+      "title": "イーロン・マスクは「百科事典」　猛烈な読書がイノベーションの源泉に",
+      "category": "industry",
+      "importance": 70,
+      "summary": "この記事は、イーロン・マスク、スティーブ・ジョブズ、ジェフ・ベゾスなどの天才イノベーターが共通して実践する思考法を解剖した書籍『天才思考　世界を変えるイノベーションを生む10の思考法』の一部を抜粋し、特にマスクとベゾスがビジネスで実践するアナロジー思考とその基盤となる読書について述べている。",
+      "updated_at": "2026-09-13T21:06:04.345183+00:00"
+    },
+    {
+      "id": 45932,
+      "title": "Iran war reshapes Brics ties but also exposes divisions",
+      "category": "news",
+      "importance": 70,
+      "summary": "ブラジル・ロシア・インド・中国・南アフリカのBRICS諸国は、新しい世界秩序の必要性を認めたが、その代替案と実現方法については答えが出しにくいと述べた。",
+      "updated_at": "2026-09-13T21:05:49.352792+00:00"
+    },
+    {
+      "id": 45953,
+      "title": "知財分析で見たフィジカルAI開発、日本勢の強みは産業用ロボット企業群",
+      "category": "industry",
+      "importance": 70,
+      "summary": "フィジカルAIの技術開発と市場拡大が見込まれ、日本企業が成長分野として注目している。",
+      "updated_at": "2026-09-13T21:05:38.215026+00:00"
+    },
+    {
+      "id": 45934,
+      "title": "Six dead, 130 missing after Indonesian ferry capsizes in Java Sea",
+      "category": "news",
+      "importance": 80,
+      "summary": "インドネシアのフェリー「Virgo Transport 8」がジャワ海で転覆し、6人が死亡し130人が行方不明となった。",
+      "updated_at": "2026-09-13T21:05:27.578438+00:00"
+    },
+    {
+      "id": 45954,
+      "title": "肩書に「丸投げ」できるコンサルタント、そんなに増やしてどうするの",
+      "category": "industry",
+      "importance": 70,
+      "summary": "コンサルタントの肩書が増えている現状を指摘し、その増加の意味を疑問視している。",
+      "updated_at": "2026-09-13T21:05:18.486239+00:00"
+    },
+    {
+      "id": 45930,
+      "title": "Legendary Canadian boxer George Chuvalo dies aged 89",
+      "category": "news",
+      "importance": 70,
+      "summary": "カナダの伝説的ヘビー級ボクサー、ジョージ・チュヴァロが89歳で死亡した。",
+      "updated_at": "2026-09-13T21:05:07.030538+00:00"
+    },
+    {
+      "id": 45955,
+      "title": "AI社員がファクトチェック、日報は翌日作業のコンテキスト",
+      "category": "industry",
+      "importance": 70,
+      "summary": "筆者は夕方の業務後、Discord上のAIリサーチャーの部屋を開き、AIリサーチャーが今日の最終ニュース配信のプレビューを3本の記事スライドで準備している。",
+      "updated_at": "2026-09-13T21:04:55.841191+00:00"
+    },
+    {
+      "id": 45933,
+      "title": "Turkish police detain dozens in raids on gay bars and homes of LGBTQ+ activists",
+      "category": "news",
+      "importance": 70,
+      "summary": "トルコの警察がゲイバーやLGBTQ+活動家の自宅を捜索し、数十人を拘束した。",
+      "updated_at": "2026-09-13T21:04:44.608395+00:00"
+    },
+    {
+      "id": 45956,
+      "title": "四足歩行ロボットを制御、「しゃがむ」動作をさせてみよう",
+      "category": "industry",
+      "importance": 60,
+      "summary": "四足歩行ロボットを制御して歩かせるシミュレーションに挑戦してみます。",
+      "updated_at": "2026-09-13T21:04:32.867911+00:00"
+    },
+    {
+      "id": 45929,
+      "title": "US congressman swims to safety after his plane is forced to land on a lake",
+      "category": "news",
+      "importance": 50,
+      "summary": "米議員トム・ティファニーが乗った小型機が機械的な問題によりウィスコンシン州の湖に緊急着陸した。",
+      "updated_at": "2026-09-13T21:04:19.249028+00:00"
+    },
+    {
+      "id": 45957,
+      "title": "建設キャリアアップシステム、英語略称のCCUSでも認知度上昇",
+      "category": "industry",
+      "importance": 70,
+      "summary": "建設キャリアアップシステム（CCUS）の認知度は、土木専門誌『日経コンストラクション』の読者を対象にした調査で41％に上昇した。",
+      "updated_at": "2026-09-13T21:04:06.773737+00:00"
+    },
+    {
+      "id": 45935,
+      "title": "Questions mount over what an AI 'slowdown' would look like",
+      "category": "news",
+      "importance": 70,
+      "summary": "記事はAI開発のペース調整が簡単ではないと述べている。",
+      "updated_at": "2026-09-13T21:03:54.234143+00:00"
+    },
+    {
+      "id": 45958,
+      "title": "1位は「有害物質で工事打ち切った国道168号トンネル、処分地探し難航で再開めど立たず」",
+      "category": "industry",
+      "importance": 70,
+      "summary": "国道168号のトンネルは有害物質の発見により工事が打ち切られ、処分地の確保が難航している。",
+      "updated_at": "2026-09-13T21:03:38.233364+00:00"
+    },
+    {
+      "id": 45936,
+      "title": "Trump downplays warnings of AI risks, citing rivalry with China",
+      "category": "news",
+      "importance": 70,
+      "summary": "米国大統領は中国との競争を理由にAIリスクに関する警告を軽視した。",
+      "updated_at": "2026-09-13T21:03:27.931254+00:00"
+    },
+    {
+      "id": 45963,
+      "title": "維新 中司幹事長の入閣調整 今週にも自民党役員人事 内閣改造",
+      "category": "news",
+      "importance": 70,
+      "summary": "高市総理大臣は今週に自民党役員人事と内閣改造を行い、日本維新の会の中司幹事長を入閣させる方向で調整に入った。",
+      "updated_at": "2026-09-13T21:03:16.618627+00:00"
+    },
+    {
+      "id": 45937,
+      "title": "Russia hits Ukrainian train shortly after Boris Johnson and top European officials leave station",
+      "category": "news",
+      "importance": 70,
+      "summary": "前英国首相ボリス・ジョンソンは、ポーランド国境で停止していたウクライナの機関車が破壊されたことについて、ロシアの行動の動機を知らないと述べた。",
+      "updated_at": "2026-09-13T21:03:01.607355+00:00"
+    },
+    {
+      "id": 45965,
+      "title": "政府・与党 沖縄県知事選 古謝氏当選で辺野古移設推進",
+      "category": "news",
+      "importance": 70,
+      "summary": "沖縄県知事選挙で新人の古謝玄太氏が当選した。",
+      "updated_at": "2026-09-13T21:02:50.388449+00:00"
+    },
+    {
+      "id": 45931,
+      "title": "Trump says he will remove all Irish whiskey tariffs as he ends two-day visit",
+      "category": "news",
+      "importance": 60,
+      "summary": "アイルランド共和国で蒸留されたウイスキーは、米国に輸入されるEU製品に対して15％の関税が課せられています。",
+      "updated_at": "2026-09-13T21:02:39.784198+00:00"
+    },
+    {
+      "id": 45961,
+      "title": "千葉豪雨“屋外での移動危険”避難所開設しない判断の自治体も",
+      "category": "news",
+      "importance": 80,
+      "summary": "千葉県の8月豪雨でレベル4危険警報が発表されたが、一部自治体は屋外での移動を危険と判断し、避難指示や避難所の開設を行わなかった。",
+      "updated_at": "2026-09-13T21:02:29.454791+00:00"
+    },
+    {
+      "id": 45939,
+      "title": "さくらインターネット、「さくらのレンタルサーバ」および販売管理システムへの不正アクセスについて調査結果を公開　「さくらのレンタルサーバ」不正アクセス対象は951アカウントに拡大",
+      "category": "industry",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45968,
+      "title": "「AIコーディングより人を雇う方が安い」時代が来る？　生成AIの予算超過を防ぐトークン浪費対策の全て",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45969,
+      "title": "仕様書通りだけど提案書とは違うシステムだったので訴えます",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45970,
+      "title": "「SD-WANでネットワーク全面刷新」の計画が失敗だった理由　なぜ“閉域網との二刀流”に？",
+      "category": "policy",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45971,
+      "title": "Adi's Future Pending as Assofermet Demands Transparency",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45972,
+      "title": "Ukraine: Zaporizhstal Renovates Sanitary and Domestic Facilities of Water Supply Shop",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45973,
+      "title": "Ukraine: Metallurgical Output Continues to Decline",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45974,
+      "title": "How to Keep Abrasive Waterjet Cutting Reliable",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45975,
+      "title": "China Currency Push Targets Australia's Biggest Commodity Exports",
+      "category": "manufacturing",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45976,
+      "title": "Oil Industry Braces for Years-Long Iran War",
+      "category": "market",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45977,
+      "title": "UK Wind Power Hits Record High as Energy Security Risks Mount",
+      "category": "market",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45978,
+      "title": "Trump’s Caucasus Trade Corridor Delayed Until 2027",
+      "category": "market",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45979,
+      "title": "U.S. Dams Could Unlock 15.2 Terawatt-Hours of Untapped Hydropower",
+      "category": "market",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
+    {
+      "id": 45980,
+      "title": "Further Oil Price Spikes Could Rekindle Recession Fears",
+      "category": "market",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-09-13T21:01:20.461626+00:00"
+    },
     {
       "id": 45737,
       "title": "令和8年防災功労者内閣総理大臣表彰（消防関係）",
@@ -297,510 +801,6 @@
       "importance": 64,
       "summary": "イスラエル首相が総選挙前にハマスの奇襲警告を黙殺したと指摘されている。",
       "updated_at": "2026-09-12T21:05:51.803992+00:00"
-    },
-    {
-      "id": 45825,
-      "title": "Record heatwaves in France set to make champagne stronger",
-      "category": "news",
-      "importance": 70,
-      "summary": "フランスの異常な収穫により甘みのあるブドウが生産され、ワインメーカーは15% ABVまでのスパークリングワインを作ることができる。",
-      "updated_at": "2026-09-12T21:05:43.057173+00:00"
-    },
-    {
-      "id": 45831,
-      "title": "A united Ireland would be 'fantastic' says Trump during Irish visit",
-      "category": "news",
-      "importance": 60,
-      "summary": "トランプ大統領は、アイルランドの指導者ミカエル・マーティンとの会談で、統一アイルランドは「素晴らしい」と述べた。",
-      "updated_at": "2026-09-12T21:05:33.315099+00:00"
-    },
-    {
-      "id": 45829,
-      "title": "French officials investigate if malicious act caused train derailment",
-      "category": "news",
-      "importance": 70,
-      "summary": "フランスの当局は、乗客列車の脱線事故後に線路に鉄片が発見されたことを調査している。",
-      "updated_at": "2026-09-12T21:05:21.522349+00:00"
-    },
-    {
-      "id": 45855,
-      "title": "埼玉 寄居町の治療院兼住宅で火事 男女2人死亡",
-      "category": "news",
-      "importance": 70,
-      "summary": "埼玉県寄居町の治療院兼住宅で火事が発生し、男女2人が死亡した。",
-      "updated_at": "2026-09-12T21:05:10.390073+00:00"
-    },
-    {
-      "id": 45826,
-      "title": "Death toll from Philippines ferry fire rises to 76, with more still missing",
-      "category": "news",
-      "importance": 90,
-      "summary": "フィリピンのフェリー火災で死亡者数が76人に上り、まだ行方不明者が残っている。",
-      "updated_at": "2026-09-12T21:05:01.202152+00:00"
-    },
-    {
-      "id": 45856,
-      "title": "環境省 再生プラ製造の大規模拠点設置を支援 ナフサ代替目指す",
-      "category": "news",
-      "importance": 70,
-      "summary": "環境省は、イラン情勢でナフサ由来化学製品の流通に影響が出たことを受け、国内に大規模な再生プラスチック製造拠点を設置する事業者に支援を行う方針を決めた。",
-      "updated_at": "2026-09-12T21:04:52.024259+00:00"
-    },
-    {
-      "id": 45828,
-      "title": "Uganda's King Oyo buried amid calls for unity over his successor",
-      "category": "news",
-      "importance": 70,
-      "summary": "テレビニュースプレゼンターがトゥオロ王国の新君主に任命された。",
-      "updated_at": "2026-09-12T21:04:37.539365+00:00"
-    },
-    {
-      "id": 45861,
-      "title": "京都 陸上競技場で28人搬送 “同じ種類の弁当を食べていた”",
-      "category": "news",
-      "importance": 70,
-      "summary": "京都市の陸上競技場で開催された全日本実業団選手権において、運営スタッフ28名が下痢や嘔吐を訴え病院へ搬送された。",
-      "updated_at": "2026-09-12T21:04:27.247411+00:00"
-    },
-    {
-      "id": 45823,
-      "title": "Bulgaria investigates fire at weapons  site that owner calls sabotage",
-      "category": "news",
-      "importance": 70,
-      "summary": "ブルガリアの武器製造施設で火災が発生し、所有者はそれを破壊工作と主張し、当局は外部からの介入を否定していない。",
-      "updated_at": "2026-09-12T21:04:16.808432+00:00"
-    },
-    {
-      "id": 45860,
-      "title": "千葉豪雨の発生から1か月 死者13人 住宅被害7000棟超える",
-      "category": "news",
-      "importance": 80,
-      "summary": "千葉県で発生した記録的豪雨から1か月が経過し、13人が死亡し、住宅被害は7000棟を超えた。",
-      "updated_at": "2026-09-12T21:04:06.522011+00:00"
-    },
-    {
-      "id": 45833,
-      "title": "Anthropic boss Dario Amodei calls for AI development to slow down",
-      "category": "news",
-      "importance": 70,
-      "summary": "Anthropicの社長ダリオ・アモデイがAI開発の速度を遅らせるよう呼びかけた。",
-      "updated_at": "2026-09-12T21:03:56.211673+00:00"
-    },
-    {
-      "id": 45858,
-      "title": "車いすテニス小田凱人 年間グランドスラムならず 全米オープン",
-      "category": "news",
-      "importance": 60,
-      "summary": "20歳の小田凱人選手が全米オープン車いす部男子シングルス決勝でイギリス選手に0対2で敗れ、準優勝した。",
-      "updated_at": "2026-09-12T21:03:44.379261+00:00"
-    },
-    {
-      "id": 45830,
-      "title": "Fire at nursing home in Chile kills 16 residents",
-      "category": "news",
-      "importance": 80,
-      "summary": "チリのアラウカニア地域にある介護施設で火災が発生し、16名の居住者が死亡した。",
-      "updated_at": "2026-09-12T21:03:32.939978+00:00"
-    },
-    {
-      "id": 45859,
-      "title": "BRICS首脳会議で共同宣言を採択 中国インド首脳会談も",
-      "category": "news",
-      "importance": 70,
-      "summary": "BRICS首脳会議でイラン情勢に関する共同宣言が採択され、関係国に最大限の自制と状況悪化を避けるよう求められた。",
-      "updated_at": "2026-09-12T21:03:21.487098+00:00"
-    },
-    {
-      "id": 45824,
-      "title": "Only Roland Garros towel left, says Ukraine tennis player after Russian strike hits flat",
-      "category": "news",
-      "importance": 70,
-      "summary": "ウクライナのテニス選手ダヤナ・ヤストレムスカが、オデッサでロシアのミサイルによりアパートが直撃され、残されたのはロラン・ガロスのタオルだけだった。",
-      "updated_at": "2026-09-12T21:03:08.148059+00:00"
-    },
-    {
-      "id": 45857,
-      "title": "車いすテニス上地結衣 全米オープン 2年連続4回目の優勝",
-      "category": "news",
-      "importance": 80,
-      "summary": "上地結衣選手が全米オープン車いす部女子シングルス決勝でオランダ選手にセットカウント2対1で勝利し、2年連続で4回目の優勝を果たした。",
-      "updated_at": "2026-09-12T21:02:57.786028+00:00"
-    },
-    {
-      "id": 45870,
-      "title": "「人間の敗北」を告げるCTFの終焉と『徳丸本』第3版――激変するセキュリティと基盤運用のリアル",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45871,
-      "title": "オンプレVDIやDaaSにしがみつく必要はもうない？　「1人当たり月1万円安くなる」代替策の実態",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45872,
-      "title": "CERNが巨大加速器の制御基盤OSを「CentOS 7」から「Debian 13」に全面移行　コミュニティー主導OSを選ぶ理由",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45874,
-      "title": "東京都債権管理条例に基づく私債権の放棄について",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45875,
-      "title": "第5回調布飛行場整備検討会の開催について",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45876,
-      "title": "令和8年度第1回東京都災害医療協議会の開催",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45877,
-      "title": "東京都江戸東京博物館外6施設の指定管理者候補者の決定について",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45878,
-      "title": "令和8年度第5回 東京都私立学校審議会（第862回）の開催について",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45879,
-      "title": "令和8年第三回都議会定例会条例案概要",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45880,
-      "title": "いわゆる「年収の壁」の理解促進へ　普及啓発動画を公開　制度改正のポイントやシミュレーションツール「イフキャリ」を紹介",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45881,
-      "title": "女性活躍推進の取組をよりわかりやすく発信「女性活躍の輪（WA）」の3本の動画とポータルサイトを公開",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45882,
-      "title": "あなたの想いをマンガに！育業サンキューエピソード投票スタート！",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45885,
-      "title": "Portable Plasma Cutting Cobots Bring Automation to Heavy Fabrication",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45886,
-      "title": "Salzgitter AG Appoints Christoph Martin as New CFO",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45887,
-      "title": "Assofermet Calls for Continued Production at Taranto Steel Plant",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45888,
-      "title": "EU Registers Steel Mesh Imports from TüRkiye and China",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45889,
-      "title": "Lawmakers Push to Lower Aluminium EU CBAM Threshold",
-      "category": "manufacturing",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45890,
-      "title": "An AI-Powered Culturally Aware Chatbot for Stress Detection and Wellness Support among Pakistani University Students Using NLP and Machine Learning",
-      "category": "ai",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45891,
-      "title": "DRG-MAPPO: Hierarchical Dynamic Role-Graph Multi-Agent Reinforcement Learning for Cooperative Air Combat",
-      "category": "ai",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45892,
-      "title": "Autonomous Chemical Mechanistic Discovery through Agentic Reasoning and Validation",
-      "category": "ai",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45893,
-      "title": "Grounding Agent Memory: Environment-Probing Curation for Enterprise Agents",
-      "category": "ai",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45894,
-      "title": "Defining AI Agents: A Compendium of Criteria, Metrics, and Benchmarks",
-      "category": "ai",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45895,
-      "title": "Studying Without a Syllabus: Task-Agnostic Environment Preprocessing",
-      "category": "ai",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45896,
-      "title": "Quantifying the Memorization-to-Generalization Transition: Scaling Laws and Phase Structure in Grokking",
-      "category": "ai",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45898,
-      "title": "Cognition helps Devin test its own work with GPT‑6 Astra",
-      "category": "ai",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45899,
-      "title": "Perplexity trusts GPT-6 Astra with end-to-end systems",
-      "category": "ai",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45900,
-      "title": "Global Softwood Supply Growth Set to Lag Demand Through 2035",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45901,
-      "title": "Virgin Islands Maritime Administration Puts a Senior Contact at the Centre of World Shipping",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45902,
-      "title": "VHBS New ConTex Container Ship Time Charter Assessment Index Week 37",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45903,
-      "title": "Drewry: World Container Index Stable Last Week",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45904,
-      "title": "The Week in Alt Fuels: Can December deliver a breakthrough?",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45905,
-      "title": "Gibson tanker report – Africa’s Refining Pipeline",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45906,
-      "title": "Iran-backed Houthis seize key port in Yemen, advance on another vital oil choke point",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45907,
-      "title": "Getting to Zero Coalition calls on IMO Member States to secure an investable Net-Zero Framework",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45908,
-      "title": "Advanced Shipping & Trading – WEEKLY SHIPPING MARKET REPORT WEEK 37 2026",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45909,
-      "title": "Affinity Tanker Weekly, 11 September 2026",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45910,
-      "title": "Best Oasis Weekly Recycling Market Report, 11 September 2026",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45911,
-      "title": "Shipowners face growing financial risk from delayed EUA transfers, says EmissionLink",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45912,
-      "title": "The Cocaine Is Below the Waterline and the Crew Has No Idea",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45913,
-      "title": "GMS Week 37 – ROUTES TIGHTEN, BIDS RISE!",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45914,
-      "title": "Shipping capacity is returning to Red Sea while rates from China to Jeddah and Khor al Fakkan break Covid-19 records",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45915,
-      "title": "How port call activity can reveal a changing trade route",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45916,
-      "title": "APPEC: Tankers transit Hormuz in the dark as oil flows persist",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45917,
-      "title": "Fresh momentum for Net-Zero Framework gains",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45918,
-      "title": "Tanker Market: Rates on the Rise During August",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45919,
-      "title": "Baltic dry bulk freight index falls to lowest in over a week",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
-    },
-    {
-      "id": 45920,
-      "title": "Europe's \"Less\" Is Doing More Than Anyone Gives It Credit For",
-      "category": "market",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-09-12T21:01:47.964748+00:00"
     }
   ]
 }
