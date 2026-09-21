@@ -1,0 +1,758 @@
+
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未来予測レポート | Daily Tech Trend</title>
+  <meta name="description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
+  <link rel="canonical" href="/daily-tech-trend/forecast/">
+  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
+
+  <meta property="og:title" content="未来予測レポート | Daily Tech Trend">
+  <meta property="og:description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/daily-tech-trend/forecast/">
+  <meta property="og:site_name" content="Daily Tech Trend">
+  <meta property="og:locale" content="ja_JP">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="未来予測レポート | Daily Tech Trend">
+  <meta name="twitter:description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
+  <link rel="stylesheet" href="/daily-tech-trend/assets/css/common.css">
+  <style>
+    /* タブ */
+    .forecast-tabs{display:flex;gap:4px;margin:12px 0 0;flex-wrap:wrap}
+    .forecast-tabs button{padding:6px 14px;border:1px solid var(--border);border-radius:6px 6px 0 0;
+      background:var(--panel);cursor:pointer;font-size:.85rem;color:var(--text-sub);line-height:1.4}
+    .forecast-tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* パネル */
+    .forecast-panel{display:none;padding:16px;border:1px solid var(--border);border-radius:0 8px 8px 8px;
+      background:var(--panel);margin-bottom:20px;overflow-x:auto;word-wrap:break-word;overflow-wrap:break-word}
+    /* 予測カード */
+    .pred-card{background:var(--bg);border:1px solid var(--border);border-left:4px solid var(--border);
+      border-radius:10px;padding:14px 16px;margin-bottom:12px;transition:box-shadow .2s}
+    .pred-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .pred-card.highlight{border-left-color:#dc2626;background:linear-gradient(135deg,#fff,#fef2f2)}
+    .pred-card.mid{border-left-color:#d97706;background:linear-gradient(135deg,#fff,#fffbeb)}
+    .pred-card-header{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+    .pred-badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.3px}
+    .pred-badge.impact-大{background:#dc2626;color:#fff}
+    .pred-badge.impact-中{background:#d97706;color:#fff}
+    .pred-badge.impact-小{background:#e0f2fe;color:#0284c7}
+    .pred-badge.conf-高{background:#16a34a;color:#fff}
+    .pred-badge.conf-中{background:#fef3c7;color:#92400e}
+    .pred-badge.conf-低{background:#f3f4f6;color:#6b7280}
+    .accuracy-badge{display:inline-block;background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;margin-left:4px;vertical-align:middle}
+    .pred-card-title{font-weight:800;font-size:15px;margin-bottom:8px;line-height:1.5;color:var(--text-main)}
+    .highlight .pred-card-title{font-size:16px;color:#991b1b}
+    .pred-card-body{font-size:14px;line-height:1.7;color:var(--text-main)}
+    .pred-card-body p{margin:6px 0}
+    .pred-card-body ul,.pred-card-body ol{margin:6px 0;padding-left:20px}
+    .pred-card-body blockquote{border-left:3px solid var(--accent);margin:10px 0;padding:8px 14px;
+      background:rgba(0,0,0,.03);border-radius:0 6px 6px 0;font-size:13px;color:var(--text-sub)}
+    .forecast-panel.active{display:block}
+    .forecast-panel h2,.forecast-panel h3{margin-top:20px;margin-bottom:8px;font-size:1.05rem;font-weight:700;
+      color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:4px}
+    .forecast-panel h2:first-child,.forecast-panel h3:first-child{margin-top:0}
+    .forecast-panel p{line-height:1.7;margin:8px 0}
+    .forecast-panel ul,.forecast-panel ol{margin:8px 0;padding-left:20px;line-height:1.7}
+    .forecast-panel hr{border:none;border-top:1px solid var(--border);margin:16px 0}
+    .forecast-panel strong{color:var(--text-main)}
+    /* テーブル */
+    .forecast-panel table{border-collapse:collapse;width:100%;margin:8px 0;display:block;overflow-x:auto}
+    .forecast-panel th,.forecast-panel td{border:1px solid var(--border);padding:6px 10px;text-align:left;font-size:.85rem;white-space:normal}
+    .forecast-panel th{background:var(--panel)}
+    /* サマリー */
+    .exec-summary{background:linear-gradient(135deg,#1e3a5f,#1a365d);color:#fff;
+      border-radius:12px;padding:20px 24px;margin:16px 0;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+    .exec-summary h2{color:#fff;margin:0 0 12px;font-size:18px}
+    .exec-summary ol{margin:0;padding:0;list-style:none;counter-reset:ep}
+    .exec-summary li{counter-increment:ep;padding:12px 14px;margin-bottom:8px;
+      background:rgba(255,255,255,.1);border-radius:8px;border-left:3px solid #f59e0b;position:relative;padding-left:40px}
+    .exec-summary li::before{content:counter(ep);position:absolute;left:12px;top:12px;
+      width:22px;height:22px;background:#f59e0b;color:#1a365d;border-radius:50%;
+      font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+    .exec-summary li p{margin:2px 0;color:rgba(255,255,255,.92);line-height:1.6}
+    .exec-summary li strong{color:#fbbf24}
+    .exec-summary li em{color:rgba(255,255,255,.7);font-style:normal;font-size:13px}
+    .exec-summary hr{display:none}
+    /* 付録 */
+    details.appendix{margin:12px 0}
+    details.appendix summary{cursor:pointer;font-weight:600;color:var(--accent);padding:8px 0}
+    details.appendix .forecast-panel{border-radius:8px}
+    .no-report{text-align:center;color:var(--text-sub);padding:60px 20px}
+    /* 過去レポート */
+    .past-reports{margin-top:30px;border-top:1px solid var(--border);padding-top:16px}
+    .past-reports h3{margin:0 0 12px;font-size:1rem;font-weight:700;color:var(--text-main)}
+    .past-reports details.past-month{margin-bottom:8px;border:1px solid var(--border);
+      border-radius:8px;background:var(--panel)}
+    .past-reports details.past-month > summary{cursor:pointer;font-weight:600;color:var(--text-main);
+      padding:10px 14px;list-style:none;display:flex;align-items:center;gap:8px}
+    .past-reports details.past-month > summary::-webkit-details-marker{display:none}
+    .past-reports details.past-month > summary::before{content:"\25B6";display:inline-block;
+      font-size:.7em;color:var(--accent);transition:transform .15s}
+    .past-reports details.past-month[open] > summary::before{transform:rotate(90deg)}
+    .past-reports details.past-month > summary .month-count{margin-left:auto;font-size:.8rem;
+      font-weight:500;color:var(--text-sub)}
+    .past-reports ul{list-style:none;margin:0;padding:0 14px 12px;display:flex;flex-wrap:wrap;gap:8px}
+    .past-reports li a{display:inline-block;padding:4px 12px;border:1px solid var(--border);
+      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main);background:var(--bg)}
+    .past-reports li a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* === モバイル (640px以下) === */
+    @media(max-width:640px){
+      .forecast-tabs{gap:3px}
+      .forecast-tabs button{padding:8px 14px;font-size:.85rem;min-height:44px}
+      .forecast-panel{padding:10px;border-radius:0 6px 6px 6px}
+      .forecast-panel table{font-size:.78rem}
+      .forecast-panel th,.forecast-panel td{padding:4px 6px}
+      .exec-summary{padding:14px 16px;border-radius:10px;margin:10px 0}
+      .exec-summary li{padding:10px 12px 10px 36px}
+      .exec-summary li::before{left:8px;top:10px;width:20px;height:20px;font-size:12px}
+      .exec-summary h2{font-size:16px}
+      details.appendix summary{font-size:.9rem;padding:6px 0}
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"未来予測レポート","description":"直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。","url":"/daily-tech-trend/forecast/","isPartOf":{"@type":"WebSite","name":"Daily Tech Trend","url":"/daily-tech-trend/"}}</script>
+</head>
+<body>
+  <h1>未来予測レポート</h1>
+  <div class="nav">
+    <a href="/daily-tech-trend/news/" class="">ニュース</a>
+    <a href="/daily-tech-trend/forecast/" class="active">未来予測</a>
+    <a href="/daily-tech-trend/forecast/hits/" class="">予想的中</a>
+    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
+    <a href="/daily-tech-trend/ops/" class="">運用</a>
+    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
+  </div>
+
+  <div class="summary-card" style="margin:16px 0">
+    <div class="summary-grid">
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-09-22 06:16:58 JST</div></div>
+      <div class="summary-item"><div class="k">レポート日付</div><div class="v">2026-09-21</div></div>
+      
+      
+      <div class="summary-item"><div class="k">過去平均的中率</div><div class="v">39.2%</div></div>
+      
+    </div>
+  </div>
+
+  
+
+  <!-- エグゼクティブサマリー -->
+  <div class="exec-summary">
+    <h2 style="margin:0 0 8px">今週の最重要ポイント</h2>
+    <p>1. <strong>高齢化による医療需要の拡大</strong></p>
+<p><em>あなたへの影響:</em> 日本の高齢化が進むことで、医療サービス全体の需要が増大し、関連企業は市場拡大の機会を捉えることができます。</p>
+
+<p>2. <strong>介護ロボット・在宅医療デバイスの成長</strong></p>
+<p><em>あなたへの影響:</em> 技術革新が進むことで、介護ロボットや遠隔医療機器の需要が高まり、製造・サービス提供側は新規開発や投資の検討が重要です。</p>
+
+<p>3. <strong>医療サービス業の売上増加と投資機会</strong></p>
+<p><em>あなたへの影響:</em> 医療サービス業全体の売上が15%増加する見込みがあるため、投資家や企業は資金調達・提携戦略を見直すべきです。</p>
+
+<hr>
+  </div>
+
+  <!-- 未来予測（時間軸タブ） -->
+  <h2>未来予測</h2>
+  <div class="forecast-tabs" id="pred-tabs">
+    
+    <button onclick="switchTab('pred', '0')" class="active"
+            id="pred-tab-0">1週間後</button>
+    
+    <button onclick="switchTab('pred', '1')" class=""
+            id="pred-tab-1">1〜6ヶ月後</button>
+    
+    <button onclick="switchTab('pred', '2')" class=""
+            id="pred-tab-2">1年後</button>
+    
+  </div>
+  
+  <div class="forecast-panel active" id="pred-panel-0">
+    
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        
+        
+      </div>
+      <div class="pred-card-title">> ※ この時間軸の予測は今回生成されませんでした（LLM応答の解析に失敗した可能性があります）。</div>
+      <div class="pred-card-body"><blockquote>※ この時間軸の予測は今回生成されませんでした（LLM応答の解析に失敗した可能性があります）。</blockquote></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="forecast-panel " id="pred-panel-1">
+    
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        
+        
+      </div>
+      <div class="pred-card-title">> ※ この時間軸の予測は今回生成されませんでした（LLM応答の解析に失敗した可能性があります）。</div>
+      <div class="pred-card-body"><blockquote>※ この時間軸の予測は今回生成されませんでした（LLM応答の解析に失敗した可能性があります）。</blockquote></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="forecast-panel " id="pred-panel-2">
+    
+    
+    <div class="pred-card mid">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-高">確信度: 高</span>
+      </div>
+      <div class="pred-card-title">日本の高齢化が医療需要を大幅に押し上げる</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2025年までに日本の医療サービス業の売上が15%増加し、特に介護ロボットや在宅医療デバイス市場が拡大する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: 過去数年の高速化する高齢化率に伴い、医療や介護関連企業の売上が伸びたという統計データ。</blockquote>
+
+
+<hr></div>
+    </div>
+    
+    
+  </div>
+  
+
+  <!-- 検証済み予測レポート -->
+  
+
+  <!-- 3視点分析（タブ） -->
+  <h2>3視点分析</h2>
+  <div class="forecast-tabs" id="persp-tabs">
+    
+    <button onclick="switchTab('persp', '0')" class="active"
+            id="persp-tab-0">技術者視点</button>
+    
+    <button onclick="switchTab('persp', '1')" class=""
+            id="persp-tab-1">経営者視点</button>
+    
+    <button onclick="switchTab('persp', '2')" class=""
+            id="persp-tab-2">消費者視点</button>
+    
+  </div>
+  
+  <div class="forecast-panel active" id="persp-panel-0">
+    <h3>注目すべきトレンド</h3>
+
+<p>1. <strong>熱管理とチップ発熱抑制</strong> — 冷却優先設計により発熱が抑えられ、パフォーマンスが安定する可能性がある。</p>
+<p>2. <strong>高度化するサイバー攻撃</strong> — WaterPlumの攻撃手口は暗号資産窃取技術を用いていると考えられ、マルウェア感染や不正アクセスが主な脅威となる。</p>
+<p>3. <strong>システム統合とスケーラビリティ</strong> — SBI HDの取得に伴い、ITシステム統合・POS機器統一化が必要で、システムのスケーラビリティや監視体制の強化が求められる。</p>
+<p>4. <strong>デジタルインフラ拡充とデータ基盤構築</strong> — デジタルインフラの拡充とセキュリティ対策、価値提供を測定するためのデータ収集・分析基盤の構築が必要になる可能性がある。</p>
+
+<h3>リスクと機会</h3>
+
+<ul>
+<li><strong>リスク</strong></li>
+<li>発熱抑制が不十分だとチップの故障や性能低下が発生し、製品寿命に影響を与える。</li>
+<li>高度な暗号資産窃取技術に対する防御が遅れると、機密情報漏えいや資産損失が拡大する。</li>
+<li>システム統合時にデータ整合性が損なわれると、運用障害やセキュリティ脆弱性が増大する。</li>
+</ul>
+
+<ul>
+<li><strong>機会</strong></li>
+<li>熱管理技術の改善により、デバイスの長時間使用が可能になり顧客満足度が向上する。</li>
+<li>マイクロサービス化やコンテナ化により、スケーラビリティとデプロイ速度が向上し、開発サイクルが短縮される。</li>
+<li>データレイクと分析基盤を構築することで、運用データから異常検知や予測保守を実現し、新たなサービス創出が期待できる。</li>
+</ul>
+
+<h3>推奨アクション</h3>
+
+<p>1. <strong>熱設計の最適化</strong> — 熱拡散材やファン配置のシミュレーションを実施し、発熱予測モデルを構築。</p>
+<p>2. <strong>ゼロトラストセキュリティの導入</strong> — アクセス制御、マイクロセグメンテーション、行動分析を組み合わせ、攻撃検知を強化。</p>
+<p>3. <strong>マイクロサービス化とコンテナ化</strong> — 既存モノリシックアプリを分割し、CI/CDパイプラインで自動テスト・デプロイを実装。</p>
+<p>4. <strong>データレイクと機械学習パイプラインの構築</strong> — 運用データを統合し、異常検知・予測保守モデルを開発。</p>
+<p>5. <strong>レガシー統合フレームワークの設計</strong> — APIゲートウェイとデータ変換レイヤーを構築し、統合時のデータ整合性を確保。</p>
+  </div>
+  
+  <div class="forecast-panel " id="persp-panel-1">
+    <h3>注目すべきトレンド</h3>
+
+<p>1. <strong>高齢化による医療・介護サービス需要拡大</strong> — 2025年までに医療サービス業売上が15%増加し、介護ロボットや在宅医療デバイス市場が急成長。経営者は新規事業投資と組織再編を検討すべき重要な市場機会です。</p>
+<p>2. <strong>サイバーセキュリティ強化と従業員教育の必要性</strong> — 企業は法的対応・顧客通知・信用回復策を実施しつつ、サイバー攻撃リスクに対処。セキュリティ体制と人材育成への投資が競争優位性を確立する鍵となります。</p>
+
+<h3>リスクと機会</h3>
+
+<ul>
+<li><strong>リスク</strong>:</li>
+<li>金利上昇に伴う資金調達コスト増と預金残高増で資金繰りが圧迫。</li>
+<li>サイバー攻撃による信用損失・法的責任の増大。</li>
+</ul>
+
+<ul>
+<li><strong>機会</strong>:</li>
+<li>高齢化市場での新製品・サービス投入により売上拡大。</li>
+<li>サイバーセキュリティ投資で顧客信頼を獲得し、競合との差別化を図る。</li>
+<li>ブランドポートフォリオの多様化で市場シェア拡大を狙える。</li>
+</ul>
+
+<h3>推奨アクション</h3>
+
+<p>1. <strong>高齢化市場への投資戦略策定</strong> — 介護ロボット・在宅医療デバイスの開発・提携を加速し、資金調達計画を見直して投資優先順位を明確化。</p>
+<p>2. <strong>サイバーセキュリティ体制強化と従業員教育プログラム実施</strong> — 監視体制、脆弱性管理、定期訓練を導入し、法務・規制遵守と顧客通知プロトコルを整備。</p>
+  </div>
+  
+  <div class="forecast-panel " id="persp-panel-2">
+    <h3>注目すべきトレンド</h3>
+
+<p>1. <strong>デバイス発熱の減少</strong> — Apple等が熱管理を改善し、スマートフォンやタブレットの発熱が低減。長時間使用でも快適に利用できるようになるため、日常のデジタル体験が向上します。</p>
+<p>2. <strong>個人情報保護への不安</strong> — 個人情報漏えいが報じられると、消費者はデータの安全性に対して警戒心を強めます。二要素認証の導入や怪しいリンクの回避が重要になります。</p>
+<p>3. <strong>金融環境の変化</strong> — 普通預金金利の上昇は貯蓄利息を増やす一方、ローン金利も上昇。借入計画の見直しや金利リスクへの備えが必要です。</p>
+<p>4. <strong>サービス拡充による選択肢増</strong> — 例えばサンマルクカフェや鎌倉パスタがうどんメニューを追加、LiveDaraとSBI HDの連携により新機能やサポートが提供される可能性があります。</p>
+<p>5. <strong>在宅医療デバイスの普及</strong> — 高齢化に伴い、介護ロボットや在宅医療デバイス市場が拡大。自宅での健康管理がより手軽に、かつ高度に行えるようになります。</p>
+
+<h3>リスクと機会</h3>
+
+<ul>
+<li><strong>リスク</strong>:</li>
+<li>個人情報漏えいによるプライバシー侵害の可能性。</li>
+<li>ローン金利上昇による借入コストの増大。</li>
+<li>在宅医療デバイスへの過度な依存が、専門的な医療サービスの利用を遅らせる恐れ。</li>
+</ul>
+
+<ul>
+<li><strong>機会</strong>:</li>
+<li>発熱低減デバイスで長時間作業や娯楽が快適に。</li>
+<li>高金利環境で貯蓄利息が増えることで資産形成が促進。</li>
+<li>新メニューやサービス連携で日常の選択肢が広がり、生活の質が向上。</li>
+<li>在宅医療デバイスの導入で医療サービスへのアクセスが容易に。</li>
+</ul>
+
+<h3>推奨アクション</h3>
+
+<p>1. <strong>二要素認証を有効化</strong> — アカウントの安全性を高め、個人情報漏えいリスクを低減。</p>
+<p>2. <strong>ローン・借入計画を定期的に見直す</strong> — 金利上昇に備え、返済計画や金利タイプの変更を検討。</p>
+<p>3. <strong>デバイスの発熱状態をモニタリング</strong> — 発熱低減機能を活用し、長時間使用時の快適性を確保。</p>
+<p>4. <strong>在宅医療デバイスの導入を検討</strong> — 高齢化に伴う医療ニーズに備え、費用対効果を比較し導入を検討。</p>
+<p>5. <strong>新サービス・メニューを試す</strong> — 生活の質を向上させる新しい選択肢を積極的に取り入れ、地域のビジネスを支援。</p>
+  </div>
+  
+
+  <!-- 付録 -->
+  
+  
+
+  <!-- 過去レポート一覧（月別折りたたみ） -->
+  
+  <div class="past-reports">
+    <h3>過去のレポート</h3>
+    
+    <details class="past-month" open>
+      <summary>2026年9月<span class="month-count">21件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-09-22/">2026-09-22</a></li>
+        
+        <li><a href="../2026-09-20/">2026-09-20</a></li>
+        
+        <li><a href="../2026-09-19/">2026-09-19</a></li>
+        
+        <li><a href="../2026-09-18/">2026-09-18</a></li>
+        
+        <li><a href="../2026-09-17/">2026-09-17</a></li>
+        
+        <li><a href="../2026-09-16/">2026-09-16</a></li>
+        
+        <li><a href="../2026-09-15/">2026-09-15</a></li>
+        
+        <li><a href="../2026-09-14/">2026-09-14</a></li>
+        
+        <li><a href="../2026-09-13/">2026-09-13</a></li>
+        
+        <li><a href="../2026-09-12/">2026-09-12</a></li>
+        
+        <li><a href="../2026-09-11/">2026-09-11</a></li>
+        
+        <li><a href="../2026-09-10/">2026-09-10</a></li>
+        
+        <li><a href="../2026-09-09/">2026-09-09</a></li>
+        
+        <li><a href="../2026-09-08/">2026-09-08</a></li>
+        
+        <li><a href="../2026-09-07/">2026-09-07</a></li>
+        
+        <li><a href="../2026-09-06/">2026-09-06</a></li>
+        
+        <li><a href="../2026-09-05/">2026-09-05</a></li>
+        
+        <li><a href="../2026-09-04/">2026-09-04</a></li>
+        
+        <li><a href="../2026-09-03/">2026-09-03</a></li>
+        
+        <li><a href="../2026-09-02/">2026-09-02</a></li>
+        
+        <li><a href="../2026-09-01/">2026-09-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年8月<span class="month-count">22件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-08-31/">2026-08-31</a></li>
+        
+        <li><a href="../2026-08-30/">2026-08-30</a></li>
+        
+        <li><a href="../2026-08-29/">2026-08-29</a></li>
+        
+        <li><a href="../2026-08-28/">2026-08-28</a></li>
+        
+        <li><a href="../2026-08-27/">2026-08-27</a></li>
+        
+        <li><a href="../2026-08-26/">2026-08-26</a></li>
+        
+        <li><a href="../2026-08-25/">2026-08-25</a></li>
+        
+        <li><a href="../2026-08-24/">2026-08-24</a></li>
+        
+        <li><a href="../2026-08-21/">2026-08-21</a></li>
+        
+        <li><a href="../2026-08-20/">2026-08-20</a></li>
+        
+        <li><a href="../2026-08-19/">2026-08-19</a></li>
+        
+        <li><a href="../2026-08-18/">2026-08-18</a></li>
+        
+        <li><a href="../2026-08-17/">2026-08-17</a></li>
+        
+        <li><a href="../2026-08-16/">2026-08-16</a></li>
+        
+        <li><a href="../2026-08-15/">2026-08-15</a></li>
+        
+        <li><a href="../2026-08-14/">2026-08-14</a></li>
+        
+        <li><a href="../2026-08-13/">2026-08-13</a></li>
+        
+        <li><a href="../2026-08-12/">2026-08-12</a></li>
+        
+        <li><a href="../2026-08-11/">2026-08-11</a></li>
+        
+        <li><a href="../2026-08-10/">2026-08-10</a></li>
+        
+        <li><a href="../2026-08-09/">2026-08-09</a></li>
+        
+        <li><a href="../2026-08-01/">2026-08-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年7月<span class="month-count">31件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-07-31/">2026-07-31</a></li>
+        
+        <li><a href="../2026-07-30/">2026-07-30</a></li>
+        
+        <li><a href="../2026-07-29/">2026-07-29</a></li>
+        
+        <li><a href="../2026-07-28/">2026-07-28</a></li>
+        
+        <li><a href="../2026-07-27/">2026-07-27</a></li>
+        
+        <li><a href="../2026-07-26/">2026-07-26</a></li>
+        
+        <li><a href="../2026-07-25/">2026-07-25</a></li>
+        
+        <li><a href="../2026-07-24/">2026-07-24</a></li>
+        
+        <li><a href="../2026-07-23/">2026-07-23</a></li>
+        
+        <li><a href="../2026-07-22/">2026-07-22</a></li>
+        
+        <li><a href="../2026-07-21/">2026-07-21</a></li>
+        
+        <li><a href="../2026-07-20/">2026-07-20</a></li>
+        
+        <li><a href="../2026-07-19/">2026-07-19</a></li>
+        
+        <li><a href="../2026-07-18/">2026-07-18</a></li>
+        
+        <li><a href="../2026-07-17/">2026-07-17</a></li>
+        
+        <li><a href="../2026-07-16/">2026-07-16</a></li>
+        
+        <li><a href="../2026-07-15/">2026-07-15</a></li>
+        
+        <li><a href="../2026-07-14/">2026-07-14</a></li>
+        
+        <li><a href="../2026-07-13/">2026-07-13</a></li>
+        
+        <li><a href="../2026-07-12/">2026-07-12</a></li>
+        
+        <li><a href="../2026-07-11/">2026-07-11</a></li>
+        
+        <li><a href="../2026-07-10/">2026-07-10</a></li>
+        
+        <li><a href="../2026-07-09/">2026-07-09</a></li>
+        
+        <li><a href="../2026-07-08/">2026-07-08</a></li>
+        
+        <li><a href="../2026-07-07/">2026-07-07</a></li>
+        
+        <li><a href="../2026-07-06/">2026-07-06</a></li>
+        
+        <li><a href="../2026-07-05/">2026-07-05</a></li>
+        
+        <li><a href="../2026-07-04/">2026-07-04</a></li>
+        
+        <li><a href="../2026-07-03/">2026-07-03</a></li>
+        
+        <li><a href="../2026-07-02/">2026-07-02</a></li>
+        
+        <li><a href="../2026-07-01/">2026-07-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年6月<span class="month-count">18件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-06-30/">2026-06-30</a></li>
+        
+        <li><a href="../2026-06-28/">2026-06-28</a></li>
+        
+        <li><a href="../2026-06-27/">2026-06-27</a></li>
+        
+        <li><a href="../2026-06-26/">2026-06-26</a></li>
+        
+        <li><a href="../2026-06-25/">2026-06-25</a></li>
+        
+        <li><a href="../2026-06-24/">2026-06-24</a></li>
+        
+        <li><a href="../2026-06-12/">2026-06-12</a></li>
+        
+        <li><a href="../2026-06-11/">2026-06-11</a></li>
+        
+        <li><a href="../2026-06-10/">2026-06-10</a></li>
+        
+        <li><a href="../2026-06-09/">2026-06-09</a></li>
+        
+        <li><a href="../2026-06-08/">2026-06-08</a></li>
+        
+        <li><a href="../2026-06-07/">2026-06-07</a></li>
+        
+        <li><a href="../2026-06-06/">2026-06-06</a></li>
+        
+        <li><a href="../2026-06-05/">2026-06-05</a></li>
+        
+        <li><a href="../2026-06-04/">2026-06-04</a></li>
+        
+        <li><a href="../2026-06-03/">2026-06-03</a></li>
+        
+        <li><a href="../2026-06-02/">2026-06-02</a></li>
+        
+        <li><a href="../2026-06-01/">2026-06-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年5月<span class="month-count">29件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-05-31/">2026-05-31</a></li>
+        
+        <li><a href="../2026-05-30/">2026-05-30</a></li>
+        
+        <li><a href="../2026-05-29/">2026-05-29</a></li>
+        
+        <li><a href="../2026-05-28/">2026-05-28</a></li>
+        
+        <li><a href="../2026-05-27/">2026-05-27</a></li>
+        
+        <li><a href="../2026-05-25/">2026-05-25</a></li>
+        
+        <li><a href="../2026-05-24/">2026-05-24</a></li>
+        
+        <li><a href="../2026-05-23/">2026-05-23</a></li>
+        
+        <li><a href="../2026-05-22/">2026-05-22</a></li>
+        
+        <li><a href="../2026-05-21/">2026-05-21</a></li>
+        
+        <li><a href="../2026-05-20/">2026-05-20</a></li>
+        
+        <li><a href="../2026-05-19/">2026-05-19</a></li>
+        
+        <li><a href="../2026-05-18/">2026-05-18</a></li>
+        
+        <li><a href="../2026-05-17/">2026-05-17</a></li>
+        
+        <li><a href="../2026-05-16/">2026-05-16</a></li>
+        
+        <li><a href="../2026-05-15/">2026-05-15</a></li>
+        
+        <li><a href="../2026-05-14/">2026-05-14</a></li>
+        
+        <li><a href="../2026-05-13/">2026-05-13</a></li>
+        
+        <li><a href="../2026-05-12/">2026-05-12</a></li>
+        
+        <li><a href="../2026-05-11/">2026-05-11</a></li>
+        
+        <li><a href="../2026-05-10/">2026-05-10</a></li>
+        
+        <li><a href="../2026-05-09/">2026-05-09</a></li>
+        
+        <li><a href="../2026-05-08/">2026-05-08</a></li>
+        
+        <li><a href="../2026-05-07/">2026-05-07</a></li>
+        
+        <li><a href="../2026-05-05/">2026-05-05</a></li>
+        
+        <li><a href="../2026-05-04/">2026-05-04</a></li>
+        
+        <li><a href="../2026-05-03/">2026-05-03</a></li>
+        
+        <li><a href="../2026-05-02/">2026-05-02</a></li>
+        
+        <li><a href="../2026-05-01/">2026-05-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年4月<span class="month-count">28件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-04-30/">2026-04-30</a></li>
+        
+        <li><a href="../2026-04-29/">2026-04-29</a></li>
+        
+        <li><a href="../2026-04-28/">2026-04-28</a></li>
+        
+        <li><a href="../2026-04-27/">2026-04-27</a></li>
+        
+        <li><a href="../2026-04-26/">2026-04-26</a></li>
+        
+        <li><a href="../2026-04-25/">2026-04-25</a></li>
+        
+        <li><a href="../2026-04-24/">2026-04-24</a></li>
+        
+        <li><a href="../2026-04-22/">2026-04-22</a></li>
+        
+        <li><a href="../2026-04-21/">2026-04-21</a></li>
+        
+        <li><a href="../2026-04-20/">2026-04-20</a></li>
+        
+        <li><a href="../2026-04-19/">2026-04-19</a></li>
+        
+        <li><a href="../2026-04-18/">2026-04-18</a></li>
+        
+        <li><a href="../2026-04-17/">2026-04-17</a></li>
+        
+        <li><a href="../2026-04-16/">2026-04-16</a></li>
+        
+        <li><a href="../2026-04-15/">2026-04-15</a></li>
+        
+        <li><a href="../2026-04-14/">2026-04-14</a></li>
+        
+        <li><a href="../2026-04-13/">2026-04-13</a></li>
+        
+        <li><a href="../2026-04-12/">2026-04-12</a></li>
+        
+        <li><a href="../2026-04-11/">2026-04-11</a></li>
+        
+        <li><a href="../2026-04-10/">2026-04-10</a></li>
+        
+        <li><a href="../2026-04-09/">2026-04-09</a></li>
+        
+        <li><a href="../2026-04-08/">2026-04-08</a></li>
+        
+        <li><a href="../2026-04-07/">2026-04-07</a></li>
+        
+        <li><a href="../2026-04-06/">2026-04-06</a></li>
+        
+        <li><a href="../2026-04-05/">2026-04-05</a></li>
+        
+        <li><a href="../2026-04-04/">2026-04-04</a></li>
+        
+        <li><a href="../2026-04-02/">2026-04-02</a></li>
+        
+        <li><a href="../2026-04-01/">2026-04-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年3月<span class="month-count">4件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-03-31/">2026-03-31</a></li>
+        
+        <li><a href="../2026-03-30/">2026-03-30</a></li>
+        
+        <li><a href="../2026-03-29/">2026-03-29</a></li>
+        
+        <li><a href="../2026-03-28/">2026-03-28</a></li>
+        
+      </ul>
+    </details>
+    
+  </div>
+  
+
+  
+
+  <script src="/daily-tech-trend/assets/js/common.js" defer></script>
+  <script>
+    // タブ状態は URL クエリで共有可能にする:
+    //   ?pred=1  → 予測タブ の 2番目 (0-indexed)
+    //   ?persp=engineer|manager|consumer → 3視点タブ
+    //   ?persp=0|1|2 も互換扱い
+    var PERSP_NAMES = ['engineer','manager','consumer'];
+    var PERSP_LABELS = ['技術者','経営者','消費者'];
+
+    function switchTab(group, idx, opts) {
+      idx = parseInt(idx, 10);
+      document.querySelectorAll('#' + group + '-tabs button').forEach(function(b, i) {
+        b.classList.toggle('active', i == idx);
+      });
+      document.querySelectorAll('[id^="' + group + '-panel-"]').forEach(function(p, i) {
+        p.classList.toggle('active', i == idx);
+      });
+      // URL 同期（history.replaceState で余分な履歴を残さない）
+      if (!opts || opts.updateUrl !== false) {
+        try {
+          var url = new URL(window.location.href);
+          var val = idx;
+          if (group === 'persp' && PERSP_NAMES[idx]) val = PERSP_NAMES[idx];
+          url.searchParams.set(group, val);
+          window.history.replaceState(null, '', url.toString());
+        } catch (e) { /* noop */ }
+      }
+    }
+
+    function _initTabFromUrl(group) {
+      try {
+        var url = new URL(window.location.href);
+        var v = url.searchParams.get(group);
+        if (v === null) return;
+        var idx = parseInt(v, 10);
+        if (group === 'persp' && isNaN(idx)) {
+          idx = PERSP_NAMES.indexOf(v);
+          if (idx < 0) idx = PERSP_LABELS.indexOf(v);
+        }
+        if (!isNaN(idx) && idx >= 0) switchTab(group, idx, {updateUrl: false});
+      } catch (e) { /* noop */ }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.DTTCommon) window.DTTCommon.setupCommon('forecast');
+      _initTabFromUrl('pred');
+      _initTabFromUrl('persp');
+    });
+  </script>
+</body>
+</html>
