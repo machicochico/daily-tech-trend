@@ -1,0 +1,789 @@
+
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未来予測レポート | Daily Tech Trend</title>
+  <meta name="description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
+  <link rel="canonical" href="/daily-tech-trend/forecast/">
+  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
+
+  <meta property="og:title" content="未来予測レポート | Daily Tech Trend">
+  <meta property="og:description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/daily-tech-trend/forecast/">
+  <meta property="og:site_name" content="Daily Tech Trend">
+  <meta property="og:locale" content="ja_JP">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="未来予測レポート | Daily Tech Trend">
+  <meta name="twitter:description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
+  <link rel="stylesheet" href="/daily-tech-trend/assets/css/common.css">
+  <style>
+    /* タブ */
+    .forecast-tabs{display:flex;gap:4px;margin:12px 0 0;flex-wrap:wrap}
+    .forecast-tabs button{padding:6px 14px;border:1px solid var(--border);border-radius:6px 6px 0 0;
+      background:var(--panel);cursor:pointer;font-size:.85rem;color:var(--text-sub);line-height:1.4}
+    .forecast-tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* パネル */
+    .forecast-panel{display:none;padding:16px;border:1px solid var(--border);border-radius:0 8px 8px 8px;
+      background:var(--panel);margin-bottom:20px;overflow-x:auto;word-wrap:break-word;overflow-wrap:break-word}
+    /* 予測カード */
+    .pred-card{background:var(--bg);border:1px solid var(--border);border-left:4px solid var(--border);
+      border-radius:10px;padding:14px 16px;margin-bottom:12px;transition:box-shadow .2s}
+    .pred-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .pred-card.highlight{border-left-color:#dc2626;background:linear-gradient(135deg,#fff,#fef2f2)}
+    .pred-card.mid{border-left-color:#d97706;background:linear-gradient(135deg,#fff,#fffbeb)}
+    .pred-card-header{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+    .pred-badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.3px}
+    .pred-badge.impact-大{background:#dc2626;color:#fff}
+    .pred-badge.impact-中{background:#d97706;color:#fff}
+    .pred-badge.impact-小{background:#e0f2fe;color:#0284c7}
+    .pred-badge.conf-高{background:#16a34a;color:#fff}
+    .pred-badge.conf-中{background:#fef3c7;color:#92400e}
+    .pred-badge.conf-低{background:#f3f4f6;color:#6b7280}
+    .accuracy-badge{display:inline-block;background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;margin-left:4px;vertical-align:middle}
+    .pred-card-title{font-weight:800;font-size:15px;margin-bottom:8px;line-height:1.5;color:var(--text-main)}
+    .highlight .pred-card-title{font-size:16px;color:#991b1b}
+    .pred-card-body{font-size:14px;line-height:1.7;color:var(--text-main)}
+    .pred-card-body p{margin:6px 0}
+    .pred-card-body ul,.pred-card-body ol{margin:6px 0;padding-left:20px}
+    .pred-card-body blockquote{border-left:3px solid var(--accent);margin:10px 0;padding:8px 14px;
+      background:rgba(0,0,0,.03);border-radius:0 6px 6px 0;font-size:13px;color:var(--text-sub)}
+    .forecast-panel.active{display:block}
+    .forecast-panel h2,.forecast-panel h3{margin-top:20px;margin-bottom:8px;font-size:1.05rem;font-weight:700;
+      color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:4px}
+    .forecast-panel h2:first-child,.forecast-panel h3:first-child{margin-top:0}
+    .forecast-panel p{line-height:1.7;margin:8px 0}
+    .forecast-panel ul,.forecast-panel ol{margin:8px 0;padding-left:20px;line-height:1.7}
+    .forecast-panel hr{border:none;border-top:1px solid var(--border);margin:16px 0}
+    .forecast-panel strong{color:var(--text-main)}
+    /* テーブル */
+    .forecast-panel table{border-collapse:collapse;width:100%;margin:8px 0;display:block;overflow-x:auto}
+    .forecast-panel th,.forecast-panel td{border:1px solid var(--border);padding:6px 10px;text-align:left;font-size:.85rem;white-space:normal}
+    .forecast-panel th{background:var(--panel)}
+    /* サマリー */
+    .exec-summary{background:linear-gradient(135deg,#1e3a5f,#1a365d);color:#fff;
+      border-radius:12px;padding:20px 24px;margin:16px 0;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+    .exec-summary h2{color:#fff;margin:0 0 12px;font-size:18px}
+    .exec-summary ol{margin:0;padding:0;list-style:none;counter-reset:ep}
+    .exec-summary li{counter-increment:ep;padding:12px 14px;margin-bottom:8px;
+      background:rgba(255,255,255,.1);border-radius:8px;border-left:3px solid #f59e0b;position:relative;padding-left:40px}
+    .exec-summary li::before{content:counter(ep);position:absolute;left:12px;top:12px;
+      width:22px;height:22px;background:#f59e0b;color:#1a365d;border-radius:50%;
+      font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+    .exec-summary li p{margin:2px 0;color:rgba(255,255,255,.92);line-height:1.6}
+    .exec-summary li strong{color:#fbbf24}
+    .exec-summary li em{color:rgba(255,255,255,.7);font-style:normal;font-size:13px}
+    .exec-summary hr{display:none}
+    /* 付録 */
+    details.appendix{margin:12px 0}
+    details.appendix summary{cursor:pointer;font-weight:600;color:var(--accent);padding:8px 0}
+    details.appendix .forecast-panel{border-radius:8px}
+    .no-report{text-align:center;color:var(--text-sub);padding:60px 20px}
+    /* 過去レポート */
+    .past-reports{margin-top:30px;border-top:1px solid var(--border);padding-top:16px}
+    .past-reports h3{margin:0 0 12px;font-size:1rem;font-weight:700;color:var(--text-main)}
+    .past-reports details.past-month{margin-bottom:8px;border:1px solid var(--border);
+      border-radius:8px;background:var(--panel)}
+    .past-reports details.past-month > summary{cursor:pointer;font-weight:600;color:var(--text-main);
+      padding:10px 14px;list-style:none;display:flex;align-items:center;gap:8px}
+    .past-reports details.past-month > summary::-webkit-details-marker{display:none}
+    .past-reports details.past-month > summary::before{content:"\25B6";display:inline-block;
+      font-size:.7em;color:var(--accent);transition:transform .15s}
+    .past-reports details.past-month[open] > summary::before{transform:rotate(90deg)}
+    .past-reports details.past-month > summary .month-count{margin-left:auto;font-size:.8rem;
+      font-weight:500;color:var(--text-sub)}
+    .past-reports ul{list-style:none;margin:0;padding:0 14px 12px;display:flex;flex-wrap:wrap;gap:8px}
+    .past-reports li a{display:inline-block;padding:4px 12px;border:1px solid var(--border);
+      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main);background:var(--bg)}
+    .past-reports li a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* === モバイル (640px以下) === */
+    @media(max-width:640px){
+      .forecast-tabs{gap:3px}
+      .forecast-tabs button{padding:8px 14px;font-size:.85rem;min-height:44px}
+      .forecast-panel{padding:10px;border-radius:0 6px 6px 6px}
+      .forecast-panel table{font-size:.78rem}
+      .forecast-panel th,.forecast-panel td{padding:4px 6px}
+      .exec-summary{padding:14px 16px;border-radius:10px;margin:10px 0}
+      .exec-summary li{padding:10px 12px 10px 36px}
+      .exec-summary li::before{left:8px;top:10px;width:20px;height:20px;font-size:12px}
+      .exec-summary h2{font-size:16px}
+      details.appendix summary{font-size:.9rem;padding:6px 0}
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"未来予測レポート","description":"直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。","url":"/daily-tech-trend/forecast/","isPartOf":{"@type":"WebSite","name":"Daily Tech Trend","url":"/daily-tech-trend/"}}</script>
+</head>
+<body>
+  <h1>未来予測レポート</h1>
+  <div class="nav">
+    <a href="/daily-tech-trend/news/" class="">ニュース</a>
+    <a href="/daily-tech-trend/forecast/" class="active">未来予測</a>
+    <a href="/daily-tech-trend/forecast/hits/" class="">予想的中</a>
+    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
+    <a href="/daily-tech-trend/ops/" class="">運用</a>
+    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
+  </div>
+
+  <div class="summary-card" style="margin:16px 0">
+    <div class="summary-grid">
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-09-25 06:21:16 JST</div></div>
+      <div class="summary-item"><div class="k">レポート日付</div><div class="v">2026-09-24</div></div>
+      
+      
+      <div class="summary-item"><div class="k">過去平均的中率</div><div class="v">39.2%</div></div>
+      
+    </div>
+  </div>
+
+  
+
+  <!-- エグゼクティブサマリー -->
+  <div class="exec-summary">
+    <h2 style="margin:0 0 8px">今週の最重要ポイント</h2>
+    <p>1. <strong>機械式時計の需要拡大とサブスクリプション型メンテナンス市場の成長</strong></p>
+<p><em>あなたへの影響:</em> 機械式時計の人気が高まることで、定期メンテナンス契約やサブスクリプションサービスの需要が増大し、サービス提供企業は人員拡充や新サービス開発を検討する必要があります。</p>
+
+<p>2. <strong>シリコンバレー発の高級時計市場拡大とブランド差別化の進展</strong></p>
+<p><em>あなたへの影響:</em> 36mmバンドの人気が国内外の高級時計市場でシェアを拡大し、競合ブランドのシェアが縮小することで、ブランド戦略の再構築や差別化要素の強化が求められます。</p>
+
+<p>3. <strong>中古市場の活性化と価値評価の変化</strong></p>
+<p><em>あなたへの影響:</em> 需要増に伴い中古時計の取引量と価格が上昇し、オリジナルモデルの価値が高まるため、中古品取引やリセール戦略が重要な収益源となります。</p>
+
+<hr>
+  </div>
+
+  <!-- 未来予測（時間軸タブ） -->
+  <h2>未来予測</h2>
+  <div class="forecast-tabs" id="pred-tabs">
+    
+    <button onclick="switchTab('pred', '0')" class="active"
+            id="pred-tab-0">1週間後</button>
+    
+    <button onclick="switchTab('pred', '1')" class=""
+            id="pred-tab-1">1〜6ヶ月後</button>
+    
+    <button onclick="switchTab('pred', '2')" class=""
+            id="pred-tab-2">1年後</button>
+    
+  </div>
+  
+  <div class="forecast-panel active" id="pred-panel-0">
+    
+    
+    <div class="pred-card mid">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-大">影響度: 大</span>
+        <span class="pred-badge conf-低">確信度: 低</span>
+      </div>
+      <div class="pred-card-title">中古市場での需要が拡大</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：需要が増えることで、オリエントの旧モデルや類似サイズの時計が中古市場で高値を付ける可能性がある。中古品の取引量は、需要増に伴い拡大する可能性がある。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: オリエントが新モデルを発表したことで、旧モデルの需要が増えると予測されるが、具体的なデータは未確認のため仮定に基づく。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">機械式時計の需要が増加</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：近年の高い需要により、オリエント社は追加生産を検討する可能性が高まる。特に、旅行やビジネスシーンでの需要が拡大し、在庫確保の重要性が増す。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: オリエント社が9月に新モデルを発売し、価格帯が設定されているという報告に基づく。需要増が予測されるのは、同社の製品が人気を博したことを踏まえた上での推測。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">機械式時計のメンテナンス需要増</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：機械式モデルの普及に伴い、メンテナンスサービスの需要が増加する。ユーザーは定期的なメンテナンス契約の必要性を認識し、サービスプロバイダーの選択肢を検討するようになる。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: 機械式時計は一般的にメンテナンスが必要であるという事実に基づく。市場動向として、手頃な価格帯での販売が拡大した結果、利用者が増加する可能性がある。</blockquote></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="forecast-panel " id="pred-panel-1">
+    
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        
+        
+      </div>
+      <div class="pred-card-title">> ※ この時間軸の予測は今回生成されませんでした（LLM応答の解析に失敗した可能性があります）。</div>
+      <div class="pred-card-body"><blockquote>※ この時間軸の予測は今回生成されませんでした（LLM応答の解析に失敗した可能性があります）。</blockquote></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="forecast-panel " id="pred-panel-2">
+    
+    
+    <div class="pred-card mid">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-高">確信度: 高</span>
+      </div>
+      <div class="pred-card-title">機械式時計のメンテナンス需要増加によるサービス業の拡張</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：来年度、機械式時計の需要増加であるため、メンテナンス会社は従業員数を10％増やし、サービス拡充に注力する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: 機械式時計の普及が進むと、メンテナンスニーズが拡大し、業界全体で需要が増加すると予測される。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">シリコンバレーの新しい時計市場が拡大</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：来年度、オリエントの36mmバンドが人気を集め、国内外の高級時計市場において5％のシェア拡大が期待される。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: オリエントの新製品投入により、同社の小型機械式時計に対する需要が増加し、競合他社との差別化が進むことで市場シェアが伸びると予想される。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">小型高性能時計の市場で、ブランド差異が拡大</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：来年、オリエントの36mmバンドは競争力が高く、他ブランドのシェアを10％減らす要因となる。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: 小型で高性能な時計の需要が増えることで、既存の大きなデザインが相対的に魅力を失い、他社へのシフトが起こると考えられる。</blockquote>
+
+
+<hr></div>
+    </div>
+    
+    
+  </div>
+  
+
+  <!-- 検証済み予測レポート -->
+  
+
+  <!-- 3視点分析（タブ） -->
+  <h2>3視点分析</h2>
+  <div class="forecast-tabs" id="persp-tabs">
+    
+    <button onclick="switchTab('persp', '0')" class="active"
+            id="persp-tab-0">技術者視点</button>
+    
+    <button onclick="switchTab('persp', '1')" class=""
+            id="persp-tab-1">経営者視点</button>
+    
+    <button onclick="switchTab('persp', '2')" class=""
+            id="persp-tab-2">消費者視点</button>
+    
+  </div>
+  
+  <div class="forecast-panel active" id="persp-panel-0">
+    <p>json</p>
+<p>[</p>
+<p>{</p>
+<p>&quot;トレンド名&quot;: &quot;低価格・高性能統合の拡大&quot;,</p>
+<p>&quot;説明&quot;: &quot;低価格ハードウェアと最新OS対応のソフトウェアが結合し、AI機能を含むマウスユーティリティやAIサービスが中小企業・個人ユーザーに広く普及する。&quot;</p>
+<p>},</p>
+<p>{</p>
+<p>&quot;トレンド名&quot;: &quot;拡張機能とセキュリティの課題&quot;,</p>
+<p>&quot;説明&quot;: &quot;ユーザーが拡張機能をインストールする際の信頼性確認やブラウザのセキュリティアップデートが不可欠となり、セキュリティリスクが増大する。&quot;</p>
+<p>},</p>
+<p>{</p>
+<p>&quot;トレンド名&quot;: &quot;メディア互換性と利用柔軟性の向上&quot;,</p>
+<p>&quot;説明&quot;: &quot;ATRAC3/ATRAC9対応や利用上限の引き上げ・リセット機能により、音声・PDFなどのメディア利用が柔軟かつ広範に拡大する。&quot;</p>
+<p>}</p>
+<p>]</p>
+  </div>
+  
+  <div class="forecast-panel " id="persp-panel-1">
+    <p>[</p>
+<p>{</p>
+<p>&quot;トレンド名&quot;: &quot;機械式時計需要拡大とメンテナンス・中古市場の同時成長&quot;,</p>
+<p>&quot;説明&quot;: &quot;1週間後の需要増加予測と1年後のメンテナンス需要増加、さらに中古市場の活性化が示すように、機械式時計市場全体が拡大し、製造・サービス・流通の各段階で需要が増える。&quot;</p>
+<p>},</p>
+<p>{</p>
+<p>&quot;トレンド名&quot;: &quot;小型高性能時計を中心としたブランド差異の拡大と市場シェア再編&quot;,</p>
+<p>&quot;説明&quot;: &quot;1年後の36mmバンドの人気拡大と他ブランドシェア減少予測から、小型高性能時計が市場の競争軸となり、ブランド間で差別化が進む。&quot;</p>
+<p>},</p>
+<p>{</p>
+<p>&quot;トレンド名&quot;: &quot;サービス業の拡張とリソース配分の最適化&quot;,</p>
+<p>&quot;説明&quot;: &quot;機械式時計需要増に伴いメンテナンス会社が従業員を増員しサービス拡充を図る動きが見られ、企業はリソースを再配分し、サービス提供体制を強化する必要がある。&quot;</p>
+<p>}</p>
+<p>]</p>
+  </div>
+  
+  <div class="forecast-panel " id="persp-panel-2">
+    <h3>注目すべきトレンド</h3>
+
+<p>1. <strong>低価格化とAI・OS対応製品の拡散</strong> — 低価格で最新OSに対応したマウスユーティリティやAIサービスが普及し、個人ユーザーや中小企業が手軽に導入できるようになる一方、AI機能の設定が複雑で利用障壁になる恐れがある。</p>
+<p>2. <strong>サービス利用上限の引き上げと拡張機能の柔軟化</strong> — 利用上限の増加やリセット機能の追加により、ユーザーはより柔軟にサービスを活用できるようになるが、拡張機能をインストールする際には信頼性確認と定期的なブラウザセキュリティアップデートが必要になる。</p>
+<p>3. <strong>旅行・イベント向け便利機能の普及</strong> — 旅行先の事前確認やイベントのライブ視聴、PDFの編集・消去機能など、日常生活やビジネスシーンでの利便性が向上し、個人ユーザーや小規模事業者が手軽に活用できるようになる。</p>
+
+<h3>リスクと機会</h3>
+
+<ul>
+<li><strong>リスク</strong></li>
+<li>AI機能や拡張機能の設定が複雑で、誤操作や設定ミスによる不具合・セキュリティリスクが発生する可能性。</li>
+<li>低価格化に伴い、製品の品質やサポート体制が十分でないケースが増える恐れ。</li>
+<li>機械式時計の需要増により、メンテナンスコストや専門サービスへの依存度が高まる。</li>
+</ul>
+
+<ul>
+<li><strong>機会</strong></li>
+<li>価格が下がることで、個人ユーザーや中小企業がAIサービスや高性能デバイスを導入しやすくなり、業務効率や生活の質が向上。</li>
+<li>サービス利用上限の引き上げ・リセット機能により、ユーザーは必要に応じて柔軟にサービスを拡張できる。</li>
+<li>旅行・イベント向け機能の普及により、出張や観光時の情報取得・コミュニケーションがスムーズになる。</li>
+</ul>
+
+<h3>推奨アクション</h3>
+
+<p>1. <strong>AI・拡張機能導入前のリテラシーチェック</strong> — 事前に設定手順や必要な知識を確認し、設定ミスやセキュリティリスクを最小化する。</p>
+<p>2. <strong>定期的なセキュリティアップデートとメンテナンス契約の検討</strong> — ブラウザやデバイスのアップデートを怠らず、機械式時計のメンテナンスは定期契約でコストを安定化させる。</p>
+  </div>
+  
+
+  <!-- 付録 -->
+  
+  
+
+  <!-- 過去レポート一覧（月別折りたたみ） -->
+  
+  <div class="past-reports">
+    <h3>過去のレポート</h3>
+    
+    <details class="past-month" open>
+      <summary>2026年9月<span class="month-count">24件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-09-25/">2026-09-25</a></li>
+        
+        <li><a href="../2026-09-23/">2026-09-23</a></li>
+        
+        <li><a href="../2026-09-22/">2026-09-22</a></li>
+        
+        <li><a href="../2026-09-21/">2026-09-21</a></li>
+        
+        <li><a href="../2026-09-20/">2026-09-20</a></li>
+        
+        <li><a href="../2026-09-19/">2026-09-19</a></li>
+        
+        <li><a href="../2026-09-18/">2026-09-18</a></li>
+        
+        <li><a href="../2026-09-17/">2026-09-17</a></li>
+        
+        <li><a href="../2026-09-16/">2026-09-16</a></li>
+        
+        <li><a href="../2026-09-15/">2026-09-15</a></li>
+        
+        <li><a href="../2026-09-14/">2026-09-14</a></li>
+        
+        <li><a href="../2026-09-13/">2026-09-13</a></li>
+        
+        <li><a href="../2026-09-12/">2026-09-12</a></li>
+        
+        <li><a href="../2026-09-11/">2026-09-11</a></li>
+        
+        <li><a href="../2026-09-10/">2026-09-10</a></li>
+        
+        <li><a href="../2026-09-09/">2026-09-09</a></li>
+        
+        <li><a href="../2026-09-08/">2026-09-08</a></li>
+        
+        <li><a href="../2026-09-07/">2026-09-07</a></li>
+        
+        <li><a href="../2026-09-06/">2026-09-06</a></li>
+        
+        <li><a href="../2026-09-05/">2026-09-05</a></li>
+        
+        <li><a href="../2026-09-04/">2026-09-04</a></li>
+        
+        <li><a href="../2026-09-03/">2026-09-03</a></li>
+        
+        <li><a href="../2026-09-02/">2026-09-02</a></li>
+        
+        <li><a href="../2026-09-01/">2026-09-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年8月<span class="month-count">22件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-08-31/">2026-08-31</a></li>
+        
+        <li><a href="../2026-08-30/">2026-08-30</a></li>
+        
+        <li><a href="../2026-08-29/">2026-08-29</a></li>
+        
+        <li><a href="../2026-08-28/">2026-08-28</a></li>
+        
+        <li><a href="../2026-08-27/">2026-08-27</a></li>
+        
+        <li><a href="../2026-08-26/">2026-08-26</a></li>
+        
+        <li><a href="../2026-08-25/">2026-08-25</a></li>
+        
+        <li><a href="../2026-08-24/">2026-08-24</a></li>
+        
+        <li><a href="../2026-08-21/">2026-08-21</a></li>
+        
+        <li><a href="../2026-08-20/">2026-08-20</a></li>
+        
+        <li><a href="../2026-08-19/">2026-08-19</a></li>
+        
+        <li><a href="../2026-08-18/">2026-08-18</a></li>
+        
+        <li><a href="../2026-08-17/">2026-08-17</a></li>
+        
+        <li><a href="../2026-08-16/">2026-08-16</a></li>
+        
+        <li><a href="../2026-08-15/">2026-08-15</a></li>
+        
+        <li><a href="../2026-08-14/">2026-08-14</a></li>
+        
+        <li><a href="../2026-08-13/">2026-08-13</a></li>
+        
+        <li><a href="../2026-08-12/">2026-08-12</a></li>
+        
+        <li><a href="../2026-08-11/">2026-08-11</a></li>
+        
+        <li><a href="../2026-08-10/">2026-08-10</a></li>
+        
+        <li><a href="../2026-08-09/">2026-08-09</a></li>
+        
+        <li><a href="../2026-08-01/">2026-08-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年7月<span class="month-count">31件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-07-31/">2026-07-31</a></li>
+        
+        <li><a href="../2026-07-30/">2026-07-30</a></li>
+        
+        <li><a href="../2026-07-29/">2026-07-29</a></li>
+        
+        <li><a href="../2026-07-28/">2026-07-28</a></li>
+        
+        <li><a href="../2026-07-27/">2026-07-27</a></li>
+        
+        <li><a href="../2026-07-26/">2026-07-26</a></li>
+        
+        <li><a href="../2026-07-25/">2026-07-25</a></li>
+        
+        <li><a href="../2026-07-24/">2026-07-24</a></li>
+        
+        <li><a href="../2026-07-23/">2026-07-23</a></li>
+        
+        <li><a href="../2026-07-22/">2026-07-22</a></li>
+        
+        <li><a href="../2026-07-21/">2026-07-21</a></li>
+        
+        <li><a href="../2026-07-20/">2026-07-20</a></li>
+        
+        <li><a href="../2026-07-19/">2026-07-19</a></li>
+        
+        <li><a href="../2026-07-18/">2026-07-18</a></li>
+        
+        <li><a href="../2026-07-17/">2026-07-17</a></li>
+        
+        <li><a href="../2026-07-16/">2026-07-16</a></li>
+        
+        <li><a href="../2026-07-15/">2026-07-15</a></li>
+        
+        <li><a href="../2026-07-14/">2026-07-14</a></li>
+        
+        <li><a href="../2026-07-13/">2026-07-13</a></li>
+        
+        <li><a href="../2026-07-12/">2026-07-12</a></li>
+        
+        <li><a href="../2026-07-11/">2026-07-11</a></li>
+        
+        <li><a href="../2026-07-10/">2026-07-10</a></li>
+        
+        <li><a href="../2026-07-09/">2026-07-09</a></li>
+        
+        <li><a href="../2026-07-08/">2026-07-08</a></li>
+        
+        <li><a href="../2026-07-07/">2026-07-07</a></li>
+        
+        <li><a href="../2026-07-06/">2026-07-06</a></li>
+        
+        <li><a href="../2026-07-05/">2026-07-05</a></li>
+        
+        <li><a href="../2026-07-04/">2026-07-04</a></li>
+        
+        <li><a href="../2026-07-03/">2026-07-03</a></li>
+        
+        <li><a href="../2026-07-02/">2026-07-02</a></li>
+        
+        <li><a href="../2026-07-01/">2026-07-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年6月<span class="month-count">18件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-06-30/">2026-06-30</a></li>
+        
+        <li><a href="../2026-06-28/">2026-06-28</a></li>
+        
+        <li><a href="../2026-06-27/">2026-06-27</a></li>
+        
+        <li><a href="../2026-06-26/">2026-06-26</a></li>
+        
+        <li><a href="../2026-06-25/">2026-06-25</a></li>
+        
+        <li><a href="../2026-06-24/">2026-06-24</a></li>
+        
+        <li><a href="../2026-06-12/">2026-06-12</a></li>
+        
+        <li><a href="../2026-06-11/">2026-06-11</a></li>
+        
+        <li><a href="../2026-06-10/">2026-06-10</a></li>
+        
+        <li><a href="../2026-06-09/">2026-06-09</a></li>
+        
+        <li><a href="../2026-06-08/">2026-06-08</a></li>
+        
+        <li><a href="../2026-06-07/">2026-06-07</a></li>
+        
+        <li><a href="../2026-06-06/">2026-06-06</a></li>
+        
+        <li><a href="../2026-06-05/">2026-06-05</a></li>
+        
+        <li><a href="../2026-06-04/">2026-06-04</a></li>
+        
+        <li><a href="../2026-06-03/">2026-06-03</a></li>
+        
+        <li><a href="../2026-06-02/">2026-06-02</a></li>
+        
+        <li><a href="../2026-06-01/">2026-06-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年5月<span class="month-count">29件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-05-31/">2026-05-31</a></li>
+        
+        <li><a href="../2026-05-30/">2026-05-30</a></li>
+        
+        <li><a href="../2026-05-29/">2026-05-29</a></li>
+        
+        <li><a href="../2026-05-28/">2026-05-28</a></li>
+        
+        <li><a href="../2026-05-27/">2026-05-27</a></li>
+        
+        <li><a href="../2026-05-25/">2026-05-25</a></li>
+        
+        <li><a href="../2026-05-24/">2026-05-24</a></li>
+        
+        <li><a href="../2026-05-23/">2026-05-23</a></li>
+        
+        <li><a href="../2026-05-22/">2026-05-22</a></li>
+        
+        <li><a href="../2026-05-21/">2026-05-21</a></li>
+        
+        <li><a href="../2026-05-20/">2026-05-20</a></li>
+        
+        <li><a href="../2026-05-19/">2026-05-19</a></li>
+        
+        <li><a href="../2026-05-18/">2026-05-18</a></li>
+        
+        <li><a href="../2026-05-17/">2026-05-17</a></li>
+        
+        <li><a href="../2026-05-16/">2026-05-16</a></li>
+        
+        <li><a href="../2026-05-15/">2026-05-15</a></li>
+        
+        <li><a href="../2026-05-14/">2026-05-14</a></li>
+        
+        <li><a href="../2026-05-13/">2026-05-13</a></li>
+        
+        <li><a href="../2026-05-12/">2026-05-12</a></li>
+        
+        <li><a href="../2026-05-11/">2026-05-11</a></li>
+        
+        <li><a href="../2026-05-10/">2026-05-10</a></li>
+        
+        <li><a href="../2026-05-09/">2026-05-09</a></li>
+        
+        <li><a href="../2026-05-08/">2026-05-08</a></li>
+        
+        <li><a href="../2026-05-07/">2026-05-07</a></li>
+        
+        <li><a href="../2026-05-05/">2026-05-05</a></li>
+        
+        <li><a href="../2026-05-04/">2026-05-04</a></li>
+        
+        <li><a href="../2026-05-03/">2026-05-03</a></li>
+        
+        <li><a href="../2026-05-02/">2026-05-02</a></li>
+        
+        <li><a href="../2026-05-01/">2026-05-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年4月<span class="month-count">28件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-04-30/">2026-04-30</a></li>
+        
+        <li><a href="../2026-04-29/">2026-04-29</a></li>
+        
+        <li><a href="../2026-04-28/">2026-04-28</a></li>
+        
+        <li><a href="../2026-04-27/">2026-04-27</a></li>
+        
+        <li><a href="../2026-04-26/">2026-04-26</a></li>
+        
+        <li><a href="../2026-04-25/">2026-04-25</a></li>
+        
+        <li><a href="../2026-04-24/">2026-04-24</a></li>
+        
+        <li><a href="../2026-04-22/">2026-04-22</a></li>
+        
+        <li><a href="../2026-04-21/">2026-04-21</a></li>
+        
+        <li><a href="../2026-04-20/">2026-04-20</a></li>
+        
+        <li><a href="../2026-04-19/">2026-04-19</a></li>
+        
+        <li><a href="../2026-04-18/">2026-04-18</a></li>
+        
+        <li><a href="../2026-04-17/">2026-04-17</a></li>
+        
+        <li><a href="../2026-04-16/">2026-04-16</a></li>
+        
+        <li><a href="../2026-04-15/">2026-04-15</a></li>
+        
+        <li><a href="../2026-04-14/">2026-04-14</a></li>
+        
+        <li><a href="../2026-04-13/">2026-04-13</a></li>
+        
+        <li><a href="../2026-04-12/">2026-04-12</a></li>
+        
+        <li><a href="../2026-04-11/">2026-04-11</a></li>
+        
+        <li><a href="../2026-04-10/">2026-04-10</a></li>
+        
+        <li><a href="../2026-04-09/">2026-04-09</a></li>
+        
+        <li><a href="../2026-04-08/">2026-04-08</a></li>
+        
+        <li><a href="../2026-04-07/">2026-04-07</a></li>
+        
+        <li><a href="../2026-04-06/">2026-04-06</a></li>
+        
+        <li><a href="../2026-04-05/">2026-04-05</a></li>
+        
+        <li><a href="../2026-04-04/">2026-04-04</a></li>
+        
+        <li><a href="../2026-04-02/">2026-04-02</a></li>
+        
+        <li><a href="../2026-04-01/">2026-04-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年3月<span class="month-count">4件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-03-31/">2026-03-31</a></li>
+        
+        <li><a href="../2026-03-30/">2026-03-30</a></li>
+        
+        <li><a href="../2026-03-29/">2026-03-29</a></li>
+        
+        <li><a href="../2026-03-28/">2026-03-28</a></li>
+        
+      </ul>
+    </details>
+    
+  </div>
+  
+
+  
+
+  <script src="/daily-tech-trend/assets/js/common.js" defer></script>
+  <script>
+    // タブ状態は URL クエリで共有可能にする:
+    //   ?pred=1  → 予測タブ の 2番目 (0-indexed)
+    //   ?persp=engineer|manager|consumer → 3視点タブ
+    //   ?persp=0|1|2 も互換扱い
+    var PERSP_NAMES = ['engineer','manager','consumer'];
+    var PERSP_LABELS = ['技術者','経営者','消費者'];
+
+    function switchTab(group, idx, opts) {
+      idx = parseInt(idx, 10);
+      document.querySelectorAll('#' + group + '-tabs button').forEach(function(b, i) {
+        b.classList.toggle('active', i == idx);
+      });
+      document.querySelectorAll('[id^="' + group + '-panel-"]').forEach(function(p, i) {
+        p.classList.toggle('active', i == idx);
+      });
+      // URL 同期（history.replaceState で余分な履歴を残さない）
+      if (!opts || opts.updateUrl !== false) {
+        try {
+          var url = new URL(window.location.href);
+          var val = idx;
+          if (group === 'persp' && PERSP_NAMES[idx]) val = PERSP_NAMES[idx];
+          url.searchParams.set(group, val);
+          window.history.replaceState(null, '', url.toString());
+        } catch (e) { /* noop */ }
+      }
+    }
+
+    function _initTabFromUrl(group) {
+      try {
+        var url = new URL(window.location.href);
+        var v = url.searchParams.get(group);
+        if (v === null) return;
+        var idx = parseInt(v, 10);
+        if (group === 'persp' && isNaN(idx)) {
+          idx = PERSP_NAMES.indexOf(v);
+          if (idx < 0) idx = PERSP_LABELS.indexOf(v);
+        }
+        if (!isNaN(idx) && idx >= 0) switchTab(group, idx, {updateUrl: false});
+      } catch (e) { /* noop */ }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.DTTCommon) window.DTTCommon.setupCommon('forecast');
+      _initTabFromUrl('pred');
+      _initTabFromUrl('persp');
+    });
+  </script>
+</body>
+</html>
