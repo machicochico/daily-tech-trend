@@ -1,806 +1,806 @@
 {
-  "generated_at": "2026-10-27T21:26:40+00:00",
+  "generated_at": "2026-10-28T21:26:09+00:00",
   "count": 100,
   "items": [
     {
-      "id": 52194,
-      "title": "「防災分野のデータ流通促進」の取組概要と「デジタル庁における官民共創による防災DXの推進」の資料を更新しました",
+      "id": 52335,
+      "title": "顧客も巻き込むサイバー脅迫　GMO攻撃が問う企業の防御と国の対処、被害の連鎖どう断つ",
+      "category": "news",
+      "importance": 80,
+      "summary": "ネットサービス大手GMOインターネットグループへの不正アクセスが10月27日に攻撃者の声明と利用者情報とされるデータの公開により新たな段階に入った。",
+      "updated_at": "2026-10-28T21:12:37.053446+00:00"
+    },
+    {
+      "id": 52336,
+      "title": "Anthropic、独自の“創薬活動”に着手　社員1人のバイオ企業を買収、小児難病の治療薬研究を進める",
+      "category": "news",
+      "importance": 80,
+      "summary": "Anthropicは10月27日に小児の希少な筋ジストロフィーなどを対象に創薬活動を開始し、社員1人でClaudeを用いて外部11の研究機関と実験を行ってきた企業を買収した。",
+      "updated_at": "2026-10-28T21:12:26.514557+00:00"
+    },
+    {
+      "id": 52306,
+      "title": "熊本のバス・電鉄・市電に共通定期「ふらピッと」　タッチ決済で月額上限",
+      "category": "security",
+      "importance": 70,
+      "summary": "熊本県内の交通事業者6者と三井住友カード、ジェーシービーが、タッチ決済を利用した新共通定期サービス「ふらピッと」を2027年4月1日に開始する。",
+      "updated_at": "2026-10-28T21:12:12.623013+00:00"
+    },
+    {
+      "id": 52307,
+      "title": "グーグル「Genie 4」、操作できるリアル世界シミュレート",
+      "category": "security",
+      "importance": 70,
+      "summary": "Google DeepMindがワールドモデル「Genie 4」を発表し、テスター向けに提供開始した。",
+      "updated_at": "2026-10-28T21:12:01.294994+00:00"
+    },
+    {
+      "id": 52308,
+      "title": "“指示待ちAI”からの脱却　Metaが語るパーソナルAI「Muse」",
+      "category": "security",
+      "importance": 70,
+      "summary": "Metaは2024年3月23日に日本でAIエージェントMuseを提供開始し、27日にシンガポールへも展開した。",
+      "updated_at": "2026-10-28T21:11:51.358398+00:00"
+    },
+    {
+      "id": 52309,
+      "title": "アップルのサブスク「Creator Studio」が大幅強化　KeynoteにもAI機能",
+      "category": "security",
+      "importance": 70,
+      "summary": "Appleがクリエイティブアプリのサブスクサービス『Apple Creator Studio』をアップデートし、Final Cut Pro、Logic Pro、Keynote、Pages、NumbersにAI機能を導入した。",
+      "updated_at": "2026-10-28T21:11:38.697578+00:00"
+    },
+    {
+      "id": 48280,
+      "title": "第6回先進的AI利活用アドバイザリーボードの会議資料等を掲載しました",
       "category": "policy",
-      "importance": 60,
-      "summary": "防災分野のデータ流通促進の取組概要とデジタル庁の官民共創による防災DX推進資料が更新された。",
-      "updated_at": "2026-10-27T21:12:15.611096+00:00"
+      "importance": 50,
+      "summary": "第6回先進的AI利活用アドバイザリーボードの会議資料等が掲載された。",
+      "updated_at": "2026-10-28T21:11:27.086248+00:00"
     },
     {
-      "id": 52195,
-      "title": "塩崎デジタル副大臣がアンドレス・ウンガ駐日エストニア共和国大使の表敬訪問を受けました",
+      "id": 52310,
+      "title": "「セブンならPayPay」へ　カフェ半額や13週連続「おにぎり祭」",
+      "category": "security",
+      "importance": 70,
+      "summary": "セブン‐イレブン・ジャパンとPayPayが11月1日から3つのキャンペーンを開始する。",
+      "updated_at": "2026-10-28T21:11:15.091738+00:00"
+    },
+    {
+      "id": 52337,
+      "title": "資さんうどん、従業員の退職理由などが外部から閲覧可能に　委託先の勤怠システムに設定不備",
+      "category": "news",
+      "importance": 70,
+      "summary": "資さんうどんは、委託先の勤怠管理システムの設定不備により、従業員と退職者の個人情報（退職理由を含む）が外部から閲覧可能になっていた可能性があると発表した。",
+      "updated_at": "2026-10-28T21:11:03.260172+00:00"
+    },
+    {
+      "id": 52383,
+      "title": "三角デジタル監がDFFT Expert Community初の対面会合に出席しました",
       "category": "policy",
-      "importance": 30,
-      "summary": "塩崎デジタル副大臣がアンドレス・ウンガ駐日エストニア共和国大使の表敬訪問を受けました。",
-      "updated_at": "2026-10-27T21:12:01.421032+00:00"
+      "importance": 50,
+      "summary": "三角デジタル監がDFFT Expert Community初の対面会合に出席しました。",
+      "updated_at": "2026-10-28T21:10:52.570755+00:00"
     },
     {
-      "id": 52119,
-      "title": "PFN、調査業務に対応した国産AI最新版「PLaMo 3.1 Prime」",
-      "category": "security",
-      "importance": 70,
-      "summary": "Preferred Networksは国内でフルスクラッチ開発した生成AI基盤モデルPLaMoの最新フラッグシップモデルPLaMo 3.1 Primeの提供を開始した。",
-      "updated_at": "2026-10-27T21:11:49.561394+00:00"
-    },
-    {
-      "id": 52120,
-      "title": "富士フイルム、チェキフィルムに「第3の色合い」　増産計画も",
-      "category": "security",
-      "importance": 70,
-      "summary": "富士フイルムは新しいチェキフィルム「SOFT HAZE」を11月13日に発売し、SQUAREフォーマットで1,430円で販売する。",
-      "updated_at": "2026-10-27T21:11:39.253111+00:00"
-    },
-    {
-      "id": 52149,
-      "title": "専門AIで肌カウンセリング、ファンケルが新サービス　チャットと顔画像解析で",
+      "id": 52338,
+      "title": "「推しがそばにいる日常」を　ソニー、5万円台の裸眼3Dディスプレイ　アニメ公式コンテンツに対応",
       "category": "news",
       "importance": 70,
-      "summary": "ファンケルは10月27日、肌専門AIを使った肌カウンセリングサービスを公式アプリで無料提供開始した。",
-      "updated_at": "2026-10-27T21:11:29.314943+00:00"
+      "summary": "ソニーは5万円台の裸眼3Dディスプレイを発表し、ホロモデルやアニメ公式キャラクターの3Dデジタルフィギュアを手軽に鑑賞できるようにした。",
+      "updated_at": "2026-10-28T21:10:40.707627+00:00"
     },
     {
-      "id": 52150,
-      "title": "タイムズカー、お見舞金3000円の算定基準は？　パーク24に聞いた",
-      "category": "news",
-      "importance": 70,
-      "summary": "パーク24はタイムズカーの情報漏えいに対し、対象者に3000円相当のお見舞金を支払うことを決定した。",
-      "updated_at": "2026-10-27T21:11:18.999896+00:00"
-    },
-    {
-      "id": 52151,
-      "title": "GMO、攻撃者による情報公開を確認　顧客データ含むか調査中　追加の見舞金も検討",
-      "category": "news",
-      "importance": 70,
-      "summary": "GMOインターネットグループは、FX自動売買用VPS「お名前.com デスクトップクラウド」への不正アクセスにより、攻撃者が顧客情報を公開したことを確認し、調査中で追加の見舞金も検討している。",
-      "updated_at": "2026-10-27T21:11:05.913080+00:00"
-    },
-    {
-      "id": 52121,
-      "title": "ドコモ、人に配慮して動くロボットへ　フィジカルAI連携基盤を開発",
+      "id": 52311,
+      "title": "人気の「Setlog」にLINEヤフー系VCが出資　グローバル展開目指す",
       "category": "security",
-      "importance": 70,
-      "summary": "NTTドコモは個人向けAIエージェントとロボットを接続する「Physical AI連携基盤」を開発した。",
-      "updated_at": "2026-10-27T21:10:53.779209+00:00"
-    },
-    {
-      "id": 52122,
-      "title": "東京メトロ、保守作業車にAI搭載の支援システム",
-      "category": "security",
-      "importance": 70,
-      "summary": "東京地下鉄はカメラとAI画像認識技術を組み合わせた運転者支援システム「ポイントAI」を導入した。",
-      "updated_at": "2026-10-27T21:10:42.567460+00:00"
-    },
-    {
-      "id": 52123,
-      "title": "グラングリーン大阪「うめきたの森」11月20日開園　大阪駅前でドローンショー",
-      "category": "security",
-      "importance": 70,
-      "summary": "グラングリーン大阪内の都市公園「うめきた公園」の森林エリア「うめきたの森」が11月20日に早期開園し、11月20日から23日までドローンショーを含むイベントが開催される。",
-      "updated_at": "2026-10-27T21:10:32.758553+00:00"
-    },
-    {
-      "id": 52124,
-      "title": "So-net、不正アクセスで約258万件の会員情報流出　一部メールのパスワードも",
-      "category": "security",
-      "importance": 75,
-      "summary": "ソニーネットワークコミュニケーションズは、So-netとplala(Sコース)の会員情報計258万5,481件が不正アクセスにより漏洩し、一部メールサービスではメールアドレスとパスワードも流出したと発表した。",
-      "updated_at": "2026-10-27T21:10:20.190867+00:00"
-    },
-    {
-      "id": 52152,
-      "title": "GMO、攻撃者の公開情報に「アクセスは絶対に控えて」　悪質な拡散者には法的措置を準備",
-      "category": "news",
-      "importance": 70,
-      "summary": "GMOインターネットグループは、10月27日に「お名前.com デスクトップクラウド」への不正アクセスに関して、攻撃者が公開した情報にアクセスしないよう呼び掛けた。",
-      "updated_at": "2026-10-27T21:10:09.215098+00:00"
-    },
-    {
-      "id": 52125,
-      "title": "iOS 27.2公開　Siri AI対応やカメラのSiriモードなど",
-      "category": "security",
-      "importance": 70,
-      "summary": "アップルは27日、iOS 27.2を公開し、Siri AIに対応した自然な会話と文脈把握機能を追加した。",
-      "updated_at": "2026-10-27T21:09:58.505131+00:00"
-    },
-    {
-      "id": 52126,
-      "title": "Genspark、文章だけでAIで動画制作できる「Media Studio」",
-      "category": "security",
-      "importance": 70,
-      "summary": "Gensparkが、文章だけで脚本から映像・音声・編集・字幕までを一括で制作できるAI動画制作スタジオ「Genspark AI Media Studio」を公開した。",
-      "updated_at": "2026-10-27T21:09:46.225220+00:00"
-    },
-    {
-      "id": 52116,
-      "title": "自民、比例３１減で集約目指す　国民・維新の対応焦点",
-      "category": "news",
-      "importance": 70,
-      "summary": "自民党は比例代表議席を31減らし集約を目指す方針を示した。",
-      "updated_at": "2026-10-27T21:09:35.596346+00:00"
-    },
-    {
-      "id": 52127,
-      "title": "初のタッチパネル搭載チェキ「instax mini Evo 2」　富士フイルム",
-      "category": "security",
-      "importance": 70,
-      "summary": "富士フイルムはinstax mini Evo 2とinstax SQUARE 2を発表し、mini Evo 2は11月27日発売で価格42,900円、SQUARE 2は11月13日発売で価格16,500円。",
-      "updated_at": "2026-10-27T21:09:23.202706+00:00"
-    },
-    {
-      "id": 52153,
-      "title": "So-net、会員情報約259万件が漏えい　一部メールサービスではパスワードも流出",
-      "category": "news",
-      "importance": 80,
-      "summary": "So-netの会員データベースが不正アクセスにより約259万件の会員情報が漏えいし、一部メールサービスでは約5万4000件のメールアドレスとパスワードが漏えいした。",
-      "updated_at": "2026-10-27T21:09:12.210470+00:00"
-    },
-    {
-      "id": 52154,
-      "title": "GMO、不正アクセス実行犯の手がかりに懸賞金　1億5000万円規模",
-      "category": "news",
-      "importance": 70,
-      "summary": "GMOインターネットグループがFX自動売買用VPS「お名前.com デスクトップクラウド」への不正アクセス事件に対し、総額100万ドル（約1億5000万円）の報奨金を支払う懸賞金制度を開始した。",
-      "updated_at": "2026-10-27T21:08:57.999154+00:00"
-    },
-    {
-      "id": 52128,
-      "title": "GMO、不正アクセス攻撃者情報に1.5億円の「懸賞金」 被害者には最大300万円",
-      "category": "security",
-      "importance": 70,
-      "summary": "GMOインターネットグループは、o名前.com デスクトップクラウドへの不正アクセスで公開された情報に対し、利用者に最大300万円の特別お見舞金を支払うと発表し、犯罪者に関する情報を提供する者に対して最大100万米ドルの懸賞金を設けた。",
-      "updated_at": "2026-10-27T21:08:43.408989+00:00"
-    },
-    {
-      "id": 52155,
-      "title": "IPO目論見書に「AIは人類の存亡リスク」「コードの9割はClaude製」　Anthropicが示した規格外の見立て",
-      "category": "news",
-      "importance": 80,
-      "summary": "米Anthropicは10月26日にIPO目論見書を米SECに提出し、社内コードの90％以上がAIによって書かれ、AI利用額が人件費を上回るとともに、AIが人類に与えるリスクについても言及した。",
-      "updated_at": "2026-10-27T21:08:32.510526+00:00"
-    },
-    {
-      "id": 52129,
-      "title": "auじぶん銀行、アプリを大幅刷新　お金の流れを「タイムライン」表示",
-      "category": "security",
-      "importance": 70,
-      "summary": "auじぶん銀行がアプリをリニューアルし、目的情報や機能へのアクセスをしやすくし、お金の流れをタイムライン表示で分かりやすくした。",
-      "updated_at": "2026-10-27T21:08:19.839124+00:00"
-    },
-    {
-      "id": 52130,
-      "title": "新「MacBook Pro」登場 M6チップ搭載で339800円から",
-      "category": "security",
-      "importance": 70,
-      "summary": "アップルは14インチのMacBook ProにM6プロセッサを搭載し、価格339,800円から販売を開始することを発表した。",
-      "updated_at": "2026-10-27T21:08:07.886865+00:00"
-    },
-    {
-      "id": 52144,
-      "title": "フラビオ・ボルソナロ氏 ブラジルを出国か 現地メディア報道",
-      "category": "news",
-      "importance": 70,
-      "summary": "フラビオ・ボルソナロ氏は、27日、ブラジルの大統領選挙で敗れた後、ブラジルを出国し、アメリカへ向かっていると報じられた。",
-      "updated_at": "2026-10-27T21:07:58.045999+00:00"
-    },
-    {
-      "id": 52131,
-      "title": "テスラ最大の競合、NVIDIAに車メーカーが殺到　E2E自動運転の基盤争い",
-      "category": "industry",
-      "importance": 80,
-      "summary": "NVIDIAはE2E自動運転のAIモデル「Alpamayo」を無償公開し、世界の完成車メーカーや自動運転ソフト企業とエコシステムを形成してプラットフォーマーを目指している。",
-      "updated_at": "2026-10-27T21:07:47.122792+00:00"
-    },
-    {
-      "id": 52132,
-      "title": "廃校は地域ニーズを受け止める空間資源、必要に応じて活用範囲を拡大",
-      "category": "industry",
-      "importance": 70,
-      "summary": "廃校は地域ニーズを受け止める空間資源として活用され、必要に応じて活用範囲が拡大されることが提案されている。",
-      "updated_at": "2026-10-27T21:07:34.390429+00:00"
-    },
-    {
-      "id": 52112,
-      "title": "Lula's comeback in Brazil dents Trump's ambitions for Latin America",
-      "category": "news",
-      "importance": 70,
-      "summary": "ブラジルでルラの復帰がトランプのラテンアメリカに対する野心を削った。",
-      "updated_at": "2026-10-27T21:07:17.726847+00:00"
-    },
-    {
-      "id": 52133,
-      "title": "突然数十倍に跳ね上がったAWS利用料、GMOペパボが苦労して解決した経緯",
-      "category": "industry",
-      "importance": 75,
-      "summary": "GMOペパボは検証環境で発生したアラートを放置した結果、AWS利用料が数十倍に跳ね上がった。",
-      "updated_at": "2026-10-27T21:07:05.572926+00:00"
-    },
-    {
-      "id": 52104,
-      "title": "Jordan carries out deadly strike in Syria in retaliation for church attack",
-      "category": "news",
-      "importance": 70,
-      "summary": "シリアの村で攻撃があり、女性と子どもを含む5人が死亡した。",
-      "updated_at": "2026-10-27T21:06:55.529540+00:00"
-    },
-    {
-      "id": 52134,
-      "title": "AIエージェント導入時に見極める、「ワークフロー」で十分な業務",
-      "category": "industry",
-      "importance": 70,
-      "summary": "手順が決まっていて分岐を事前に設計できる業務は、AIエージェント導入に適していると述べられている。",
-      "updated_at": "2026-10-27T21:06:45.159228+00:00"
-    },
-    {
-      "id": 52113,
-      "title": "Mbappé sorry for 'ill-judged' Mao remark after backlash in China",
-      "category": "news",
       "importance": 60,
-      "summary": "ムバッペはインタビューで中国の前指導者毛沢東を「独裁者」と呼んだ。",
-      "updated_at": "2026-10-27T21:06:27.631971+00:00"
+      "summary": "LINEヤフー系VCのZ Venture Capitalがソーシャルメディアアプリ「Setlog」を運営するNew Chatに出資した。",
+      "updated_at": "2026-10-28T21:10:30.054233+00:00"
     },
     {
-      "id": 52135,
-      "title": "現場の危険示唆やKY活動の記録・評価、生成AIが安全管理をサポート",
-      "category": "industry",
+      "id": 52312,
+      "title": "LINE、未読のまま“トーク全体”を見られる機能",
+      "category": "security",
       "importance": 70,
-      "summary": "施工現場の安全管理は質の向上が求められ、生成AIが技術者の目や知見をサポートし、危険予知活動の形骸化を防げる。",
-      "updated_at": "2026-10-27T21:06:16.958576+00:00"
+      "summary": "LINEヤフーは、未読のままトークルーム全体を確認できる「スクロールプレビュー」機能を、11月4日から月額制サービス「LYPプレミアム」会員向けに提供する。",
+      "updated_at": "2026-10-28T21:10:19.031266+00:00"
     },
     {
-      "id": 52107,
-      "title": "Ballon d'Or ceremony raises case of French sports journalist jailed in Algeria",
-      "category": "news",
-      "importance": 60,
-      "summary": "彼はカブリイ地方への出張後、テロ支援容疑で投獄されている。",
-      "updated_at": "2026-10-27T21:06:03.477717+00:00"
-    },
-    {
-      "id": 52136,
-      "title": "AIロボットの第三極狙うドイツ、部品量産化に着手　安全規格策定も主導",
-      "category": "industry",
-      "importance": 70,
-      "summary": "ドイツはAIロボットの第三極開発を加速し、世界中の新興企業と協業し、国際安全規格の策定に関与して設計に反映させている。",
-      "updated_at": "2026-10-27T21:05:52.273914+00:00"
-    },
-    {
-      "id": 52115,
-      "title": "Norway and Finland leaders hold rare call with Putin",
-      "category": "news",
-      "importance": 70,
-      "summary": "フィンランド大統領アレクサンダー・スタブは、ウクライナ紛争は沈黙によって終結しないと述べた。",
-      "updated_at": "2026-10-27T21:05:41.138028+00:00"
-    },
-    {
-      "id": 52137,
-      "title": "テラゾー調の床に仕上げられる塗材",
-      "category": "industry",
-      "importance": 60,
-      "summary": "アイカ工業は2026年8月に人造大理石の意匠性と質感を再現した内装床面用塗材「クライマテリア クランチアート フロア仕様」を発売した。",
-      "updated_at": "2026-10-27T21:05:29.641619+00:00"
-    },
-    {
-      "id": 52105,
-      "title": "Controversial Islamic cleric shot dead in northern Nigeria",
-      "category": "news",
-      "importance": 70,
-      "summary": "イエハヤ・マスッスカが北部ナイジェリアで射殺された。",
-      "updated_at": "2026-10-27T21:05:18.549582+00:00"
-    },
-    {
-      "id": 52138,
-      "title": "土質及び基礎　過去問題と解説　2026年度",
-      "category": "industry",
-      "importance": 70,
-      "summary": "選択科目「土質及び基礎（土質基礎）」のIII―1は地震後の豪雨など複合災害に対する盛り土の安全確保、III―2は老朽地下インフラに起因する地盤空洞化・道路陥没の予防保全を対象としている。",
-      "updated_at": "2026-10-27T21:05:06.520456+00:00"
-    },
-    {
-      "id": 52108,
-      "title": "Ghanaian twin brothers and US woman plead guilty to $9m romance scam",
-      "category": "news",
-      "importance": 70,
-      "summary": "ガーナ人の双子の兄弟と米国人女性が、米国とヨーロッパの高齢者を対象にした9百万ドルの恋愛詐欺で有罪を認めた。",
-      "updated_at": "2026-10-27T21:04:52.588975+00:00"
-    },
-    {
-      "id": 52145,
-      "title": "GMO“懸賞金支払い”で脅迫に対抗も不安続く",
-      "category": "news",
-      "importance": 70,
-      "summary": "GMOインターネットグループのサービスに不正アクセスし、金銭を要求したハッカー集団が27日に利用者情報をネット上に公開した。",
-      "updated_at": "2026-10-27T21:04:40.032588+00:00"
-    },
-    {
-      "id": 52106,
-      "title": "Deaths in detention cells in Nigeria were entirely preventable, inquiry finds",
+      "id": 52339,
+      "title": "「対策を後回しにしたサーバが軒並み狙われている」　相次ぐ不正アクセスにラックCTOが警鐘",
       "category": "news",
       "importance": 80,
-      "summary": "ミンナ州の刑務所で過密と換気不良により33人の被拘禁者が死亡した。",
-      "updated_at": "2026-10-27T21:04:29.753162+00:00"
+      "summary": "ラックのCTO・倉持浩明氏がKDDI SUMMIT 2026で、脆弱性診断を後回しにしたサーバが不正アクセスの標的になっていると警告した。",
+      "updated_at": "2026-10-28T21:10:06.121749+00:00"
     },
     {
-      "id": 52143,
-      "title": "きょう日独首脳会談 サプライチェーン強じん化など確認へ",
+      "id": 52313,
+      "title": "メルカリ、海外ファンの“推し部屋”を原宿に再現　ミニ四駆やPlastic Love",
+      "category": "security",
+      "importance": 70,
+      "summary": "メルカリは東京・原宿のWITH HARAJUKUで、海外の日本文化ファンの部屋を再現した没入型体験イベント『世界の誰かの推し部屋展』を開催し、11月1日までの5日間、無料かつ事前予約なしで入場できた。",
+      "updated_at": "2026-10-28T21:09:55.576810+00:00"
+    },
+    {
+      "id": 52314,
+      "title": "LINEヤフー、AIで食事管理　写真から栄養バランスを確認",
+      "category": "security",
+      "importance": 60,
+      "summary": "LINEヤフーはAIエージェント「Agent i」で食事管理機能を提供し、LINE公式アカウントと連携してトークルームから食事を記録・管理できるようにした。",
+      "updated_at": "2026-10-28T21:09:44.641211+00:00"
+    },
+    {
+      "id": 52340,
+      "title": "Oracle CloudがGoogle TPU導入へ　2027年に提供を開始",
       "category": "news",
       "importance": 70,
-      "summary": "高市総理がドイツのメルツ首相と会談し、重要鉱物・半導体のサプライチェーン強化とサイバー分野協力を確認する方向で調整している。",
-      "updated_at": "2026-10-27T21:04:20.510392+00:00"
+      "summary": "Oracle Cloudは2027年にGoogle TPUを導入し、提供を開始する予定である。",
+      "updated_at": "2026-10-28T21:09:33.422018+00:00"
+    },
+    {
+      "id": 52315,
+      "title": "楽天カード、Google Payのタッチ決済に対応　Visa・Mastercard・JCB",
+      "category": "security",
+      "importance": 60,
+      "summary": "楽天カードは、28日からGoogle PayでVisa、Mastercard、JCBブランドの楽天カードによるタッチ決済に対応した。",
+      "updated_at": "2026-10-28T21:09:21.643050+00:00"
+    },
+    {
+      "id": 52341,
+      "title": "NEC、委託先の情報漏えいで謝罪　「セキュリティ事業を手掛ける企業として反省」",
+      "category": "news",
+      "importance": 70,
+      "summary": "NECの雨宮邦和副社長兼CFOが委託先経由の情報漏えいについて謝罪した。",
+      "updated_at": "2026-10-28T21:09:12.175595+00:00"
+    },
+    {
+      "id": 52342,
+      "title": "JALの予約システムに不正アクセス　約9万人分の予約情報が漏えい　一部ではパスポート番号も",
+      "category": "news",
+      "importance": 80,
+      "summary": "日本航空（JAL）と日本トランスオーシャン航空（JTA）は、予約や搭乗手続きシステムの提供元が不正アクセスを受け、約9万2000人の予約情報が外部から閲覧された形跡があったと発表した。",
+      "updated_at": "2026-10-28T21:09:00.097934+00:00"
+    },
+    {
+      "id": 52316,
+      "title": "完全一新したアマゾン「Alexa+」日本上陸 自然な会話とタスク実行が当面無料",
+      "category": "security",
+      "importance": 70,
+      "summary": "Amazonが日本でAlexa+の早期アクセスプログラムを開始し、当面無料で数百万規模のユーザーに提供する。",
+      "updated_at": "2026-10-28T21:08:47.745439+00:00"
     },
     {
       "id": 52111,
       "title": "Dutch zookeeper dies after being mauled in leopard enclosure",
       "category": "news",
-      "importance": 80,
-      "summary": "オランダの動物園で豹の囲いで襲われ、死亡した女性は17歳でキャリアを始め、40年間にわたり不定期に勤務していた。",
-      "updated_at": "2026-10-27T21:04:08.324053+00:00"
+      "importance": 70,
+      "summary": "オランダの動物園で働く女性がヒョウに噛まれ死亡した。",
+      "updated_at": "2026-10-28T21:08:36.396474+00:00"
     },
     {
-      "id": 52142,
-      "title": "定数31議席削減案 各党が賛否表明へ 国民 総合的に判断へ",
+      "id": 52317,
+      "title": "アマゾンからスマートクロック「Echo Time」登場　睡眠を検知し、優しく起こす",
+      "category": "security",
+      "importance": 70,
+      "summary": "アマゾンは10月29日からEcho Time（35,980円）とEcho Dot（17,980円）の2製品を発売する。",
+      "updated_at": "2026-10-28T21:08:25.591309+00:00"
+    },
+    {
+      "id": 52328,
+      "title": "ホンダと日産 EV用バッテリーの協業へ具体的な交渉",
+      "category": "news",
+      "importance": 70,
+      "summary": "ホンダと日産自動車が、EV用バッテリーの協業に向けて具体的な交渉を進めている。",
+      "updated_at": "2026-10-28T21:08:15.591479+00:00"
+    },
+    {
+      "id": 52330,
+      "title": "GMO 攻撃者に関する情報精査 被害拡大防止で緊急の対応続く",
+      "category": "news",
+      "importance": 80,
+      "summary": "GMOインターネットグループのサービスが不正アクセスを受け、利用者に関する個人情報が公開された。",
+      "updated_at": "2026-10-28T21:08:05.059960+00:00"
+    },
+    {
+      "id": 52296,
+      "title": "Ex-wife of Zimbabwe's vice-president freed after collapse of attempted murder case",
+      "category": "news",
+      "importance": 70,
+      "summary": "マリ・ムバイワは、2019年に夫の暗殺未遂容疑で起訴され、7年間拘留された後、事件が崩壊したため解放された。",
+      "updated_at": "2026-10-28T21:07:54.050635+00:00"
+    },
+    {
+      "id": 52329,
+      "title": "【地震情報】千葉県北東部で震度5弱 津波の心配なし",
+      "category": "news",
+      "importance": 70,
+      "summary": "千葉県北東部で29日未明に地震が発生し、千葉県内で震度5弱の揺れが観測された。",
+      "updated_at": "2026-10-28T21:07:43.204021+00:00"
+    },
+    {
+      "id": 52332,
+      "title": "スペイン高速鉄道衝突事故 これまでに68人死亡 後続列車が追突",
+      "category": "news",
+      "importance": 90,
+      "summary": "スペイン中部で28日に高速鉄道の列車同士が衝突し、60人以上が死亡し、先行列車が停止していたところ後続列車が追突したことが判明した。",
+      "updated_at": "2026-10-28T21:07:33.169850+00:00"
+    },
+    {
+      "id": 52297,
+      "title": "King acknowledges 'suffering of the past' as Caribbean tour begins",
       "category": "news",
       "importance": 60,
-      "summary": "自民党が比例代表で31議席削減案を示し、与野党は28日協議で賛否表明する予定である。",
-      "updated_at": "2026-10-27T21:03:55.676300+00:00"
+      "summary": "キングは9日間のカリブ海ツアーを開始し、バハマ、ガイアナ、アンティグア・バーブーダを訪れる。",
+      "updated_at": "2026-10-28T21:07:23.016287+00:00"
     },
     {
-      "id": 52114,
-      "title": "Ceasefire extended across Ukraine's Kherson region, officials say",
+      "id": 52327,
+      "title": "イスラエル総選挙“首相のSNS投稿が功を奏した”",
       "category": "news",
       "importance": 70,
-      "summary": "ウクライナのハーソン州で停戦が延長され、ロシアとウクライナは違反が報告されていないと述べた。",
-      "updated_at": "2026-10-27T21:03:44.751077+00:00"
+      "summary": "イスラエルの総選挙で開票率が85％を超え、ネタニヤフ首相の右派政党が世論調査を覆し第1党の座を守ると見られた。",
+      "updated_at": "2026-10-28T21:07:11.750655+00:00"
     },
     {
-      "id": 52140,
-      "title": "熊本地震3か月 住まいの確保と在宅避難者への継続支援が課題",
+      "id": 52298,
+      "title": "Anger in Kenya over extradition hearing delay for ex-British soldier accused of murdering woman",
       "category": "news",
       "importance": 70,
-      "summary": "熊本地震から3か月で避難所に1000人余りが居住し、壊れた自宅で生活する人も多い。",
-      "updated_at": "2026-10-27T21:03:31.152963+00:00"
+      "summary": "次の月に予定されていた聴聞が2027年5月に延期された理由は公式に示されていない。",
+      "updated_at": "2026-10-28T21:06:56.087908+00:00"
     },
     {
-      "id": 52139,
-      "title": "フィジカルAI 農業分野で導入や開発の動き",
+      "id": 52318,
+      "title": "「仕事をしなくてもよい」人が登場、AIで失業する人と二極化進む",
+      "category": "industry",
+      "importance": 70,
+      "summary": "生成AIやAIエージェントの進化により、仕事をしなくてもよい人と仕事を奪われる人の二極化が進む可能性がある。",
+      "updated_at": "2026-10-28T21:06:45.425887+00:00"
+    },
+    {
+      "id": 52300,
+      "title": "Serbian shot dead after attacking officer outside Israeli embassy, minister says",
       "category": "news",
       "importance": 70,
-      "summary": "AIが作物の生育具合を自律的に判断して収穫を行うフィジカルAIロボットの導入や開発が進められている。",
-      "updated_at": "2026-10-27T21:03:20.580703+00:00"
+      "summary": "ベオグラードでイスラエル大使館外で警官を攻撃した未成年男性が射殺された。",
+      "updated_at": "2026-10-28T21:06:32.592296+00:00"
     },
     {
-      "id": 52109,
-      "title": "Egypt court fines journalist Lina Attalah and orders news site's closure",
+      "id": 52319,
+      "title": "渦巻き状の文化施設「MoN」、高輪ゲートウェイシティで低くて目立つ",
+      "category": "industry",
+      "importance": 70,
+      "summary": "MoN Takanawa：The Museum of Narratives は、JR東日本が約6000億円を投じて開発した高輪ゲートウェイシティ内にあるスパイラル状の低層棟である。",
+      "updated_at": "2026-10-28T21:06:22.624619+00:00"
+    },
+    {
+      "id": 52299,
+      "title": "Tanzania celebrates first natural gas discovery in more than 10 years",
+      "category": "news",
+      "importance": 70,
+      "summary": "タンザニアが10年以上ぶりに初の天然ガス発見を祝う。",
+      "updated_at": "2026-10-28T21:06:09.802429+00:00"
+    },
+    {
+      "id": 52320,
+      "title": "モメンタ日本へ急接近、テスラに迫れるか　中国E2E自動運転トップの技術力",
+      "category": "industry",
+      "importance": 70,
+      "summary": "モメンタは中国のE2E自動運転企業で、トヨタなどの完成車メーカーが採用し、データ収集と学習サイクルを高速化して性能を向上させ、世界進出を図り日本で実験を始めている。",
+      "updated_at": "2026-10-28T21:05:58.046069+00:00"
+    },
+    {
+      "id": 52301,
+      "title": "Luxury cruise passengers stranded in Cambodia due to soaring fuel costs",
+      "category": "news",
+      "importance": 60,
+      "summary": "Villa Vie Odysseyは航行を中止し、乗客に対して一時的な滞在手配を行っている。",
+      "updated_at": "2026-10-28T21:05:43.846487+00:00"
+    },
+    {
+      "id": 52321,
+      "title": "AIエージェント導入のカギを握る「プレーヤー」、誰に何を任せるか",
+      "category": "industry",
+      "importance": 70,
+      "summary": "AIエージェントの導入は、基盤提供事業者、実装会社、コンサルタント、社内推進担当という複数のプレーヤーが関与することで完結する。",
+      "updated_at": "2026-10-28T21:05:34.888888+00:00"
+    },
+    {
+      "id": 52293,
+      "title": "Israel's election result is messy - here's why",
+      "category": "news",
+      "importance": 70,
+      "summary": "イスラエルの選挙はほぼ30年ぶりの最高投票率を記録したが、明確な勝者はいない。",
+      "updated_at": "2026-10-28T21:05:23.886103+00:00"
+    },
+    {
+      "id": 52322,
+      "title": "ローカル環境でWeb APIを試す、3ステップでToDo APIを開発",
+      "category": "industry",
+      "importance": 70,
+      "summary": "ローカル環境でToDo APIを3ステップで開発し、Web APIの仕組みを学ぶ。",
+      "updated_at": "2026-10-28T21:05:14.178827+00:00"
+    },
+    {
+      "id": 52302,
+      "title": "How could Israel break election deadlock? Here are four scenarios",
+      "category": "news",
+      "importance": 70,
+      "summary": "投票の85％が集計された結果、選挙の行き詰まりが予想され、新たな選挙が最も可能性の高い結果である。",
+      "updated_at": "2026-10-28T21:05:00.566804+00:00"
+    },
+    {
+      "id": 52323,
+      "title": "フィジカルAI半導体、鍵は「低遅延と拡張性」　川崎重工が採用決めた国内新興",
+      "category": "industry",
+      "importance": 70,
+      "summary": "EdgeCortix（川崎市）がクラウドと組み込みエッジの中間を対象とした省電力で柔軟に拡張可能な専用半導体を発表し、川崎重工が採用を決定した。",
+      "updated_at": "2026-10-28T21:04:50.829865+00:00"
+    },
+    {
+      "id": 52294,
+      "title": "Watch: At the scene of Spain's deadly train crash",
       "category": "news",
       "importance": 80,
-      "summary": "エジプトの裁判所がジャーナリスト・リナ・アタラハに罰金を科し、独立系ニュースサイト・マダ・マスルの閉鎖を命じた。",
-      "updated_at": "2026-10-27T21:03:04.538193+00:00"
+      "summary": "スペインの首都マドリード南部で高速鉄道が別の列車と衝突し、死亡者が出た。",
+      "updated_at": "2026-10-28T21:04:36.706431+00:00"
     },
     {
-      "id": 52141,
-      "title": "フィンランドとノルウェーの首脳がプーチン大統領と電話会談",
+      "id": 52324,
+      "title": "自作アプリで事務作業を8割削減、地方建設会社の土木技術者が生成AIで開発",
+      "category": "industry",
+      "importance": 70,
+      "summary": "広島市の地場建設会社鴻治組では、プログラミング未経験の土木技術者が生成AIを使い、半年で計11個のWebアプリを開発した。",
+      "updated_at": "2026-10-28T21:04:25.831650+00:00"
+    },
+    {
+      "id": 52295,
+      "title": "How did Flávio Bolsonaro end up in Miami?",
       "category": "news",
       "importance": 70,
-      "summary": "フィンランドとノルウェーの首脳がプーチン大統領と電話会談し、11月にロシアとウクライナの和平案協議が行われる見通しとなったことを踏まえて戦闘終結を求めた。",
-      "updated_at": "2026-10-27T21:02:54.204100+00:00"
+      "summary": "BBC Verify が敗北した大統領候補フラビオ・ボルソナロがブラジル、アルゼンチン、エクアドルを経てマイアミに到着した経路を明らかにした。",
+      "updated_at": "2026-10-28T21:04:12.682394+00:00"
     },
     {
-      "id": 52110,
-      "title": "Alexander brothers each sentenced to 30 years in prison for sex trafficking case",
+      "id": 52325,
+      "title": "1位は「1万5000冊の漫画を中核に、スロープで回遊できる新図書館」",
+      "category": "industry",
+      "importance": 50,
+      "summary": "この記事は2025年10月26日から11月1日に読まれた記事のランキングを紹介し、2026年10月29日から11月4日に無料で閲覧できるようにしたものです。",
+      "updated_at": "2026-10-28T21:04:00.097676+00:00"
+    },
+    {
+      "id": 52326,
+      "title": "ゼレンスキー大統領 和平案めぐるロシアとの高官協議に期待",
       "category": "news",
-      "importance": 80,
-      "summary": "三兄弟は数十年にわたり女性を薬物で麻痺させ、強姦した罪で有罪判決を受け、30年の懲役刑を言い渡された。",
-      "updated_at": "2026-10-27T21:02:40.545055+00:00"
+      "importance": 70,
+      "summary": "ゼレンスキー大統領は、11月6日から10日にUAEで開催されるロシアとの和平案をめぐるアメリカも交えた3か国の高官協議に期待を示した。",
+      "updated_at": "2026-10-28T21:03:46.657846+00:00"
     },
     {
-      "id": 52117,
-      "title": "Webブラウザーで動作する無料のベクター編集ツール「ぷちパス工房」　ほか【ダイジェストニュース】",
-      "category": "company",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "id": 52304,
+      "title": "Flávio Bolsonaro lands in Miami after defeat in Brazil's presidential election",
+      "category": "news",
+      "importance": 70,
+      "summary": "フラビオ・ボルソナロはブラジル大統領選挙敗北後、パスポート返還命令に従わず米国に到着しマイアミに着陸した。",
+      "updated_at": "2026-10-28T21:03:33.886173+00:00"
     },
     {
-      "id": 52118,
-      "title": "アンインストール支援ソフト「GeekUninstaller」v1.6が公開、ARM64ネイティブに対応／個人利用なら無料、アプリを根こそぎ削除するアプリ",
-      "category": "company",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "id": 52303,
+      "title": "Netanyahu's bloc leading Israel election but short of majority, partial results show",
+      "category": "news",
+      "importance": 70,
+      "summary": "85％の投票が集計された時点で、ネタニヤフ率いるリクード党とその同盟国は120議席の国会で53席を獲得する見込みである。",
+      "updated_at": "2026-10-28T21:03:21.192667+00:00"
     },
     {
-      "id": 52146,
-      "title": "貨物の搬送車両で自動運転「レベル4」　福岡空港、国内3カ所目",
+      "id": 52331,
+      "title": "FRB 政策金利据え置き 議長は今後の追加利上げ辞さない構えも",
+      "category": "news",
+      "importance": 70,
+      "summary": "FRBは2会合ぶりに政策金利を据え置き、ウォーシュ議長はインフレ率が依然として高いと述べた。",
+      "updated_at": "2026-10-28T21:03:10.426045+00:00"
+    },
+    {
+      "id": 52305,
+      "title": "日本維新の会は、衆院定数３１減を受け入れる方針を決めた",
       "category": "news",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52147,
-      "title": "政府、サイバー攻撃の「緊急対策パッケージ」来週中に策定へ　高市首相がサイバー閣僚会議の初会合で指示",
+      "id": 52333,
+      "title": "システム障害でカード決済が1日停止→客が取る行動は……スイス国立銀行が約2400店を調査",
       "category": "news",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52148,
-      "title": "GMO、ランサム被害にあった顧客に新しいPC提供へ　犯行グループは1人の顧客情報公開か",
+      "id": 52334,
+      "title": "GMO不正アクセスの犯人サイト、ドメイン停止を確認",
       "category": "news",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52156,
-      "title": "Egypt’s largest solar PV project and Triodos Bank’s renewed B Corp certification: The sustainability success stories of the week",
+      "id": 52343,
+      "title": "Publish Visual Studio Marketplace extensions securely with Trusted Publishing",
+      "category": "dev",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
+    },
+    {
+      "id": 52344,
+      "title": "Octoverse: Commits, pushes, reach new highs in 2026 as developers build with agents",
+      "category": "dev",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
+    },
+    {
+      "id": 52345,
+      "title": "GitHub Universe 2026: Evolving every layer of the stack",
+      "category": "dev",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
+    },
+    {
+      "id": 52346,
+      "title": "On-demand webinar: How AI can unlock investment in climate solutions",
       "category": "decarbonization_ops",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52157,
-      "title": "UK CBAM: Understanding the risks, managing carbon data and preparing for compliance",
+      "id": 52347,
+      "title": "EU tells countries to plan for 3C of warming under new climate resilience framework",
       "category": "decarbonization_ops",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52158,
-      "title": "Study: Oil and gas firms committed $59bn to transition-exposed projects in 2025",
+      "id": 52348,
+      "title": "COP31: New AI Pledge ‘lacks teeth’ for climate action",
       "category": "decarbonization_ops",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52159,
-      "title": "Biodiversity COP17 at the halfway mark: What has been announced so far?",
+      "id": 52349,
+      "title": "Making the UK CBAM-ready",
       "category": "decarbonization_ops",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52160,
-      "title": "Nature loss threatens 140 million jobs across Europe, study finds",
+      "id": 52350,
+      "title": "Autumn Budget: Chancellor pledges energy reforms to cut bills but loosens biodiversity rules",
       "category": "decarbonization_ops",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52161,
-      "title": "Weaker EV targets could result in more than half of Rosebank’s emissions, ECIU warns",
+      "id": 52351,
+      "title": "The Government’s trick-or-treat approach to energy security is a horror story waiting to happen",
       "category": "decarbonization_ops",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52162,
-      "title": "What is holding back sustainability measurement in construction?",
+      "id": 52352,
+      "title": "‘A sticking plaster’: Green economy warns of missed opportunities on energy and climate in Budget",
       "category": "decarbonization_ops",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52163,
-      "title": "Guest post: Greenland ice sheet shrinks for 30th year in a row",
+      "id": 52353,
+      "title": "UK SRS: Streamlining sustainability reporting and preparing for new requirements",
       "category": "decarbonization_ops",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52164,
-      "title": "Q&A: Why are UK energy bills so high – and how could they be lowered?",
+      "id": 52354,
+      "title": "Analysis: How the UK spent more than £11.6bn on climate aid since 2021",
       "category": "decarbonization_ops",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52165,
-      "title": "ドコモ、au、ソフトバンク、楽天の「5Gがつながるエリア」に最大2倍の違い――全国で実測比較",
+      "id": 52355,
+      "title": "Revealed: UK relied on £2bn of ‘questionable accounting’ to hit its climate-aid goal",
+      "category": "decarbonization_ops",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
+    },
+    {
+      "id": 52356,
+      "title": "UK budget 2026: Key climate and energy announcements",
+      "category": "decarbonization_ops",
+      "importance": 0,
+      "summary": "",
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
+    },
+    {
+      "id": 52357,
+      "title": "「攻撃者に権限なし」でも危険　BIND 9の脆弱性、回避策なく更新必須",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52166,
-      "title": "オーケーが“絶対に止められないDB”をクラウドに移す　ダウンタイムをどう極小化した？",
+      "id": 52358,
+      "title": "VS Codeの新規セッションで「ハーネス」がデフォルトに　複数AIモデルを競わせる新機能も",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52167,
-      "title": "情シスの知らないところで「ITコストが30％オーバー」、見落とされる支出の正体",
+      "id": 52359,
+      "title": "MIXIが「1秒以内の画像検索」を維持しながら「DB管理費→75％削減」、どう実現？",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52168,
-      "title": "CoreWeave株急落が示すAI投資の落とし穴　問われるのは需要より資金調達力",
+      "id": 52360,
+      "title": "「Microsoft 365」を3万4000人が使う旭化成、「Teams」のチーム作成を“最大3営業日→即日”に　負担をどう軽減した？",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52169,
-      "title": "PythonでもSQLでもない、2026年「最も使う言語」　Stack Overflow調査が映す“定番回帰”とAIとの距離感",
+      "id": 52361,
+      "title": "「AIで攻撃コード生成はたったの数時間に」　Fortinetが5製品を緊急更新＆警鐘",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52170,
-      "title": "VS Code使いは要注意　GitHub経由で送られる「悪意あるリポジトリ」を見分けるポイント",
+      "id": 52362,
+      "title": "「ハーネス」とは何か　工場の比喩が嫌いだった私がトヨタの自働化とアンドンを持ち出す理由",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52171,
-      "title": "「取引先のサイバーリスクが高い」――不正アクセス相次ぐ今、“AI判定の正しさ”をどう見極める？",
+      "id": 52363,
+      "title": "11月から1月は「冬季大気汚染対策」推進期間です！",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52172,
-      "title": "【Pythonで学ぶデータ分析】ベイズ統計で重回帰分析 ～ 株価のファンダメンタルズ分析を行う",
+      "id": 52364,
+      "title": "性自認及び性的指向に関する企業研修のオンライン開催について（令和8年度第1回）",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52173,
-      "title": "住宅政策本部の消費税未申告事案に係る損害賠償請求権の行使等を求める住民監査請求の監査結果について",
+      "id": 52365,
+      "title": "令和8年度東京都スポーツ功労者及びスポーツ功労団体の決定について",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52174,
-      "title": "東京都公益認定等審議会（第185回）の開催結果について",
+      "id": 52366,
+      "title": "11月12日～25日は「女性に対する暴力をなくす運動」期間です！パープル・ライトアップ、都内全高校1年生に啓発カード配布等を実施",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52175,
-      "title": "「土砂災害防止に関する絵画・作文」令和8年度 受賞作品決定！ 受賞作品等の展示を行います",
+      "id": 52367,
+      "title": "FC東京と共に「やさしい日本語」を応援しています！",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52177,
-      "title": "秋の東京いい庭キャンペーン　都内29の庭園で日本庭園が持つ魅力を発信",
+      "id": 52368,
+      "title": "B.LEAGUEの試合で東京都の公式ボランティアポータルサイト「VLN」をPRします！ユーザー登録でVLN×アルバルク東京のコラボグッズなどをプレゼント！",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52178,
-      "title": "シンガポール企業庁とイノベーション及びスタートアップの発展促進に関する覚書を締結しました",
+      "id": 52369,
+      "title": "都職員の給与の状況",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52179,
-      "title": "スタートアップ社会実装促進事業「PoC Ground Tokyo」　令和8年度第3期募集を開始します",
+      "id": 52370,
+      "title": "（図表2）人件費の内訳（7年度普通会計決算）",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52180,
-      "title": "都内各地の観光とグルメを一度に楽しめる！「TOKYO周穫祭2026」を開催",
+      "id": 52371,
+      "title": "（図表9）特別職の給料・報酬、期末手当の状況（8年4月1日現在）",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52181,
-      "title": "都事業所のプラスチックリサイクル高度化に向けて廃棄物データ管理DXツールを導入します",
+      "id": 52372,
+      "title": "（図表10）一般行政職の級別職員数の状況（8年4月1日）",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52182,
-      "title": "東京港開港85周年記念 東京港夜景観賞クルーズ募集 抽選で各回250名様をご招待",
+      "id": 52373,
+      "title": "（図表12）職員数の状況",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52183,
-      "title": "「令和8年度　第2回 復興応援ふるさと市」の開催",
+      "id": 52374,
+      "title": "令和8年度分基地交付金及び調整交付金の決定",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52184,
-      "title": "メールアドレスの漏えい事故について",
+      "id": 52375,
+      "title": "情報通信審議会 情報通信政策部会 放送政策委員会 第5回 開催案内",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52185,
-      "title": "アルコール関連問題啓発週間に係るイベント等の開催について",
+      "id": 52376,
+      "title": "情報通信審議会　情報通信技術分科会　電波有効利用委員会（第16回）開催案内",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52186,
-      "title": "未来社会を見据えた人とデジタルの関係の在り方に関する研究会（第7回）",
+      "id": 52377,
+      "title": "令和8年9月の熱中症による救急搬送状況",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52187,
-      "title": "情報通信審議会 電気通信事業政策部会 接続政策委員会（第86回）配布資料",
+      "id": 52378,
+      "title": "令和8年（5月〜9月）の熱中症による救急搬送状況",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52189,
-      "title": "IPネットワーク設備委員会報告（案）に対する意見募集の結果",
+      "id": 52379,
+      "title": "情報通信審議会 郵政政策部会 郵便事業政策委員会(第4回)開催案内",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52190,
-      "title": "不適正利用対策に関するワーキンググループ（第15回）",
+      "id": 52380,
+      "title": "「地方議会活性化シンポジウム2026」の開催",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52191,
-      "title": "「MVNOに係る電気通信事業法及び電波法の適用関係に関するガイドライン」改定案に対する意見募集",
+      "id": 52381,
+      "title": "令和8年度緊急消防援助隊地域ブロック合同訓練の実施",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52192,
-      "title": "「電子政府における調達のために参照すべき暗号のリスト（CRYPTREC暗号リスト）」の改定（PQC対応）に対する意見募集",
+      "id": 52382,
+      "title": "「AIによるリスク」の検討ワーキンググループ（第1回）",
       "category": "policy",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52196,
-      "title": "New EU Framework for Climate Resilience",
-      "category": "policy",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
-    },
-    {
-      "id": 52197,
-      "title": "From Spreadsheets to CMMS: A Practical Guide for Maintenance Teams",
+      "id": 52384,
+      "title": "How to Use a CMMS to Manage Inspections and Audits",
       "category": "maintenance",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52198,
-      "title": "Schaeffler Demonstrates Humanoids Making Humanoids at New Lighthouse Factory",
+      "id": 52385,
+      "title": "Hyundai Motor and Kia Advance Vision for Software-Defined Factories",
       "category": "quality",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52199,
-      "title": "HP-FX Brings High-Precision Surface Inspection Directly to the Shop Floor",
+      "id": 52386,
+      "title": "Smart Sensors Drive Process Optimization and Factory Connectivity",
       "category": "quality",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52200,
-      "title": "What Auditors Find in Calibration and Measurement Records",
+      "id": 52387,
+      "title": "Hexagon Rearchitects Inspire Software for Easier, Faster, 3D Scanning",
       "category": "quality",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52201,
-      "title": "The Critical Role of Fixturing in Production Metrology",
-      "category": "quality",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
-    },
-    {
-      "id": 52202,
-      "title": "Mouser's alternative energy resource center grants insights into decentralized systems",
+      "id": 52388,
+      "title": "Honeywell helping Dangote build world’s largest single-train refinery in Kenya",
       "category": "smart_factory",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52203,
-      "title": "Survey: AI delivers measurable value gains for control engineers",
+      "id": 52389,
+      "title": "AI Infrastructure Expansion Pushes Manufacturers To Rethink Data Center Power And Thermal Management",
       "category": "smart_factory",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     },
     {
-      "id": 52204,
-      "title": "PACK EXPO: Unitech Showcases Packaging Conversion Technology, Highlights US Expansion",
+      "id": 52390,
+      "title": "Schneider Electric Recognized with Esri IMGIS Partner Award for Network Management",
       "category": "smart_factory",
       "importance": 0,
       "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
-    },
-    {
-      "id": 52205,
-      "title": "Robotics ROI",
-      "category": "smart_factory",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
-    },
-    {
-      "id": 52206,
-      "title": "EDGE Awards 2027 Call For Entries",
-      "category": "smart_factory",
-      "importance": 0,
-      "summary": "",
-      "updated_at": "2026-10-27T21:01:24.974557+00:00"
+      "updated_at": "2026-10-28T21:01:42.939901+00:00"
     }
   ]
 }
