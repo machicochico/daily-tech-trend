@@ -1,0 +1,1028 @@
+
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未来予測レポート | Daily Tech Trend</title>
+  <meta name="description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
+  <link rel="canonical" href="/daily-tech-trend/forecast/">
+  <link rel="alternate" type="application/rss+xml" title="Daily Tech Trend RSS" href="/daily-tech-trend/feed.xml">
+
+  <meta property="og:title" content="未来予測レポート | Daily Tech Trend">
+  <meta property="og:description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/daily-tech-trend/forecast/">
+  <meta property="og:site_name" content="Daily Tech Trend">
+  <meta property="og:locale" content="ja_JP">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="未来予測レポート | Daily Tech Trend">
+  <meta name="twitter:description" content="直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。">
+  <link rel="stylesheet" href="/daily-tech-trend/assets/css/common.css">
+  <style>
+    /* タブ */
+    .forecast-tabs{display:flex;gap:4px;margin:12px 0 0;flex-wrap:wrap}
+    .forecast-tabs button{padding:6px 14px;border:1px solid var(--border);border-radius:6px 6px 0 0;
+      background:var(--panel);cursor:pointer;font-size:.85rem;color:var(--text-sub);line-height:1.4}
+    .forecast-tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* パネル */
+    .forecast-panel{display:none;padding:16px;border:1px solid var(--border);border-radius:0 8px 8px 8px;
+      background:var(--panel);margin-bottom:20px;overflow-x:auto;word-wrap:break-word;overflow-wrap:break-word}
+    /* 予測カード */
+    .pred-card{background:var(--bg);border:1px solid var(--border);border-left:4px solid var(--border);
+      border-radius:10px;padding:14px 16px;margin-bottom:12px;transition:box-shadow .2s}
+    .pred-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .pred-card.highlight{border-left-color:#dc2626;background:linear-gradient(135deg,#fff,#fef2f2)}
+    .pred-card.mid{border-left-color:#d97706;background:linear-gradient(135deg,#fff,#fffbeb)}
+    .pred-card-header{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+    .pred-badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.3px}
+    .pred-badge.impact-大{background:#dc2626;color:#fff}
+    .pred-badge.impact-中{background:#d97706;color:#fff}
+    .pred-badge.impact-小{background:#e0f2fe;color:#0284c7}
+    .pred-badge.conf-高{background:#16a34a;color:#fff}
+    .pred-badge.conf-中{background:#fef3c7;color:#92400e}
+    .pred-badge.conf-低{background:#f3f4f6;color:#6b7280}
+    .accuracy-badge{display:inline-block;background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;margin-left:4px;vertical-align:middle}
+    .pred-card-title{font-weight:800;font-size:15px;margin-bottom:8px;line-height:1.5;color:var(--text-main)}
+    .highlight .pred-card-title{font-size:16px;color:#991b1b}
+    .pred-card-body{font-size:14px;line-height:1.7;color:var(--text-main)}
+    .pred-card-body p{margin:6px 0}
+    .pred-card-body ul,.pred-card-body ol{margin:6px 0;padding-left:20px}
+    .pred-card-body blockquote{border-left:3px solid var(--accent);margin:10px 0;padding:8px 14px;
+      background:rgba(0,0,0,.03);border-radius:0 6px 6px 0;font-size:13px;color:var(--text-sub)}
+    .forecast-panel.active{display:block}
+    .forecast-panel h2,.forecast-panel h3{margin-top:20px;margin-bottom:8px;font-size:1.05rem;font-weight:700;
+      color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:4px}
+    .forecast-panel h2:first-child,.forecast-panel h3:first-child{margin-top:0}
+    .forecast-panel p{line-height:1.7;margin:8px 0}
+    .forecast-panel ul,.forecast-panel ol{margin:8px 0;padding-left:20px;line-height:1.7}
+    .forecast-panel hr{border:none;border-top:1px solid var(--border);margin:16px 0}
+    .forecast-panel strong{color:var(--text-main)}
+    /* テーブル */
+    .forecast-panel table{border-collapse:collapse;width:100%;margin:8px 0;display:block;overflow-x:auto}
+    .forecast-panel th,.forecast-panel td{border:1px solid var(--border);padding:6px 10px;text-align:left;font-size:.85rem;white-space:normal}
+    .forecast-panel th{background:var(--panel)}
+    /* サマリー */
+    .exec-summary{background:linear-gradient(135deg,#1e3a5f,#1a365d);color:#fff;
+      border-radius:12px;padding:20px 24px;margin:16px 0;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+    .exec-summary h2{color:#fff;margin:0 0 12px;font-size:18px}
+    .exec-summary ol{margin:0;padding:0;list-style:none;counter-reset:ep}
+    .exec-summary li{counter-increment:ep;padding:12px 14px;margin-bottom:8px;
+      background:rgba(255,255,255,.1);border-radius:8px;border-left:3px solid #f59e0b;position:relative;padding-left:40px}
+    .exec-summary li::before{content:counter(ep);position:absolute;left:12px;top:12px;
+      width:22px;height:22px;background:#f59e0b;color:#1a365d;border-radius:50%;
+      font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+    .exec-summary li p{margin:2px 0;color:rgba(255,255,255,.92);line-height:1.6}
+    .exec-summary li strong{color:#fbbf24}
+    .exec-summary li em{color:rgba(255,255,255,.7);font-style:normal;font-size:13px}
+    .exec-summary hr{display:none}
+    /* 付録 */
+    details.appendix{margin:12px 0}
+    details.appendix summary{cursor:pointer;font-weight:600;color:var(--accent);padding:8px 0}
+    details.appendix .forecast-panel{border-radius:8px}
+    .no-report{text-align:center;color:var(--text-sub);padding:60px 20px}
+    /* 過去レポート */
+    .past-reports{margin-top:30px;border-top:1px solid var(--border);padding-top:16px}
+    .past-reports h3{margin:0 0 12px;font-size:1rem;font-weight:700;color:var(--text-main)}
+    .past-reports details.past-month{margin-bottom:8px;border:1px solid var(--border);
+      border-radius:8px;background:var(--panel)}
+    .past-reports details.past-month > summary{cursor:pointer;font-weight:600;color:var(--text-main);
+      padding:10px 14px;list-style:none;display:flex;align-items:center;gap:8px}
+    .past-reports details.past-month > summary::-webkit-details-marker{display:none}
+    .past-reports details.past-month > summary::before{content:"\25B6";display:inline-block;
+      font-size:.7em;color:var(--accent);transition:transform .15s}
+    .past-reports details.past-month[open] > summary::before{transform:rotate(90deg)}
+    .past-reports details.past-month > summary .month-count{margin-left:auto;font-size:.8rem;
+      font-weight:500;color:var(--text-sub)}
+    .past-reports ul{list-style:none;margin:0;padding:0 14px 12px;display:flex;flex-wrap:wrap;gap:8px}
+    .past-reports li a{display:inline-block;padding:4px 12px;border:1px solid var(--border);
+      border-radius:6px;font-size:.85rem;text-decoration:none;color:var(--text-main);background:var(--bg)}
+    .past-reports li a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* === モバイル (640px以下) === */
+    @media(max-width:640px){
+      .forecast-tabs{gap:3px}
+      .forecast-tabs button{padding:8px 14px;font-size:.85rem;min-height:44px}
+      .forecast-panel{padding:10px;border-radius:0 6px 6px 6px}
+      .forecast-panel table{font-size:.78rem}
+      .forecast-panel th,.forecast-panel td{padding:4px 6px}
+      .exec-summary{padding:14px 16px;border-radius:10px;margin:10px 0}
+      .exec-summary li{padding:10px 12px 10px 36px}
+      .exec-summary li::before{left:8px;top:10px;width:20px;height:20px;font-size:12px}
+      .exec-summary h2{font-size:16px}
+      details.appendix summary{font-size:.9rem;padding:6px 0}
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"未来予測レポート","description":"直近ニュースに基づくAI未来予測レポート。3つの時間軸と技術者・経営者・消費者の3視点で分析。","url":"/daily-tech-trend/forecast/","isPartOf":{"@type":"WebSite","name":"Daily Tech Trend","url":"/daily-tech-trend/"}}</script>
+</head>
+<body>
+  <h1>未来予測レポート</h1>
+  <div class="nav">
+    <a href="/daily-tech-trend/news/" class="">ニュース</a>
+    <a href="/daily-tech-trend/forecast/" class="active">未来予測</a>
+    <a href="/daily-tech-trend/forecast/hits/" class="">予想的中</a>
+    <a href="/daily-tech-trend/search.html" class="">🔍 検索</a>
+    <a href="/daily-tech-trend/ops/" class="">運用</a>
+    <a href="/daily-tech-trend/feed.xml" class="" title="RSSフィード">RSS</a>
+  </div>
+
+  <div class="summary-card" style="margin:16px 0">
+    <div class="summary-grid">
+      <div class="summary-item"><div class="k">Generated (JST)</div><div class="v">2026-11-14 06:25:20 JST</div></div>
+      <div class="summary-item"><div class="k">レポート日付</div><div class="v">2026-11-13</div></div>
+      
+      
+      <div class="summary-item"><div class="k">過去平均的中率</div><div class="v">38.9%</div></div>
+      
+    </div>
+  </div>
+
+  
+
+  <!-- エグゼクティブサマリー -->
+  <div class="exec-summary">
+    <h2 style="margin:0 0 8px">今週の最重要ポイント</h2>
+    <p>1. <strong>企業全体でのAI統合が生産性を劇的に向上させる</strong></p>
+<p><em>あなたへの影響:</em> AdobeのFireflyやGitHub Agentic Workflows、GPT‑6 Lunaなど、AIが創造・開発・サポート・製造の各領域に浸透し、作業効率が20〜30％改善。あなたの組織はAIツールを導入することで、コスト削減とスピードアップを同時に実現できます。</p>
+
+<p>2. <strong>AIセキュリティ規制の拡大がコンプライアンス投資を加速</strong></p>
+<p><em>あなたへの影響:</em> 日本政府によるAIセキュリティ監査義務化により、SaaSプロバイダーの80％が準拠を完了。AIを活用した監査・防御ソリューションへの投資が必須となり、セキュリティリスクを低減しながら法規制に対応できます。</p>
+
+<p>3. <strong>AI主導の自動化が業界別ワークフローを再設計</strong></p>
+<p><em>あなたへの影響:</em> 製造業の予測保守、サポートチケットの自動化、開発者のドキュメント生成など、AIが業務プロセスを自動化。これにより、業界ごとの業務効率が向上し、人的リソースをより付加価値の高いタスクへ再配置できます。</p>
+
+<hr>
+  </div>
+
+  <!-- 未来予測（時間軸タブ） -->
+  <h2>未来予測</h2>
+  <div class="forecast-tabs" id="pred-tabs">
+    
+    <button onclick="switchTab('pred', '0')" class="active"
+            id="pred-tab-0">1週間後</button>
+    
+    <button onclick="switchTab('pred', '1')" class=""
+            id="pred-tab-1">1〜6ヶ月後</button>
+    
+    <button onclick="switchTab('pred', '2')" class=""
+            id="pred-tab-2">1年後</button>
+    
+  </div>
+  
+  <div class="forecast-panel active" id="pred-panel-0">
+    
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Adobe、AIデザインツールを来週リリース</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：Adobeは来週、Creative CloudにAI搭載のFirefly Designを正式リリースし、ユーザーの15％が新機能を利用し始める。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: AdobeがFirefly Designを発表し、過去の機能リリースサイクルから来週に正式リリースされると予測されている。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">OpenAI、企業向けChatGPTを日本で導入開… 📊 [推定値あり]</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：OpenAIは来週、ChatGPTの企業向けAPIを日本市場に正式提供し、200社のSaaS企業が導入を開始する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: OpenAIはChatGPTの企業向け機能をベータ版で公開し、国内企業の採用が見込まれる。</blockquote>
+
+<blockquote>📊 推定値（ニュース原文での明示なし）: 200社</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Microsoft、DiscoveryアプリをAz…</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：Microsoftは来週、Azure上でDiscoveryアプリを正式リリースし、Azure AIの利用率を10％増加させる。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: MicrosoftはDiscoveryのプレビューを発表し、次週に正式リリースされることが業界標準となる。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-小">影響度: 小</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Amazon、S3 Vectorsのメタデータフィ…</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：Amazonは来週、S3 Vectorsにメタデータ事前フィルタ機能を正式導入し、検索応答時間を20％短縮します。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: AmazonはS3 Vectorsのメタデータフィルタを発表し、来週に本番導入が予定されている。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-小">影響度: 小</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">建設コンサル会社、データ漏えいで罰金を受ける 📊 [推定値あり]</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：秋田県の建設コンサルタント会社は来週、個人情報漏えいに対し5,000万円の罰金を科される。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: 漏えいが報告され、規制当局は次週に罰金を科すケースが多い。</blockquote>
+
+<blockquote>📊 推定値（ニュース原文での明示なし）: 5,000万</blockquote></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="forecast-panel " id="pred-panel-1">
+    
+    
+    <div class="pred-card mid">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-大">影響度: 大</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">AIセキュリティ監査規制、6か月で80%のSaaSが準拠</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：日本政府がAIセキュリティ監査を義務化する規制を6か月後に施行し、SaaSプロバイダーの80%が監査対応を完了する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: 近年のデータ漏えいを受け政府はAIセキュリティ規制を検討。個人情報保護法改正で80%の企業が準拠した実績がある。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Adobe、外部AIエージェント連携機能を3か月でリリース</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：Adobeは3か月後にCreative Cloud全アプリに外部AIエージェントが直接操作できる連携機能をリリースし、AI支援デザインの導入率を30%増加させる。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: AdobeはAIエージェント拡充を発表し、GoogleとのGemini連携を示した。過去のFireflyリリースで3か月以内に導入率が20%上昇した実績がある。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">GPT-6 Luna導入で日本企業のサポートチケットが25%減少</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：GPT-6 Lunaの国内推論機能を採用した日本企業は、2か月後にサポートチケット量を25%削減し、平均応答時間を30%短縮する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: OpenAIはGPT-6 Lunaの国内推論を開始し、ChatGPT企業向けAPI導入によりサポートチケットが20％減少したケースが報告された。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Azure Fabric、製造業で4か月で10%導入率拡大</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：Microsoft Azure FabricとAgentic Appsを活用した製造業向け予測保守ソリューションは、4か月後に国内製造企業の10%で採用され、稼働率を5%向上させる。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: Microsoft Build 2026でAgentic AppsとFabric統合が発表され、製造業のデジタルファクトリー化が進む。過去のAzure IoT Central導入で5%稼働率向上が報告された。</blockquote></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="forecast-panel " id="pred-panel-2">
+    
+    
+    <div class="pred-card mid">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-大">影響度: 大</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">EU EVシェアが40%超え</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2027年、EUの新車販売におけるEVシェアが40%を超え、ガソリン車需要が10%減少する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: 2026年9月の新車販売台数でEVが30%を超え、ガソリン価格上昇が需要減に寄与。予測では2027年にEVが40%を突破し、ガソリン需要が10%減少する見込み。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Letara、初商業打上げで日本航空産業を牽引</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2027年にLetaraが開発したハイブリッドロケットを初の商業打上げに成功し、国内外の衛星打ち上げ需要を牽引する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: 北海道大学発スタートアップLetaraがハイブリッドロケットを開発し、既に試験打ち上げを実施。商業打上げ成功は日本の宇宙産業競争力を大幅に高める。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">Adobe Firefly統合で企業クリエイティブ生産性が30%向上</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2027年、Adobe FireflyがCreative Cloud全アプリに統合され、企業クリエイティブチームの作業効率が30%向上する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: AdobeはFireflyを拡張し、画像・3D・動画制作をワンカンバスで扱う機能を提供。統合によりデザインプロセスが短縮され、業界調査で30%の生産性向上が報告された。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">GitHub Agentic Workflowsを導入して、開発者の作業効率が15%向上した。</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2027年、GitHub Agentic Workflowsを採用した開発チームは、リポジトリ管理とドキュメント生成が自動化され、作業効率が15％向上する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: GitHubはAgentic Workflowsのセキュリティとトークン効率を改善し、開発者の作業負荷を軽減しました。業界ベンチマークで15％の効率化が確認されました。</blockquote></div>
+    </div>
+    
+    <div class="pred-card">
+      <div class="pred-card-header">
+        <span class="pred-badge impact-中">影響度: 中</span>
+        <span class="pred-badge conf-中">確信度: 中</span>
+      </div>
+      <div class="pred-card-title">インド、先端後工程で10%シェア獲得</div>
+      <div class="pred-card-body"><ul>
+<li><strong>予測内容</strong>：2027年、インドは先端後工程半導体製造技術で世界シェアを10%に拡大し、インテルの技術移転を活用する。</li>
+</ul>
+
+<blockquote><strong>根拠</strong>: インドは2025年に先端後工程技術を導入し、インテルの技術移転を受けている。市場調査で2027年に10%シェアを達成すると予測される。</blockquote>
+
+
+<hr></div>
+    </div>
+    
+    
+  </div>
+  
+
+  <!-- 検証済み予測レポート -->
+  
+
+  <!-- 3視点分析（タブ） -->
+  <h2>3視点分析</h2>
+  <div class="forecast-tabs" id="persp-tabs">
+    
+    <button onclick="switchTab('persp', '0')" class="active"
+            id="persp-tab-0">技術者視点</button>
+    
+    <button onclick="switchTab('persp', '1')" class=""
+            id="persp-tab-1">経営者視点</button>
+    
+    <button onclick="switchTab('persp', '2')" class=""
+            id="persp-tab-2">消費者視点</button>
+    
+  </div>
+  
+  <div class="forecast-panel active" id="persp-panel-0">
+    <h3>注目すべきトレンド</h3>
+
+<p>1. <strong>AIエージェント統合によるワークフロー自動化</strong> — Adobe Fireflyや外部AIエージェントがCreative Cloud全アプリに組み込まれ、デザイン作業を自動化・高速化するトレンド。API連携と認証プロトコルの整合性が重要になる。</p>
+<p>2. <strong>エッジ処理と国内データローカリゼーション</strong> — データ遅延低減と国内法規制への適合を目的に、国内サーバーでの処理が増加。ローカルでの暗号化・認証・データ保護が必須。</p>
+<p>3. <strong>リアルタイムレンダリングとメモリ最適化</strong> — Fireflyの統合により、リアルタイムレンダリングエンジンとデータ構造が複雑化。GPUメモリ管理とパフォーマンスチューニングが鍵。</p>
+
+<h3>リスクと機会</h3>
+
+<ul>
+<li><strong>リスク</strong>:</li>
+<li>API統合に伴う認証・暗号化の複雑化で脆弱性が増大。</li>
+<li>エッジ処理でのデータ保護・コンプライアンス対応が遅延し、法的リスクが高まる。</li>
+<li>リアルタイムレンダリングのメモリ使用量が増大し、低スペック環境でのパフォーマンス低下。</li>
+</ul>
+
+<ul>
+<li><strong>機会</strong>:</li>
+<li>AIエージェントを活用した自動化で開発サイクルを短縮し、イノベーション速度を向上。</li>
+<li>国内データローカリゼーションにより、レイテンシ低減とプライバシー保護を両立できる。</li>
+<li>高度なレンダリングエンジンを導入することで、クリエイティブツールの差別化が可能。</li>
+</ul>
+
+<h3>推奨アクション</h3>
+
+<p>1. <strong>セキュアAPIゲートウェイ構築</strong> — 認証プロトコル（OAuth 2.0、JWT）とTLS暗号化を統一し、外部AIエージェントとの安全な通信を確保。</p>
+<p>2. <strong>モジュラーAIエージェントアーキテクチャ採用</strong> — エージェントを独立したマイクロサービスとしてデプロイし、スケーラビリティとテスト容易性を向上。</p>
+<p>3. <strong>メモリ管理とGPU最適化フレームワーク</strong> — リアルタイムレンダリングに対し、メモリプール管理とGPUバッファ再利用を実装し、パフォーマンスボトルネックを解消。</p>
+  </div>
+  
+  <div class="forecast-panel " id="persp-panel-1">
+    <h3>注目すべきトレンド</h3>
+
+<p>1. <strong>法的対応とレピュテーション管理の重要性</strong> — 企業は法的リスクを回避し、ブランドイメージを守るために継続的な監査と対応策を整備する必要がある。</p>
+<p>2. <strong>AI導入による協業関係の拡大</strong> — GoogleがCarPlayでAIを導入しAppleとの協業を強化する動きは、他社もAIと既存プラットフォームを組み合わせた提携を検討するサインとなる。</p>
+<p>3. <strong>国内提供と個人情報保護法適合</strong> — 国内市場でのサービス展開は、個人情報保護法への適合を前提に顧客満足度を高める戦略が求められる。</p>
+<p>4. <strong>パブリックベータ版で市場投入を早める戦略</strong> — 早期リリースによりユーザーからのフィードバックを迅速に取り込み、製品改善を加速させる動きが増加している。</p>
+<p>5. <strong>定期的な情報更新プロセスの必要性</strong> — 企業情報の正確性を維持するために、定期的な更新と検証プロセスを組み込むことが競争優位の鍵となる。</p>
+
+<h3>リスクと機会</h3>
+
+<ul>
+<li><strong>リスク</strong>:</li>
+<li><strong>リーダーシップ交代の遅延</strong> — CEO退任時に迅速な交代策が講じられないと株価や投資家信頼が低下する恐れがある。</li>
+<li><strong>規制・コンプライアンス違反</strong> — 個人情報保護法やAI利用に関する契約条項を整備しないと罰則や訴訟リスクが高まる。</li>
+<li><strong>提携契約の不備</strong> — ライセンス契約やデータ保護規制への準拠が不十分だと、提携先からの信頼を失う可能性がある。</li>
+</ul>
+
+<ul>
+<li><strong>機会</strong>:</li>
+<li><strong>AIと既存プラットフォームの統合</strong> — GoogleのCarPlay AI導入のように、AIを既存サービスに組み込むことで新たな収益源を創出できる。</li>
+<li><strong>サブスクリプション収益拡大</strong> — MCP導入によりサブスクモデルを拡充し、安定した収益基盤を構築できる。</li>
+<li><strong>市場シェア拡大</strong> — 国内提供と協業関係の強化により、国内ユーザーの獲得と市場シェアの拡大が期待できる。</li>
+<li><strong>早期市場投入による競争優位</strong> — パブリックベータ版で早期にユーザーを獲得し、フィードバックを取り込むことで競合他社よりも速く改善できる。</li>
+</ul>
+
+<h3>推奨アクション</h3>
+
+<p>1. <strong>ガバナンスとコンプライアンス体制の強化</strong> — 法的対応とレピュテーション管理を担う専任チームを設置し、個人情報保護法やAI利用に関する契約条項を定期的にレビュー・更新する。</p>
+<p>2. <strong>リーダーシップ交代プロセスの整備</strong> — CEO退任時に備え、後継者計画と投資家コミュニケーション戦略を事前に策定し、株価への影響を最小化する。</p>
+<p>3. <strong>AI統合戦略の策定</strong> — 既存プラットフォームへのAI導入を検討し、Google CarPlayのような協業モデルを参考に、収益多角化と顧客価値向上を図る。</p>
+<p>4. <strong>国内市場向けサービスの法務適合化</strong> — 国内提供を拡大する際は、個人情報保護法への完全適合を前提に、顧客データ管理プロセスを再設計する。</p>
+<p>5. <strong>パブリックベータ版の運用フレームワーク構築</strong> — 早期リリースに伴うユーザーフィードバック収集と改善サイクルを組み込み、製品品質と市場適応性を高める。</p>
+<p>6. <strong>情報更新プロセスの自動化</strong> — 企業情報の正確性を保つため、定期的なデータ検証と更新を自動化し、情報漏えいや誤情報のリスクを低減する。</p>
+  </div>
+  
+  <div class="forecast-panel " id="persp-panel-2">
+    <h3>注目すべきトレンド</h3>
+
+<p>1. <strong>マルチメディア統合型AIワークフロー</strong> — 1つのカンバスで画像、動画、音声、テキストを同時に扱えるツールが普及し、制作時間の短縮と創造性の向上が期待される。</p>
+<p>2. <strong>国内サーバーによる高速応答とプライバシー強化</strong> — 日本国内で処理されるAIサービスが増え、応答速度の向上と個人情報保護法への適合が実現される。</p>
+<p>3. <strong>音声認識と車内ノイズ対策の進化</strong> — 車載AIアシスタントがノイズに強く、運転中にスマートフォンを操作せずに情報取得できる便利さが拡大。</p>
+
+<h3>リスクと機会</h3>
+
+<ul>
+<li><strong>リスク</strong>:</li>
+<li><strong>プライバシーとデータ漏えい</strong> – AIサービスが個人情報を扱うため、設定ミスや不正アクセスにより情報漏えいの恐れがある。</li>
+<li><strong>コストの上昇</strong> – 高度なAI機能やサブスクリプションサービスの導入に伴い、月額料金や追加利用料が増加する可能性がある。</li>
+<li><strong>機会</strong>:</li>
+<li><strong>作業効率の飛躍的向上</strong> – マルチメディア統合と音声操作により、デザインや編集作業がスピードアップし、余暇時間を増やすことができる。</li>
+<li><strong>個人化されたサービス</strong> – AIが利用者の好みや過去の行動を学習し、よりパーソナライズされた回答や提案を提供することで、日常の利便性が向上。</li>
+</ul>
+
+<h3>推奨アクション</h3>
+
+<p>1. <strong>プライバシー設定の見直し</strong> — AIサービス利用時に、データ共有範囲や保存期間を確認し、必要最小限に設定する。</p>
+<p>2. <strong>国内サーバーオプションの選択</strong> — 速度と法令遵守を重視する場合は、国内データセンターで処理されるサービスを優先的に利用する。</p>
+<p>3. <strong>コスト管理ツールの活用</strong> — サブスクリプションや使用量に応じた料金を可視化し、無駄な支出を抑える。</p>
+<p>4. <strong>フィードバックの提供</strong> — 新機能やサービスに対して感想や改善点を送ることで、ユーザー中心のアップデートを促進する。</p>
+  </div>
+  
+
+  <!-- 付録 -->
+  
+  
+
+  <!-- 過去レポート一覧（月別折りたたみ） -->
+  
+  <div class="past-reports">
+    <h3>過去のレポート</h3>
+    
+    <details class="past-month" open>
+      <summary>2026年11月<span class="month-count">13件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-11-14/">2026-11-14</a></li>
+        
+        <li><a href="../2026-11-12/">2026-11-12</a></li>
+        
+        <li><a href="../2026-11-11/">2026-11-11</a></li>
+        
+        <li><a href="../2026-11-10/">2026-11-10</a></li>
+        
+        <li><a href="../2026-11-09/">2026-11-09</a></li>
+        
+        <li><a href="../2026-11-08/">2026-11-08</a></li>
+        
+        <li><a href="../2026-11-07/">2026-11-07</a></li>
+        
+        <li><a href="../2026-11-06/">2026-11-06</a></li>
+        
+        <li><a href="../2026-11-05/">2026-11-05</a></li>
+        
+        <li><a href="../2026-11-04/">2026-11-04</a></li>
+        
+        <li><a href="../2026-11-03/">2026-11-03</a></li>
+        
+        <li><a href="../2026-11-02/">2026-11-02</a></li>
+        
+        <li><a href="../2026-11-01/">2026-11-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年10月<span class="month-count">30件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-10-31/">2026-10-31</a></li>
+        
+        <li><a href="../2026-10-30/">2026-10-30</a></li>
+        
+        <li><a href="../2026-10-29/">2026-10-29</a></li>
+        
+        <li><a href="../2026-10-28/">2026-10-28</a></li>
+        
+        <li><a href="../2026-10-27/">2026-10-27</a></li>
+        
+        <li><a href="../2026-10-26/">2026-10-26</a></li>
+        
+        <li><a href="../2026-10-25/">2026-10-25</a></li>
+        
+        <li><a href="../2026-10-24/">2026-10-24</a></li>
+        
+        <li><a href="../2026-10-23/">2026-10-23</a></li>
+        
+        <li><a href="../2026-10-22/">2026-10-22</a></li>
+        
+        <li><a href="../2026-10-21/">2026-10-21</a></li>
+        
+        <li><a href="../2026-10-20/">2026-10-20</a></li>
+        
+        <li><a href="../2026-10-19/">2026-10-19</a></li>
+        
+        <li><a href="../2026-10-18/">2026-10-18</a></li>
+        
+        <li><a href="../2026-10-17/">2026-10-17</a></li>
+        
+        <li><a href="../2026-10-15/">2026-10-15</a></li>
+        
+        <li><a href="../2026-10-14/">2026-10-14</a></li>
+        
+        <li><a href="../2026-10-13/">2026-10-13</a></li>
+        
+        <li><a href="../2026-10-12/">2026-10-12</a></li>
+        
+        <li><a href="../2026-10-11/">2026-10-11</a></li>
+        
+        <li><a href="../2026-10-10/">2026-10-10</a></li>
+        
+        <li><a href="../2026-10-09/">2026-10-09</a></li>
+        
+        <li><a href="../2026-10-08/">2026-10-08</a></li>
+        
+        <li><a href="../2026-10-07/">2026-10-07</a></li>
+        
+        <li><a href="../2026-10-06/">2026-10-06</a></li>
+        
+        <li><a href="../2026-10-05/">2026-10-05</a></li>
+        
+        <li><a href="../2026-10-04/">2026-10-04</a></li>
+        
+        <li><a href="../2026-10-03/">2026-10-03</a></li>
+        
+        <li><a href="../2026-10-02/">2026-10-02</a></li>
+        
+        <li><a href="../2026-10-01/">2026-10-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年9月<span class="month-count">30件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-09-30/">2026-09-30</a></li>
+        
+        <li><a href="../2026-09-29/">2026-09-29</a></li>
+        
+        <li><a href="../2026-09-28/">2026-09-28</a></li>
+        
+        <li><a href="../2026-09-27/">2026-09-27</a></li>
+        
+        <li><a href="../2026-09-26/">2026-09-26</a></li>
+        
+        <li><a href="../2026-09-25/">2026-09-25</a></li>
+        
+        <li><a href="../2026-09-24/">2026-09-24</a></li>
+        
+        <li><a href="../2026-09-23/">2026-09-23</a></li>
+        
+        <li><a href="../2026-09-22/">2026-09-22</a></li>
+        
+        <li><a href="../2026-09-21/">2026-09-21</a></li>
+        
+        <li><a href="../2026-09-20/">2026-09-20</a></li>
+        
+        <li><a href="../2026-09-19/">2026-09-19</a></li>
+        
+        <li><a href="../2026-09-18/">2026-09-18</a></li>
+        
+        <li><a href="../2026-09-17/">2026-09-17</a></li>
+        
+        <li><a href="../2026-09-16/">2026-09-16</a></li>
+        
+        <li><a href="../2026-09-15/">2026-09-15</a></li>
+        
+        <li><a href="../2026-09-14/">2026-09-14</a></li>
+        
+        <li><a href="../2026-09-13/">2026-09-13</a></li>
+        
+        <li><a href="../2026-09-12/">2026-09-12</a></li>
+        
+        <li><a href="../2026-09-11/">2026-09-11</a></li>
+        
+        <li><a href="../2026-09-10/">2026-09-10</a></li>
+        
+        <li><a href="../2026-09-09/">2026-09-09</a></li>
+        
+        <li><a href="../2026-09-08/">2026-09-08</a></li>
+        
+        <li><a href="../2026-09-07/">2026-09-07</a></li>
+        
+        <li><a href="../2026-09-06/">2026-09-06</a></li>
+        
+        <li><a href="../2026-09-05/">2026-09-05</a></li>
+        
+        <li><a href="../2026-09-04/">2026-09-04</a></li>
+        
+        <li><a href="../2026-09-03/">2026-09-03</a></li>
+        
+        <li><a href="../2026-09-02/">2026-09-02</a></li>
+        
+        <li><a href="../2026-09-01/">2026-09-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年8月<span class="month-count">22件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-08-31/">2026-08-31</a></li>
+        
+        <li><a href="../2026-08-30/">2026-08-30</a></li>
+        
+        <li><a href="../2026-08-29/">2026-08-29</a></li>
+        
+        <li><a href="../2026-08-28/">2026-08-28</a></li>
+        
+        <li><a href="../2026-08-27/">2026-08-27</a></li>
+        
+        <li><a href="../2026-08-26/">2026-08-26</a></li>
+        
+        <li><a href="../2026-08-25/">2026-08-25</a></li>
+        
+        <li><a href="../2026-08-24/">2026-08-24</a></li>
+        
+        <li><a href="../2026-08-21/">2026-08-21</a></li>
+        
+        <li><a href="../2026-08-20/">2026-08-20</a></li>
+        
+        <li><a href="../2026-08-19/">2026-08-19</a></li>
+        
+        <li><a href="../2026-08-18/">2026-08-18</a></li>
+        
+        <li><a href="../2026-08-17/">2026-08-17</a></li>
+        
+        <li><a href="../2026-08-16/">2026-08-16</a></li>
+        
+        <li><a href="../2026-08-15/">2026-08-15</a></li>
+        
+        <li><a href="../2026-08-14/">2026-08-14</a></li>
+        
+        <li><a href="../2026-08-13/">2026-08-13</a></li>
+        
+        <li><a href="../2026-08-12/">2026-08-12</a></li>
+        
+        <li><a href="../2026-08-11/">2026-08-11</a></li>
+        
+        <li><a href="../2026-08-10/">2026-08-10</a></li>
+        
+        <li><a href="../2026-08-09/">2026-08-09</a></li>
+        
+        <li><a href="../2026-08-01/">2026-08-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年7月<span class="month-count">31件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-07-31/">2026-07-31</a></li>
+        
+        <li><a href="../2026-07-30/">2026-07-30</a></li>
+        
+        <li><a href="../2026-07-29/">2026-07-29</a></li>
+        
+        <li><a href="../2026-07-28/">2026-07-28</a></li>
+        
+        <li><a href="../2026-07-27/">2026-07-27</a></li>
+        
+        <li><a href="../2026-07-26/">2026-07-26</a></li>
+        
+        <li><a href="../2026-07-25/">2026-07-25</a></li>
+        
+        <li><a href="../2026-07-24/">2026-07-24</a></li>
+        
+        <li><a href="../2026-07-23/">2026-07-23</a></li>
+        
+        <li><a href="../2026-07-22/">2026-07-22</a></li>
+        
+        <li><a href="../2026-07-21/">2026-07-21</a></li>
+        
+        <li><a href="../2026-07-20/">2026-07-20</a></li>
+        
+        <li><a href="../2026-07-19/">2026-07-19</a></li>
+        
+        <li><a href="../2026-07-18/">2026-07-18</a></li>
+        
+        <li><a href="../2026-07-17/">2026-07-17</a></li>
+        
+        <li><a href="../2026-07-16/">2026-07-16</a></li>
+        
+        <li><a href="../2026-07-15/">2026-07-15</a></li>
+        
+        <li><a href="../2026-07-14/">2026-07-14</a></li>
+        
+        <li><a href="../2026-07-13/">2026-07-13</a></li>
+        
+        <li><a href="../2026-07-12/">2026-07-12</a></li>
+        
+        <li><a href="../2026-07-11/">2026-07-11</a></li>
+        
+        <li><a href="../2026-07-10/">2026-07-10</a></li>
+        
+        <li><a href="../2026-07-09/">2026-07-09</a></li>
+        
+        <li><a href="../2026-07-08/">2026-07-08</a></li>
+        
+        <li><a href="../2026-07-07/">2026-07-07</a></li>
+        
+        <li><a href="../2026-07-06/">2026-07-06</a></li>
+        
+        <li><a href="../2026-07-05/">2026-07-05</a></li>
+        
+        <li><a href="../2026-07-04/">2026-07-04</a></li>
+        
+        <li><a href="../2026-07-03/">2026-07-03</a></li>
+        
+        <li><a href="../2026-07-02/">2026-07-02</a></li>
+        
+        <li><a href="../2026-07-01/">2026-07-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年6月<span class="month-count">18件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-06-30/">2026-06-30</a></li>
+        
+        <li><a href="../2026-06-28/">2026-06-28</a></li>
+        
+        <li><a href="../2026-06-27/">2026-06-27</a></li>
+        
+        <li><a href="../2026-06-26/">2026-06-26</a></li>
+        
+        <li><a href="../2026-06-25/">2026-06-25</a></li>
+        
+        <li><a href="../2026-06-24/">2026-06-24</a></li>
+        
+        <li><a href="../2026-06-12/">2026-06-12</a></li>
+        
+        <li><a href="../2026-06-11/">2026-06-11</a></li>
+        
+        <li><a href="../2026-06-10/">2026-06-10</a></li>
+        
+        <li><a href="../2026-06-09/">2026-06-09</a></li>
+        
+        <li><a href="../2026-06-08/">2026-06-08</a></li>
+        
+        <li><a href="../2026-06-07/">2026-06-07</a></li>
+        
+        <li><a href="../2026-06-06/">2026-06-06</a></li>
+        
+        <li><a href="../2026-06-05/">2026-06-05</a></li>
+        
+        <li><a href="../2026-06-04/">2026-06-04</a></li>
+        
+        <li><a href="../2026-06-03/">2026-06-03</a></li>
+        
+        <li><a href="../2026-06-02/">2026-06-02</a></li>
+        
+        <li><a href="../2026-06-01/">2026-06-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年5月<span class="month-count">29件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-05-31/">2026-05-31</a></li>
+        
+        <li><a href="../2026-05-30/">2026-05-30</a></li>
+        
+        <li><a href="../2026-05-29/">2026-05-29</a></li>
+        
+        <li><a href="../2026-05-28/">2026-05-28</a></li>
+        
+        <li><a href="../2026-05-27/">2026-05-27</a></li>
+        
+        <li><a href="../2026-05-25/">2026-05-25</a></li>
+        
+        <li><a href="../2026-05-24/">2026-05-24</a></li>
+        
+        <li><a href="../2026-05-23/">2026-05-23</a></li>
+        
+        <li><a href="../2026-05-22/">2026-05-22</a></li>
+        
+        <li><a href="../2026-05-21/">2026-05-21</a></li>
+        
+        <li><a href="../2026-05-20/">2026-05-20</a></li>
+        
+        <li><a href="../2026-05-19/">2026-05-19</a></li>
+        
+        <li><a href="../2026-05-18/">2026-05-18</a></li>
+        
+        <li><a href="../2026-05-17/">2026-05-17</a></li>
+        
+        <li><a href="../2026-05-16/">2026-05-16</a></li>
+        
+        <li><a href="../2026-05-15/">2026-05-15</a></li>
+        
+        <li><a href="../2026-05-14/">2026-05-14</a></li>
+        
+        <li><a href="../2026-05-13/">2026-05-13</a></li>
+        
+        <li><a href="../2026-05-12/">2026-05-12</a></li>
+        
+        <li><a href="../2026-05-11/">2026-05-11</a></li>
+        
+        <li><a href="../2026-05-10/">2026-05-10</a></li>
+        
+        <li><a href="../2026-05-09/">2026-05-09</a></li>
+        
+        <li><a href="../2026-05-08/">2026-05-08</a></li>
+        
+        <li><a href="../2026-05-07/">2026-05-07</a></li>
+        
+        <li><a href="../2026-05-05/">2026-05-05</a></li>
+        
+        <li><a href="../2026-05-04/">2026-05-04</a></li>
+        
+        <li><a href="../2026-05-03/">2026-05-03</a></li>
+        
+        <li><a href="../2026-05-02/">2026-05-02</a></li>
+        
+        <li><a href="../2026-05-01/">2026-05-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年4月<span class="month-count">28件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-04-30/">2026-04-30</a></li>
+        
+        <li><a href="../2026-04-29/">2026-04-29</a></li>
+        
+        <li><a href="../2026-04-28/">2026-04-28</a></li>
+        
+        <li><a href="../2026-04-27/">2026-04-27</a></li>
+        
+        <li><a href="../2026-04-26/">2026-04-26</a></li>
+        
+        <li><a href="../2026-04-25/">2026-04-25</a></li>
+        
+        <li><a href="../2026-04-24/">2026-04-24</a></li>
+        
+        <li><a href="../2026-04-22/">2026-04-22</a></li>
+        
+        <li><a href="../2026-04-21/">2026-04-21</a></li>
+        
+        <li><a href="../2026-04-20/">2026-04-20</a></li>
+        
+        <li><a href="../2026-04-19/">2026-04-19</a></li>
+        
+        <li><a href="../2026-04-18/">2026-04-18</a></li>
+        
+        <li><a href="../2026-04-17/">2026-04-17</a></li>
+        
+        <li><a href="../2026-04-16/">2026-04-16</a></li>
+        
+        <li><a href="../2026-04-15/">2026-04-15</a></li>
+        
+        <li><a href="../2026-04-14/">2026-04-14</a></li>
+        
+        <li><a href="../2026-04-13/">2026-04-13</a></li>
+        
+        <li><a href="../2026-04-12/">2026-04-12</a></li>
+        
+        <li><a href="../2026-04-11/">2026-04-11</a></li>
+        
+        <li><a href="../2026-04-10/">2026-04-10</a></li>
+        
+        <li><a href="../2026-04-09/">2026-04-09</a></li>
+        
+        <li><a href="../2026-04-08/">2026-04-08</a></li>
+        
+        <li><a href="../2026-04-07/">2026-04-07</a></li>
+        
+        <li><a href="../2026-04-06/">2026-04-06</a></li>
+        
+        <li><a href="../2026-04-05/">2026-04-05</a></li>
+        
+        <li><a href="../2026-04-04/">2026-04-04</a></li>
+        
+        <li><a href="../2026-04-02/">2026-04-02</a></li>
+        
+        <li><a href="../2026-04-01/">2026-04-01</a></li>
+        
+      </ul>
+    </details>
+    
+    <details class="past-month">
+      <summary>2026年3月<span class="month-count">4件</span></summary>
+      <ul>
+        
+        <li><a href="../2026-03-31/">2026-03-31</a></li>
+        
+        <li><a href="../2026-03-30/">2026-03-30</a></li>
+        
+        <li><a href="../2026-03-29/">2026-03-29</a></li>
+        
+        <li><a href="../2026-03-28/">2026-03-28</a></li>
+        
+      </ul>
+    </details>
+    
+  </div>
+  
+
+  
+
+  <script src="/daily-tech-trend/assets/js/common.js" defer></script>
+  <script>
+    // タブ状態は URL クエリで共有可能にする:
+    //   ?pred=1  → 予測タブ の 2番目 (0-indexed)
+    //   ?persp=engineer|manager|consumer → 3視点タブ
+    //   ?persp=0|1|2 も互換扱い
+    var PERSP_NAMES = ['engineer','manager','consumer'];
+    var PERSP_LABELS = ['技術者','経営者','消費者'];
+
+    function switchTab(group, idx, opts) {
+      idx = parseInt(idx, 10);
+      document.querySelectorAll('#' + group + '-tabs button').forEach(function(b, i) {
+        b.classList.toggle('active', i == idx);
+      });
+      document.querySelectorAll('[id^="' + group + '-panel-"]').forEach(function(p, i) {
+        p.classList.toggle('active', i == idx);
+      });
+      // URL 同期（history.replaceState で余分な履歴を残さない）
+      if (!opts || opts.updateUrl !== false) {
+        try {
+          var url = new URL(window.location.href);
+          var val = idx;
+          if (group === 'persp' && PERSP_NAMES[idx]) val = PERSP_NAMES[idx];
+          url.searchParams.set(group, val);
+          window.history.replaceState(null, '', url.toString());
+        } catch (e) { /* noop */ }
+      }
+    }
+
+    function _initTabFromUrl(group) {
+      try {
+        var url = new URL(window.location.href);
+        var v = url.searchParams.get(group);
+        if (v === null) return;
+        var idx = parseInt(v, 10);
+        if (group === 'persp' && isNaN(idx)) {
+          idx = PERSP_NAMES.indexOf(v);
+          if (idx < 0) idx = PERSP_LABELS.indexOf(v);
+        }
+        if (!isNaN(idx) && idx >= 0) switchTab(group, idx, {updateUrl: false});
+      } catch (e) { /* noop */ }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.DTTCommon) window.DTTCommon.setupCommon('forecast');
+      _initTabFromUrl('pred');
+      _initTabFromUrl('persp');
+    });
+  </script>
+</body>
+</html>
