@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-24T21:29:04+00:00",
+  "generated_at": "2026-11-25T21:27:26+00:00",
   "latest": {
-    "report_date": "2026-11-25",
-    "executive_summary": "- AIが産業横断的に製品・サービスを加速させる: AnthropicのClaudeシリーズの進化やセキュリティ・IoT製品へのAI統合により、業界全体で新機能や収益拡大が期待でき、あなたのビジネスや投資判断に直接影響を与えます。\n- プラットフォーム統合と自動化で効率とスケールを実現: クラウド・セキュリティ・IoTプラットフォームの統合（CrowdStrike+Zscaler、Azure Fabric Agentic App、AWS Well-Architected Agent）が取引量や導入速度を高め、業務プロセスの最適化とスケールアップを促進します。\n- セキュリティとコンプライアンスへの投資が加速: 迅速なパッチ適用、AI生成検出機能、Well-Architected Agentの導入により、リスク低減と監査対応が重要になり、組織の安全性と信頼性を高めることが求められます。",
+    "report_date": "2026-11-26",
+    "executive_summary": "- AIエージェントとオートメーションの拡大: GitHubのAgentic WorkflowsやMicrosoft To Do／Plannerの移行ガイド、CrowdStrikeのAI保護機能など、AIが開発・運用・タスク管理を自動化する動きが加速しています。これにより、あなたの業務プロセスは人手による作業が減少し、効率と生産性が向上します。\n- クラウドとセキュリティの統合進化: Azure Fabricの採用増加、CrowdStrikeとZscalerの統合、NIST AIコンソーシアムの拡大など、クラウドベースのインフラとセキュリティがAIで統合されつつあります。結果として、あなたの組織は安全かつスケーラブルなクラウド戦略を再設計する必要があります。\n- IoTエコシステムの標準化とセキュリティ拡大: YKK APのMatter対応スマートロック普及とIoTセキュリティ市場の成長、NIST AIコンソーシアムの標準化活動が相乗効果を生み、IoTデバイスの安全性と相互運用性が向上しています。あなたは消費者としてより安全で連携しやすいスマートデバイスを選択できるようになります。",
     "accuracy_score": null
   },
   "verifications": [
